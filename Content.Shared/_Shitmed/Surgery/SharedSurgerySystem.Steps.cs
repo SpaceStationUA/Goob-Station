@@ -701,6 +701,12 @@ public abstract partial class SharedSurgerySystem
     #region Helper Methods
     private void HandleSanitization(SurgeryStepEvent args)
     {
+        // Pirate: Omu membrane jackets replace gloves for Xelthia surgeons.
+        if (_inventory.TryGetSlotEntity(args.User, "outerClothing", out var jacket)
+            && HasComp<Content.Shared._Pirate.Xelthia.GloveJacketComponent>(jacket)
+            && _inventory.TryGetSlotEntity(args.User, "mask", out _))
+            return;
+
         if (_inventory.TryGetSlotEntity(args.User, "gloves", out var _)
             && _inventory.TryGetSlotEntity(args.User, "mask", out var _))
             return;

@@ -24,7 +24,7 @@ namespace Content.Goobstation.Server.MaterialEnergy
 
         private void OnInteract(EntityUid uid, MaterialEnergyComponent component, InteractUsingEvent args)
         {
-            if (component.MaterialWhiteList == null)
+            if (args.Handled || component.MaterialWhiteList == null) // Pirate: consume fuel only once.
                 return;
 
             _entityManager.TryGetComponent<PhysicalCompositionComponent>(args.Used, out var _composition);
@@ -37,16 +37,21 @@ namespace Content.Goobstation.Server.MaterialEnergy
 
             foreach (var fueltype in component.MaterialWhiteList)
             {
-                if (_composition.MaterialComposition.ContainsKey(fueltype))
+                if (_composition.MaterialComposition.ContainsKey(fueltype) &&
                     AddBatteryCharge(
                         uid,
                         args.Used,
                         _composition.MaterialComposition[fueltype],
-                        materialStack.Count);
+                        materialStack.Count))
+                {
+                    // Pirate: consuming the final fuel piece deletes it, so finish the interaction here.
+                    args.Handled = true;
+                    return;
+                }
             }
         }
 
-        private void AddBatteryCharge(
+        private bool AddBatteryCharge(
             EntityUid cutter,
             EntityUid _material,
             int materialPerSheet,
@@ -54,7 +59,7 @@ namespace Content.Goobstation.Server.MaterialEnergy
         {
             var chargeDiff = _batterySystem.GetChargeDifference(cutter);
             if (chargeDiff == 0)
-                return;
+                return false;
 
             var totalMaterial = materialPerSheet * sheetsInStack;
 
@@ -62,16 +67,18 @@ namespace Content.Goobstation.Server.MaterialEnergy
             var chargeToAdd = (int) MathF.Floor(chargeToAddFloat);
 
             if (chargeToAdd <= 0)
-                return;
+                return false;
 
-            if (_batterySystem.TryGetBatteryComponent(cutter, out var batteryComponent, out _))
-                _batterySystem.SetCharge(cutter, batteryComponent.LastCharge + chargeToAdd);
+            if (!_batterySystem.TryGetBatteryComponent(cutter, out var batteryComponent, out _))
+                return false;
 
-            var toDel = _stack.Split(
-                (EntityUid) _material,
-                chargeToAdd / materialPerSheet,
-                Transform(_material).Coordinates);
-            QueueDel(toDel);
+            // Pirate: topping up by less than one piece of ore must still consume that piece.
+            var piecesToUse = (int) MathF.Ceiling((float) chargeToAdd / materialPerSheet);
+            if (!_stack.TryUse(_material, piecesToUse))
+                return false;
+
+            _batterySystem.SetCharge(cutter, batteryComponent.LastCharge + chargeToAdd);
+            return true;
         }
     }
 }

@@ -3,6 +3,7 @@
 - type: vendingMachineInventory
   id: EngiVendInventory
   startingInventory:
+    ClothingOuterJacketInsulated: 3 # Pirate: Xelthia protective equipment.
     ClothingEyesGlassesMeson: 4
     ClothingEyesGlassesThermal: 4 # Pirate: thermal vision
     ClothingEyesGlassesEngineering: 4 # Pirate: engineering goggles

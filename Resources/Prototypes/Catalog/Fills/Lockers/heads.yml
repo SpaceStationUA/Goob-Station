@@ -177,6 +177,7 @@
     # Pirate: skill chips
     - id: BoxSkillChipsEngi
     - id: AccessConfigurator
+    - id: ClothingOuterJacketInsulated # Pirate
     - id: BoxEncryptionKeyEngineering
     - id: CigarCase
       prob: 0.15
@@ -253,6 +254,7 @@
     - id: BoxEncryptionKeyMedical
     # - id: ClothingBackpackDuffelSurgeryFilled # Goobstation - tools in webbing
     - id: ClothingEyesHudMedical
+    - id: ClothingOuterJacketSurgical # Pirate
     - id: ClothingHandsGlovesNitrile
     - id: ClothingHeadsetAltMedical
     - id: ClothingMaskSterile

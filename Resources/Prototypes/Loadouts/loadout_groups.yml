@@ -127,6 +127,7 @@
   minLimit: 3
   hidden: true
   loadouts:
+  - EmergencyOxygenCarnivore # Pirate: Xelthia survival kit.
   - EmergencyNitrogen
   - EmergencyOxygen
   - EmergencyOxygenBlood # Pirate: Doll haemobrick kit.
@@ -145,6 +146,7 @@
   hidden: true
   loadouts:
   - LoadoutSpeciesEVANitrogen
+  - LoadoutXelthiaEVAOxygen # Pirate
   - LoadoutSpeciesEVAOxygen
   - LoadoutSpeciesEVAWaterVapor
 
@@ -162,6 +164,7 @@
   hidden: true
   loadouts:
   - LoadoutSpeciesPocketDoubleNitrogen
+  - LoadoutXelthiaPocketDoubleOxygen # Pirate
   - LoadoutSpeciesPocketDoubleOxygen
   - LoadoutSpeciesPocketDoubleWaterVapor
 
@@ -192,6 +195,7 @@
   name: loadout-group-captain-neck
   minLimit: 0
   loadouts:
+  - CaptainOffcoat # Pirate: Omu off-coats
   - CaptainCloak
   - CaptainCloakFormal
   - CaptainMantle
@@ -245,6 +249,7 @@
   name: loadout-group-hop-neck
   minLimit: 0
   loadouts:
+  - HeadofPersonnelOffcoat # Pirate: Omu off-coats
   - HoPCloak
   - HoPMantle
   - HeadOfPersonnelEnsemble # goob
@@ -697,6 +702,7 @@
   minLimit: 2
   hidden: true
   loadouts:
+  - EmergencyOxygenCarnivoreClown # Pirate: Xelthia survival kit.
   - EmergencyNitrogenClown
   - EmergencyOxygenClown
   - EmergencyOxygenClownBlood # Pirate: Doll haemobrick kit.
@@ -776,6 +782,7 @@
   minLimit: 2
   hidden: true
   loadouts:
+  - EmergencyOxygenCarnivoreMime # Pirate: Xelthia survival kit.
   - EmergencyNitrogenMime
   - EmergencyOxygenMime
   - EmergencyOxygenMimeBlood # Pirate: Doll haemobrick kit.
@@ -885,6 +892,7 @@
   name: loadout-group-quartermaster-neck
   minLimit: 0
   loadouts:
+  - QuartermasterOffcoat # Pirate: Omu off-coats
   - QuartermasterCloak
   - QuartermasterMantle
   - QuartermasterEnsemble # goob
@@ -1032,6 +1040,8 @@
   name: loadout-group-chief-engineer-neck
   minLimit: 0
   loadouts:
+  - ChiefEngineerWhiteOffcoat # Pirate: Omu off-coats
+  - ChiefEngineerGreenOffcoat # Pirate: Omu off-coats
   - ClothingNeckCloakWhiteCe # goob
   - ClothingNeckCloakGreenCe # goob
   - ClothingNeckMantleWhiteCE # goob
@@ -1044,6 +1054,8 @@
   name: loadout-group-chief-engineer-outerclothing
   minLimit: 0
   loadouts:
+  - SeniorEngineerXelthiaJacket # Pirate: Omu Xelthia equipment.
+  - ClothingOuterXelthiaInsulated # Pirate: Omu Xelthia equipment.
   - ChiefEngineerWintercoat
   - CoatAwaria # Pirate
 
@@ -1115,6 +1127,8 @@
   name: loadout-group-station-engineer-outerclothing
   minLimit: 0
   loadouts:
+  - SeniorEngineerXelthiaJacket # Pirate: Omu Xelthia equipment.
+  - ClothingOuterXelthiaInsulated # Pirate: Omu Xelthia equipment.
   - StationEngineerOuterVest
   - StationEngineerWintercoat
   - CoatAwaria # Pirate
@@ -1166,6 +1180,8 @@
   name: loadout-group-atmospheric-technician-outerclothing
   minLimit: 0
   loadouts:
+  - SeniorEngineerXelthiaJacket # Pirate: Omu Xelthia equipment.
+  - ClothingOuterXelthiaInsulated # Pirate: Omu Xelthia equipment.
   - AtmosphericTechnicianWintercoat
   - CoatAwaria # Pirate
 
@@ -1199,6 +1215,7 @@
   minLimit: 2
   hidden: true
   loadouts:
+  - EmergencyOxygenCarnivoreExtended # Pirate: Xelthia survival kit.
   - EmergencyNitrogenExtended
   - EmergencyOxygenExtended
   - EmergencyOxygenExtendedBlood # Pirate: Doll haemobrick kit.
@@ -1224,6 +1241,7 @@
   name: loadout-group-research-director-neck
   minLimit: 0
   loadouts:
+  - ResearchDirectorOffcoat # Pirate: Omu off-coats
   - ResearchDirectorMantle
   - ResearchDirectorCloak
   - ResearchDirectorEnsemble # goob
@@ -1389,6 +1407,7 @@
   name: loadout-group-head-of-security-neck
   minLimit: 0
   loadouts:
+  - HeadofSecurityOffcoat # Pirate: Omu off-coats
   - HeadofSecurityCloak
   - HeadofSecurityMantle
   - Bodycam # Goobstation - Body cameras
@@ -1399,6 +1418,7 @@
   id: HeadofSecurityOuterClothing
   name: loadout-group-head-of-security-outerclothing
   loadouts:
+  - HeadofSecurityGloveJacket # Pirate: Omu Xelthia equipment.
   - HeadofSecurityCoat
   - HeadofSecurityWinterCoat
   - HeadofSecurityGreatCoat # Goobstation
@@ -1588,6 +1608,7 @@
   minLimit: 2
   hidden: true
   loadouts:
+  - EmergencyOxygenCarnivoreSecurity # Pirate: Xelthia survival kit.
   - EmergencyNitrogenSecurity
   - EmergencyOxygenSecurity
   - EmergencyOxygenSecurityBlood # Pirate: Doll haemobrick kit.
@@ -1624,6 +1645,8 @@
   name: loadout-group-chief-medical-officer-outerclothing
   minLimit: 0
   loadouts:
+  - ClothingOuterXelthiaSurgical # Pirate: Omu Xelthia equipment.
+  - SeniorPhysicianXelthiaJacket # Pirate: Omu Xelthia equipment.
   - ChiefMedicalOfficerLabCoat
   - ChiefMedicalOfficerWintercoat
   - ChiefMedicalOfficerLabCoatWinter # Funky Station
@@ -1633,6 +1656,7 @@
   name: loadout-group-chief-medical-officer-neck
   minLimit: 0
   loadouts:
+  - ChiefMedicalOfficerOffcoat # Pirate: Omu off-coats
   - ChiefMedicalOfficerCloak
   - ChiefMedicalOfficerMantle
   - ChiefMedicalOfficerEnsemble # goob
@@ -1682,6 +1706,8 @@
   name: loadout-group-medical-doctor-outerclothing
   minLimit: 0
   loadouts:
+  - ClothingOuterXelthiaSurgical # Pirate: Omu Xelthia equipment.
+  - SeniorPhysicianXelthiaJacket # Pirate: Omu Xelthia equipment.
   - RegularLabCoat
   - MedicalDoctorWintercoat
   - SeniorPhysicianLabCoat
@@ -1761,6 +1787,8 @@
   name: loadout-group-chemist-outerclothing
   minLimit: 0
   loadouts:
+  - ClothingOuterXelthiaSurgical # Pirate: Omu Xelthia equipment.
+  - SeniorPhysicianXelthiaJacket # Pirate: Omu Xelthia equipment.
   - RegularLabCoat
   - ChemistLabCoat
   - ChemistWintercoat
@@ -1805,6 +1833,8 @@
   name: loadout-group-paramedic-outerclothing
   minLimit: 0
   loadouts:
+  - SeniorPhysicianXelthiaJacket # Pirate: Omu Xelthia equipment.
+  - ClothingOuterXelthiaSurgical # Pirate: Omu Xelthia equipment.
   - ParamedicWindbreaker
   - ParamedicWintercoat
   - ParamedicDavidsJacket # Goobstation
@@ -1842,6 +1872,7 @@
   minLimit: 2
   hidden: true
   loadouts:
+  - EmergencyOxygenCarnivoreMedical # Pirate: Xelthia survival kit.
   - EmergencyNitrogenMedical
   - EmergencyOxygenMedical
   - EmergencyOxygenMedicalBlood # Pirate: Doll haemobrick kit.
@@ -1890,6 +1921,7 @@
   minLimit: 2
   hidden: true
   loadouts:
+  - EmergencyOxygenCarnivoreSyndicate # Pirate: Xelthia survival kit.
   - EmergencyNitrogenSyndicate
   - EmergencyOxygenSyndicate
   - EmergencyOxygenSyndicateBlood # Pirate: Doll haemobrick kit.
@@ -1907,6 +1939,7 @@
   minLimit: 2
   hidden: true
   loadouts:
+  - EmergencyOxygenCarnivoreSyndicate # Pirate: oxygen and edible rations for Xelthia.
   - EmergencyNitrogenMilitaryDouble
   - EmergencyOxygenMilitaryDouble
   - EmergencyOxygenMilitaryDoubleBlood # Pirate: Doll haemobrick kit.

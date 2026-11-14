@@ -798,6 +798,7 @@
           - Yowie # Goobstation - Yowie
           - XenobioSlime # Goobstation - XenobioSlime
           - Hydrakin # Fuck you
+          - Xelthia # Pirate: Omu raw-meat metabolism.
           - Vampiric # Pirate
           - Synth # Goob - Afterlight synths
           inverted: true
@@ -817,6 +818,7 @@
           - Yowie # Goobstation - Yowie
           - XenobioSlime # Goobstation - XenobioSlime
           - Hydrakin # Fuck you
+          - Xelthia # Pirate: Omu raw-meat metabolism.
           - Vampiric # Pirate
           - Synth # Goob - Afterlight synths
           inverted: true
@@ -831,6 +833,7 @@
           - Yowie # Goobstation - Yowie
           - XenobioSlime # Goobstation - XenobioSlime
           - Hydrakin # Fuck you
+          - Xelthia # Pirate: Omu raw-meat metabolism.
           - Vampiric # Pirate
           - Synth # Goob - Afterlight synths
           inverted: true
@@ -861,6 +864,7 @@
         - !type:MetabolizerTypeCondition
           type:
           - Hydrakin # Go fuck yourself
+          - Xelthia # Pirate: Omu raw-meat metabolism.
         reagent: Protein
         amount: 0.5
       - !type:AdjustReagent

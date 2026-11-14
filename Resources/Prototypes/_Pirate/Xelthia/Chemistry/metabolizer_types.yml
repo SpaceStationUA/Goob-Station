@@ -1,0 +1,4 @@
+# Pirate: direct Xelthia dependencies from Omu.
+- type: metabolizerType
+  id: Xelthia
+  name: metabolizer-type-xelthia

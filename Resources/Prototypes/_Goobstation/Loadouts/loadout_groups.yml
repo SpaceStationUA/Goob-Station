@@ -1067,6 +1067,7 @@
   id: BlueshieldOfficerOuter
   name: loadout-group-bso-outer
   loadouts:
+  - BlueshieldOfficerOuterXelthiaBlueshield # Pirate: Omu Xelthia equipment.
   - BlueshieldOfficerOuterBlueshieldArmorVest
   - BlueshieldOfficerOuterBlueshieldArmoredJacket
   - BlueshieldOfficerOuterBlueshieldCowboyVest
@@ -1077,6 +1078,7 @@
   name: loadout-group-bso-neck
   minLimit: 0
   loadouts:
+  - BlueshieldOfficerOffcoat # Pirate: Omu off-coats
   - BlueshieldOfficerOuterBlueshieldMantle
   - BlueshieldOfficerEnsemble
 

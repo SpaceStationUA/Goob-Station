@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 using Content.Shared.Roles;
+using Content.Shared._Pirate.Network; // Pirate
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -21,6 +22,7 @@ public sealed class MsgRoleBans : NetMessage
     public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
     {
         var jobCount = buffer.ReadVariableInt32();
+        buffer.AssertAtLeastSize(jobCount * NetMessageBufferExtensions.MinSizeOfString); // Pirate: Omu #2166
         JobBans.EnsureCapacity(jobCount);
 
         for (var i = 0; i < jobCount; i++)
@@ -29,6 +31,7 @@ public sealed class MsgRoleBans : NetMessage
         }
 
         var antagCount = buffer.ReadVariableInt32();
+        buffer.AssertAtLeastSize(antagCount * NetMessageBufferExtensions.MinSizeOfString); // Pirate: Omu #2166
         AntagBans.EnsureCapacity(antagCount);
 
         for (var i = 0; i < antagCount; i++)

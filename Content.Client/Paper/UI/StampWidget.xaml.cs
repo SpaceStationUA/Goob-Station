@@ -34,11 +34,12 @@ public sealed partial class StampWidget : PanelContainer
            // ModulateSelfOverride = value.StampedColor;
 
            var icon = value.StampLargeIcon;
-           if (icon != null)
+           var path = value.StampLargePath; // Pirate: Omu #2180
+           if (icon != null || path != null) // Pirate
            {
                var resCache = IoCManager.Resolve<IResourceCache>();
                var borderImage = resCache.GetResource<TextureResource>(
-                   "/Textures/_Pirate/Interface/Paper/Stamps/" + icon + ".png"); // Pirate (!)
+                   icon != null ? "/Textures/_Pirate/Interface/Paper/Stamps/" + icon + ".png" : path!); // Pirate: retain existing stamps alongside Omu texture paths.
 
                _borderTexture = new StyleBoxTexture { Texture = borderImage };
                PanelOverride = _borderTexture;

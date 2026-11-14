@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared._Pirate.Network; // Pirate
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -40,7 +41,9 @@ namespace Content.Shared.Voting
             DisplayVotes = buffer.ReadBoolean();
             TargetEntity = buffer.ReadVariableInt32();
 
-            Options = new (ushort votes, string name, string? icon, EntProtoId? preview)[buffer.ReadByte()];
+            var length = buffer.ReadByte();
+            buffer.AssertAtLeastSize(length * (sizeof(short) + NetMessageBufferExtensions.MinSizeOfString)); // Pirate: Omu #2166, retain map vote previews.
+            Options = new (ushort votes, string name, string? icon, EntProtoId? preview)[length];
             for (var i = 0; i < Options.Length; i++)
             {
                 var votes = buffer.ReadUInt16();

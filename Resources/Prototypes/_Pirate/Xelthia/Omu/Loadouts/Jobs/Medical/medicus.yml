@@ -1,0 +1,5 @@
+# Pirate: direct Xelthia dependencies from Omu.
+- type: loadout
+  id: MedicusXelthiaJacket
+  equipment:
+    outerClothing: ClothingOuterJacketMedicus

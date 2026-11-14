@@ -21,7 +21,7 @@
     maxCharge: 1500
     startingCharge: 1500
   - type: MaterialEnergy
-    materialWhiteList: [Plasma]
+    materialWhiteList: [Plasma, RawPlasma] # Pirate: both cutters also accept unprocessed plasma ore.
   - type: BatteryAmmoProvider
     proto: BulletPlasmaCutter
     fireCost: 100
