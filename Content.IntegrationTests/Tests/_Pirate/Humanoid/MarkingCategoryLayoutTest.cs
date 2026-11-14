@@ -101,6 +101,9 @@ public sealed class MarkingCategoryLayoutTest
         {
             control.Measure(size);
             control.Arrange(UIBox2.FromDimensions(Vector2.Zero, size));
+            // Scrolling invalidates only this container's arrangement, not the already arranged parent.
+            var categories = control.FindControl<ScrollContainer>("CategoryScroll");
+            categories.Arrange(UIBox2.FromDimensions(categories.Position, categories.Size));
         }
     }
 
