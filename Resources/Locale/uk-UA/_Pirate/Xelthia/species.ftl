@@ -50,18 +50,25 @@ ent-ClothingOuterBlueshieldArmourXelthia = пальто «Синього щит�
     .desc = Поважне броньоване пальто з довгими рукавами. Забезпечує щупальцям електроізоляцію та хірургічний захист.
 
 ent-BoxSurvivalSlotsMeat = аварійний набір для хижаків
+    .desc = { ent-BoxSurvivalSlots.desc }
     .suffix = Для хижаків
 ent-BoxSurvivalSlotsEngineeringMeat = розширений аварійний набір для хижаків
+    .desc = { ent-BoxSurvivalSlotsEngineering.desc }
     .suffix = Розширений, для хижаків
 ent-BoxSurvivalSlotsSecurityMeat = аварійний набір охоронця для хижаків
+    .desc = { ent-BoxSurvivalSlotsSecurity.desc }
     .suffix = Охорона, для хижаків
 ent-BoxSurvivalSlotsMedicalMeat = медичний аварійний набір для хижаків
+    .desc = { ent-BoxSurvivalSlotsMedical.desc }
     .suffix = Медичний, для хижаків
 ent-BoxHugSlotsMeat = аварійний набір клоуна для хижаків
+    .desc = { ent-BoxHugSlots.desc }
     .suffix = Клоун, для хижаків
 ent-BoxSurvivalSlotsSyndicateMeat = аварійний набір Синдикату для хижаків
+    .desc = { ent-BoxSurvivalSlotsSyndicate.desc }
     .suffix = Синдикат, для хижаків
 ent-BoxMimeSlotsMeat = аварійний набір міма для хижаків
+    .desc = { ent-BoxSurvivalSlots.desc }
     .suffix = Мім, для хижаків
 
 marking-XelthiaEarsBigFloppy = Великі обвислі вуха

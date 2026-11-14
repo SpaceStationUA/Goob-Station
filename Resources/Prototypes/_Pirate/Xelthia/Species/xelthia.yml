@@ -9,6 +9,7 @@
   markingLimits: MobXelthiaMarkingLimits
   dollPrototype: MobXelthiaDummy
   skinColoration: Hues
+  knowledge: Human # Pirate: required local skill baseline; Omu has no knowledge system.
   maleFirstNames: NamesXelthiaFirst
   femaleFirstNames: NamesXelthiaFirst
   lastNames: NamesXelthiaLast
