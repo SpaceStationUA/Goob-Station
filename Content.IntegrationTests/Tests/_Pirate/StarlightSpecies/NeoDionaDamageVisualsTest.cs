@@ -15,12 +15,14 @@ namespace Content.IntegrationTests.Tests._Pirate.StarlightSpecies;
 
 public sealed class NeoDionaDamageVisualsTest : InteractionTest
 {
-    [TestCase("Blunt", "Brute")]
-    [TestCase("Heat", "Burn")]
-    public async Task DamageAfterLimbRemovalPreservesBodySprites(string damageType, string damageGroup)
+    [TestCase("MobNeoDiona", "Blunt", "Brute")]
+    [TestCase("MobNeoDiona", "Heat", "Burn")]
+    [TestCase("MobDiona", "Blunt", "Brute")]
+    [TestCase("MobDiona", "Heat", "Burn")]
+    public async Task DamageAfterLimbRemovalPreservesBodySprites(string prototype, string damageType, string damageGroup)
     {
         await AddAtmosphere();
-        await SpawnTarget("MobNeoDiona");
+        await SpawnTarget(prototype);
         EntityUid rightLeg = default;
         string groinState = null!;
 
