@@ -53,6 +53,7 @@
   ransomModifier: 4 # Pirate: traitor ransom value
   supervisors: job-supervisors-captain
   canBeAntag: false
+  whitelisted: true # Pirate
   guides: # goobstation
   - Security
   - SpaceLaw
