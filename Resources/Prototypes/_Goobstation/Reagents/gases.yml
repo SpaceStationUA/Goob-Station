@@ -286,14 +286,6 @@
         effectProto: StatusEffectForcedSleeping # Pirate: healium nerf
         time: 1
         type: Update # Pirate: healium nerf
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectOpiateNod
-        type: Add
-        time: 4
-        conditions:
-        - !type:ReagentCondition
-          reagent: Healium
-          min: 4
       - !type:Oxygenate
         conditions:
         - !type:MetabolizerTypeCondition #Fuck you
@@ -337,14 +329,6 @@
         visualType: Medium
         messages: [ "effect-sleepy" ]
         probability: 0.01
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectOpiateNod
-        type: Add
-        time: 4
-        conditions:
-        - !type:ReagentCondition
-          reagent: Healium
-          min: 4
       - !type:ModifyStatusEffect # Pirate: healium nerf
         conditions:
         - !type:ReagentCondition

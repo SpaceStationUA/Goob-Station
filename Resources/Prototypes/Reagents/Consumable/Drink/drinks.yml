@@ -33,14 +33,6 @@
         - !type:ReagentCondition
           reagent: Coffee
           min: 25
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectStimRush
-        type: Add
-        time: 2
-        conditions:
-        - !type:ReagentCondition
-          reagent: Coffee
-          min: 25
       - !type:MovementSpeedModifier
         walkSpeedModifier: 1.1
         sprintSpeedModifier: 1.1
@@ -111,14 +103,6 @@
           max: 293.15 # Pirate: coffeemaker - intentional Leporazine cold threshold in Kelvin
         amount: 25000 # Pirate: coffeemaker
       - !type:Jitter # Goobstation: Coffee causes jitteriness and alters speed
-        conditions:
-        - !type:ReagentCondition
-          reagent: SyntheticCoffee
-          min: 25
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectStimRush
-        type: Add
-        time: 2
         conditions:
         - !type:ReagentCondition
           reagent: SyntheticCoffee
