@@ -54,6 +54,7 @@
 
 - type: loadout
   id: EmergencyOxygenCarnivoreSecurity
+  # Pirate: Blueshield also uses this kit through the local SurvivalSecurity group.
   effects:
   - !type:GroupLoadoutEffect
     proto: OxygenMeatEater
@@ -69,15 +70,6 @@
   storage:
     back:
     - BoxSurvivalSlotsSyndicateMeat
-
-- type: loadout
-  id: EmergencyOxygenCarnivoreBlueshieldOfficer
-  effects:
-  - !type:GroupLoadoutEffect
-    proto: OxygenMeatEater
-  storage:
-    back:
-    - BoxSurvivalSlotsBlueshieldOfficerMeat
 
 # Pirate: the local EVA tank groups need explicit entries for this oxygen-breathing carnivore.
 - type: loadout
