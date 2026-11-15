@@ -2,7 +2,7 @@
 - type: tile
   id: FloorSnowBorderless
   parent: BaseFloorPlanet
-  name: tiles-snow-borderless
+  name: tiles-snow-floor
   sprite: /Textures/Tiles/Planet/Snow/snow.png
   variants: 13
   placementVariants:
