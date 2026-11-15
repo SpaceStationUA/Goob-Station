@@ -10,7 +10,7 @@ using Robust.Shared.Player;
 
 namespace Content.Client.SubFloor;
 
-public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
+public sealed partial class SubFloorHideSystem : SharedSubFloorHideSystem // Pirate: subfloor filters
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
@@ -28,12 +28,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
             if (_showAll == value) return;
             _showAll = value;
             _ui.GetUIController<SandboxUIController>().SetToggleSubfloors(value);
-
-            var ev = new ShowSubfloorRequestEvent()
-            {
-                Value = value,
-            };
-            RaiseNetworkEvent(ev);
+            SendShowRequest(); // Pirate: subfloor filters
         }
     }
 
@@ -63,6 +58,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
     private void OnPlayerDetached(LocalPlayerDetachedEvent ev)
     {
         // Vismask resets so need to reset this.
+        ResetFilters(); // Pirate: subfloor filters
         ShowAll = false;
     }
 
@@ -80,10 +76,11 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         _appearance.TryGetData<bool>(uid, SubFloorVisuals.Covered, out var covered, args.Component);
         _appearance.TryGetData<bool>(uid, SubFloorVisuals.ScannerRevealed, out var scannerRevealed, args.Component);
 
-        scannerRevealed &= !ShowAll; // no transparency for show-subfloor mode.
+        var showAll = ShowAll || IsFilterRevealed(uid); // Pirate: subfloor filters
+        scannerRevealed &= !showAll; // Pirate: subfloor filters
 
         var showVentPipe = HasComp<PipeAppearanceComponent>(uid) && ShowVentPipe;    //Goobstation - Ventcrawler
-        var revealed = !covered || ShowAll || scannerRevealed || showVentPipe;   //Goobstation - Ventcrawler
+        var revealed = !covered || showAll || scannerRevealed || showVentPipe;   //Goobstation - Ventcrawler // Pirate: subfloor filters
 
         // set visibility & color of each layer
         foreach (var layer in args.Sprite.AllLayers)
@@ -107,7 +104,7 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 
         _sprite.SetVisible((uid, args.Sprite), hasVisibleLayer || revealed);
 
-        if (ShowAll)
+        if (showAll) // Pirate: subfloor filters
         {
             // Allows sandbox mode to make wires visible over other stuff.
             component.OriginalDrawDepth ??= args.Sprite.DrawDepth;
