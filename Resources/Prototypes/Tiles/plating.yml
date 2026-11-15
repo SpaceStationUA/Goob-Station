@@ -31,6 +31,7 @@
     - FloorLowDesert
     - FloorPlanetGrass
     - FloorSnow
+    - FloorSnowBorderless # Pirate: borderless snow
     - FloorDirt
     - FloorAsteroidIronsand
     - FloorAsteroidSand
