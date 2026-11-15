@@ -468,6 +468,37 @@
   - type: Sprite
     state: bigbush4
 
+- type: entity
+  parent: FloraBigBush01
+  id: FloraBigBushSnow01
+  name: snowy big bush
+  description: A dense decorative bush, covered in snow.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Decoration/Flora/flora_bushessnow64x64.rsi
+    state: bigbushsnow1
+
+- type: entity
+  parent: FloraBigBushSnow01
+  id: FloraBigBushSnow02
+  components:
+  - type: Sprite
+    state: bigbushsnow2
+
+- type: entity
+  parent: FloraBigBushSnow01
+  id: FloraBigBushSnow03
+  components:
+  - type: Sprite
+    state: bigbushsnow3
+
+- type: entity
+  parent: FloraBigBushSnow01
+  id: FloraBigBushSnow04
+  components:
+  - type: Sprite
+    state: bigbushsnow4
+
 #region Каміння
 - type: entity
   parent: BaseStructure

@@ -150,6 +150,7 @@
   - FloorLowDesert
   - FloorPlanetGrass
   - FloorSnow
+  - FloorSnowBorderless # Pirate: borderless snow
   - FloorDirt
   - PlatingRCD
   - FloorHullReinforced

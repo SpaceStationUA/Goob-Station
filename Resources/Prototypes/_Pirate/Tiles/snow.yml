@@ -1,0 +1,23 @@
+# Does not draw over nearby tiles.
+- type: tile
+  id: FloorSnowBorderless
+  parent: BaseFloorPlanet
+  name: tiles-snow-floor
+  sprite: /Textures/Tiles/Planet/Snow/snow.png
+  variants: 13
+  placementVariants:
+  - 0.8
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0116
+  - 0.0116
+  footstepSounds:
+    collection: FootstepSnow

@@ -1,0 +1,23 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Made by prazat911 (discord) for Adventure Time, snow added by CyberLanos based on flora_bushes64x64.rsi",
+    "size": {
+        "x": 64,
+        "y": 64
+    },
+    "states": [
+        {
+            "name": "bigbushsnow1"
+        },
+        {
+            "name": "bigbushsnow2"
+        },
+        {
+            "name": "bigbushsnow3"
+        },
+        {
+            "name": "bigbushsnow4"
+        }
+    ]
+}

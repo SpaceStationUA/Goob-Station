@@ -1,0 +1,12 @@
+- type: entity
+  id: SuitStorageParamedicRescue
+  parent: SuitStorageBase
+  suffix: Paramedic
+  components:
+  - type: StorageFill
+    contents:
+    - id: OxygenTankFilled
+    - id: ClothingModularControllerRescuePreassembled
+    - id: ClothingMaskBreath
+  - type: AccessReader
+    access: [ [ "Medical" ] ] # Paramedic access is not assigned to jobs or AllAccess; use Medical like LockerParamedic.

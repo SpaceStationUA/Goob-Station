@@ -68,6 +68,8 @@
     - showemergencyshuttle
     - zoom
     - showsubfloor
+    - showwires # Pirate: subfloor filters
+    - showpipes # Pirate: subfloor filters
     - showmarkers
     - nodevis
     - nodevisfilter
@@ -87,6 +89,8 @@
     - mappingclientsidesetup
     - showsubfloor
     - showsubfloorforever
+    - showwires # Pirate: subfloor filters
+    - showpipes # Pirate: subfloor filters
     - toggleautosave
     - toggledecals
     - showwallmounts

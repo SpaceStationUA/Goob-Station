@@ -1,5 +1,13 @@
 ent-FloraBigBush01 = великий кущ
     .desc = Густий декоративний кущ.
+ent-FloraBigBushSnow01 = засніжений великий кущ
+    .desc = Густий декоративний кущ, вкритий снігом.
+ent-FloraBigBushSnow02 = засніжений великий кущ
+    .desc = { ent-FloraBigBushSnow01.desc }
+ent-FloraBigBushSnow03 = засніжений великий кущ
+    .desc = { ent-FloraBigBushSnow01.desc }
+ent-FloraBigBushSnow04 = засніжений великий кущ
+    .desc = { ent-FloraBigBushSnow01.desc }
 ent-FloraBigRock01 = великий камінь
     .desc = Великий декоративний камінь.
 ent-FloraPalmTree01 = пальма
