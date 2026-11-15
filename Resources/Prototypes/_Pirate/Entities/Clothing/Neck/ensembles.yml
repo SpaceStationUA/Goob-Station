@@ -7,6 +7,7 @@
   components:
   - type: Item
     size: Small
+    heldPrefix: both
   - type: Sprite
     sprite: _Pirate/Clothing/Neck/Ensembles/officer.rsi
   - type: Clothing
