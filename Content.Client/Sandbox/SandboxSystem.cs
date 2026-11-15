@@ -2,6 +2,8 @@
 
 using Content.Client.Administration.Managers;
 using Content.Client.Movement.Systems;
+using Content.Shared.Atmos.Components; // Pirate: pipe layer copy
+using Content.Shared.Atmos.EntitySystems; // Pirate: pipe layer copy
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
 using Robust.Client.Placement;
@@ -19,6 +21,7 @@ namespace Content.Client.Sandbox
         [Dependency] private readonly ContentEyeSystem _contentEye = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly SharedMapSystem _mapSystem = default!;
+        [Dependency] private readonly SharedAtmosPipeLayersSystem _pipeLayers = default!; // Pirate: pipe layer copy
 
         private bool _sandboxEnabled;
         public bool SandboxAllowed { get; private set; }
@@ -94,7 +97,19 @@ namespace Content.Client.Sandbox
                 && TryComp(uid, out MetaDataComponent? comp)
                 && !comp.EntityDeleted)
             {
-                if (comp.EntityPrototype == null || comp.EntityPrototype.HideSpawnMenu || comp.EntityPrototype.Abstract)
+                #region Pirate: pipe layer copy
+                // Hidden Alt1/Alt2 variants copy as primary so placement can choose their layer at the cursor.
+                var proto = comp.EntityPrototype;
+                if (proto is { HideSpawnMenu: true }
+                    && TryComp(uid, out AtmosPipeLayersComponent? pipeLayers)
+                    && _pipeLayers.TryGetAlternativePrototype(pipeLayers, AtmosPipeLayer.Primary, out var primaryId)
+                    && PrototypeManager.TryIndex(primaryId, out var primaryProto))
+                {
+                    proto = primaryProto;
+                }
+                #endregion
+
+                if (proto == null || proto.HideSpawnMenu || proto.Abstract) // Pirate: pipe layer copy
                     return false;
 
                 if (_placement.Eraser)
@@ -102,10 +117,10 @@ namespace Content.Client.Sandbox
 
                 _placement.BeginPlacing(new()
                 {
-                    EntityType = comp.EntityPrototype.ID,
+                    EntityType = proto.ID, // Pirate: pipe layer copy
                     IsTile = false,
                     TileType = 0,
-                    PlacementOption = comp.EntityPrototype.PlacementMode
+                    PlacementOption = proto.PlacementMode // Pirate: pipe layer copy
                 });
                 return true;
             }
