@@ -2298,7 +2298,7 @@ namespace Content.Client.Lobby.UI
             {
                 ICInfoEditor.PhysicalDescriptionInput.TextRope = new Rope.Leaf(Profile?.PhysicalDescription ?? string.Empty);
                 ICInfoEditor.PersonalityDescriptionInput.TextRope = new Rope.Leaf(Profile?.PersonalityDescription ?? string.Empty);
-                ICInfoEditor.BloodTasteInput.TextRope = new Rope.Leaf(Profile?.BloodTaste ?? string.Empty);
+                ICInfoEditor.BloodTasteInput.TextRope = new Rope.Leaf(Profile?.BloodTaste ?? string.Empty); // Pirate
                 ICInfoEditor.ExploitableInfoInput.TextRope = new Rope.Leaf(Profile?.ExploitableInfo ?? string.Empty);
                 ICInfoEditor.SecretsInput.TextRope = new Rope.Leaf(Profile?.Secrets ?? string.Empty);
                 OOCInfoEditor.PersonalNotesInput.TextRope = new Rope.Leaf(Profile?.PersonalNotes ?? string.Empty);
