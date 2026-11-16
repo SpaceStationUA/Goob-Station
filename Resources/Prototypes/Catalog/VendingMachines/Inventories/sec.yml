@@ -25,7 +25,7 @@
     HandheldSecurityMonitor: 2 # Pirate
     HandheldBrigmedicCrewMonitor: 2 # Pirate
     RMCMotionDetector: 2 # Pirate
-    PSA: 1 # Pirate: limited stealth detector
+    PSA: 2 # Pirate: SecTech gear rebalance; limited stealth detector, alert-gated, 2 in stock
     NFWeaponLauncherGrenadeNfsd: 1 # Pirate: tracking dart launcher
     NFBoxDartsTracking: 2 # Pirate: limited tracking kits
     TicketPad: 5 # Pirate: SecLink citationator supplies

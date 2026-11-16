@@ -179,7 +179,7 @@
 # Adapted from RMC commit d8fe93ef744114f7ae1acdea4278eec9f2a1989e.
 - type: entity
   id: RMCMotionDetector
-  parent: [ BaseItem, PowerCellSlotSmallItem ]
+  parent: [ BaseItem, PowerCellSlotMediumItem ]
   name: pulse motion detector
   description: Detects nearby living beings that moved recently. Each scan consumes battery charge.
   components:
@@ -199,6 +199,10 @@
     - suitStorage
     - belt
   - type: MotionDetector
+    powerUse: 2 # 2 J per scan: 1 W in long mode (2 s), 2 W in short mode (1 s)
+  - type: AlertLevelRestricted
+    requirement:
+      minimum: blue
   - type: Appearance
   - type: GenericVisualizer
     visuals:
