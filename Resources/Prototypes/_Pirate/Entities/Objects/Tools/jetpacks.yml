@@ -18,7 +18,4 @@
   - type: GasTank
     toggleAction: null
   - type: Jetpack
-    acceleration: 2
-    weightlessModifier: 2.4
-    friction: 0.125
     moleUsage: 0
