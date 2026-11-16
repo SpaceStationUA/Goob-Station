@@ -8,4 +8,4 @@ ooc-icon-pirate-pyrizhok = Пиріжок
 ooc-icon-pirate-hamster-masterr = Хамстер_мастерр
 ooc-icon-pirate-gamescat = Ґеймскет
 ooc-icon-pirate-ter-4333 = Тер_4333
-ooc-icon-pirate-bi = В
+ooc-icon-pirate-B = В
