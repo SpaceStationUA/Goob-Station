@@ -42,9 +42,5 @@
         type: Remove
         time: 2
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectDreamy # the lotus: slow dream-wash
-        type: Remove
-        time: 2
-      - !type:ModifyStatusEffect
         effectProto: StatusEffectTelepathicRepeater
         type: Remove
