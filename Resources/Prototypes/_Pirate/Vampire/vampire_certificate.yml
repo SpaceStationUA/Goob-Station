@@ -1,0 +1,27 @@
+- type: entity
+  name: офіційне посвідчення вампіра
+  parent: BaseItem
+  id: VampireCertificate
+  description: Документ, що підтверджує офіційний статус вампіра.
+  components:
+  - type: VampireCertificate
+  - type: Sprite
+    sprite: _Pirate/Origin/VampireCertificate.rsi
+    layers:
+    - state: document_closed
+  - type: Appearance
+  - type: EmitSoundOnPickup
+    sound:
+      path: /Audio/_Goobstation/Items/handling/book_pickup.ogg
+      params:
+        volume: -4
+  - type: EmitSoundOnDrop
+    sound:
+      path: /Audio/_Goobstation/Items/handling/book_drop.ogg
+      params:
+        volume: -4
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/_Goobstation/Items/handling/book_drop.ogg
+      params:
+        volume: -4

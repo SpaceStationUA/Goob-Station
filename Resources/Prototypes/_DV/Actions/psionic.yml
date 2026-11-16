@@ -325,3 +325,19 @@
     checkCanInteract: false
   - type: InstantAction
     event: !type:PsionicFlashPowerActionEvent
+
+# Familiar summoning powers
+- type: entity
+  parent: BasePsionicAction
+  id: ActionSummonRemilia
+  name: Summon Remilia
+  description: Summon your familiar Remilia. She likes fruit.
+  components:
+  - type: Action
+    icon:
+      sprite: Mobs/Animals/bat.rsi
+      state: bat
+    useDelay: 120
+    checkCanInteract: false
+  - type: InstantAction
+    event: !type:SummonFamiliarPowerActionEvent

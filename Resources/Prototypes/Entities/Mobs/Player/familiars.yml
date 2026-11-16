@@ -34,6 +34,7 @@
     - PetsNT
   - type: Alerts
   - type: Familiar
+  - type: Dispellable # Pirate: Remilia can be dispelled by psionics
   - type: LanguageKnowledge
     speaks:
     - Mouse

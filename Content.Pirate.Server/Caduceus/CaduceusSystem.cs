@@ -35,12 +35,15 @@ namespace Content.Pirate.Server.Caduceus;
 /// <summary>
 ///     The Caduceus slime weapon of the Index. While held by an Index member it can be toggled
 ///     between an inert slime vial and a weapon form by the "toggle" action or by using it in
-///     hand (Z): activating it transforms it into a random weapon form, deactivating collapses it
+///     hand (Z): activating it transforms it into the queued next form, deactivating collapses it
 ///     back into the slime. Both paths share the toggle action's 10s useDelay cooldown.
-///     The "swap" action shifts it into another random form (30s action cooldown).
+///     The "swap" action shifts it into the queued next form (30s action cooldown).
 ///     Form changes wait until the current attack is finished - the weapon never morphs mid-swing.
-///     Once it becomes the fpoon the form is permanent: Z is disabled, the weapon cannot be
-///     dropped or swapped, and the only escape is suicide (handled via <see cref="SuicideByEnvironmentEvent"/>).
+///     Each form change applies the queued next form and then generates (rolls) the form after
+///     it - admin picks from the Index admin menu are written straight into that queue (see
+///     <see cref="SetQueuedNextForm"/>), so every transformation always flows through the same
+///     queued next form. The fpoon is permanent: Z is disabled, the weapon cannot be dropped
+///     or swapped, and the only escape is suicide (handled via <see cref="SuicideByEnvironmentEvent"/>).
 /// </summary>
 public sealed class CaduceusSystem : EntitySystem
 {
@@ -100,6 +103,7 @@ public sealed class CaduceusSystem : EntitySystem
     private void OnMapInit(Entity<CaduceusComponent> ent, ref MapInitEvent args)
     {
         ent.Comp.CurrentForm = CaduceusForm.Inactive;
+        ent.Comp.NextForm = null;
         ent.Comp.PendingForm = null;
 
         // Remember the prototype's name/description so deactivating back into the inert slime
@@ -118,6 +122,12 @@ public sealed class CaduceusSystem : EntitySystem
     private void OnEquippedHand(Entity<CaduceusComponent> ent, ref GotEquippedHandEvent args)
     {
         ent.Comp.Holder = args.User;
+
+        // The weapon is bound to the first Index member who wields it - the admin menu
+        // addresses "the member's next weapon" through this link.
+        if (ent.Comp.Member == null && HasComp<IndexMemberComponent>(args.User))
+            ent.Comp.Member = args.User;
+
         Dirty(ent);
     }
 
@@ -154,9 +164,9 @@ public sealed class CaduceusSystem : EntitySystem
     #region Toggle (use in hand)
 
     /// <summary>
-    ///     Z toggles the Caduceus between its inert slime vial and a weapon form. Activating picks a
-    ///     random weapon form (deferred until any in-progress attack is done); deactivating collapses
-    ///     it back into the slime. The fpoon is permanent - it can never be toggled back.
+    ///     Z toggles the Caduceus between its inert slime vial and a weapon form. Activating picks
+    ///     the queued next form (deferred until any in-progress attack is done); deactivating
+    ///     collapses it back into the slime. The fpoon is permanent - it can never be toggled back.
     ///     Z shares the toggle action's 10s cooldown so the weapon can't be re-rolled every nanosecond.
     /// </summary>
     private void OnUseInHand(Entity<CaduceusComponent> ent, ref UseInHandEvent args)
@@ -214,7 +224,7 @@ public sealed class CaduceusSystem : EntitySystem
 
     /// <summary>
     ///     Shared toggle logic used by both the Z use-in-hand toggle and the toggle action:
-    ///     activating transforms into a random weapon form (deferred until any in-progress attack
+    ///     activating transforms into the queued next form (deferred until any in-progress attack
     ///     finishes), deactivating collapses back into the inert slime.
     /// </summary>
     private bool ToggleActive(Entity<CaduceusComponent> ent, EntityUid user)
@@ -239,7 +249,7 @@ public sealed class CaduceusSystem : EntitySystem
         }
         else
         {
-            // Activate: transform into a random weapon form (after any in-progress attack).
+            // Activate: transform into the queued next form (after any in-progress attack).
             ent.Comp.Active = true;
             _actions.SetToggled(ent.Comp.ToggleActionEntity, true);
             RequestFormChange(ent, GetNextForm(ent), playSwapSound: false);
@@ -301,7 +311,6 @@ public sealed class CaduceusSystem : EntitySystem
         args.Handled = true;
         RequestFormChange(ent, GetNextForm(ent), playSwapSound: true);
     }
-
     #endregion
 
     #region Hold action + hit-based form changing
@@ -353,7 +362,7 @@ public sealed class CaduceusSystem : EntitySystem
 
     /// <summary>
     ///     Each landed hit spends one of the current form's remaining hits. When the form is spent
-    ///     the Caduceus shifts into a random other weapon (deferred until the current attack ends).
+    ///     the Caduceus shifts into the queued next form (deferred until the current attack ends).
     /// </summary>
     private void OnMeleeHit(Entity<CaduceusComponent> ent, ref MeleeHitEvent args)
     {
@@ -378,23 +387,28 @@ public sealed class CaduceusSystem : EntitySystem
 
     #region Form logic
 
-    /// <summary>Computes the next form: admin guarantee wins, then the karma-based fpoon chance, else a random weapon form.</summary>
-    /// <remarks>
-    ///     The admin fpoon guarantee is NOT consumed here - it only goes away once the fpoon actually
-    ///     materializes (see <see cref="SetForm"/>), so a deferred form change can never waste it.
-    /// </remarks>
+    /// <summary>
+    ///     The next form: whatever is queued - either pre-rolled when the current form was
+    ///     entered, or a form an admin wrote straight into the queue. One path, no overrides.
+    /// </summary>
     private CaduceusForm GetNextForm(Entity<CaduceusComponent> ent)
     {
-        var holder = ent.Comp.Holder;
-        IndexMemberComponent? member = null;
-        if (holder is { } h)
-            TryComp(h, out member);
+        return ent.Comp.NextForm ?? RollNextForm(ent);
+    }
 
-        if (member is { NextWeaponFpoon: true })
+    /// <summary>
+    ///     Rolls the queued next form: a random weapon form. The fpoon can never be rolled like the
+    ///     other weapons - it only slips in through KARMIC CONSEQUENCE (see <see cref="FpoonChance"/>).
+    /// </summary>
+    private CaduceusForm RollNextForm(Entity<CaduceusComponent> ent)
+    {
+        if (ent.Comp.Holder is { } holder
+            && TryComp<IndexMemberComponent>(holder, out var member)
+            && member.KarmicConsequence >= FpoonKarmaThreshold
+            && _random.Prob(FpoonChance))
+        {
             return CaduceusForm.Fpoon;
-
-        if (member is { KarmicConsequence: >= FpoonKarmaThreshold } && _random.Prob(FpoonChance))
-            return CaduceusForm.Fpoon;
+        }
 
         var choices = ent.Comp.Forms.Keys
             .Where(f => f != CaduceusForm.Inactive && f != CaduceusForm.Fpoon)
@@ -404,6 +418,35 @@ public sealed class CaduceusSystem : EntitySystem
             return ent.Comp.CurrentForm;
 
         return _random.Pick(choices);
+    }
+
+    /// <summary>
+    ///     Finds the Caduceus bound to an Index member (the first member to wield it keeps it).
+    ///     Used by the admin menu to address "the member's next weapon".
+    /// </summary>
+    public Entity<CaduceusComponent>? FindMemberWeapon(EntityUid memberUid)
+    {
+        var query = EntityQueryEnumerator<CaduceusComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.Member == memberUid)
+                return (uid, comp);
+        }
+
+        return null;
+    }
+
+    /// <summary>
+    ///     Writes the queued next form directly - admin picks go through the same queue the weapon
+    ///     always transforms through. Null clears the queue so the next transformation rolls random.
+    /// </summary>
+    public void SetQueuedNextForm(Entity<CaduceusComponent> ent, CaduceusForm? form)
+    {
+        if (ent.Comp.NextForm == form)
+            return;
+
+        ent.Comp.NextForm = form;
+        Dirty(ent);
     }
 
     /// <summary>
@@ -445,20 +488,10 @@ public sealed class CaduceusSystem : EntitySystem
                 ? formEntry.MaxHits
                 : 0;
 
-        // The fpoon is permanent: it can never be removed from the hand again, it loses all
-        // weapon actions, and it gains the Execution component so that clicking yourself
-        // performs a (self-only) execution.
         if (form == CaduceusForm.Fpoon)
         {
             if (ent.Comp.Holder is { } fpoonHolder)
             {
-                // The admin guarantee is consumed only now that the fpoon has actually materialized.
-                if (TryComp<IndexMemberComponent>(fpoonHolder, out var member) && member.NextWeaponFpoon)
-                {
-                    member.NextWeaponFpoon = false;
-                    Dirty(fpoonHolder, member);
-                }
-
                 _actions.RemoveProvidedActions(fpoonHolder, ent);
             }
 
@@ -498,6 +531,16 @@ public sealed class CaduceusSystem : EntitySystem
             if (form == CaduceusForm.Fpoon)
                 OnFpoon(holder);
         }
+
+        // "Change type, then generate the next": once this form is entered, queue the form after
+        // it. The fpoon is permanent so it never queues a follow-up.
+        ent.Comp.NextForm = form is CaduceusForm.Inactive or CaduceusForm.Fpoon
+            ? null
+            : RollNextForm(ent);
+
+        // Let any open pager / admin menu see the new form and the refreshed queue right away.
+        if (ent.Comp.Member is { } member)
+            EntityManager.System<IndexPagerSystem>().PushMemberUi(member);
     }
 
     private string GetFormName(CaduceusForm form)

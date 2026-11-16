@@ -2,9 +2,10 @@
 - type: weightedRandomEntity
   id: OracleRewardDisks
   weights:
-    ResearchDisk5000: 85
-    ResearchDisk10000: 13
-    ResearchDisk20000: 2
+    ResearchDisk5000: 50
+    ResearchDisk10000: 30
+    ResearchDisk20000: 16
+    ResearchDisk50000: 4
 
 - type: entity
   parent: BaseStructure

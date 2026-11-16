@@ -9,9 +9,10 @@
     speechVerbOverrides:
     - chat-speech-verb-marish
   obfuscation:
-    !type:SyllableObfuscation
-    minSyllables: 2
-    maxSyllables: 5
+    !type:PhraseObfuscation # Pirate changed obfuscation method
+    minPhrases: 1
+    maxPhrases: 9
+    capitalizeSentences: true
     replacement:
     - mar
     - mwrrr
@@ -32,7 +33,13 @@
     - wrlurll
     - wlarrul
     - wlAmur
-    - AlwuRm
+    - alwuRm
     - mrrrAw
     - wurlMur
     - uuRlmmr
+    - marmwar
+    - mwrrrmlar
+    - wrurrlmwar
+    - mlarwurrl
+    - marrma
+    - mwAlwarmar

@@ -54,6 +54,21 @@ public sealed partial class CaduceusComponent : Component
     public EntityUid? Holder;
 
     /// <summary>
+    ///     The queued next form: rolled when the current form is entered ("change type, then
+    ///     generate the next"). Admin picks from the Index admin menu are written directly
+    ///     into this queue - there are no separate overrides, every transformation always
+    ///     consumes the queued form. Transient server state - never networked.
+    /// </summary>
+    public CaduceusForm? NextForm;
+
+    /// <summary>
+    ///     The Index member this weapon is bound to (the first member to wield it). Used by the
+    ///     admin menu to address "the member's next weapon". Transient server state - never
+    ///     networked.
+    /// </summary>
+    public EntityUid? Member;
+
+    /// <summary>
     ///     Form change requested while the wielder was mid-attack. Applied (server-side) once the
     ///     current attack finishes. Transient server state - never networked.
     /// </summary>
@@ -74,7 +89,7 @@ public sealed partial class CaduceusComponent : Component
     [DataField]
     public EntityUid? ToggleActionEntity;
 
-    /// <summary>"Swap" action: instantly shifts into a random other form.</summary>
+    /// <summary>"Swap" action: instantly shifts into the queued next form.</summary>
     [DataField]
     public EntProtoId SwapAction = "ActionCaduceusSwap";
 

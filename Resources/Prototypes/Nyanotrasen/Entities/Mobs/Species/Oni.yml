@@ -6,6 +6,8 @@
   id: MobOniBase
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-oni
   - type: Speech
     speechSounds: Baritone
     speechVerb: Oni

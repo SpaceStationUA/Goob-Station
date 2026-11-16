@@ -50,7 +50,6 @@
   recipes:
   - MagazineVectorIncendiary
   - MagazineVectorUranium
-  - MagazineVectorCryptobiolin
   # 45. Mk 32
   - MagazineUniversalMagnumUranium
   - MagazineUniversalMagnumIncendiary

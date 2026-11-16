@@ -99265,13 +99265,6 @@ entities:
       linkedPorts: {}
       lastSignals: {}
       ports: []
-- proto: MagazinePistolCryptobiolin
-  entities:
-  - uid: 13745
-    components:
-    - type: Transform
-      pos: -36.60179,-18.410002
-      parent: 2
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 13747

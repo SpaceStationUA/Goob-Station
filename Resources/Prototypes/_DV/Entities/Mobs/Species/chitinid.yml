@@ -5,6 +5,8 @@
   id: BaseMobChitinid
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-chitinid
   - type: HumanoidAppearance
     species: Chitinid
     hideLayersOnEquip:

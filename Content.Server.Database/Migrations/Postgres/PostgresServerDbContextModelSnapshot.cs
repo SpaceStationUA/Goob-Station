@@ -1690,6 +1690,12 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("bark_voice");
 
+                    b.Property<string>("BloodTaste")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("blood_taste");
+
                     b.Property<string>("CharacterName")
                         .IsRequired()
                         .HasColumnType("text")

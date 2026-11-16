@@ -6,7 +6,7 @@ namespace Content.Shared._DV.Psionics.Components.PsionicPowers;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MetapsionicPulsePowerComponent : BasePsionicPowerComponent
 {
-    public override EntProtoId ActionProtoId { get; set; } = "ActionMetapsionicPulse";
+    public override EntProtoId? ActionProtoId { get; set; } = "ActionMetapsionicPulse";
 
     public override string PowerName { get; set; } = "psionic-power-name-metapsionic";
 

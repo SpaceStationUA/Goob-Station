@@ -5,6 +5,8 @@
   id: MobThavenBase
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-thaven
   - type: Sprite
   - type: ScaleData
   - type: HumanoidAppearance

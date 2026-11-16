@@ -23,5 +23,6 @@ index-admin-send-prescription-header = НАДІСЛАТИ НАСТАНОВУ
 index-admin-prescription-placeholder = Текст настанови...
 index-admin-send-button = Надіслати
 index-admin-karma-header = KARMIC CONSEQUENCE
-index-admin-fpoon-button = Гарантувати ложко-виделку наступного разу
+index-admin-next-weapon-header = НАСТУПНА ЗБРОЯ
+index-admin-next-weapon-random = Випадково
 index-admin-jumpscare-button = Показати KARMIC CONSEQUENCE

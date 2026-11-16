@@ -80,8 +80,9 @@ public sealed class MindSwappedReturnPowerSystem : BasePsionicPowerSystem<MindSw
 
     public void EnsureReturnAction(Entity<MindSwappedReturnPowerComponent> psionic)
     {
-        if (Action.GetAction(psionic.Comp.ActionEntity) is null)
-            Action.AddAction(psionic, ref psionic.Comp.ActionEntity, psionic.Comp.ActionProtoId);
+        if (Action.GetAction(psionic.Comp.ActionEntity) is null
+            && psionic.Comp.ActionProtoId is { } actionProtoId)
+            Action.AddAction(psionic, ref psionic.Comp.ActionEntity, actionProtoId);
 
         var psionicComp = EnsureComp<PsionicComponent>(psionic);
         psionicComp.PsionicPowersActionEntities.Add(psionic.Comp.ActionEntity);

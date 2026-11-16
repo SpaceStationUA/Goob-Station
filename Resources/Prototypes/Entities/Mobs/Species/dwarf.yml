@@ -7,6 +7,8 @@
   id: BaseMobDwarf
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-dwarf
   # Pirate: Trauma genetics species defaults.
   - type: Mutatable
     dormant:

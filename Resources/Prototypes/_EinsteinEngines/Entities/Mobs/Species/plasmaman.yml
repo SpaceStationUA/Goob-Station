@@ -4,6 +4,9 @@
   name: Urist McPlasma
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-plasmaman
+    givesBenefits: false
   - type: Barotrauma # Goob
     protectionSlots:
     - head

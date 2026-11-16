@@ -1021,7 +1021,8 @@ HandheldHealthAnalyzerEmpty: HandheldHealthAnalyzer
 BorgModuleAdvancedChemical: BorgModuleAdvancedTopical
 
 # PIRATE START
-MagazinePistolMindbreaker: MagazinePistolCryptobiolin
+MagazinePistolMindbreaker: null
+MagazinePistolCryptobiolin: null
 SpawnMobGoidaBot: SpawnMobPotyzhnobot
 PinkHandcuffs: null
 AsimovCircuitBoard: CrewsimovCircuitBoard

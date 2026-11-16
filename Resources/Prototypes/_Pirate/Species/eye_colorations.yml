@@ -1,0 +1,11 @@
+# Pirate: eye coloration strategies (see Content.Shared/_Pirate/Humanoid/EyeColorationPrototype.cs)
+
+- type: eyeColoration
+  id: NoBlack
+  # Blocks black (and near-black) eyes. Used by shadowkin - black eyes are the mindbroken look.
+  # The 0.25 floors keep clamped colors clearly visible (near-black gray would defeat the point),
+  # and pure black/gray picks snap to the fallback violet since they have no hue to preserve.
+  strategy: !type:ClampedHsvEyeColoration
+    saturation: [[0.25, 1.0]]
+    value: [[0.25, 1.0]]
+    achromaticFallback: "#9a6fd0"

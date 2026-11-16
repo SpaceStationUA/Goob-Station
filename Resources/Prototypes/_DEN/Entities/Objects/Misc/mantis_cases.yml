@@ -102,7 +102,7 @@
 # on request, and ClothingNeckMantisShackles / ClothingHeadCageMantis / LeashMantis aren't ported either.
 # GuideHelp (MantisGuide) commented out.
 - type: entity
-  parent: [MantisCaseLarge, BaseMantisContraband] # Contraband since its contents are
+  parent: [MantisCase, BaseMantisContraband] # Contraband since its contents are
   id: MantisCaseTools
   name: mantis tools case # In the mantis locker
   description: "An amaranth case to store your things. A Greek psi is carved into the top, marking it as yours."
@@ -115,6 +115,8 @@
       map: ["openLayer"]
       visible: false
   - type: Storage
+    grid:
+    - 0,0,2,1
     whitelist: # Exactly the same whitelist as the belt, so you can't cheat and store non-whitelisted things in it on the belt
       tags:
       - Folder
@@ -211,9 +213,8 @@
 - type: entity
   parent: [MantisCaseLarge, BaseMantisContraband] # Contraband since its contents are
   id: MantisCaseRestraints
-  suffix: DO NOT MAP # Kept as an empty shell - its contents and loadout were removed on request
   name: mantis restraints case
-  description: "An amaranth case with a carved restraint motif. The shackles that once filled it have been decommissioned, but it's still a handsome keepsake."
+  description: "An amaranth case with a carved restraint motif, lined with slots for keeping your detainees compliant."
   components:
   - type: Sprite
     layers:
@@ -228,8 +229,12 @@
     whitelist:
       tags:
       - MantisBoxRestraintsStorable # Only the items below should have this
-  # StorageFill removed: the restraints case's contents (WrenchMantis / HandcuffsMantis) were deleted on request.
-  # ClothingNeckMantisShackles / ClothingHeadCageMantis / LeashMantis aren't ported to this fork either.
+      components:
+      - Handcuff
+  - type: StorageFill
+    contents:
+    - id: Zipties
+      amount: 8
   - type: Tag
     tags:
     - MantisBeltStorable

@@ -8,6 +8,8 @@
   name: Urist McShadow
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-shadowkin
   - type: Inventory # TheDen - So they can have -shadowkin clothing sprites
     speciesId: shadowkin
   - type: LanguageKnowledge # Einstein Engines - Language

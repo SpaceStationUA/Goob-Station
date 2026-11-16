@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Pirate.Shared.Caduceus;
 using Content.Pirate.Shared.Index;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -24,7 +25,7 @@ public sealed class IndexAdminMenuBoundUserInterface : BoundUserInterface
         _window.OnSendPrescription += text => SendMessage(new IndexAdminSendPrescriptionMessage(text));
         _window.OnAddKarma += amount => SendMessage(new IndexAdminAddKarmaMessage(amount));
         _window.OnRemoveKarma += amount => SendMessage(new IndexAdminRemoveKarmaMessage(amount));
-        _window.OnGuaranteeFpoon += enabled => SendMessage(new IndexAdminGuaranteeFpoonMessage(enabled));
+        _window.OnNextWeaponSelected += weapon => SendMessage(new IndexAdminSetNextWeaponMessage(weapon));
         _window.OnJumpscare += () => SendMessage(new IndexAdminJumpscareMessage());
     }
 

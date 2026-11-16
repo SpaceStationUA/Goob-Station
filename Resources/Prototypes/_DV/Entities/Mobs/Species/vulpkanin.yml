@@ -7,6 +7,8 @@
   id: BaseMobVulpkanin
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-vulpkanin
   - type: HumanoidAppearance
     species: Vulpkanin
   - type: Hunger

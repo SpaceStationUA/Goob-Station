@@ -6,7 +6,7 @@ namespace Content.Shared._DV.Psionics.Components.PsionicPowers;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class MassSleepPowerComponent : BasePsionicPowerComponent
 {
-    public override EntProtoId ActionProtoId { get; set; } = "ActionMassSleep";
+    public override EntProtoId? ActionProtoId { get; set; } = "ActionMassSleep";
 
     public override string PowerName { get; set; } = "psionic-power-name-mass-sleep";
 

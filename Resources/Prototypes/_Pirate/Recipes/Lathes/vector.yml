@@ -37,12 +37,3 @@
     Steel: 25
     Plastic: 250
     Uranium: 250
-
-- type: latheRecipe
-  id: MagazineVectorCryptobiolin
-  parent: BaseAmmoRecipe
-  result: MagazineVectorCryptobiolin
-  completetime: 4
-  materials:
-    Steel: 1000
-    BSCrystal: 50

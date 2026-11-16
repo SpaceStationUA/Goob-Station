@@ -7,6 +7,8 @@
   id: BaseMobResomi
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-resomi
   - type: LanguageKnowledge # Einstein Engines - Language
     speaks:
     - TauCetiBasic

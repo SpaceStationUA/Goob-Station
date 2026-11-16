@@ -61,8 +61,12 @@
                 <Button Name="RemoveFiveButton" Text="-5" HorizontalExpand="True" />
             </BoxContainer>
 
-            <!-- Fpoon guarantee -->
-            <Button Name="FpoonButton" ToggleMode="True" Text="{Loc 'index-admin-fpoon-button'}" Margin="0 14 0 0" />
+            <!-- Next weapon override -->
+            <Label Text="{Loc 'index-admin-next-weapon-header'}"
+                   StyleClasses="LabelSubText"
+                   FontColorOverride="#C9A36A"
+                   Margin="0 14 0 4" />
+            <OptionButton Name="NextWeaponOptions" />
 
             <!-- Index jumpscare -->
             <Button Name="JumpscareButton" Text="{Loc 'index-admin-jumpscare-button'}" Margin="0 8 0 0" />

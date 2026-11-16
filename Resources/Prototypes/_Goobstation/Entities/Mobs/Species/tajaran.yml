@@ -6,6 +6,8 @@
   id: BaseMobTajaran
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-tajaran
   - type: Hunger
   - type: Thirst
   - type: Sprite # smaller size

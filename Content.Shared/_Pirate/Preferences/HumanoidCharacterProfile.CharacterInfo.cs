@@ -14,6 +14,7 @@ namespace Content.Shared.Preferences;
 public sealed partial class HumanoidCharacterProfile
 {
     public const int MaxCharacterInfoLength = 4096;
+    public const int MaxBloodTasteLength = 64;
 
     // Keep the legacy FlavorText backing for serialized profile compatibility.
     public string PhysicalDescription
@@ -24,6 +25,9 @@ public sealed partial class HumanoidCharacterProfile
 
     [DataField]
     public string PersonalityDescription { get; set; } = string.Empty;
+
+    [DataField]
+    public string BloodTaste { get; set; } = string.Empty;
 
     [DataField]
     public string PersonalNotes { get; set; } = string.Empty;
@@ -48,6 +52,11 @@ public sealed partial class HumanoidCharacterProfile
     public HumanoidCharacterProfile WithPersonalityDescription(string description)
     {
         return new(this) { PersonalityDescription = description };
+    }
+
+    public HumanoidCharacterProfile WithBloodTaste(string taste)
+    {
+        return new(this) { BloodTaste = taste };
     }
 
     public HumanoidCharacterProfile WithPersonalNotes(string notes)
@@ -95,6 +104,7 @@ public sealed partial class HumanoidCharacterProfile
     private void CopyPirateCharacterInfo(HumanoidCharacterProfile other)
     {
         PersonalityDescription = other.PersonalityDescription;
+        BloodTaste = other.BloodTaste;
         PersonalNotes = other.PersonalNotes;
         OOCNotes = other.OOCNotes;
         Secrets = other.Secrets;
@@ -105,6 +115,7 @@ public sealed partial class HumanoidCharacterProfile
     private bool PirateCharacterInfoEquals(HumanoidCharacterProfile other)
     {
         return PersonalityDescription == other.PersonalityDescription
+            && BloodTaste == other.BloodTaste
             && PersonalNotes == other.PersonalNotes
             && OOCNotes == other.OOCNotes
             && Secrets == other.Secrets
@@ -116,6 +127,7 @@ public sealed partial class HumanoidCharacterProfile
     {
         PhysicalDescription = NormalizeWhitespace(PhysicalDescription);
         PersonalityDescription = SanitizeCharacterInfo(PersonalityDescription);
+        BloodTaste = SanitizeCharacterInfo(BloodTaste, MaxBloodTasteLength);
         PersonalNotes = SanitizeCharacterInfo(PersonalNotes);
         OOCNotes = SanitizeCharacterInfo(OOCNotes);
         Secrets = SanitizeCharacterInfo(Secrets);
@@ -209,6 +221,7 @@ public sealed partial class HumanoidCharacterProfile
     private void AddPirateCharacterInfoHash(ref HashCode hashCode)
     {
         hashCode.Add(PersonalityDescription);
+        hashCode.Add(BloodTaste);
         hashCode.Add(PersonalNotes);
         hashCode.Add(OOCNotes);
         hashCode.Add(Secrets);

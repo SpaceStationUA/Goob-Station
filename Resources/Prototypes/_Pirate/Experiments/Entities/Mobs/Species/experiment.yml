@@ -5,6 +5,8 @@
   id: BaseMobExperiment
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-experiment
   - type: Absorbable
   - type: Speech
     speechVerb: Experiment

@@ -11,6 +11,9 @@ public partial class Profile
     [MaxLength(4096)]
     public string PersonalityDescription { get; set; } = string.Empty;
 
+    [MaxLength(64)]
+    public string BloodTaste { get; set; } = string.Empty;
+
     [MaxLength(4096)]
     public string PersonalNotes { get; set; } = string.Empty;
 

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Pirate.Server.Caduceus;
+using Content.Pirate.Shared.Caduceus;
 using Content.Pirate.Shared.Index;
 using Content.Shared.Audio;
 using Content.Shared.Ghost;
@@ -39,6 +41,7 @@ public sealed class IndexPagerSystem : EntitySystem
 
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
+    [Dependency] private readonly CaduceusSystem _caduceus = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -138,11 +141,17 @@ public sealed class IndexPagerSystem : EntitySystem
         var name = hasMember ? Identity.Name(owner!.Value, EntityManager) : string.Empty;
 
         var lastPrescription = pager.Comp.Prescriptions.Count > 0 ? pager.Comp.Prescriptions[^1] : string.Empty;
+
+        // Show the queued next form on the member's Caduceus - what will actually materialize next.
+        CaduceusForm? nextWeapon = null;
+        if (hasMember && _caduceus.FindMemberWeapon(owner!.Value) is { } weapon)
+            nextWeapon = weapon.Comp.NextForm;
+
         var state = new IndexAdminBoundUserInterfaceState(
             member?.KarmicConsequence ?? 0,
             name,
             hasMember,
-            member?.NextWeaponFpoon ?? false,
+            nextWeapon,
             lastPrescription);
 
         _ui.SetUiState(pager.Owner, IndexAdminUiKey.Key, state);
@@ -179,13 +188,30 @@ public sealed class IndexPagerSystem : EntitySystem
         PushMemberUi(memberUid, member);
     }
 
-    public void SetGuaranteeFpoon(EntityUid memberUid, bool enabled)
+    /// <summary>
+    ///     Admin control: writes the picked form straight into the member's Caduceus queue - the
+    ///     same queue every transformation goes through. Null clears the queue so the next
+    ///     transformation rolls randomly again.
+    /// </summary>
+    public void SetNextWeapon(EntityUid memberUid, CaduceusForm? weapon)
     {
         if (!TryComp<IndexMemberComponent>(memberUid, out var member))
             return;
 
-        member.NextWeaponFpoon = enabled;
-        Dirty(memberUid, member);
+        if (_caduceus.FindMemberWeapon(memberUid) is { } caduceus)
+            _caduceus.SetQueuedNextForm(caduceus, weapon);
+
+        PushMemberUi(memberUid, member);
+    }
+
+    /// <summary>
+    ///     Push fresh pager + admin-menu state for a member (e.g. after their Caduceus changed form).
+    /// </summary>
+    public void PushMemberUi(EntityUid memberUid)
+    {
+        if (!TryComp<IndexMemberComponent>(memberUid, out var member))
+            return;
+
         PushMemberUi(memberUid, member);
     }
 
@@ -225,6 +251,9 @@ public sealed class IndexPagerSystem : EntitySystem
         });
 
         UpdatePagerUi((pagerUid, pager));
+
+        // Keep any open admin menu in sync with the new prescription.
+        UpdateAdminUi((pagerUid, pager));
     }
 
     #endregion

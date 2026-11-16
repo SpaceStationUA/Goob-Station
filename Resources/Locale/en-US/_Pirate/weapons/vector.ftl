@@ -16,5 +16,3 @@ ent-MagazineVectorIncendiary = extended pistol magazine (.35 auto incendiary)
     .desc = An extended pistol magazine loaded with 30 rounds of incendiary ammunition.
 ent-MagazineVectorUranium = extended pistol magazine (.35 auto uranium)
     .desc = An extended pistol magazine loaded with 30 rounds of uranium-core ammunition.
-ent-MagazineVectorCryptobiolin = extended pistol magazine (.35 auto Cryptobiolin)
-    .desc = An extended pistol magazine loaded with 30 rounds of Cryptobiolin ammunition.

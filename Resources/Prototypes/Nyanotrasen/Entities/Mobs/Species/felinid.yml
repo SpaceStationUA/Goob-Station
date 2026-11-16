@@ -7,6 +7,8 @@
   id: MobFelinidBase
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-felinid
   - type: Sprite
     # scale: 0.8, 0.8 # Goobstation: port EE height/width sliders
   - type: ScaleData # Goobstation

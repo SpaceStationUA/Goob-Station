@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Pirate.Shared.Caduceus;
 using Robust.Shared.Serialization;
 
 namespace Content.Pirate.Shared.Index;
@@ -56,18 +57,18 @@ public sealed class IndexAdminBoundUserInterfaceState : BoundUserInterfaceState
     /// <summary>Whether the member exists (pager might not be claimed yet).</summary>
     public bool HasMember;
 
-    /// <summary>Whether the next Caduceus transformation is guaranteed to be a fpoon.</summary>
-    public bool NextWeaponFpoon;
+    /// <summary>The queued next form on the member's Caduceus (null = the queue will roll randomly).</summary>
+    public CaduceusForm? NextWeapon;
 
     /// <summary>The latest prescription sent to the member (empty when none).</summary>
     public string LastPrescription;
 
-    public IndexAdminBoundUserInterfaceState(int karmicConsequence, string memberName, bool hasMember, bool nextWeaponFpoon, string lastPrescription)
+    public IndexAdminBoundUserInterfaceState(int karmicConsequence, string memberName, bool hasMember, CaduceusForm? nextWeapon, string lastPrescription)
     {
         KarmicConsequence = karmicConsequence;
         MemberName = memberName;
         HasMember = hasMember;
-        NextWeaponFpoon = nextWeaponFpoon;
+        NextWeapon = nextWeapon;
         LastPrescription = lastPrescription;
     }
 }
@@ -108,15 +109,15 @@ public sealed class IndexAdminSendPrescriptionMessage : BoundUserInterfaceMessag
     }
 }
 
-/// <summary>Admin: toggle the guarantee that the member's next Caduceus form is a fpoon.</summary>
+/// <summary>Admin: set the member's queued next Caduceus weapon (null = back to random rolls).</summary>
 [Serializable, NetSerializable]
-public sealed class IndexAdminGuaranteeFpoonMessage : BoundUserInterfaceMessage
+public sealed class IndexAdminSetNextWeaponMessage : BoundUserInterfaceMessage
 {
-    public bool Enabled;
+    public CaduceusForm? Weapon;
 
-    public IndexAdminGuaranteeFpoonMessage(bool enabled)
+    public IndexAdminSetNextWeaponMessage(CaduceusForm? weapon)
     {
-        Enabled = enabled;
+        Weapon = weapon;
     }
 }
 

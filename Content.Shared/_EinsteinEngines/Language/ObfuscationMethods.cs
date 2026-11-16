@@ -165,6 +165,12 @@ public sealed partial class PhraseObfuscation : ReplacementObfuscation
     [DataField]
     public float Proportion = 1f / 3;
 
+    /// <summary>
+    ///     Pirate: Whether the first phrase of each sentence should start with a capital letter.
+    /// </summary>
+    [DataField]
+    public bool CapitalizeSentences = false;
+
     internal override void Obfuscate(StringBuilder builder, string message, SharedLanguageSystem context)
     {
         var sentenceBeginIndex = 0;
@@ -188,6 +194,14 @@ public sealed partial class PhraseObfuscation : ReplacementObfuscation
                 {
                     var phraseIdx = context.PseudoRandomNumber(hashCode + j, 0, Replacement.Count - 1);
                     var phrase = Replacement[phraseIdx];
+                    if (CapitalizeSentences && j == 0 && phrase.Length > 0)
+                    {
+                        // Pirate: avoid char + string / range lowering, it emits a ReadOnlySpan ctor
+                        // that the content sandbox typechecker rejects.
+                        var chars = phrase.ToCharArray();
+                        chars[0] = char.ToUpperInvariant(chars[0]);
+                        phrase = new string(chars);
+                    }
                     builder.Append(phrase);
                     builder.Append(Separator);
                 }

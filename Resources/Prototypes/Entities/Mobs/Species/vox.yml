@@ -5,6 +5,8 @@
   id: BaseMobVox
   abstract: true
   components:
+  - type: TastyBlood # Pirate: race blood taste
+    raceTaste: bloodsucker-taste-race-vox
   - type: Disgust # Vox are better at handling disgust
     accumulationMultiplier: 0.75
     reductionRate: 3

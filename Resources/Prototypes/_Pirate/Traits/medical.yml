@@ -47,6 +47,7 @@
       invert: true
       species:
         - IPC
+        - Synth
         - Plasmaman
   components:
   - type: Vampirism

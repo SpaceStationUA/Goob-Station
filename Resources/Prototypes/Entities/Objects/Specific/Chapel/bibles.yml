@@ -193,8 +193,8 @@
   #  bibleUserOnly: true
   - type: AlternatePrayable # Goobstation
     requireBibleUser: false
-  - type: Summonable
-    specialItem: SpawnPointGhostRemilia
+  #- type: Summonable # Pirate - Remilia now is psionic power
+  #  specialItem: SpawnPointGhostRemilia
   - type: ReactionMixer
     mixMessage: "bible-mixing-success"
     reactionTypes:

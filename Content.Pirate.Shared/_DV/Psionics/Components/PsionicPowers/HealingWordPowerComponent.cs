@@ -7,7 +7,7 @@ namespace Content.Shared._DV.Psionics.Components.PsionicPowers;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class HealingWordComponent : BasePsionicPowerComponent
 {
-    public override EntProtoId ActionProtoId { get; set; } = "ActionHealingWord";
+    public override EntProtoId? ActionProtoId { get; set; } = "ActionHealingWord";
 
     public override string PowerName { get; set; } = "psionic-power-name-healing-word";
 

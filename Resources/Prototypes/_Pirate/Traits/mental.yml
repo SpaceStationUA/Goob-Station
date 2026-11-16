@@ -47,6 +47,7 @@
       invert: true
       species:
         - IPC
+        - Synth
         - Shadowkin
     - !type:HasCompCondition
       invert: true

@@ -56687,13 +56687,6 @@ entities:
     - type: Transform
       pos: -15.34892,18.407017
       parent: 2
-- proto: MagazinePistolCryptobiolin
-  entities:
-  - uid: 10023
-    components:
-    - type: Transform
-      pos: -22.704153,-37.573338
-      parent: 2
 - proto: MaintenanceFluffSpawner
   entities:
   - uid: 8082

@@ -206,6 +206,13 @@ public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance, 
             var strategy = proto.Index(speciesProto.SkinColoration).Strategy;
             skinColor = strategy.EnsureVerified(skinColor);
 
+            // Pirate: clamp eye color to the species' eye coloration (e.g. shadowkin can't have black eyes).
+            if (speciesProto.EyeColoration is { } eyeColorationId
+                && proto.TryIndex(eyeColorationId, out var eyeColoration))
+            {
+                eyeColor = eyeColoration.Strategy.EnsureVerified(eyeColor);
+            }
+
             markingSet.EnsureSpecies(species, skinColor, markingManager);
             markingSet.EnsureSexes(sex, markingManager);
         }
