@@ -28,8 +28,6 @@
   id: VampireFed
   icons:
   - sprite: _Pirate/Vampire/vampire_fed.rsi
-    state: vampire_fat
-  - sprite: _Pirate/Vampire/vampire_fed.rsi
     state: vampire_starving
   - sprite: _Pirate/Vampire/vampire_fed.rsi
     state: vampire_hungry
@@ -37,6 +35,8 @@
     state: vampire_fed
   - sprite: _Pirate/Vampire/vampire_fed.rsi
     state: vampire_well_fed
+  - sprite: _Pirate/Vampire/vampire_fed.rsi
+    state: vampire_fat
   maxSeverity: 5
   name: alerts-vampire-fed-name
   description: alerts-vampire-fed-desc

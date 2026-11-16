@@ -357,8 +357,19 @@ public sealed partial class VampireSystem : EntitySystem
         if (!Resolve(uid, ref comp, false))
             return;
 
-        var frac = comp.MaxBloodFullness <= 0f ? 0f : comp.BloodFullness / comp.MaxBloodFullness;
-        var sev = (short)Math.Clamp((int)MathF.Ceiling(frac * 4f) + 1, 1, 5);
+        var fullness = comp.BloodFullness;
+        short sev;
+        if (fullness <= comp.StarvingFullness)
+            sev = 1;
+        else if (fullness <= comp.PeckishFullness)
+            sev = 2;
+        else if (fullness <= comp.OverfedFullness)
+            sev = 3;
+        else if (fullness < comp.FatFullness)
+            sev = 4;
+        else
+            sev = 5;
+
         _alerts.ShowAlert(uid, "VampireFed", sev);
     }
 
