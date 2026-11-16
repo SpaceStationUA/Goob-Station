@@ -258,6 +258,7 @@
       tags:
         - Grenade # China lake ammo
         - MagazinePistol
+        - MagazineVector # Pirate: Vector magazine compatibility
         - MagazinePistolHighCapacity
         - MagazineMagnum
         - SpeedLoaderMagnum

@@ -9,6 +9,7 @@
   components:
   - type: TranslatorImplant
     spoken:
+      - Qiilour # Pirate: Xelthia.
       - TauCetiBasic # Common Languages -
       - SolCommon
       - Elyran
@@ -46,6 +47,7 @@
       - Kobold
 
     understood:
+      - Qiilour # Pirate: Xelthia.
       - TauCetiBasic # Common Languages -
       - SolCommon
       - Elyran

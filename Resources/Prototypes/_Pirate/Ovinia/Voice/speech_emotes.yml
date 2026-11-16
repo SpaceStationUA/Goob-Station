@@ -1,0 +1,34 @@
+# Pirate: Ovinia from ProjectOmu/OmuStation@2034ff02e121ae8dd42b3dd70c62d11b3a4ebba1.
+
+# Ovinia
+- type: emote
+  id: Baa
+  name: chat-emote-name-baa
+  category: Vocal
+  available: false
+  icon: _Goobstation/Interface/Emotes/caw.png
+  whitelist:
+    tags:
+    - OviniaEmotes
+  blacklist:
+    components:
+    - BorgChassis
+  chatMessages: [ chat-emote-msg-baa ] # Pirate: localizable emote text.
+  chatTriggers:
+    - baas
+    - baa
+    - baahs
+    - baah
+    - baahed
+    - baah'd
+    - baahing
+    - bah
+    - bahs
+    - bahed
+    - bah'd
+    - бекає
+    - бекати
+    - мекає
+    - мекати
+    - бе
+    - бее

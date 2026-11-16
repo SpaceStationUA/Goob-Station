@@ -308,8 +308,9 @@ public sealed class KnowledgeLifecycleIntegrationTest
         await pair.CleanReturnAsync();
     }
 
-    [Test]
-    public async Task PlayerSpawnAppliesSpeciesAndSavedKnowledgeToTheFinalMob()
+    [TestCase("Human")]
+    [TestCase("Ovinia")]
+    public async Task PlayerSpawnAppliesSpeciesAndSavedKnowledgeToTheFinalMob(string species)
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         var server = pair.Server;
@@ -319,13 +320,13 @@ public sealed class KnowledgeLifecycleIntegrationTest
 
         await server.WaitAssertion(() =>
         {
-            var holder = entMan.SpawnEntity("MobHuman", MapCoordinates.Nullspace);
+            var holder = entMan.SpawnEntity($"Mob{species}", MapCoordinates.Nullspace);
             var oldStore = knowledge.EnsureKnowledgeContainer(holder);
             Assert.That(knowledge.EnsureKnowledge(oldStore, "KnowledgeWeaponsEnergy", 100, popup: false), Is.Not.Null);
 
             var profile = new HumanoidCharacterProfile
             {
-                Species = "Human",
+                Species = species,
                 Knowledge = new KnowledgeProfile(new Dictionary<EntProtoId, int>
                 {
                     ["FirstAidKnowledge"] = 3,

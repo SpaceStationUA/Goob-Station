@@ -1,0 +1,7 @@
+# Pirate: direct Xelthia dependencies from Omu.
+- type: damageModifierSet
+  id: Xelthia
+  coefficients:
+    Cold: 1.5
+    Heat: 0.7 # Omu
+    Caustic: 0

@@ -16,7 +16,7 @@
   id: Boop
   name: chat-emote-name-boop
   category: Vocal
-  chatMessages: [ boops. ]
+  chatMessages: [chat-emote-msg-boop] # Pirate
   chatTriggers:
   - boops
   whitelist:
@@ -28,7 +28,7 @@
   id: Whirr
   name: chat-emote-name-whirr
   category: Vocal
-  chatMessages: [ whirrs. ]
+  chatMessages: [chat-emote-msg-whirr] # Pirate
   chatTriggers:
   - whirrs
   whitelist:

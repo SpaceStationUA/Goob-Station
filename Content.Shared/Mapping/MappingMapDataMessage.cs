@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.IO;
+using Content.Shared._Pirate.Network; // Pirate
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
@@ -21,7 +22,10 @@ public sealed class MappingMapDataMessage : NetMessage
         MsgSize = buffer.LengthBytes;
 
         var uncompressedLength = buffer.ReadVariableInt32();
+
         var compressedLength = buffer.ReadVariableInt32();
+        buffer.AssertAtLeastSize(compressedLength); // Pirate: Omu #2166
+
         var stream = new MemoryStream(compressedLength);
         buffer.ReadAlignedMemory(stream, compressedLength);
         using var decompress = new ZStdDecompressStream(stream);

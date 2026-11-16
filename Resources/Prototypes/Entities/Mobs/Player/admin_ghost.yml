@@ -130,6 +130,23 @@
     allowedVerbs: []
   - type: ExplosionResistance
     damageCoefficient: 0
+  # Pirate: Omu #2147 - additional admin ghost HUDs.
+  - type: ShowCriminalRecordIcons
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
+  - type: ShowSyndicateIcons
+  - type: ShowHealthBars
+    damageContainers:
+    - Biological
+    - Inorganic
+    - Silicon
+    - SiliconRadiation
+    - InorganicMetaphysical
+  - type: ShowHealthIcons
+  - type: ShowDiseaseIcons
+    lowThreshold: 1
+    mediumThreshold: 20
+    highThreshold: 40
 
 - type: entity
   abstract: true

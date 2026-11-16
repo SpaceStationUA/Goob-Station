@@ -21,7 +21,7 @@
   - type: UserInterface
     interfaces:
       enum.PaintUiKey.Key:
-        type: PaintBoundUserInterface
+        type: Content.Goobstation.Client.Paint.PaintBoundUserInterface # Pirate: avoid matching LightPaintBoundUserInterface.
   - type: FaxableObject
   - type: StaticPrice
     price: 20

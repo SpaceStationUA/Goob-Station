@@ -38,6 +38,8 @@
       prob: 0.2
     - id: ClothingHandsGlovesColorYellow
       prob: 0.05
+    - id: ClothingOuterJacketInsulated # Pirate
+      prob: 0.05
     - !type:GroupSelector
       prob: 0.4
       children:
@@ -206,6 +208,7 @@
   id: FillLockerEngineer
   table: !type:AllSelector
     children:
+    - id: ClothingOuterJacketInsulated # Pirate
     - id: ClothingHandsGlovesColorYellow
     - id: ClothingMaskGas
     - id: trayScanner

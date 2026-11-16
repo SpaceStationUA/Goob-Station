@@ -1,0 +1,131 @@
+# Pirate: Xelthia from ProjectOmu/OmuStation@94c6cb84bac71924f9e114c811a8d1a0ac859a3f.
+# Tails
+- type: marking
+  id: XelthiaTailNormal
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Xelthia]
+  sprites:
+  - sprite: _Pirate/Xelthia/Mobs/Customization/xelthia_parts.rsi
+    state: tail_normal
+
+# Ears
+- type: marking
+  id: XelthiaEarsNormal
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [Xelthia]
+  sprites:
+  - sprite: _Pirate/Xelthia/Mobs/Customization/xelthia_parts.rsi
+    state: ears_normal
+
+- type: marking
+  id: XelthiaEarsSmall
+  bodyPart: Snout
+  markingCategory: Snout
+  speciesRestriction: [Xelthia]
+  sprites:
+  - sprite: _Pirate/Xelthia/Mobs/Customization/xelthia_parts.rsi
+    state: ears_small
+
+
+# Tendril Hair
+- type: marking
+  id: XelthiaHairStandard
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Xelthia]
+  sprites:
+  - sprite: _Pirate/Xelthia/Mobs/Customization/xelthia_parts.rsi
+    state: hair_standard
+
+- type: marking
+  id: XelthiaHairShort
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Xelthia]
+  sprites:
+  - sprite: _Pirate/Xelthia/Mobs/Customization/xelthia_parts.rsi
+    state: hair_short
+
+- type: marking
+  id: XelthiaHairLongish
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Xelthia]
+  sprites:
+  - sprite: _Pirate/Xelthia/Mobs/Customization/xelthia_parts.rsi
+    state: hair_longish
+
+- type: marking
+  id: XelthiaHairOvereye
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Xelthia]
+  sprites:
+  - sprite: _Pirate/Xelthia/Mobs/Customization/xelthia_parts.rsi
+    state: hair_overeye
+
+- type: marking
+  id: XelthiaHairFancy
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Xelthia]
+  sprites:
+  - sprite: _Pirate/Xelthia/Mobs/Customization/xelthia_parts.rsi
+    state: hair_fancy
+
+- type: marking
+  id: XelthiaHairTripoint
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Xelthia]
+  sprites:
+  - sprite: _Pirate/Xelthia/Mobs/Customization/xelthia_parts.rsi
+    state: hair_tripoint
+
+- type: marking
+  id: XelthiaHairDownNBack
+  bodyPart: Hair
+  markingCategory: Hair
+  speciesRestriction: [Xelthia]
+  sprites:
+  - sprite: _Pirate/Xelthia/Mobs/Customization/xelthia_parts.rsi
+    state: hair_downandback
+
+# Chest Patterns
+
+- type: marking
+  id: XelthiaStripeyChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Xelthia]
+  sprites:
+  - sprite: _Pirate/Xelthia/Mobs/Customization/xelthia_parts.rsi
+    state: stripey
+
+- type: marking
+  id: XelthiaUnderbelly
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Xelthia]
+  sprites:
+  - sprite: _Pirate/Xelthia/Mobs/Customization/xelthia_parts.rsi
+    state: underbelly
+
+# Spikes
+
+- type: marking
+  id: XelthiaBackspikes
+  bodyPart: Chest # Omu
+  markingCategory: Overlay
+  speciesRestriction: [Xelthia]
+  coloring:
+    default:
+      type:
+        !type:SkinColoring # Omu
+       # !type:SimpleColoring # Omu
+         # color: "#FFFFFF" # Omu
+  sprites:
+  - sprite: _Pirate/Xelthia/Mobs/Customization/xelthia_parts.rsi
+    state: backspikes

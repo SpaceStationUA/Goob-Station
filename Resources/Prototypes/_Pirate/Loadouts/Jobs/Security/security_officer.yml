@@ -18,6 +18,14 @@
   equipment:
     head: ClothingHeadHatBeretSecurityOfficer
 
+- type: loadout
+  id: SecurityOfficerEnsemble
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: VeteranOfficer
+  equipment:
+    neck: ClothingNeckEnsembleSecurityOfficer
+
 # Mask - Маски
 - type: loadout
   id: BlackBalaclava

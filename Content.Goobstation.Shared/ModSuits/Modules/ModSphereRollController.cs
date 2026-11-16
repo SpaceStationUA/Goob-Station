@@ -147,6 +147,16 @@ public sealed partial class ModSphereRollController : VirtualController
                 _modSuit.TryUseCharge(suit, drillComp.PowerCost);
 
             _damageable.TryChangeDamage(rock, drillComp.Damage, origin: user);
+
+            #region Pirate: sphere drill deleted rock
+            // Destruction queues the rock's deletion before this tick's state send; PruneHits only runs next tick.
+            if ((TerminatingOrDeleted(rock) || EntityManager.IsQueuedForDeletion(rock))
+                && TryComp(user, out ModSphereFormComponent? form)
+                && form.Hits.Remove(rock))
+            {
+                Dirty(user, form);
+            }
+            #endregion
         }
 
         _pendingDrills.Clear();

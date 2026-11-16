@@ -2,6 +2,7 @@
 
 using System.Linq;
 using System.Numerics;
+using Content.Goobstation.Client.Paint;
 using Content.Goobstation.Shared.Paint;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server._Pirate.Crayon;
@@ -138,6 +139,11 @@ public sealed class NoviceBuildingAndDrawingTest : InteractionTest
         var canvas = await SpawnTarget("PaintCanvas");
         await Interact();
         Assert.That(IsUiOpen(PaintUiKey.Key), Is.True);
+        await Client.WaitAssertion(() =>
+        {
+            Assert.That(TryGetBui(PaintUiKey.Key, out var bui, canvas), Is.True);
+            Assert.That(bui, Is.TypeOf<PaintBoundUserInterface>());
+        });
         byte[] before = null!;
         await Server.WaitPost(() => before = (byte[]) SEntMan.GetComponent<PaintSurfaceComponent>(ToServer(canvas)).Image!.Pixels.Clone());
         await SendBui(PaintUiKey.Key, new PaintStrokeMessage(1, Color.Red, 1, PaintBrushStyle.Round,

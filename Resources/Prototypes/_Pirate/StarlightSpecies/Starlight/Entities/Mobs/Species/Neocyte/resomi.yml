@@ -241,29 +241,7 @@
     - Scratch
   - type: StarlightJump
     action: JumpResomi
-  - type: DamageVisuals
-    thresholds:
-    - 10
-    - 30
-    - 50
-    - 70
-    targetLayers:
-    - enum.HumanoidVisualLayers.Chest
-    - enum.HumanoidVisualLayers.Head
-    - enum.HumanoidVisualLayers.LArm
-    - enum.HumanoidVisualLayers.LLeg
-    - enum.HumanoidVisualLayers.RArm
-    - enum.HumanoidVisualLayers.RLeg
-    - enum.HumanoidVisualLayers.RHand
-    - enum.HumanoidVisualLayers.LHand
-    - enum.HumanoidVisualLayers.RFoot
-    - enum.HumanoidVisualLayers.LFoot
-    damageOverlayGroups:
-      Brute:
-        sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Effects/Resomi/brute_damage.rsi
-        color: '#C048C2'
-      Burn:
-        sprite: _Pirate/StarlightSpecies/Starlight/Mobs/Effects/Resomi/burn_damage.rsi
+  # Pirate: native Resomi limbs own wound overlays; legacy DamageVisuals uses incompatible thresholds.
   - type: Bloodstream
     bloodReferenceSolution:
       reagents:

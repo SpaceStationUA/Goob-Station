@@ -1,0 +1,32 @@
+# Pirate: Ovinia from ProjectOmu/OmuStation@2034ff02e121ae8dd42b3dd70c62d11b3a4ebba1.
+- type: entity
+  parent: OrganAnimalStomach
+  id: OrganOviniaStomach
+  name: Ovinian stomach
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - Vegetable
+      - Fruit
+      - Ruminant
+      - Pill
+      - Crayon
+      - Paper
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 80 #50 -> 75, big stomach, digest slower. Probably need to play with values more.
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 5
+  - type: Metabolizer
+    metabolizerTypes: [ Ovinia ]
+    groups:
+      - id: Food
+        rateModifier: 0.75
+      - id: Drink
+        rateModifier: 0.75

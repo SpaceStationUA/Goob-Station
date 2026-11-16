@@ -36,6 +36,8 @@
         acts: [ "Destruction" ]
   - type: CollideOnAnchor
   - type: SubFloorHide
+  - type: SubFloorCategory
+    category: Wires
   - type: Appearance
   - type: Electrified
     onHandInteract: true

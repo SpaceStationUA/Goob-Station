@@ -41,7 +41,8 @@ namespace Content.Shared.Humanoid.Markings
         FaceCover,
         FaceCoverCover,
         BodyCover,
-        BodyCoverCover
+        BodyCoverCover,
+        NeckFluff, // Pirate: Ovinia wool, appended to preserve network values.
     }
 
     public static class MarkingCategoriesConversion
@@ -77,6 +78,7 @@ namespace Content.Shared.Humanoid.Markings
                 HumanoidVisualLayers.FaceCoverCover => MarkingCategories.FaceCoverCover,
                 HumanoidVisualLayers.BodyCover => MarkingCategories.BodyCover,
                 HumanoidVisualLayers.BodyCoverCover => MarkingCategories.BodyCoverCover,
+                HumanoidVisualLayers.NeckFluff => MarkingCategories.NeckFluff, // Pirate: Ovinia.
                 _ => MarkingCategories.Overlay
             };
         }

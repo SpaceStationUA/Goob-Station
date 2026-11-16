@@ -1,0 +1,4 @@
+# Pirate: direct Xelthia dependencies from Omu.
+- type: font
+  id: NovaFlat
+  path: /Fonts/_Pirate/Xelthia/NovaFlat/NovaFlat-Regular.ttf

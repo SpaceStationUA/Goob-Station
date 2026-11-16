@@ -45,6 +45,7 @@
           tags:
           - FoodSnack
           - BreadEmergency
+          - Wheat # Pirate: Ovinia survival ration.
           - FoodTinMRE
       flare:
         ejectOnInteract: false
@@ -103,6 +104,7 @@
           tags:
           - FoodSnack
           - BreadEmergency
+          - Wheat # Pirate: Ovinia survival ration.
           - FoodTinMRE
       flare:
         whitelist:

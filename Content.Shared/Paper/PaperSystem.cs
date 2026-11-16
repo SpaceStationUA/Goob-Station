@@ -309,7 +309,8 @@ public sealed partial class PaperSystem : EntitySystem // Goob
         {
             StampedName = stamp.StampedName,
             StampedColor = stamp.StampedColor, // Goob stamp
-            StampLargeIcon = stamp.StampLargeIcon // goob Stamp
+            StampLargeIcon = stamp.StampLargeIcon, // goob Stamp
+            StampLargePath = stamp.StampLargePath // Pirate: Omu #2180
         };
     }
 

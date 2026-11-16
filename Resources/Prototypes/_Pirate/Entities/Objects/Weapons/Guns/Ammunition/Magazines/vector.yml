@@ -9,7 +9,6 @@
   components:
   - type: Tag
     tags:
-    - MagazinePistol
     - MagazineVector
   - type: Sprite
     sprite: _Pirate/Objects/Weapons/Guns/Ammunition/Magazines/vector.rsi

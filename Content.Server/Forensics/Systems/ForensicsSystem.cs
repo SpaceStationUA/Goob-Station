@@ -30,7 +30,7 @@ using Robust.Shared.Timing; // Goobstation
 
 namespace Content.Server.Forensics
 {
-    public sealed class ForensicsSystem : SharedForensicsSystem
+    public sealed partial class ForensicsSystem : SharedForensicsSystem // Pirate: Xelthia evidence.
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
@@ -359,6 +359,9 @@ namespace Content.Server.Forensics
                 return;
 
             var component = EnsureComp<ForensicsComponent>(target);
+            if (TryApplyXelthiaEvidence(user, target, component)) // Pirate
+                return;
+
             if (_inventory.TryGetSlotEntity(user, "gloves", out var gloves))
             {
                 if (TryComp<FiberComponent>(gloves, out var fiber) && !string.IsNullOrEmpty(fiber.FiberMaterial))

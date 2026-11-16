@@ -1,0 +1,13 @@
+# Pirate: direct Xelthia dependencies from Omu.
+- type: damageContainer
+  id: Xelthia #same as Biological except it can't store caustic
+  supportedGroups:
+  - Brute
+  - Toxin
+  - Airloss
+  - Genetic
+  supportedTypes:
+  - Holy
+  - Heat
+  - Shock
+  - Cold

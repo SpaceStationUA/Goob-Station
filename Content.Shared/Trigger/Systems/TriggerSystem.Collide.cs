@@ -42,6 +42,10 @@ public sealed partial class TriggerSystem
 
     private void OnTimedCollide(Entity<TriggerOnTimedCollideComponent> ent, ref StartCollideEvent args)
     {
+        // Pirate: the other collision handler may already have deleted this contact (Omu #2181).
+        if (!args.OurFixture.Contacts.ContainsKey(args.OtherFixture))
+            return;
+
         //Ensures the trigger entity will have an active component
         EnsureComp<ActiveTriggerOnTimedCollideComponent>(ent);
         var otherUID = args.OtherEntity;

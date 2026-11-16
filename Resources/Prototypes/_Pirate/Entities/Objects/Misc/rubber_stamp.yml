@@ -8,6 +8,7 @@
     stampedName: stamp-component-stamped-name-admin-assistant
     stampedColor: "#4191f2"
     stampState: "paper_stamp-admin-assistant"
+    stampLargePath: /Textures/_Pirate/Interface/Paper/Stamps/Omu/large_stamp-adminassistant.png # Pirate: Omu #2180
   - type: Sprite
     sprite: _Pirate/Objects/Misc/stamps.rsi
     state: stamp-admin-assistant

@@ -14,6 +14,7 @@
       whitelist:
         components:
         - ModPart
+        - ModularSuitPart # Pirate: allow our modular boots as well as upstream MOD boots.
     - name: jumpsuit
       slotTexture: uniform
       slotFlags: INNERCLOTHING

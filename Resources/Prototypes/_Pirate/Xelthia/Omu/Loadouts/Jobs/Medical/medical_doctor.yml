@@ -1,0 +1,8 @@
+# Pirate: direct Xelthia dependencies from Omu.
+- type: loadout
+  id: SeniorPhysicianXelthiaJacket
+  effects:
+  - !type:GroupLoadoutEffect
+    proto: SeniorPhysician
+  equipment:
+    outerClothing: ClothingOuterJacketSeniorPhys

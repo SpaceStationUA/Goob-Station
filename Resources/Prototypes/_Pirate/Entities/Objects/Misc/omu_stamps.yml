@@ -1,0 +1,45 @@
+# Ported from ProjectOmu/OmuStation #2180 and its stamp dependencies.
+
+- type: entity
+  name: IA rubber stamp
+  parent: [RubberStampBase, BaseCentcommContraband] # Pirate: source contraband classification.
+  id: RubberStampNTAgent
+  suffix: DO NOT MAP
+  description: A rubber stamp for stamping important documents. For internal related affairs.
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-NTAgent
+    stampedColor: "#000080"
+    stampState: "paper_stamp-cap"
+    stampLargePath: "/Textures/_Pirate/Interface/Paper/Stamps/Omu/large_stamp-internalaffairs.png" # Pirate
+  - type: Sprite
+    state: stamp-cap
+
+- type: entity
+  name: CentComm intern rubber stamp
+  parent: RubberStampBase
+  id: RubberStampCentcomIntern
+  categories: [ DoNotMap ]
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-centcom-intern
+    stampedColor: "#008800"
+    stampState: "paper_stamp-centcom-intern"
+    stampLargePath: "/Textures/_Pirate/Interface/Paper/Stamps/Omu/large_stamp-centcomintern.png"
+  - type: Sprite
+    sprite: _Pirate/Objects/Misc/centcom_intern_stamp.rsi
+    state: stamp-centcom-intern
+
+
+- type: entity
+  name: Blueshield officer rubber stamp
+  parent: [RubberStampBase, BaseCentcommContraband]
+  id: RubberStampBlueshieldOfficer
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-blueshield-officer
+    stampedColor: "#000080"
+    stampState: "paper_stamp-cap"
+    stampLargePath: "/Textures/_Pirate/Interface/Paper/Stamps/Omu/large_stamp-blueshield.png"
+  - type: Sprite
+    state: stamp-cap

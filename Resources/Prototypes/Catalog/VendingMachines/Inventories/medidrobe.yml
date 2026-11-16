@@ -3,6 +3,7 @@
 - type: vendingMachineInventory
   id: MediDrobeInventory
   startingInventory:
+    ClothingOuterJacketSurgical: 2 # Pirate: Xelthia protective equipment.
     ClothingBackpackDuffelMedical: 4
     ClothingBackpackMedical: 4
     ClothingBackpackSatchelMedical: 4

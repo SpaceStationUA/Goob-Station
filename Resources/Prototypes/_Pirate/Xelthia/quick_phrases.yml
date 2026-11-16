@@ -1,0 +1,5 @@
+# Pirate: use the local AAC species category for Omu's Xelthia phrase.
+- type: quickPhrase
+  id: XelthiaPhraseOmu
+  parent: BaseSpeciesPhrase
+  text: species-name-xelthia

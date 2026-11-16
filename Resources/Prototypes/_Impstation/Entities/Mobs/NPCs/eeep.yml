@@ -74,6 +74,9 @@
       castShadows: true
     - type: BatteryDrainer
       drainTime: 10
+      targetBlacklist: # Pirate: SMES capacity bypasses the intended growth progression.
+        components:
+        - Smes
       sparkSound:
         path: /Audio/Effects/PowerSink/charge_fire.ogg
     - type: ComplexInteraction

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 
+using Content.Shared._Pirate.Network; // Pirate
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
@@ -18,6 +19,7 @@ public sealed class MsgDeleteChatMessagesBy : NetMessage
         Key = buffer.ReadInt32();
 
         var entities = buffer.ReadInt32();
+        buffer.AssertAtLeastSize(entities * NetMessageBufferExtensions.SizeOfNetEntity); // Pirate: Omu #2166
         Entities = new HashSet<NetEntity>(entities);
 
         for (var i = 0; i < entities; i++)

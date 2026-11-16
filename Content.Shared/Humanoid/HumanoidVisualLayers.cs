@@ -43,5 +43,6 @@ namespace Content.Shared.Humanoid
         FaceCoverCover,
         BodyCover,
         BodyCoverCover,
+        NeckFluff, // Pirate: Ovinia wool, appended to preserve network values.
     }
 }

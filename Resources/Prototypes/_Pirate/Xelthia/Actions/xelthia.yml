@@ -1,0 +1,15 @@
+# Pirate: Xelthia from ProjectOmu/OmuStation@94c6cb84bac71924f9e114c811a8d1a0ac859a3f.
+- type: entity
+  id: XelthiaRegenerateAction
+  name: Regrow Arms
+  description: Regrow any arms you may have lost.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: Action
+    startDelay: true
+    useDelay: 150 # Once every 2.5 minutes or so?
+    icon:
+      sprite: Mobs/Ghosts/ghost_human.rsi
+      state: icon
+  - type: InstantAction
+    event: !type:ArmRegrowthEvent

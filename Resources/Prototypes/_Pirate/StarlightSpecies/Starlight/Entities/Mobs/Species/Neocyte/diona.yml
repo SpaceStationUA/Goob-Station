@@ -65,27 +65,7 @@
   - type: Damageable
     damageContainer: Hybrid
     damageModifierSet: NeoDiona
-  - type: DamageVisuals
-    damageOverlayGroups:
-      Brute:
-        sprite: _Pirate/StarlightSpecies/Shared/Mobs/Effects/brute_damage.rsi
-        color: '#cd7314'
-      Burn:
-        sprite: _Pirate/StarlightSpecies/Shared/Mobs/Effects/burn_damage.rsi
-    thresholds:
-    - 10
-    - 20
-    - 30
-    - 50
-    - 70
-    - 100
-    targetLayers:
-    - enum.HumanoidVisualLayers.Chest
-    - enum.HumanoidVisualLayers.Head
-    - enum.HumanoidVisualLayers.LArm
-    - enum.HumanoidVisualLayers.LLeg
-    - enum.HumanoidVisualLayers.RArm
-    - enum.HumanoidVisualLayers.RLeg
+  # Pirate: Diona limbs own wound overlays; legacy DamageVisuals conflicts with their removal.
   - type: Butcherable
     spawned:
     - id: FoodMeatPlant

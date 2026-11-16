@@ -15,10 +15,6 @@
         type: Add
         time: 2 # Pirate
       - !type:ModifyStatusEffect
-        effectProto: StatusEffectDreamy # the lotus: slow dream-wash
-        type: Add
-        time: 6
-      - !type:ModifyStatusEffect
         effectProto: StatusEffectTelepathicRepeater
         type: Add
       - !type:RollPsionicAbility

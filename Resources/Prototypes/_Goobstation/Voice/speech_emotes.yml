@@ -259,7 +259,7 @@
 
 - type: emote
   id: Hoot
-  name: Hoot
+  name: chat-emote-name-harpyhoot # Pirate
   category: Vocal
   icon: _Goobstation/Interface/Emotes/caw.png
   whitelist:
@@ -268,7 +268,7 @@
   blacklist:
     components:
     - BorgChassis
-  chatMessages: [ hoots. ]
+  chatMessages: [chat-emote-msg-harpyhoot] # Pirate
   chatTriggers:
     - hoots
     - hoot

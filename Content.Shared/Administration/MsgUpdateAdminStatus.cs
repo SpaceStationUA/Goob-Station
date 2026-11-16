@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 
+using Content.Shared._Pirate.Network; // Pirate
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
@@ -17,6 +18,7 @@ namespace Content.Shared.Administration
         {
             var count = buffer.ReadVariableInt32();
 
+            buffer.AssertAtLeastSize(count * NetMessageBufferExtensions.MinSizeOfString); // Pirate: Omu #2166
             AvailableCommands = new string[count];
 
             for (var i = 0; i < count; i++)

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 
+using Content.Shared._Pirate.Network; // Pirate
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
@@ -18,6 +19,7 @@ public sealed class MsgPlayTime : NetMessage
     public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
     {
         var count = buffer.ReadVariableInt32();
+        buffer.AssertAtLeastSize(count * (NetMessageBufferExtensions.MinSizeOfString + NetMessageBufferExtensions.SizeOfTimeSpan)); // Pirate: Omu #2166
         Trackers.EnsureCapacity(count);
 
         for (var i = 0; i < count; i++)

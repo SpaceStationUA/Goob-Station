@@ -1,0 +1,8 @@
+# Pirate: direct Xelthia dependencies from Omu.
+- type: latheRecipe
+  id: XelthiaCube
+  result: XelthiaCube
+  completetime: 30
+  materials:
+    Biomass: 70
+    Plasma: 250

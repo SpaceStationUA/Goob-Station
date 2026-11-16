@@ -334,6 +334,7 @@
     # Goobstation start
     speciesOverride: Human
     speciesOverrideBlacklist:
+    - Xelthia # Pirate: cannot equip ninja gloves.
     - Yowie
     - IPC
     - Diona

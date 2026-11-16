@@ -1,0 +1,15 @@
+# Ported from ProjectOmu/OmuStation #2190.
+
+- type: constructionGraph
+  id: SpiderWebConstruct
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: end
+      steps:
+      - material: WebSilk
+        amount: 2
+        doAfter: 5
+  - node: end
+    entity: SpiderWebConstruct

@@ -4,7 +4,10 @@
               HorizontalExpand="True"
               VerticalExpand="True"
               SeparationOverride="8">
-    <hull:TileFlowContainer Name="CategoryChips" Separation="4" CrossSeparation="4" HorizontalExpand="True" />
+    <!-- Pirate: keep two category rows visible and scroll the remaining rows. -->
+    <ScrollContainer Name="CategoryScroll" HScrollEnabled="False" ReturnMeasure="True" HorizontalExpand="True">
+        <hull:TileFlowContainer Name="CategoryChips" Separation="4" CrossSeparation="4" HorizontalExpand="True" />
+    </ScrollContainer>
     <BoxContainer Orientation="Horizontal" SeparationOverride="10" VerticalExpand="True">
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="1.6" SeparationOverride="6">
             <BoxContainer Orientation="Horizontal" SeparationOverride="4">

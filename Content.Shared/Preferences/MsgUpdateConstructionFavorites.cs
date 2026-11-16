@@ -1,4 +1,5 @@
 using Content.Shared.Construction.Prototypes;
+using Content.Shared._Pirate.Network; // Pirate
 using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -18,6 +19,7 @@ public sealed class MsgUpdateConstructionFavorites : NetMessage
     public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
     {
         var length = buffer.ReadVariableInt32();
+        buffer.AssertAtLeastSize(length * NetMessageBufferExtensions.MinSizeOfString); // Pirate: Omu #2166
         Favorites.Clear();
         for (var i = 0; i < length; i++)
         {

@@ -11,6 +11,7 @@
   - !type:SpeciesRequirement
     inverted: true
     species:
+    - Xelthia # Pirate: cannot equip ninja gloves.
     - Plasmaman
 
 #Ninja Gear

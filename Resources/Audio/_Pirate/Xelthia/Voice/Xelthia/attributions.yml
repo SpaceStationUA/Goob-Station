@@ -1,0 +1,5 @@
+# Source repository assigns these assets MIT in REUSE.toml; no separate Xelthia attribution is supplied.
+- files: ["ask.ogg", "cough.ogg", "cry.ogg", "exclaim.ogg", "laugh.ogg", "regrow.ogg", "say.ogg", "scream.ogg", "sneeze.ogg", "speech_raw/ask.ogg", "speech_raw/exclaim.ogg", "speech_raw/say.ogg"]
+  license: MIT
+  copyright: None
+  source: https://github.com/ProjectOmu/OmuStation/blob/94c6cb84bac71924f9e114c811a8d1a0ac859a3f/REUSE.toml
