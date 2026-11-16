@@ -46,7 +46,7 @@ public sealed partial class PaintSurfaceSystem : SharedPaintSurfaceSystem
 
         UpdateTexture(ent, args.Chunks);
 
-        if (_ui.TryGetOpenUi(ent.Owner, PaintUiKey.Key, out var bui)
+        if (_ui.TryGetOpenUi(ent.Owner, PaintUiKey.Key, out var bui) // Pirate
             && bui is PaintBoundUserInterface paintBui)
         {
             paintBui.SurfaceUpdated(args.Chunks);
