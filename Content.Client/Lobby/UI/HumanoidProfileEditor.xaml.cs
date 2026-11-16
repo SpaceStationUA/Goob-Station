@@ -2057,7 +2057,7 @@ namespace Content.Client.Lobby.UI
             SetDirty();
         }
 
-        private void OnBloodTasteChanged(TextEdit.TextEditEventArgs args)
+        private void OnBloodTasteChanged(TextEdit.TextEditEventArgs args) // Pirate
         {
             if (Profile is null || _suppressCharacterInfoChanges)
                 return;
