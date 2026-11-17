@@ -4,7 +4,7 @@ meta:
   engineVersion: 293.0.0
   forkId: ""
   forkVersion: ""
-  time: 11/17/2026 10:13:10
+  time: 11/17/2026 11:39:41
   entityCount: 14276
 maps:
 - 1
@@ -8101,7 +8101,7 @@ entities:
       pos: 8.5,-1.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -3587.3088
+      secondsUntilStateChange: -3631.642
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -8337,7 +8337,7 @@ entities:
       pos: -7.5,-22.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -24044.824
+      secondsUntilStateChange: -24089.158
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -34839,8 +34839,6 @@ entities:
       parent: 2
       rot: 1.5707963267948966 rad
       pos: 12.5,-18.5
-    - type: BodyScanner
-      operatingTable: 5349
   - uid: 2023
     components:
     - type: Transform
@@ -65729,13 +65727,6 @@ entities:
     - type: Transform
       parent: 2
       pos: 12.5,-17.5
-    - type: OperatingTable
-      linkedScanner: 85
-    - type: DeviceLinkSource
-      linkedPorts:
-        85:
-        - - OperatingTable
-          - OperatingTableReceiver
   - uid: 9705
     components:
     - type: Transform
@@ -73411,6 +73402,12 @@ entities:
     - type: Transform
       parent: 2
       pos: 3.5,-16.5
+    - type: TechnologyDatabase
+      supportedDisciplines:
+      - Industrial
+      - Arsenal
+      - Experimental
+      - CivilianServices
 - proto: Screen
   entities:
   - uid: 10951
@@ -73637,6 +73634,12 @@ entities:
     - type: Transform
       parent: 2
       pos: -35.5,20.5
+    - type: TechnologyDatabase
+      supportedDisciplines:
+      - Industrial
+      - Arsenal
+      - Experimental
+      - CivilianServices
 - proto: SeedExtractor
   entities:
   - uid: 10983
@@ -73661,6 +73664,12 @@ entities:
     - type: Transform
       parent: 2
       pos: -17.5,-0.5
+    - type: TechnologyDatabase
+      supportedDisciplines:
+      - Industrial
+      - Arsenal
+      - Experimental
+      - CivilianServices
 - proto: ShardGlass
   entities:
   - uid: 10987
@@ -81355,6 +81364,12 @@ entities:
     - type: Transform
       parent: 2
       pos: 5.5,24.5
+    - type: TechnologyDatabase
+      supportedDisciplines:
+      - Industrial
+      - Arsenal
+      - Experimental
+      - CivilianServices
     - type: MaterialStorage
       materialWhiteList:
       - Cloth
