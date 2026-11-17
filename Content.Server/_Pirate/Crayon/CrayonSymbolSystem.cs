@@ -9,6 +9,8 @@ using Content.Shared.Charges.Components;
 using Content.Shared._Pirate.Crayon;
 using Content.Shared.Crayon;
 using Content.Shared.Database;
+using Content.Shared.Examine;
+using Robust.Shared.Player;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Nutrition.EntitySystems;
@@ -34,10 +36,13 @@ public sealed class CrayonSymbolSystem : EntitySystem
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedTransformSystem _transform = default!;
 
+    [Dependency] private readonly CrayonLibrarySystem _library = default!;
+
     private static readonly EntProtoId StampPrototype = "CMUCrayonStamp";
 
     public override void Initialize()
     {
+        SubscribeLocalEvent<CrayonStampComponent, ExaminedEvent>(OnExamineStamp);
         SubscribeLocalEvent<CrayonComponent, CrayonSelectSymbolMessage>(OnSelectSymbol);
         SubscribeLocalEvent<CrayonSymbolComponent, CrayonSelectMessage>(OnSelectStock);
         SubscribeLocalEvent<CrayonSymbolComponent, AfterInteractEvent>(OnAfterInteract,
@@ -47,14 +52,26 @@ public sealed class CrayonSymbolSystem : EntitySystem
 
     private void OnSelectSymbol(Entity<CrayonComponent> ent, ref CrayonSelectSymbolMessage args)
     {
-        if (args.Symbol is { } symbol)
-            TrySelect(ent, args.Actor, symbol);
+        if (!TryComp<ActorComponent>(args.Actor, out var actor))
+            return;
+
+        var owner = actor.PlayerSession.UserId;
+        var id = args.Id;
+        if (_library.GetDrawings(owner)?.Find(d => d.Id == id) is not { } drawing
+            || !TrySelect(ent, args.Actor, drawing.Symbol))
+            return;
+
+        var selected = EnsureComp<CrayonSelectedDrawingComponent>(args.Actor);
+        selected.OwnerId = owner;
+        selected.Drawing = drawing.Id;
+        selected.Name = drawing.Name;
     }
 
     // Every stock pick lands here, from a button, a search or the comma queue moving on.
     private void OnSelectStock(Entity<CrayonSymbolComponent> ent, ref CrayonSelectMessage args)
     {
         _stencil.ClearStencil(args.Actor);
+        RemComp<CrayonSelectedDrawingComponent>(args.Actor);
     }
 
     /// <summary>
@@ -92,6 +109,11 @@ public sealed class CrayonSymbolSystem : EntitySystem
         _transform.SetLocalRotation(stamp, rotation.Rotation);
         var comp = EnsureComp<CrayonStampComponent>(stamp);
         comp.Symbol = symbol;
+        comp.ArtistName = Name(args.User);
+        if (TryComp<ActorComponent>(args.User, out var artist))
+            comp.Artist = artist.PlayerSession.UserId;
+        if (TryComp<CrayonSelectedDrawingComponent>(args.User, out var selection))
+            comp.DrawingName = selection.Name;
         Dirty(stamp, comp);
 
         if (TryComp(ent, out CrayonComponent? crayon))
@@ -99,6 +121,12 @@ public sealed class CrayonSymbolSystem : EntitySystem
 
         _adminLog.Add(LogType.CrayonDraw, LogImpact.Low,
             $"{ToPrettyString(args.User):user} drew a custom symbol at {args.ClickLocation}");
+    }
+
+    private void OnExamineStamp(Entity<CrayonStampComponent> ent, ref ExaminedEvent args)
+    {
+        if (!string.IsNullOrEmpty(ent.Comp.ArtistName))
+            args.PushText(Loc.GetString("pirate-crayon-stamp-artist", ("artist", ent.Comp.ArtistName)));
     }
 
     /// <summary>

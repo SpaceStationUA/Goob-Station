@@ -23,6 +23,11 @@ public sealed partial class CrayonWindow
 
     public void SetCrayon(EntityUid crayon)
     {
+        OnClose -= OnPirateWindowClosed;
+        OnClose += OnPirateWindowClosed;
+        Library.Changed -= OnPirateLibraryChanged;
+        Library.Changed += OnPirateLibraryChanged;
+        Library.Request();
         _crayon = crayon;
         PirateSyncRotation();
     }
