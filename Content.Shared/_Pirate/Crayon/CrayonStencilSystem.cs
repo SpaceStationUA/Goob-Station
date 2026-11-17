@@ -24,13 +24,15 @@ public sealed class CrayonStencilSystem : EntitySystem
         return symbol != null;
     }
 
-    public bool TrySetStencil(EntityUid user, CrayonSymbol symbol)
+    public bool TrySetStencil(EntityUid user, CrayonSymbol symbol, Guid? drawingId = null, string? drawingName = null)
     {
         if (!symbol.IsValid())
             return false;
 
         var comp = EnsureComp<CrayonStencilComponent>(user);
         comp.Symbol = symbol;
+        comp.DrawingId = drawingId;
+        comp.DrawingName = drawingName;
         Dirty(user, comp);
         return true;
     }
@@ -41,6 +43,8 @@ public sealed class CrayonStencilSystem : EntitySystem
             return;
 
         user.Comp.Symbol = null;
+        user.Comp.DrawingId = null;
+        user.Comp.DrawingName = null;
         Dirty(user, user.Comp);
     }
 }
