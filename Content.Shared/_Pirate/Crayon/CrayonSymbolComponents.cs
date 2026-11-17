@@ -25,6 +25,11 @@ public sealed partial class CrayonStencilComponent : Component
     [DataField, AutoNetworkedField]
     public CrayonSymbol? Symbol;
 
+    [DataField, AutoNetworkedField]
+    public Guid? DrawingId;
+
+    [DataField] public string? DrawingName;
+
     // Only the player's own crayon windows show it.
     public override bool SendOnlyToOwner => true;
 }

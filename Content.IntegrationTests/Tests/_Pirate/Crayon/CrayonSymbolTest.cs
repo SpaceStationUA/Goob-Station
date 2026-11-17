@@ -662,6 +662,7 @@ public sealed class CrayonSymbolTest : InteractionTest
         var crayon = await OpenWindow("CrayonWhite");
         var window = GetWindow<CrayonWindow>();
         var symbol = Symbol(CrayonSymbol.Small, White);
+        var other = await SaveDrawing(symbol, "other copy");
         const string name = "cmu delete test";
         var saved = await SaveDrawing(symbol, name);
         await SendBui(CrayonUiKey.Key, new CrayonSelectSymbolMessage(saved), crayon);
@@ -676,6 +677,12 @@ public sealed class CrayonSymbolTest : InteractionTest
         await RunTicks(15);
 
         await AssertStencil(false);
+        await Server.WaitAssertion(() =>
+        {
+            var library = Server.System<ServerLibrary>().GetDrawings(ServerSession.UserId)!;
+            Assert.That(library.Any(d => d.Id == other), Is.True, "An identical drawing in another slot must survive.");
+            Assert.That(library.Any(d => d.Id == saved), Is.False);
+        });
         await Client.WaitAssertion(() =>
         {
             Assert.That(WindowStencil(window), Is.Null);

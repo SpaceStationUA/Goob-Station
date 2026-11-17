@@ -57,21 +57,14 @@ public sealed class CrayonSymbolSystem : EntitySystem
 
         var owner = actor.PlayerSession.UserId;
         var id = args.Id;
-        if (_library.GetDrawings(owner)?.Find(d => d.Id == id) is not { } drawing
-            || !TrySelect(ent, args.Actor, drawing.Symbol))
-            return;
-
-        var selected = EnsureComp<CrayonSelectedDrawingComponent>(args.Actor);
-        selected.OwnerId = owner;
-        selected.Drawing = drawing.Id;
-        selected.Name = drawing.Name;
+        if (_library.GetDrawings(owner)?.Find(d => d.Id == id) is { } drawing)
+            _stencil.TrySetStencil(args.Actor, drawing.Symbol, drawing.Id, drawing.Name);
     }
 
     // Every stock pick lands here, from a button, a search or the comma queue moving on.
     private void OnSelectStock(Entity<CrayonSymbolComponent> ent, ref CrayonSelectMessage args)
     {
         _stencil.ClearStencil(args.Actor);
-        RemComp<CrayonSelectedDrawingComponent>(args.Actor);
     }
 
     /// <summary>
@@ -112,8 +105,8 @@ public sealed class CrayonSymbolSystem : EntitySystem
         comp.ArtistName = Name(args.User);
         if (TryComp<ActorComponent>(args.User, out var artist))
             comp.Artist = artist.PlayerSession.UserId;
-        if (TryComp<CrayonSelectedDrawingComponent>(args.User, out var selection))
-            comp.DrawingName = selection.Name;
+        if (TryComp<CrayonStencilComponent>(args.User, out var selection))
+            comp.DrawingName = selection.DrawingName;
         Dirty(stamp, comp);
 
         if (TryComp(ent, out CrayonComponent? crayon))

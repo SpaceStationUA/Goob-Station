@@ -47,7 +47,7 @@ public sealed class CrayonCanvasWindow : DefaultWindow
     // A gradient between two box crayons steps through their tones; one with a rainbow crayon's colour blends in this many.
     private const int RainbowGradientSteps = 8;
 
-    public event Action<string, CrayonSymbol>? OnSaved;
+    public event Action<Guid>? OnSaved;
 
     public CrayonCanvasWindow(Color brush, bool selectableColor, Guid? editing = null)
     {
@@ -412,13 +412,13 @@ public sealed class CrayonCanvasWindow : DefaultWindow
             _saving = false;
             if (Disposed || !IsOpen && _outside == null)
                 return;
-            if (result.Error != null)
+            if (result.Saved is not { } saved)
             {
-                _error.Text = Loc.GetString(result.Error);
+                _error.Text = Loc.GetString(result.Error ?? "pirate-crayon-library-unavailable");
                 return;
             }
 
-            OnSaved?.Invoke(name, symbol);
+            OnSaved?.Invoke(saved);
             _saved = true;
             _outside?.Close();
             Close();

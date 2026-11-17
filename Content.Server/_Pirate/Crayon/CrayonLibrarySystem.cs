@@ -131,7 +131,7 @@ public sealed partial class CrayonLibrarySystem : EntitySystem
             return "pirate-crayon-library-unavailable";
 
         if (previous != null)
-            ClearSelected(owner, previous.Value);
+            ClearSelected(previous.Value);
         saved = drawing.Id;
         return null;
     }
@@ -147,21 +147,17 @@ public sealed partial class CrayonLibrarySystem : EntitySystem
         if (!Write(owner, next))
             return "pirate-crayon-library-unavailable";
 
-        ClearSelected(owner, id);
+        ClearSelected(id);
         return null;
     }
 
-    private void ClearSelected(NetUserId owner, Guid id)
+    private void ClearSelected(Guid id)
     {
-        var query = EntityQueryEnumerator<CrayonSelectedDrawingComponent>();
+        var query = EntityQueryEnumerator<CrayonStencilComponent>();
         while (query.MoveNext(out var uid, out var selection))
         {
-            if (selection.OwnerId != owner || selection.Drawing != id)
-                continue;
-
-            _stencils.ClearStencil(uid);
-            selection.Drawing = Guid.Empty;
-            selection.Name = string.Empty;
+            if (selection.DrawingId == id)
+                _stencils.ClearStencil(uid);
         }
     }
 
@@ -194,12 +190,4 @@ public sealed partial class CrayonLibrarySystem : EntitySystem
 
         return true;
     }
-}
-
-[RegisterComponent]
-public sealed partial class CrayonSelectedDrawingComponent : Component
-{
-    [DataField] public NetUserId OwnerId;
-    [DataField] public Guid Drawing;
-    [DataField] public string Name = string.Empty;
 }
