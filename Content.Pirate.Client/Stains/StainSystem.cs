@@ -7,7 +7,7 @@ using Content.Shared.Clothing;
 using Content.Shared.Hands;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Robust.Client.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;

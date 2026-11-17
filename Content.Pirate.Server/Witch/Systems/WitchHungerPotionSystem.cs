@@ -1,6 +1,6 @@
 using Content.Pirate.Shared.Witch.Components;
 using Content.Goobstation.Common.Devour;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using System.Linq;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.Systems;

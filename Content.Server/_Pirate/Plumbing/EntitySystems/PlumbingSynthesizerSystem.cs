@@ -4,7 +4,7 @@ using Content.Shared._Pirate.Plumbing;
 using Content.Shared._Pirate.Plumbing.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.PowerCell;
 using Content.Shared.UserInterface;
 using JetBrains.Annotations;

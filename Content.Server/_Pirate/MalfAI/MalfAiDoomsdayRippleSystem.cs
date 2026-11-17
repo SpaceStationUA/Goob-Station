@@ -9,7 +9,7 @@ using Content.Server.Body.Components;
 using Content.Server.Chat.Systems;
 using Content.Server.RoundEnd;
 using Content.Shared.Damage;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared._Pirate.MalfAI;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;

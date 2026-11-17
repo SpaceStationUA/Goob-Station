@@ -1,5 +1,5 @@
 using Content.Goobstation.Common.Religion;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Pirate.Server.Traits.Vampirism.Components;
 using Content.Pirate.Server.Vampire.Systems;
 using Content.Pirate.Shared.Vampire.Components;

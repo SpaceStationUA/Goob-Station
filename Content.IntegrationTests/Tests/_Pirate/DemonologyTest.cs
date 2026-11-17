@@ -7,7 +7,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Goobstation.Common.Devour;
 using Content.Goobstation.Common.Grab;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Goobstation.Shared.Clothing.Components;
 using Content.Goobstation.Shared.Enchanting.Components;
 using Content.Goobstation.Shared.Enchanting.Systems;

@@ -16,7 +16,7 @@ using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Database;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Goobstation.Shared.ManifestListings;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mind;

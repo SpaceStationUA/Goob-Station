@@ -2,7 +2,7 @@
 
 using Content.Shared.Alert;
 using Content.Shared.Damage;
-using Content.Goobstation.Maths.FixedPoint; // Pirate
+using Content.Shared.FixedPoint; // Pirate
 using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;

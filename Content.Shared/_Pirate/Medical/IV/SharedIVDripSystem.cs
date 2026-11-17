@@ -1,6 +1,6 @@
 using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using System.Linq;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;

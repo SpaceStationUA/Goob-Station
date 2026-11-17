@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Server.Cargo.Components;
 using Content.Server.Damage.Components;
 using Content.Server.Destructible;

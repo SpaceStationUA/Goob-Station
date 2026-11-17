@@ -4,6 +4,7 @@
   id: EngiVendInventory
   startingInventory:
     ClothingOuterJacketInsulated: 3 # Pirate: Xelthia protective equipment.
+    ClothingHandsGlovesEnviroglovesColorYellow: 3 # Goob
     ClothingEyesGlassesMeson: 4
     ClothingEyesGlassesThermal: 4 # Pirate: thermal vision
     ClothingEyesGlassesEngineering: 4 # Pirate: engineering goggles
@@ -22,6 +23,8 @@
   contrabandInventory:
     CowToolboxFilled: 1
     DrinkBeerCan: 3
-  emaggedInventory: #goob
+  # <Goob>
+  emaggedInventory:
     ToolboxSyndicateFilled: 1
     ClothingHeadHatConeStorage: 4 # Trauma
+  # </Goob>

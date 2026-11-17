@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Server._Afterlight.Silicons.Synths.Body;
 using Content.Shared._Afterlight.Silicons.Synths.Body;
 using Content.Shared.Body.Part;

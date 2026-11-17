@@ -2,7 +2,7 @@
 
 using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using Content.Goobstation.Common.Movement;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Pirate.Common.Heretic;
 using Content.Shared.Actions;
 using Content.Shared.Damage;

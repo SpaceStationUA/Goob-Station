@@ -1,4 +1,4 @@
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Pirate.Server.EntityEffects;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;

@@ -1,0 +1,1 @@
+ent-BaseMobXelthia = Уріст МакЩупальце

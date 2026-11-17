@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared._Shitmed.Medical.Surgery.Traumas.Systems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;

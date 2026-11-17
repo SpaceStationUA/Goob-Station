@@ -4,7 +4,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Jittering;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Pirate.Shared.Psionics;
 using Content.Shared.Popups;
 using Content.Shared.Psionics.Events;

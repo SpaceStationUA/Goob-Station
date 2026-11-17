@@ -19,7 +19,7 @@ using Content.Shared.Crayon;
 using Content.Shared.Charges.Components;
 using Content.Shared.Decals;
 using Content.Shared.Input;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;

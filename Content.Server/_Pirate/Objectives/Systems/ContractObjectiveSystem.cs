@@ -4,7 +4,7 @@ using Content.Server.Stack;
 using Content.Server.Store.Systems;
 using Content.Shared._Pirate.Objectives.Systems;
 using Content.Shared._Pirate.Reputation;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Ghost;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Mind;

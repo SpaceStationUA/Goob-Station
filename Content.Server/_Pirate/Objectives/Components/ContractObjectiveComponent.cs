@@ -1,5 +1,5 @@
 using Content.Server._Pirate.Objectives.Systems;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Robust.Shared.Prototypes;
 
