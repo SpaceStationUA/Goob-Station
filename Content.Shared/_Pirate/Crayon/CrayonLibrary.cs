@@ -15,9 +15,10 @@ public sealed record CrayonDrawing(Guid Id, string Name, CrayonSymbol Symbol)
 public sealed class CrayonLibraryRequest : EntityEventArgs;
 
 [Serializable, NetSerializable]
-public sealed class CrayonLibraryState(List<CrayonDrawing>? drawings, string? error = null) : EntityEventArgs
+public sealed class CrayonLibraryState(List<CrayonDrawing>? drawings, TimeSpan? playtimeRemaining, string? error = null) : EntityEventArgs
 {
     public readonly List<CrayonDrawing>? Drawings = drawings;
+    public readonly TimeSpan? PlaytimeRemaining = playtimeRemaining;
     public readonly string? Error = error;
 }
 

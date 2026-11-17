@@ -3,17 +3,22 @@
 using System.Threading.Tasks;
 using Content.Shared._Pirate.Crayon;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
 namespace Content.Client._Pirate.Crayon;
 
 public sealed class CrayonLibrarySystem : EntitySystem
 {
     [Dependency] private readonly IClientNetManager _net = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public List<CrayonDrawing> Drawings { get; private set; } = new();
     public string? Error { get; private set; }
+    public bool CanDraw { get; private set; }
     public event Action? Changed;
 
+    private static readonly TimeSpan RetryDelay = TimeSpan.FromSeconds(5);
+    private TimeSpan? _nextAccessCheck;
     private int _nextRequest;
     private readonly Dictionary<int, TaskCompletionSource<CrayonSaveResult>> _pending = new();
 
@@ -36,6 +41,9 @@ public sealed class CrayonLibrarySystem : EntitySystem
         if (state.Drawings != null)
             Drawings = state.Drawings;
         Error = state.Error;
+        CanDraw = state.PlaytimeRemaining == TimeSpan.Zero;
+        var delay = state.PlaytimeRemaining.GetValueOrDefault();
+        _nextAccessCheck = CanDraw ? null : _timing.RealTime + (delay > RetryDelay ? delay : RetryDelay);
         Changed?.Invoke();
     }
 
@@ -45,7 +53,19 @@ public sealed class CrayonLibrarySystem : EntitySystem
             request.TrySetResult(result);
     }
 
-    public void Request() => RaiseNetworkEvent(new CrayonLibraryRequest());
+    public void Request()
+    {
+        if (!CanDraw)
+            _nextAccessCheck = _timing.RealTime + RetryDelay;
+        RaiseNetworkEvent(new CrayonLibraryRequest());
+    }
+
+    // While the picker is open, ask the server again when the player could have reached 24 hours.
+    public void RefreshAccessIfDue()
+    {
+        if (_nextAccessCheck <= _timing.RealTime)
+            Request();
+    }
 
     public void Delete(Guid id) => RaiseNetworkEvent(new CrayonDeleteDrawing(id));
 
@@ -64,6 +84,9 @@ public sealed class CrayonLibrarySystem : EntitySystem
     {
         Drawings = new();
         Error = null;
+        CanDraw = false;
+        _nextAccessCheck = null;
+        Changed?.Invoke();
         foreach (var (id, request) in _pending)
             request.TrySetResult(new CrayonSaveResult(id, null, "pirate-crayon-library-unavailable"));
         _pending.Clear();

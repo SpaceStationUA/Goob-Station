@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using Content.Server._Pirate.Newbies;
 using Content.Server.Administration.Logs;
 using Content.Shared._Pirate.Crayon;
 using Robust.Server.Player;
@@ -19,6 +20,7 @@ public sealed partial class CrayonLibrarySystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IAdminLogManager _log = default!;
     [Dependency] private readonly CrayonStencilSystem _stencils = default!;
+    [Dependency] private readonly NoviceCrayonProtectionSystem _protection = default!;
 
     private CrayonLibraryStore _store = default!;
     private readonly Dictionary<NetUserId, List<CrayonDrawing>> _libraries = new();
@@ -88,16 +90,27 @@ public sealed partial class CrayonLibrarySystem : EntitySystem
             return;
 
         var drawings = GetDrawings(session.UserId);
-        RaiseNetworkEvent(new CrayonLibraryState(drawings, drawings == null ? "pirate-crayon-library-unavailable" : null), session);
+        SendLibraryState(session, drawings, drawings == null ? "pirate-crayon-library-unavailable" : null);
     }
 
     private void OnSave(CrayonSaveDrawing msg, EntitySessionEventArgs args)
     {
         var session = args.SenderSession;
-        Guid? saved = null;
-        var error = SpendRequest(session.UserId)
-            ? Save(session.UserId, msg.Previous, msg.Name, msg.Symbol, out saved)
-            : "pirate-crayon-library-busy";
+        if (!SpendRequest(session.UserId))
+        {
+            RaiseNetworkEvent(new CrayonSaveResult(msg.Request, null, "pirate-crayon-library-busy"), session);
+            return;
+        }
+
+        var remaining = _protection.GetRemainingPlaytime(session);
+        if (remaining != TimeSpan.Zero)
+        {
+            RaiseNetworkEvent(new CrayonLibraryState(null, remaining), session);
+            RaiseNetworkEvent(new CrayonSaveResult(msg.Request, null, "novice-protection-crayon-stickers"), session);
+            return;
+        }
+
+        var error = Save(session.UserId, msg.Previous, msg.Name, msg.Symbol, out var saved);
         RaiseNetworkEvent(new CrayonSaveResult(msg.Request, saved, error), session);
     }
 
@@ -166,7 +179,12 @@ public sealed partial class CrayonLibrarySystem : EntitySystem
         var session = args.SenderSession;
         var error = SpendRequest(session.UserId) ? Delete(session.UserId, msg.Id) : "pirate-crayon-library-busy";
         if (error != null)
-            RaiseNetworkEvent(new CrayonLibraryState(null, error), session);
+            SendLibraryState(session, null, error);
+    }
+
+    private void SendLibraryState(ICommonSession session, List<CrayonDrawing>? drawings, string? error = null)
+    {
+        RaiseNetworkEvent(new CrayonLibraryState(drawings, _protection.GetRemainingPlaytime(session), error), session);
     }
 
     private bool Write(NetUserId owner, List<CrayonDrawing> next)
@@ -185,7 +203,7 @@ public sealed partial class CrayonLibrarySystem : EntitySystem
         if (_players.TryGetSessionById(owner, out var session))
         {
             _libraries[owner] = next;
-            RaiseNetworkEvent(new CrayonLibraryState(next), session);
+            SendLibraryState(session, next);
         }
 
         return true;

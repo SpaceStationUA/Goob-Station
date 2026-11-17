@@ -383,6 +383,61 @@ public sealed class CrayonSymbolTest : InteractionTest
     }
 
     [Test]
+    public async Task CustomStickerEditorAndLibraryUnlockAt24Hours()
+    {
+        var original = Symbol(CrayonSymbol.Small, White);
+        var replacement = Symbol(CrayonSymbol.Large, Red);
+        var name = Guid.NewGuid().ToString();
+        var saved = await SaveDrawing(original, name);
+        var tracking = Server.ResolveDependency<PlayTimeTrackingManager>();
+        await Server.WaitPost(() => NoviceTestPlaytime.Set(tracking, ServerSession, 23.5));
+
+        var crayon = await OpenWindow("CrayonArtist");
+        var window = GetWindow<CrayonWindow>();
+        await ClickControl(GetControlFromChildren<TextureButton>(button => button.ToolTip == name, window));
+        var create = FindButton(window, CLoc("pirate-crayon-custom-new"))!;
+        Assert.That(create.Disabled, Is.True);
+        Assert.That(FindButton(window, CLoc("pirate-crayon-custom-edit"))!.Disabled, Is.True);
+        Assert.That(FindButton(window, CLoc("pirate-crayon-custom-delete"))!.Disabled, Is.False);
+        await ClickControl(create);
+        Assert.That(TryFindWindow<CrayonCanvasWindow>(out _), Is.False);
+        await AssertStencil(false);
+
+        await SendBui(CrayonUiKey.Key, new CrayonSelectSymbolMessage(saved), crayon);
+        await AssertStencil(false);
+        var library = Client.System<ClientLibrary>();
+        foreach (var previous in new Guid?[] { null, saved })
+        {
+            Task<CrayonSaveResult> saving = null!;
+            await Client.WaitPost(() => saving = library.Save(previous, name + "-new", replacement));
+            await RunTicks(15);
+            Assert.That(saving.IsCompletedSuccessfully, Is.True);
+            Assert.That((await saving).Error, Is.EqualTo("novice-protection-crayon-stickers"));
+        }
+        await Server.WaitAssertion(() =>
+        {
+            var drawings = Server.System<ServerLibrary>().GetDrawings(ServerSession.UserId)!;
+            Assert.That(drawings.Single(d => d.Id == saved).Symbol.SameAs(original), Is.True);
+            Assert.That(drawings.Any(d => d.Name == name + "-new"), Is.False);
+        });
+
+        await Server.WaitPost(() => NoviceTestPlaytime.Set(tracking, ServerSession, 24));
+        await CloseBui(CrayonUiKey.Key, crayon);
+        await UseInHand();
+        await RunTicks(10);
+        window = GetWindow<CrayonWindow>();
+        create = FindButton(window, CLoc("pirate-crayon-custom-new"))!;
+        Assert.That(create.Disabled, Is.False);
+        await ClickControl(create);
+        var editor = GetWindow<CrayonCanvasWindow>();
+        await Client.WaitPost(() => editor.Close());
+
+        var unlocked = await SaveDrawing(replacement);
+        await SendBui(CrayonUiKey.Key, new CrayonSelectSymbolMessage(unlocked), crayon);
+        await AssertStencil(true);
+    }
+
+    [Test]
     public async Task SaveKeepsTheDraftWhenTheServerRejectsIt()
     {
         const string name = "duplicate draft";

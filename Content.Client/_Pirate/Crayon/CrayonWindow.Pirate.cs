@@ -55,9 +55,9 @@ public sealed partial class CrayonWindow
                 : button);
         }
 
-        var create = new Button { Text = Loc.GetString("pirate-crayon-custom-new") };
+        var create = new Button { Text = Loc.GetString("pirate-crayon-custom-new"), Disabled = !Library.CanDraw };
         create.OnPressed += _ => PirateOpenCanvas(null);
-        var edit = new Button { Text = Loc.GetString("pirate-crayon-custom-edit"), Disabled = _pirateSelected == null };
+        var edit = new Button { Text = Loc.GetString("pirate-crayon-custom-edit"), Disabled = !Library.CanDraw || _pirateSelected == null };
         edit.OnPressed += _ =>
         {
             if (Library.Drawings.Find(d => d.Id == _pirateSelected) is { } drawing)
@@ -72,6 +72,8 @@ public sealed partial class CrayonWindow
 
         Grids.AddChild(new Label { Text = Loc.GetString("pirate-crayon-library-count",
             ("count", Library.Drawings.Count), ("max", CrayonDrawing.Limit)) });
+        if (!Library.CanDraw)
+            Grids.AddChild(new RichTextLabel { Text = Loc.GetString("novice-protection-crayon-stickers") });
         if (Library.Error != null)
             Grids.AddChild(new Label { Text = Loc.GetString(Library.Error) });
         Grids.AddChild(grid);
@@ -87,10 +89,13 @@ public sealed partial class CrayonWindow
     private void PirateSelect(CrayonDrawing drawing)
     {
         _pirateSelected = drawing.Id;
-        _pirateStencil = drawing.Symbol;
+        if (Library.CanDraw)
+        {
+            _pirateStencil = drawing.Symbol;
+            OnCustomSelected?.Invoke(drawing.Id);
+        }
         // A search left in the box would otherwise pick its stock decal again on the next refresh.
         _autoSelected = null;
-        OnCustomSelected?.Invoke(drawing.Id);
         RefreshList();
     }
 
@@ -122,6 +127,9 @@ public sealed partial class CrayonWindow
 
     private void PirateOpenCanvas(CrayonDrawing? editing)
     {
+        if (!Library.CanDraw)
+            return;
+
         var canvas = new CrayonCanvasWindow(_color, ColorSelector.Visible, editing?.Id);
         if (editing != null)
             canvas.Load(editing.Name, editing.Symbol);
@@ -154,6 +162,7 @@ public sealed partial class CrayonWindow
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
+        Library.RefreshAccessIfDue();
         PirateSyncRotation();
         if (PirateSyncStencil())
             RefreshList();

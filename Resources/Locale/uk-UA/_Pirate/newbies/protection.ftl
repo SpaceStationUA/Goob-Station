@@ -1,6 +1,7 @@
 novice-protection-power-cell-injection = Ін’єкції в батарейки доступні після 24 годин гри.
 novice-protection-grille-construction = Будувати й відновлювати решітки можна після 24 годин гри.
 novice-protection-crayon-drawing = Малювати крейдою можна після 24 годин гри.
+novice-protection-crayon-stickers = Створювати й використовувати власні малюнки крейдою можна після 24 годин гри.
 novice-protection-reactive-chemical-mixing = Змішувати воду з натрієм або калієм можна після 24 годин гри.
 novice-protection-reactive-chemical-spilling = Розливати натрій чи калій або додавати до них воду на підлозі можна після 24 годин гри.
 novice-protection-reactive-chemical-ingestion = Вживати натрій чи калій або годувати ними інших можна після 24 годин гри.

@@ -120,7 +120,10 @@ public sealed class NoviceBuildingAndDrawingTest : InteractionTest
                 Is.EqualTo(decalCount + (allowed ? 1 : 0)));
             var symbol = new CrayonSymbol { Palette = [Color.Red], Pixels = new byte[CrayonSymbol.Small * CrayonSymbol.Small] };
             symbol.Pixels[0] = 1;
-            Assert.That(Server.System<CrayonSymbolSystem>().TrySelect(crayon, SPlayer, symbol), Is.True);
+            Assert.That(Server.System<CrayonSymbolSystem>().TrySelect(crayon, SPlayer, symbol), Is.EqualTo(allowed));
+            // Even a stencil selected earlier must pass the playtime check when it is placed.
+            if (!allowed)
+                Assert.That(Server.System<CrayonStencilSystem>().TrySetStencil(SPlayer, symbol), Is.True);
         });
         await Interact(null, floor);
         await Server.WaitAssertion(() =>
