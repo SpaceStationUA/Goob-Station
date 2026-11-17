@@ -52,7 +52,7 @@ public sealed class CrayonSymbolSystem : EntitySystem
 
     private void OnSelectSymbol(Entity<CrayonComponent> ent, ref CrayonSelectSymbolMessage args)
     {
-        if (!TryComp<ActorComponent>(args.Actor, out var actor))
+        if (!TryComp<ActorComponent>(args.Actor, out var actor) || !CanDraw(ent, args.Actor))
             return;
 
         var owner = actor.PlayerSession.UserId;
@@ -72,7 +72,14 @@ public sealed class CrayonSymbolSystem : EntitySystem
     /// </summary>
     public bool TrySelect(EntityUid crayon, EntityUid user, CrayonSymbol symbol)
     {
-        return HasComp<CrayonComponent>(crayon) && _stencil.TrySetStencil(user, symbol);
+        return HasComp<CrayonComponent>(crayon) && CanDraw(crayon, user) && _stencil.TrySetStencil(user, symbol);
+    }
+
+    private bool CanDraw(EntityUid crayon, EntityUid user)
+    {
+        var attempt = new CrayonDrawAttemptEvent(user);
+        RaiseLocalEvent(crayon, ref attempt);
+        return !attempt.Cancelled;
     }
 
     private void OnAfterInteract(Entity<CrayonSymbolComponent> ent, ref AfterInteractEvent args)
@@ -81,9 +88,7 @@ public sealed class CrayonSymbolSystem : EntitySystem
             return;
 
         args.Handled = true;
-        var attempt = new CrayonDrawAttemptEvent(args.User);
-        RaiseLocalEvent(ent, ref attempt);
-        if (attempt.Cancelled)
+        if (!CanDraw(ent, args.User))
             return;
 
         if (!TryGetFloor(args.ClickLocation, out var floor))

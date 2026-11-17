@@ -24,6 +24,7 @@ public sealed class CrayonCanvasWindow : DefaultWindow
     [Dependency] private readonly IFileDialogManager _files = default!;
 
     private readonly CrayonPaletteSystem _palette;
+    private CrayonLibrarySystem Library => _entities.System<CrayonLibrarySystem>();
     private readonly Guid? _editing;
     private bool _saving;
     private bool _importing;
@@ -173,6 +174,29 @@ public sealed class CrayonCanvasWindow : DefaultWindow
         UpdateNeeds();
     }
 
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+        Library.Changed += OnLibraryChanged;
+    }
+
+    protected override void ExitedTree()
+    {
+        // A popped-out editor stays open in its OS window until PopIn.
+        if (_outside == null)
+            Library.Changed -= OnLibraryChanged;
+        base.ExitedTree();
+    }
+
+    private void OnLibraryChanged()
+    {
+        if (!Library.CanDraw)
+        {
+            _outside?.Close();
+            Close();
+        }
+    }
+
     public void Load(string name, CrayonSymbol symbol)
     {
         _name.Text = name;
@@ -210,8 +234,9 @@ public sealed class CrayonCanvasWindow : DefaultWindow
         if (_outside == null)
             return;
 
+        Library.Changed -= OnLibraryChanged;
         _outside = null;
-        if (_saved)
+        if (_saved || !Library.CanDraw)
             return;
 
         _editor.Orphan();
@@ -414,7 +439,7 @@ public sealed class CrayonCanvasWindow : DefaultWindow
             SetSaving(true);
             try
             {
-                var result = await _entities.System<CrayonLibrarySystem>().Save(_editing, name, symbol);
+                var result = await Library.Save(_editing, name, symbol);
                 if (Disposed || !IsOpen && _outside == null)
                     return;
                 if (result.Saved is not { } saved)

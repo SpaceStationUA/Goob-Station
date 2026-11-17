@@ -32,6 +32,15 @@ public sealed class NoviceCrayonProtectionSystem : EntitySystem
 
     private void OnRoundRestart(RoundRestartCleanupEvent args) => _nextNotification.Clear();
 
+    /// <summary>Returns zero when crayons are unlocked, or null until playtime has loaded.</summary>
+    public TimeSpan? GetRemainingPlaytime(ICommonSession session)
+    {
+        if (!_playtime.TryGetPlaytime(session, out var playtime))
+            return null;
+
+        return playtime >= RequiredPlaytime ? TimeSpan.Zero : RequiredPlaytime - playtime;
+    }
+
     private void OnDrawImage(Entity<CrayonComponent> ent, ref CrayonDrawImageEvent args)
     {
         if (!args.Cancelled && IsRestricted(args.User))
@@ -46,8 +55,7 @@ public sealed class NoviceCrayonProtectionSystem : EntitySystem
 
     private bool IsRestricted(EntityUid user)
     {
-        if (!TryComp<ActorComponent>(user, out var actor) ||
-            !_playtime.IsRestricted(actor.PlayerSession, RequiredPlaytime))
+        if (!TryComp<ActorComponent>(user, out var actor) || GetRemainingPlaytime(actor.PlayerSession) == TimeSpan.Zero)
             return false;
 
         // Paint UIs send many strokes per second: reject every stroke, but throttle only the notification.
