@@ -1,4 +1,4 @@
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Goobstation.Shared.ModSuits.Components;
 using Content.Pirate.Shared.Fluids;
 using Content.Pirate.Shared.Stains.Systems;

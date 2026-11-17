@@ -5,7 +5,7 @@ using Content.Server.Store.Systems;
 using Content.Pirate.Shared.Mage;
 using Content.Pirate.Shared.Mage.Components;
 using Content.Shared.Examine;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Systems;

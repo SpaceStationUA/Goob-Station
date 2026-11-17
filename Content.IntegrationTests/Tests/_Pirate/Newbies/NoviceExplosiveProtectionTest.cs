@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Power.Components;
 using Content.Server.Weapons.Melee;

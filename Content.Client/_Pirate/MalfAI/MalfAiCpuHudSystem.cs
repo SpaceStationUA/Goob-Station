@@ -6,7 +6,7 @@ using System;
 using Content.Shared._Pirate.MalfAI;
 using Content.Shared.Silicons.StationAi;
 using Content.Shared.Store.Components;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;

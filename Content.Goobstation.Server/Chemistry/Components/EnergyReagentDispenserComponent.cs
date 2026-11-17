@@ -3,7 +3,7 @@
 using Content.Shared.Whitelist;
 using Content.Shared.Containers.ItemSlots;
 using Content.Server._Pirate.Chemistry; // Pirate: chem recipes
-using Content.Goobstation.Maths.FixedPoint; // Pirate: chem recipes
+using Content.Shared.FixedPoint; // Pirate: chem recipes
 using Content.Goobstation.Server.Chemistry.EntitySystems;
 using Content.Goobstation.Shared.Chemistry;
 using Robust.Shared.Audio;

@@ -23,7 +23,7 @@ using Content.Shared.Humanoid.Markings;
 using Content.Shared.Maps;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.Stacks;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;

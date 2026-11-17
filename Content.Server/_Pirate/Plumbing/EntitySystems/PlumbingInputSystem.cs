@@ -2,7 +2,7 @@ using Content.Server.Popups;
 using Content.Shared._Pirate.Plumbing.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 

@@ -72,3 +72,7 @@ alerts-slasher-fear-victim-desc = Жах охоплює ваш розум, по�
 slasher-kit-guide-button = Цей різновид має інші особливості гри — відкрийте його сторінку довідника.
 slasher-kit-boogeyman = Бабай
 slasher-kit-boogeyman-desc = «Цікаво, чи може... Бабай насправді пересуватися крізь тіні...»
+slasher-relentless-grab-fail = Це неможливо схопити.
+slasher-relentless-grab-door-welded = Двері заварено.
+alerts-slasher-soul-bonus-name = Бонус душ
+alerts-slasher-soul-bonus-desc = Бонуси від викрадених душ. Верхній рядок показує додаткову шкоду, нижній — додатковий захист.

@@ -8,7 +8,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Robust.Shared.Serialization;
 
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Actions;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;

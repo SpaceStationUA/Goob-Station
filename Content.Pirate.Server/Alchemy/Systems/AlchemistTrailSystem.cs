@@ -2,7 +2,7 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Movement.Events;
 
 namespace Content.Pirate.Server.Alchemy.Systems;

@@ -20,8 +20,8 @@ public sealed partial class SinkWasherComponent : Component
 
     /// <summary>Wetness added by a sink wash.</summary>
     [DataField]
-    public Content.Goobstation.Maths.FixedPoint.FixedPoint2 WetnessAdded =
-        Content.Goobstation.Maths.FixedPoint.FixedPoint2.New(15);
+    public Content.Shared.FixedPoint.FixedPoint2 WetnessAdded =
+        Content.Shared.FixedPoint.FixedPoint2.New(15);
 }
 
 [Serializable, NetSerializable]

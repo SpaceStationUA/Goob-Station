@@ -9,7 +9,7 @@ using Content.Shared._White.BackStab;
 using Content.Shared.Access.Components; // Pirate: Lock path
 using Content.Shared.Access.Systems; // Pirate: Lock path
 using Content.Shared.Damage;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;

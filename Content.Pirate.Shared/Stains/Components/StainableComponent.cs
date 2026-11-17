@@ -1,4 +1,4 @@
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.DoAfter;
 using Content.Shared.Inventory;
 using Robust.Shared.Audio;

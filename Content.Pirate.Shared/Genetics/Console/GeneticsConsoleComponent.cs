@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.Serialization;
 
 using Content.Shared.Damage;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Materials;
 using Content.Pirate.Shared.Genetics.Mutations;
 using Robust.Shared.Audio;

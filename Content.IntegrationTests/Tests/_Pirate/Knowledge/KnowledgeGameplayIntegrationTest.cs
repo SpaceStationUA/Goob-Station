@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using Content.Goobstation.Common.Weapons.Ranged;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared._Pirate.CCVars;
 using Content.Shared._Pirate.Knowledge;
 using Content.Shared.Damage;

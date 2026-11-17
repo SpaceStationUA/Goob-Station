@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Goobstation.Common.Religion;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Pirate.Common.Heretic; // Pirate: Lock path cast blocking.
 using Content.Shared._Goobstation.Heretic.Systems;
 using Content.Shared._Shitcode.Heretic.Components;

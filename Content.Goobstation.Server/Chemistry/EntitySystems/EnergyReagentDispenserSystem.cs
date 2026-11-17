@@ -7,6 +7,8 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.FixedPoint;
+using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Power;
 using JetBrains.Annotations;
 using Robust.Server.Audio;
@@ -17,7 +19,6 @@ using Robust.Shared.Prototypes;
 using Content.Shared.Power.Components;
 
 #region Pirate: chem recipes
-using Content.Goobstation.Maths.FixedPoint;
 using Content.Server._Pirate.Chemistry;
 using Content.Server.Chemistry.Components;
 using Content.Server.Power.Components;

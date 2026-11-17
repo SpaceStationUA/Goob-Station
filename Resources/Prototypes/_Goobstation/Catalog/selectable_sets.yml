@@ -559,7 +559,7 @@
   content:
   - WeaponHeadOfSecurityRifle
 
-# Captain
+# Warden
 
 - type: selectableSet
   id: VoidsuitSelectorCaptainVoidsuit
@@ -624,3 +624,23 @@
     state: icon # Pirate: security specialist modsuits
   content:
   - ClothingModularControllerBrigmedicPreassembled # Pirate: security specialist modsuits
+
+- type: selectableSet
+  id: KravMagGloves
+  name: krav-maga-gloves-selector-name # Pirate: match the locale key.
+  description: krav-maga-gloves-selector-description
+  sprite:
+    sprite: _Goobstation/Clothing/Hands/Gloves/kravgloves.rsi
+    state: icon
+  content:
+  - ClothingHandsGlovesKravMaga
+
+- type: selectableSet
+  id: KravMagaEnvirogloves
+  name: krav-maga-envirogloves-selector-name # Pirate: match the locale key.
+  description: krav-maga-envirogloves-selector-description
+  sprite:
+    sprite: _Goobstation/Clothing/Hands/Gloves/kravenvirogloves.rsi
+    state: icon
+  content:
+  - ClothingHandsGlovesEnviroglovesKravMaga

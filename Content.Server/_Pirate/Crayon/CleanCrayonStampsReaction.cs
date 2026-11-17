@@ -4,7 +4,7 @@
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared._Pirate.Crayon;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Map;
 
 namespace Content.Server._Pirate.Crayon;

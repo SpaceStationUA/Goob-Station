@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared._Pirate.Durability;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
