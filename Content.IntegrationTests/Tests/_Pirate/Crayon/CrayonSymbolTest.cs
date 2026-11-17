@@ -14,7 +14,8 @@ using System.Reflection;
 using System.Globalization;
 using Content.Client._Pirate.Crayon;
 using Content.Client.Crayon.UI;
-using Content.Server.Administration.Managers;
+using Moq;
+using Robust.Shared.Player;
 using Content.Server.Examine;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Server._Pirate.Crayon;
@@ -365,7 +366,7 @@ public sealed class CrayonSymbolTest : InteractionTest
             var white = Symbol(CrayonSymbol.Small, White);
             var red = Symbol(CrayonSymbol.Large, Red);
             Assert.That(library.Save(owner, null, "first", white, out var first), Is.Null);
-            for (var i = 1; i < CrayonDrawing.Limit; i++)
+            for (var i = 1; i < 10; i++)
                 Assert.That(library.Save(owner, null, i.ToString(), white, out _), Is.Null);
             Assert.That(library.Save(owner, null, "extra", white, out _), Is.EqualTo("pirate-crayon-library-full"));
             Assert.That(library.Save(owner, first, "first", red, out var revised), Is.Null);
@@ -376,9 +377,42 @@ public sealed class CrayonSymbolTest : InteractionTest
             Assert.That(library.Save(owner, null, "new", red, out _), Is.Null);
 
             var store = new CrayonLibraryStore(Server.ResolveDependency<IResourceManager>().UserData);
-            Assert.That(store.Read(owner), Has.Count.EqualTo(CrayonDrawing.Limit));
+            Assert.That(store.Read(owner), Has.Count.EqualTo(10));
             Assert.That(store.Read(new NetUserId(Guid.NewGuid())), Is.Empty);
         });
+    }
+
+    [Test]
+    public async Task SaveKeepsTheDraftWhenTheServerRejectsIt()
+    {
+        const string name = "duplicate draft";
+        await SaveDrawing(Symbol(CrayonSymbol.Small, Red), name);
+        var draft = Symbol(CrayonSymbol.Large, White);
+        CrayonCanvasWindow editor = null;
+        await Client.WaitAssertion(() =>
+        {
+            editor = new CrayonCanvasWindow(White, false);
+            editor.Load(name, draft);
+            editor.OpenCentered();
+            typeof(CrayonCanvasWindow).GetMethod("Save", BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(editor, null);
+            Assert.That(GetControlFromField<BoxContainer>("_body", editor).Visible, Is.False);
+        });
+        try
+        {
+            await RunTicks(15);
+            await Client.WaitAssertion(() =>
+            {
+                Assert.That(editor.IsOpen, Is.True);
+                Assert.That(GetControlFromField<BoxContainer>("_body", editor).Visible, Is.True);
+                Assert.That(GetControlFromField<LineEdit>("_name", editor).Text, Is.EqualTo(name));
+                Assert.That(GetControlFromField<CrayonCanvas>("_canvas", editor).ToSymbol().SameAs(draft), Is.True);
+                Assert.That(GetControlFromField<Label>("_error", editor).Text, Is.EqualTo(CLoc("pirate-crayon-library-duplicate")));
+            });
+        }
+        finally
+        {
+            await Client.WaitPost(() => editor.Close());
+        }
     }
 
     [Test]
@@ -403,6 +437,10 @@ public sealed class CrayonSymbolTest : InteractionTest
             var oversized = file.ToArray();
             oversized[16] = 1;
             Assert.That(CrayonPngImport.Read(new MemoryStream(oversized), CrayonSymbol.Small, crayons), Is.Null);
+
+            file.SetLength(2 * 1024 * 1024 + 1);
+            file.Position = 0;
+            Assert.That(CrayonPngImport.Read(file, CrayonSymbol.Small, crayons), Is.Null);
         });
     }
 
@@ -436,20 +474,13 @@ public sealed class CrayonSymbolTest : InteractionTest
             Assert.That(library.Moderate(ServerSession, owner, null, removeStamp), Is.EqualTo("pirate-crayon-admin-deleted"));
             Assert.That(SEntMan.IsQueuedForDeletion(stamp), Is.True);
 
-            var admins = Server.ResolveDependency<IAdminManager>();
-            admins.DeAdmin(ServerSession);
-            try
-            {
-                var copy = library.GetDrawings(owner)!.Single(d => d.Name == "gallery (2)");
-                library.Moderate(ServerSession, owner, null, new CrayonAdminAction(copy.Id, null, true));
-                Assert.That(library.GetDrawings(owner)!.Any(d => d.Id == copy.Id), Is.True);
-            }
-            finally
-            {
-                admins.ReAdmin(ServerSession);
-            }
+            var copy = library.GetDrawings(owner)!.Single(d => d.Name == "gallery (2)");
+            var nonAdmin = new Mock<ICommonSession>().Object;
+            library.Moderate(nonAdmin, owner, null, new CrayonAdminAction(copy.Id, null, true));
+            Assert.That(library.GetDrawings(owner)!.Any(d => d.Id == copy.Id), Is.True);
         });
 
+        await RunTicks(15);
         await AssertStencil(false);
         await SendBui(CrayonUiKey.Key, new CrayonSelectSymbolMessage(saved), crayon);
         await AssertStencil(false);

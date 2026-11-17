@@ -159,9 +159,17 @@ public sealed partial class CrayonWindow
             RefreshList();
     }
 
-    private void OnPirateWindowClosed()
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+        Library.Changed += OnPirateLibraryChanged;
+        OnPirateLibraryChanged();
+    }
+
+    protected override void ExitedTree()
     {
         Library.Changed -= OnPirateLibraryChanged;
         PirateReleaseTextures();
+        base.ExitedTree();
     }
 }

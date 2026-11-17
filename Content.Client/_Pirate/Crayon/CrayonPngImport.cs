@@ -13,7 +13,7 @@ namespace Content.Client._Pirate.Crayon;
 
 public static class CrayonPngImport
 {
-    public const int MaxBytes = 4 * 1024 * 1024;
+    public const int MaxBytes = 2 * 1024 * 1024;
     public const int MaxSide = 2048;
 
     public static CrayonSymbol? Read(Stream file, int size, IReadOnlyList<CrayonColor> crayons)
@@ -41,11 +41,11 @@ public static class CrayonPngImport
         var scale = size / (double) Math.Max(image.Width, image.Height);
         var width = Math.Max(1, (int) Math.Round(image.Width * scale));
         var height = Math.Max(1, (int) Math.Round(image.Height * scale));
-        image.Mutate(context => context.Resize(width, height));
+        using var resized = image.Clone(context => context.Resize(width, height));
 
         var shades = crayons.SelectMany(c => CrayonPaletteSystem.Shades(c.Color)).Select(s => s.Color).Distinct().ToList();
         var counts = new int[shades.Count];
-        var pixels = image.GetPixelSpan();
+        var pixels = resized.GetPixelSpan();
         for (var i = 0; i < pixels.Length; i++)
         {
             var pixel = pixels[i];

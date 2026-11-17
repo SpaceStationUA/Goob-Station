@@ -7,7 +7,7 @@ namespace Content.Shared._Pirate.Crayon;
 [Serializable, NetSerializable]
 public sealed record CrayonDrawing(Guid Id, string Name, CrayonSymbol Symbol)
 {
-    public const int Limit = 20;
+    public const int Limit = 10;
     public const int MaxNameLength = 64;
 }
 

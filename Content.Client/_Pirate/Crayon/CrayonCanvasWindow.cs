@@ -38,6 +38,8 @@ public sealed class CrayonCanvasWindow : DefaultWindow
     private readonly Button _popOut = new() { Text = Loc.GetString("pirate-crayon-canvas-pop-out"), StyleClasses = { "OpenRight" }, VerticalAlignment = VAlignment.Center };
     private bool _saved;
     private readonly BoxContainer _body;
+    private readonly BoxContainer _editor = new() { Orientation = BoxContainer.LayoutOrientation.Vertical };
+    private readonly Label _savingNotice = new() { Text = Loc.GetString("pirate-crayon-saving"), Visible = false };
     private OSWindow? _outside;
     private readonly PanelContainer _gradientA = SwatchPanel(Color.White);
     private readonly PanelContainer _gradientB = SwatchPanel(Color.Black);
@@ -135,7 +137,9 @@ public sealed class CrayonCanvasWindow : DefaultWindow
         };
         if (editing == null)
             AddLegacyDrawings();
-        Contents.AddChild(_body);
+        _editor.AddChild(_body);
+        _editor.AddChild(_savingNotice);
+        Contents.AddChild(_editor);
 
         // Pirate: expose the held rainbow crayon's color picker inside the symbol editor as well.
         if (selectableColor)
@@ -193,10 +197,10 @@ public sealed class CrayonCanvasWindow : DefaultWindow
         if (_outside != null)
             return;
 
-        _body.Orphan();
+        _editor.Orphan();
         _outside = new OSWindow { Title = Title ?? string.Empty, SetSize = Size };
         _outside.Show();
-        _outside.Root?.AddChild(_body);
+        _outside.Root?.AddChild(_editor);
         _outside.Closed += PopIn;
         Close();
     }
@@ -210,8 +214,8 @@ public sealed class CrayonCanvasWindow : DefaultWindow
         if (_saved)
             return;
 
-        _body.Orphan();
-        Contents.AddChild(_body);
+        _editor.Orphan();
+        Contents.AddChild(_editor);
         OpenCentered();
     }
 
@@ -341,7 +345,7 @@ public sealed class CrayonCanvasWindow : DefaultWindow
 
     private async void ImportPng()
     {
-        if (_importing)
+        if (_importing || _saving)
             return;
 
         _importing = true;
@@ -392,7 +396,7 @@ public sealed class CrayonCanvasWindow : DefaultWindow
 
     private async void Save()
     {
-        if (_saving)
+        if (_saving || _importing)
             return;
 
         var symbol = _canvas.ToSymbol();
@@ -407,22 +411,39 @@ public sealed class CrayonCanvasWindow : DefaultWindow
             _error.Text = Loc.GetString("pirate-crayon-canvas-error-empty");
         else
         {
-            _saving = true;
-            var result = await _entities.System<CrayonLibrarySystem>().Save(_editing, name, symbol);
-            _saving = false;
-            if (Disposed || !IsOpen && _outside == null)
-                return;
-            if (result.Saved is not { } saved)
+            SetSaving(true);
+            try
             {
-                _error.Text = Loc.GetString(result.Error ?? "pirate-crayon-library-unavailable");
-                return;
-            }
+                var result = await _entities.System<CrayonLibrarySystem>().Save(_editing, name, symbol);
+                if (Disposed || !IsOpen && _outside == null)
+                    return;
+                if (result.Saved is not { } saved)
+                {
+                    _error.Text = Loc.GetString(result.Error ?? "pirate-crayon-library-unavailable");
+                    return;
+                }
 
-            OnSaved?.Invoke(saved);
-            _saved = true;
-            _outside?.Close();
-            Close();
+                OnSaved?.Invoke(saved);
+                _saved = true;
+                _outside?.Close();
+                Close();
+            }
+            finally
+            {
+                if (!Disposed)
+                    SetSaving(false);
+            }
         }
+    }
+
+    private void SetSaving(bool saving)
+    {
+        _saving = saving;
+        if (saving)
+            _name.ReleaseKeyboardFocus();
+        _body.Visible = !saving;
+        _savingNotice.Visible = saving;
+        _popOut.Disabled = saving;
     }
 
     private static Button Swatch(Color color, string name, Action pressed)
