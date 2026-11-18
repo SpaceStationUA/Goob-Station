@@ -1,2 +1,10 @@
 ui-options-max-shadowcasting-lights = Макс. джерел світла з тінями
 ui-options-max-shadowcasting-lights-tooltip = Скільки джерел світла з тінями може малюватися одночасно. Збільшення зменшує мерехтіння світла у щільно освітлених місцях ціною продуктивності відеокарти.
+ui-options-bloom = Світіння світла
+ui-options-bloom-tooltip = М'яке світіння навколо яскравих джерел світла: вогню, ламп та екранів.
+ui-options-bloom-intensity = Сила світіння світла
+ui-options-lamp-glow = Світіння ламп
+ui-options-lamp-glow-tooltip = М'яке світіння на лампах стін, у кольорі їхнього світла.
+ui-options-lamp-glow-cone = Конуси світла ламп
+ui-options-lamp-glow-cone-tooltip = Конус серпанку в напрямку, куди світить кожна лампа на стіні.
+ui-options-lamp-glow-intensity = Сила світіння ламп

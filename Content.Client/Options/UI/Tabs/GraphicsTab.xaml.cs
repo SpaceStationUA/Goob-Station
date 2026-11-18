@@ -25,6 +25,11 @@ public sealed partial class GraphicsTab : Control
 
         Control.AddOptionCheckBox(CVars.DisplayVSync, VSyncCheckBox);
         Control.AddOptionCheckBox(CCVars.PirateSpriteAmbientOcclusion, AmbientOcclusionCheckBox); // Pirate: sprite ambient occlusion
+        Control.AddOptionCheckBox(CCVars.PirateBloom, BloomCheckBox); // Pirate: light effects
+        Control.AddOptionPercentSlider(CCVars.PirateBloomIntensity, BloomIntensitySlider, 0f, 1.5f); // Pirate: light effects
+        Control.AddOptionCheckBox(CCVars.PirateLampGlow, LampGlowCheckBox); // Pirate: light effects
+        Control.AddOptionCheckBox(CCVars.PirateLampGlowCone, LampGlowConeCheckBox); // Pirate: light effects
+        Control.AddOptionPercentSlider(CCVars.PirateLampGlowIntensity, LampGlowIntensitySlider, 0f, 1.5f); // Pirate: light effects
         Control.AddOption(new OptionFullscreen(Control, _cfg, FullscreenCheckBox));
         Control.AddOption(new OptionLightingQuality(Control, _cfg, DropDownLightingQuality));
         Control.AddOption(new OptionParticleQuality(Control, _cfg, DropDownParticleQuality)); // Starfall: Particle quality.

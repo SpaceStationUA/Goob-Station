@@ -1,0 +1,25 @@
+// The engine's additive blend multiplies by destination alpha, which other overlays change.
+light_mode unshaded;
+blend_mode none;
+
+uniform sampler2D SCREEN_TEXTURE;
+// Linear target; texture2D avoids sRGB decoding.
+uniform sampler2D BLOOM_TEXTURE;
+uniform highp vec2 BLOOM_UV_SCALE;
+uniform highp vec2 BLOOM_TEXEL;
+uniform highp float INTENSITY;
+
+highp vec3 tent(sampler2D tex, highp vec2 uv, highp vec2 o) {
+    highp vec3 sum = texture2D(tex, uv).rgb * 4.0;
+    sum += (texture2D(tex, uv + vec2(o.x, 0.0)).rgb + texture2D(tex, uv - vec2(o.x, 0.0)).rgb
+        + texture2D(tex, uv + vec2(0.0, o.y)).rgb + texture2D(tex, uv - vec2(0.0, o.y)).rgb) * 2.0;
+    sum += texture2D(tex, uv + o).rgb + texture2D(tex, uv - o).rgb
+        + texture2D(tex, uv + vec2(o.x, -o.y)).rgb + texture2D(tex, uv + vec2(-o.x, o.y)).rgb;
+    return sum * 0.0625;
+}
+
+void fragment() {
+    highp vec4 screen = zTextureSpec(SCREEN_TEXTURE, FRAGCOORD.xy * SCREEN_PIXEL_SIZE);
+    highp vec3 glow = tent(BLOOM_TEXTURE, FRAGCOORD.xy * BLOOM_UV_SCALE, BLOOM_TEXEL) * INTENSITY;
+    COLOR = vec4(screen.rgb + glow, screen.a);
+}

@@ -7,6 +7,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: LampGlow # Pirate: light effects
+    enabled: false # Pirate: light effects
   - type: Sprite
     sprite: _Goobstation/Structures/Decoration/floorlight.rsi
     layers:
@@ -37,6 +39,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: LampGlow # Pirate: light effects
+    enabled: false # Pirate: light effects
   - type: Sprite
     sprite: _Goobstation/Structures/Decoration/floorlight.rsi
     layers:
@@ -63,6 +67,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: LampGlow # Pirate: light effects
+    enabled: false # Pirate: light effects
   - type: Sprite
     sprite: _Goobstation/Structures/Decoration/floorlight.rsi
     layers:

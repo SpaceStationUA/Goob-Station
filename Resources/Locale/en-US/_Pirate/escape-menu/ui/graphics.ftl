@@ -1,2 +1,10 @@
 ui-options-max-shadowcasting-lights = Max shadowcasting lights
 ui-options-max-shadowcasting-lights-tooltip = How many shadow-casting lights can be drawn at once. Raising this reduces light flicker in densely-lit areas at the cost of some GPU performance.
+ui-options-bloom = Light bloom
+ui-options-bloom-tooltip = Soft glow around bright light sources, such as flames, lamps and screens.
+ui-options-bloom-intensity = Light bloom intensity
+ui-options-lamp-glow = Lamp glow
+ui-options-lamp-glow-tooltip = A soft glow on wall lamp bulbs, in the color of their light.
+ui-options-lamp-glow-cone = Lamp light cones
+ui-options-lamp-glow-cone-tooltip = A haze cone in the direction each wall lamp shines.
+ui-options-lamp-glow-intensity = Lamp glow intensity

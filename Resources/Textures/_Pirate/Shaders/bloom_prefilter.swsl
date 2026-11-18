@@ -1,0 +1,35 @@
+light_mode unshaded;
+blend_mode none;
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp vec2 UV_SCALE;
+uniform highp vec2 SOURCE_TEXEL;
+uniform highp float THRESHOLD;
+uniform highp float KNEE;
+
+// Use the max channel so saturated flames glow like white lamps.
+highp vec3 brightPart(highp vec3 c) {
+    highp float b = max(c.r, max(c.g, c.b));
+    highp float soft = clamp(b - THRESHOLD + KNEE, 0.0, 2.0 * KNEE);
+    soft = soft * soft / (4.0 * KNEE + 0.00001);
+    highp float contribution = max(soft, b - THRESHOLD) / max(b, 0.00001);
+    return c * contribution;
+}
+
+highp vec4 tap(highp vec2 uv) {
+    // zTextureSpec decodes the sRGB screen when the engine emulates sRGB.
+    highp vec3 c = brightPart(zTextureSpec(SCREEN_TEXTURE, uv).rgb);
+    // Karis weighting prevents bright single-pixel sources from flickering as the view moves.
+    highp float w = 1.0 / (1.0 + max(c.r, max(c.g, c.b)));
+    return vec4(c * w, w);
+}
+
+void fragment() {
+    highp vec2 uv = FRAGCOORD.xy * UV_SCALE;
+    highp vec2 h = SOURCE_TEXEL * 0.5;
+    highp vec4 sum = tap(uv + vec2(-h.x, -h.y))
+        + tap(uv + vec2(h.x, -h.y))
+        + tap(uv + vec2(-h.x, h.y))
+        + tap(uv + h);
+    COLOR = vec4(sum.rgb / sum.a, 1.0);
+}
