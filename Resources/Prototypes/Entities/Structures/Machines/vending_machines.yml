@@ -1178,6 +1178,13 @@
     - white # Pirate: security vending alerts
     - amber # Pirate: security vending alerts
     - cyan # Pirate: security vending alerts
+    # region Pirate: deep space scanner
+    gates: # Pirate: deep space scanner
+    - items: # Pirate: deep space scanner
+      - HandHeldDeepSpaceScanner # Pirate: deep space scanner
+      levels: [red, gamma, delta, epsilon] # Pirate: deep space scanner; matches the component's minimum level
+      denialMessage: security-red-alert-vending-denied # Pirate: deep space scanner
+    # endregion Pirate: deep space scanner
   - type: DatasetVocalizer
     dataset: SecTechAds
   - type: SpeakOnUIClosed

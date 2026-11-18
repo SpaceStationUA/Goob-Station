@@ -6,6 +6,7 @@ using Content.Shared.Examine;
 using Content.Shared.Item.ItemToggle;
 using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Popups;
+using Content.Shared.UserInterface;
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Pirate.Shared.AlertLevel;
@@ -23,6 +24,7 @@ public sealed partial class AlertLevelRestrictionSystem : EntitySystem
         SubscribeLocalEvent<AlertLevelRestrictedComponent, ItemToggleActivateAttemptEvent>(OnToggleActivateAttempt);
         SubscribeLocalEvent<AlertLevelRestrictedComponent, AlertLevelRestrictionRevokedEvent>(OnRevoked);
         SubscribeLocalEvent<AlertLevelRestrictedComponent, ExaminedEvent>(OnExamined);
+        SubscribeLocalEvent<AlertLevelRestrictedComponent, ActivatableUIOpenAttemptEvent>(OnUIOpenAttempt);
     }
 
     public static bool IsMet(AlertLevelRequirement requirement, string level)
@@ -78,6 +80,20 @@ public sealed partial class AlertLevelRestrictionSystem : EntitySystem
         args.Cancelled = true;
         args.Popup = Loc.GetString(ent.Comp.DenyMessage, ("item", ent.Owner), ("level", GetLevelName(ent.Comp)));
         _audio.PlayPredicted(ent.Comp.DenySound, ent, user);
+    }
+
+    // Some radars activate on UI open without a toggle attempt, so gate this path before the client opens the window.
+    private void OnUIOpenAttempt(Entity<AlertLevelRestrictedComponent> ent, ref ActivatableUIOpenAttemptEvent args)
+    {
+        if (args.Cancelled || IsMet(args.User, ent.Comp.Requirement))
+            return;
+
+        args.Cancel();
+        if (args.Silent)
+            return;
+
+        _audio.PlayPredicted(ent.Comp.DenySound, ent, args.User);
+        _popup.PopupClient(Loc.GetString(ent.Comp.DenyMessage, ("item", ent.Owner), ("level", GetLevelName(ent.Comp))), ent, args.User, PopupType.SmallCaution);
     }
 
     private void OnRevoked(Entity<AlertLevelRestrictedComponent> ent, ref AlertLevelRestrictionRevokedEvent args)
