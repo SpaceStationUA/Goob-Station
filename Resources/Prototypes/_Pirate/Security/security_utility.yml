@@ -193,7 +193,9 @@
       visible: false
       map: [ "number" ]
   - type: Item
-    size: Normal
+    size: Small
+    shape: # Preserve the 2x2 storage footprint.
+    - 0,0,1,1
   - type: Clothing
     slots:
     - suitStorage
