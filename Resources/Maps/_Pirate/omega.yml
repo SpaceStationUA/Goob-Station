@@ -4,8 +4,8 @@ meta:
   engineVersion: 293.0.0
   forkId: ""
   forkVersion: ""
-  time: 11/17/2026 11:39:41
-  entityCount: 14276
+  time: 11/18/2026 05:50:56
+  entityCount: 14280
 maps:
 - 1
 grids:
@@ -8101,7 +8101,7 @@ entities:
       pos: 8.5,-1.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -3631.642
+      secondsUntilStateChange: -3765.5757
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -8337,7 +8337,7 @@ entities:
       pos: -7.5,-22.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -24089.158
+      secondsUntilStateChange: -24223.092
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -34839,12 +34839,6 @@ entities:
       parent: 2
       rot: 1.5707963267948966 rad
       pos: 12.5,-18.5
-  - uid: 2023
-    components:
-    - type: Transform
-      parent: 2
-      rot: 3.141592653589793 rad
-      pos: 6.5,-42.5
   - uid: 5244
     components:
     - type: Transform
@@ -35027,6 +35021,22 @@ entities:
       parent: 2
       rot: 1.5707963267948966 rad
       pos: 25.5,6.5
+- proto: ComputerGeneticsConsole
+  entities:
+  - uid: 2023
+    components:
+    - type: Transform
+      parent: 2
+      rot: 3.141592653589793 rad
+      pos: 6.5,-42.5
+    - type: GeneticsScanner
+      scanner: 9594
+    - type: DeviceLinkSource
+      linkedPorts:
+        9594:
+        - - MedicalScannerSender
+          - MedicalScannerReceiver
+    - type: GeneticsSequenceEdit
 - proto: ComputerId
   entities:
   - uid: 5272
@@ -58479,6 +58489,28 @@ entities:
     - type: Transform
       parent: 2
       pos: -61.5,-5.5
+- proto: GeneticsDisk
+  entities:
+  - uid: 13286
+    components:
+    - type: Transform
+      parent: 2
+      pos: 6.2651176,-42.197044
+  - uid: 13288
+    components:
+    - type: Transform
+      parent: 2
+      pos: 6.4519463,-42.20742
+  - uid: 13289
+    components:
+    - type: Transform
+      parent: 2
+      pos: 6.6342583,-42.199608
+  - uid: 13815
+    components:
+    - type: Transform
+      parent: 2
+      pos: 6.841778,-42.199608
 - proto: Girder
   entities:
   - uid: 8517
@@ -64697,6 +64729,16 @@ entities:
     - type: Transform
       parent: 2
       pos: -4.5,26.5
+- proto: LockerGeneticist
+  entities:
+  - uid: 5343
+    components:
+    - type: Transform
+      parent: 2
+      pos: 8.5,-44.5
+    - type: AccessReader
+      accessListsOriginal:
+      - - Genetics
 - proto: LockerHeadOfPersonnelFilled
   entities:
   - uid: 9589
@@ -64891,14 +64933,6 @@ entities:
           Oxygen: 1.6033952
           Nitrogen: 6.031821
         immutable: False
-  - uid: 9594
-    components:
-    - type: Transform
-      parent: 2
-      pos: 8.5,-44.5
-    - type: AccessReader
-      accessListsOriginal:
-      - - Research
   - uid: 9653
     components:
     - type: Transform
@@ -65381,7 +65415,7 @@ entities:
       pos: -37.5,-37.5
 - proto: MedicalScanner
   entities:
-  - uid: 5343
+  - uid: 9594
     components:
     - type: Transform
       parent: 2
