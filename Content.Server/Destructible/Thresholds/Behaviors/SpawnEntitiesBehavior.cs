@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
+using Content.Shared._Pirate.Cleanup; // Pirate
 using Content.Server.Forensics;
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Forensics.Components;
@@ -72,6 +73,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                                 ? system.EntityManager.SpawnNextToOrDrop(entityId, owner)
                                 : system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
 
+                            system.EntityManager.NotifyLitterProduced(spawned); // Pirate: debris from destruction.
                             TransferForensics(spawned, system, owner);
                         }
                     }

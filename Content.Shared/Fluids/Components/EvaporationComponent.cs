@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 using Content.Shared.FixedPoint;
+using Content.Shared.Chemistry.Reagent; // Pirate
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -26,6 +27,10 @@ public sealed partial class EvaporationComponent : Component
     /// </summary>
     [DataField]
     public FixedPoint2 EvaporationAmount = FixedPoint2.New(1);
+
+    // Pirate: carry fractions smaller than the solution's 0.01u resolution between ticks.
+    [DataField, AutoNetworkedField]
+    public Dictionary<ProtoId<ReagentPrototype>, double> Remainders = new();
 
     /// <summary>
     /// The effect spawned when the puddle fully evaporates.

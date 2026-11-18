@@ -1,4 +1,5 @@
 using Content.Server.Fluids.EntitySystems;
+using Content.Shared._Pirate.Cleanup;
 using Content.Server.Polymorph.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Pirate.Shared.Vampire.Components;
@@ -54,7 +55,7 @@ public sealed class SanguinePoolSystem : SharedSanguinePoolSystem
                 continue;
             }
 
-            Spawn(comp.TrailPrototype, tileCoords);
+            EntityManager.NotifyLitterProduced(Spawn(comp.TrailPrototype, tileCoords));
         }
     }
 

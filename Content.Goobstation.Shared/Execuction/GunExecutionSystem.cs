@@ -26,6 +26,7 @@ using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
+using Content.Shared._Pirate.Cleanup; // Pirate
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http.Headers;
@@ -217,6 +218,8 @@ public sealed partial class SharedGunExecutionSystem : EntitySystem
                     cartridge.Spent = true; // Expend the cartridge
                     _appearanceSystem.SetData(ammoUid!.Value, AmmoVisuals.Spent, true);
                     Dirty(ammoUid.Value, cartridge);
+                    var spent = new CartridgeSpentChangedEvent(); // Pirate
+                    RaiseLocalEvent(ammoUid.Value, ref spent);
 
                     break;
                 }

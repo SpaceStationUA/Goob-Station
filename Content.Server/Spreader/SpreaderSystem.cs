@@ -2,8 +2,10 @@
 
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Fluids.EntitySystems; // Pirate
 using Content.Server.Shuttles.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Fluids.Components; // Pirate
 using Content.Shared.Maps;
 using Content.Shared.Spreader;
 using Content.Shared.Tag;
@@ -26,6 +28,7 @@ public sealed class SpreaderSystem : EntitySystem
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+    [Dependency] private readonly PuddleSystem _puddles = default!; // Pirate
 
     /// <summary>
     /// Cached maximum number of updates per spreader prototype. This is applied per-grid.
@@ -341,8 +344,7 @@ public sealed class SpreaderSystem : EntitySystem
             DebugTools.Assert(Transform(entity.Value).Anchored);
 
             // Activate any edge spreaders that are non-terminating
-            if (_query.HasComponent(entity) && !TerminatingOrDeleted(entity))
-                EnsureComp<ActiveEdgeSpreaderComponent>(entity.Value);
+            ActivateNeighbor(entity.Value);
         }
 
         for (var i = 0; i < Atmospherics.Directions; i++)
@@ -356,10 +358,21 @@ public sealed class SpreaderSystem : EntitySystem
                 DebugTools.Assert(Transform(entity.Value).Anchored);
 
                 // Activate any edge spreaders that are non-terminating
-                if (_query.HasComponent(entity) && !TerminatingOrDeleted(entity))
-                    EnsureComp<ActiveEdgeSpreaderComponent>(entity.Value);
+                ActivateNeighbor(entity.Value);
             }
         }
+    }
+
+    private void ActivateNeighbor(EntityUid uid)
+    {
+        if (!_query.HasComp(uid) || TerminatingOrDeleted(uid))
+            return;
+
+        // Pirate: an opened door or a deleted neighbor cannot spread a shallow puddle.
+        if (TryComp<PuddleComponent>(uid, out var puddle) && _puddles.CurrentVolume(uid, puddle) <= puddle.OverflowVolume)
+            return;
+
+        EnsureComp<ActiveEdgeSpreaderComponent>(uid);
     }
 
     public bool RequiresFloorToSpread(EntProtoId<EdgeSpreaderComponent> spreader)

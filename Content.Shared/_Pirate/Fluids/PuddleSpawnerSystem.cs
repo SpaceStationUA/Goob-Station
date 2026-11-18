@@ -24,7 +24,7 @@ public sealed class PuddleSpawnerSystem : EntitySystem
         if (transform.MapID == MapId.Nullspace)
             return;
 
-        _puddle.TrySpillAt(transform.Coordinates, ent.Comp.Solution, out _);
+        _puddle.SpillPersistentAt(transform.Coordinates, ent.Comp.Solution);
         PredictedQueueDel(ent.Owner);
     }
 }

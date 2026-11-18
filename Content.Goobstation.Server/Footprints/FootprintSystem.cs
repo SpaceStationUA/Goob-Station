@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Goobstation.Common.Footprints;
 using Content.Shared._Pirate.Fluids; // Pirate: stains
+using Content.Server._Pirate.Cleanup; // Pirate
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -25,6 +26,7 @@ namespace Content.Goobstation.Server.Footprints;
 
 public sealed partial class FootprintSystem : EntitySystem
 {
+    [Dependency] private readonly RoundLitterSystem _litter = default!; // Pirate
     [Dependency] private TransformSystem _transform = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedSolutionContainerSystem _solution = default!;
@@ -183,6 +185,7 @@ public sealed partial class FootprintSystem : EntitySystem
         if (!TryGetAnchoredEntity<FootprintComponent>(grid, tile, out var footprint))
         {
             var footprintEntity = SpawnAtPosition(FootprintPrototypeId, coordinates);
+            _litter.TrackResidue(footprintEntity); // Pirate
 
             footprint = (footprintEntity, Comp<FootprintComponent>(footprintEntity));
         }
@@ -192,15 +195,14 @@ public sealed partial class FootprintSystem : EntitySystem
 
         var color = solution.Value.Comp.Solution.GetColor(_prototype).WithAlpha((float)volume / (float)(standing ? entity.Comp.MaxFootprintVolume : entity.Comp.MaxBodyprintVolume) / 2f);
 
-        _solution.TryTransferSolution(footprintSolution.Value, solution.Value.Comp.Solution, volume);
+        if (_solution.TryTransferSolution(footprintSolution.Value, solution.Value.Comp.Solution, volume))
+            _litter.RefreshResidue(footprint.Value.Owner); // Pirate: only a real deposit extends the timer.
 
         if (footprintSolution.Value.Comp.Solution.Volume >= MaxFootprintVolumeOnTile)
         {
             var footprintSolutionClone = footprintSolution.Value.Comp.Solution.Clone();
 
-            Del(footprint);
-
-            _puddle.TrySpillAt(coordinates, footprintSolutionClone, out _, false);
+            ReplaceWithPuddle(footprint.Value.Owner, coordinates, footprintSolutionClone); // Pirate
 
             return;
         }
@@ -255,9 +257,17 @@ public sealed partial class FootprintSystem : EntitySystem
 
         footprintSolution = footprintSolution.Clone();
 
-        Del(footprint);
+        ReplaceWithPuddle(footprint, coordinates.Value, footprintSolution); // Pirate
+    }
 
-        _puddle.TrySpillAt(coordinates.Value, footprintSolution, out _, false);
+    private void ReplaceWithPuddle(EntityUid footprint, EntityCoordinates coordinates, Solution solution)
+    {
+        var temporary = HasComp<RoundLitterComponent>(footprint);
+        Del(footprint);
+        if (temporary)
+            _puddle.TrySpillAt(coordinates, solution, out _, false);
+        else
+            _puddle.SpillPersistentAt(coordinates, solution, false);
     }
 
     private static FixedPoint2 GetFootprintVolume(Entity<FootprintOwnerComponent> entity, Entity<SolutionComponent> solution)

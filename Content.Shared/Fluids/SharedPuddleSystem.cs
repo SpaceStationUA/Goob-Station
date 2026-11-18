@@ -403,6 +403,10 @@ public abstract partial class SharedPuddleSystem : EntitySystem
     /// </remarks>
     public abstract bool TrySpillAt(EntityCoordinates coordinates, Solution solution, out EntityUid puddleUid, bool sound = true);
 
+    // Pirate: map decoration and its overflow retain their original lifetime.
+    public virtual void SpillPersistentAt(EntityCoordinates coordinates, Solution solution, bool sound = true)
+        => TrySpillAt(coordinates, solution, out _, sound);
+
     /// <inheritdoc cref="TrySpillAt(EntityCoordinates, Solution, out EntityUid, bool)"/>
     public abstract bool TrySpillAt(EntityUid uid, Solution solution, out EntityUid puddleUid, bool sound = true,
         TransformComponent? transformComponent = null);
