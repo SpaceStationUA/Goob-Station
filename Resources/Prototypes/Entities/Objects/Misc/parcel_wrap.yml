@@ -163,6 +163,7 @@
   name: parcel wrap
   description: The disappointing remnants of an unwrapped parcel.
   components:
+  - type: DisposableLitter # Pirate
   - type: Sprite
     sprite: Objects/Misc/ParcelWrap/parcel_wrap_trash.rsi
     layers:

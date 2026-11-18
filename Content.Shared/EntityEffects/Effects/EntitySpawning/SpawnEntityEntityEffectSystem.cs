@@ -1,3 +1,4 @@
+using Content.Shared._Pirate.Cleanup; // Pirate
 using Robust.Shared.Network;
 
 namespace Content.Shared.EntityEffects.Effects.EntitySpawning;
@@ -20,20 +21,22 @@ public sealed partial class SpawnEntityEntityEffectSystem : EntityEffectSystem<T
         {
             for (var i = 0; i < quantity; i++)
             {
-                if (args.Effect.SpawnAtPosition)
-                    PredictedSpawnAtPosition(proto, entity.Comp.Coordinates);
-                else
-                    PredictedSpawnNextToOrDrop(proto, entity, entity.Comp);
+                var spawned = args.Effect.SpawnAtPosition
+                    ? PredictedSpawnAtPosition(proto, entity.Comp.Coordinates)
+                    : PredictedSpawnNextToOrDrop(proto, entity, entity.Comp);
+                if (args.Effect.ProducesLitter) // Pirate
+                    EntityManager.NotifyLitterProduced(spawned);
             }
         }
         else if (_net.IsServer)
         {
             for (var i = 0; i < quantity; i++)
             {
-                if (args.Effect.SpawnAtPosition)
-                    SpawnAtPosition(proto, entity.Comp.Coordinates);
-                else
-                    SpawnNextToOrDrop(proto, entity, entity.Comp);
+                var spawned = args.Effect.SpawnAtPosition
+                    ? SpawnAtPosition(proto, entity.Comp.Coordinates)
+                    : SpawnNextToOrDrop(proto, entity, entity.Comp);
+                if (args.Effect.ProducesLitter) // Pirate
+                    EntityManager.NotifyLitterProduced(spawned);
             }
         }
     }
@@ -47,4 +50,8 @@ public sealed partial class SpawnEntity : BaseSpawnEntityEntityEffect<SpawnEntit
     /// </summary>
     [DataField]
     public bool SpawnAtPosition;
+
+    /// <summary>Pirate: this effect produces a temporary spill or disposable item.</summary>
+    [DataField]
+    public bool ProducesLitter;
 }

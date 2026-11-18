@@ -202,7 +202,7 @@
   - type: MixableSolution
     solution: puddle
   - type: Appearance
-  - type: ActiveEdgeSpreader
+  # Pirate: activate spreading when the solution overflows.
   - type: EdgeSpreader
     id: Puddle
   - type: StepTrigger

@@ -31,7 +31,7 @@ public sealed class PuddleMessVariationPassSystem : VariationPassSystem<PuddleMe
                 continue;
 
             var sol = proto.Pick(Random);
-            _puddle.TrySpillAt(coords, new Solution(sol.reagent, sol.quantity), out _, sound: false);
+            _puddle.SpillPersistentAt(coords, new Solution(sol.reagent, sol.quantity), sound: false); // Pirate: station decoration.
         }
     }
 }

@@ -40,6 +40,7 @@
       showInChat: true
     - !type:SpawnEntity
       entity: PuddleBloodSmall
+      producesLitter: true # Pirate
     0.3:
     - !type:PopupMessage
       type: Pvs
@@ -49,6 +50,7 @@
       amount: -40
     - !type:SpawnEntity
       entity: PuddleBlood
+      producesLitter: true # Pirate
 
 - type: curse # TO DO: Make them emote "blinks"
   id: CurseBlindness
@@ -117,6 +119,7 @@
       showInChat: true
     - !type:SpawnEntity
       entity: PuddleBloodSmall
+      producesLitter: true # Pirate
     - !type:HealthChange
       damage:
         groups:

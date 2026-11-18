@@ -613,6 +613,7 @@
   description: This is rubbish.
   abstract: true
   components:
+  - type: DisposableLitter # Pirate
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
   - type: Item

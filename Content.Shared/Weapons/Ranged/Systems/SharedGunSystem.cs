@@ -2,6 +2,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using Content.Shared._Pirate.Cleanup; // Pirate
 using Content.Shared._Shitmed.Weapons.Ranged.Events; // Shitmed Change
 using Content.Shared._Pirate.ZLevels.Shooting; // Pirate: multiz
 using Content.Shared.ActionBlocker;
@@ -589,9 +590,13 @@ public abstract partial class SharedGunSystem : EntitySystem
     protected void SetCartridgeSpent(EntityUid uid, CartridgeAmmoComponent cartridge, bool spent)
     {
         if (cartridge.Spent != spent)
+        {
+            cartridge.Spent = spent;
             DirtyField(uid, cartridge, nameof(CartridgeAmmoComponent.Spent));
+            var changed = new CartridgeSpentChangedEvent(); // Pirate: track actual shots.
+            RaiseLocalEvent(uid, ref changed);
+        }
 
-        cartridge.Spent = spent;
         Appearance.SetData(uid, AmmoVisuals.Spent, spent);
 
         if (!cartridge.MarkSpentAsTrash)

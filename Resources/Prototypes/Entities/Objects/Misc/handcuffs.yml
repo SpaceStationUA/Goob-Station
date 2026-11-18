@@ -117,6 +117,7 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: DisposableLitter # Pirate
   - type: Item
     size: Small
   - type: Tag
