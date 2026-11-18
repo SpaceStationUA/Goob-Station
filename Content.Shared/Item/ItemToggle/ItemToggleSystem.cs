@@ -89,7 +89,7 @@ public sealed class ItemToggleSystem : EntitySystem
         }
         else
         {
-            var ev = new ItemToggleActivateAttemptEvent(args.User);
+            var ev = new ItemToggleActivateAttemptEvent(args.User) { Silent = true }; // Pirate: alert-level restriction - verb building only checks, it must not buzz
             RaiseLocalEvent(ent.Owner, ref ev);
 
             if (ev.Cancelled)
@@ -123,7 +123,7 @@ public sealed class ItemToggleSystem : EntitySystem
         }
         else
         {
-            var ev = new ItemToggleActivateAttemptEvent(args.User);
+            var ev = new ItemToggleActivateAttemptEvent(args.User) { Silent = true }; // Pirate: alert-level restriction - verb building only checks, it must not buzz
             RaiseLocalEvent(ent.Owner, ref ev);
 
             if (ev.Cancelled)

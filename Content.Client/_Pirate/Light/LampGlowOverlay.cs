@@ -189,7 +189,7 @@ public sealed class LampGlowOverlay : Overlay
     {
         var width = (int) MathF.Round(box.Width * TexturePixelsPerTile);
         var height = (int) MathF.Round(box.Height * TexturePixelsPerTile);
-        var image = new Image<Rgba32>(width, height);
+        using var image = new Image<Rgba32>(width, height);
         for (var row = 0; row < height; row++)
         {
             // Image rows start at the top; DrawTextureRect places that row at +Y.

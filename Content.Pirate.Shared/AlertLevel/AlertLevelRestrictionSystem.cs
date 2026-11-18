@@ -82,7 +82,8 @@ public sealed partial class AlertLevelRestrictionSystem : EntitySystem
             return;
 
         args.Cancelled = true;
-        if (!ShouldGiveDenyFeedback(ent.Owner, user))
+        // Verb discovery is silent; do not buzz before the user selects it.
+        if (args.Silent || !ShouldGiveDenyFeedback(ent.Owner, user))
             return;
 
         // ItemToggleSystem displays args.Popup.

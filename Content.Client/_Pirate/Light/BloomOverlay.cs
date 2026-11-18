@@ -35,7 +35,9 @@ public sealed class BloomResources : IDisposable
         if (target?.Texture.Size == size)
             return;
 
-        target?.Dispose();
+        var previous = target;
+        target = null;
+        previous?.Dispose();
         // Float intermediates prevent banding in dim halos; the engine falls back if float framebuffers are unavailable.
         target = clyde.CreateRenderTarget(size,
             new RenderTargetFormatParameters(RenderTargetColorFormat.Rgba16F),

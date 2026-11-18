@@ -3,6 +3,7 @@
 using System.Numerics;
 using Content.Shared.Maps;
 using Robust.Shared.Audio;
+using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -63,6 +64,9 @@ public sealed partial class DeepSpaceScannerComponent : Component
     // Server-side cache; only viewers with the radar UI open receive a scan event.
     [ViewVariables]
     public DeepSpaceScanEvent? LastScan;
+
+    [ViewVariables]
+    public MapId LastScanMap;
 }
 
 [Serializable, NetSerializable]

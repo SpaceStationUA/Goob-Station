@@ -58,6 +58,14 @@ public sealed partial class DeepSpaceScannerSystem : EntitySystem
             return;
         }
 
+        // A scan from another map (other deck, other sector) shows wrong pings: scan again now instead.
+        if (Transform(ent).MapID != ent.Comp.LastScanMap)
+        {
+            ent.Comp.LastScan = null;
+            ent.Comp.NextScan = _timing.CurTime;
+            return;
+        }
+
         if (_player.TryGetSessionByEntity(args.Actor, out var session))
             RaiseNetworkEvent(scan, session);
     }
@@ -75,6 +83,8 @@ public sealed partial class DeepSpaceScannerSystem : EntitySystem
 
             _actors.Clear();
             _actors.UnionWith(_ui.GetActors(uid, RadarConsoleUiKey.Key));
+            if (_actors.Count == 0)
+                continue;
 
             // Recheck here because a new user may have a stale cached level.
             if (TryComp<AlertLevelRestrictedComponent>(uid, out var restricted))
@@ -97,6 +107,7 @@ public sealed partial class DeepSpaceScannerSystem : EntitySystem
             scanner.NextScan = time + scanner.ScanInterval;
             var scan = Scan((uid, scanner), time);
             scanner.LastScan = scan;
+            scanner.LastScanMap = Transform(uid).MapID;
             _appearance.SetData(uid, DeepSpaceScannerVisuals.ScanStart, time);
 
             foreach (var actor in _actors)

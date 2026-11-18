@@ -229,17 +229,20 @@ public sealed partial class VampireSystem : EntitySystem
     {
         var hadBlood = vampire.DrunkBlood > 0;
 
+        var burned = false;
         if (hadBlood)
             DrainBlood(uid, vampire, sunlight);
         else
-            ApplyBloodlessBurn(uid, sunlight);
+            burned = ApplyBloodlessBurn(uid, sunlight);
 
         var damageable = CompOrNull<DamageableComponent>(uid);
         var thresholds = CompOrNull<MobThresholdsComponent>(uid);
         var healthy = IsAboveHalfHealth(uid, damageable, thresholds);
 
         var chance = hadBlood ? sunlight.BloodEffectChance : sunlight.BloodlessEffectChance;
-        TryApplySpaceDamage(uid, healthy, chance, sunlight);
+        // One burn sound per tick, even when the direct burn and the extra effect both hit.
+        if (TryApplySpaceDamage(uid, healthy, chance, sunlight) | burned)
+            _audio.PlayPvs(_spaceBurnSound, uid);
     }
 
     private void DrainBlood(EntityUid uid, VampireComponent vampire, VampireSunlightComponent sunlight)
@@ -251,20 +254,20 @@ public sealed partial class VampireSystem : EntitySystem
         TrySpendBlood(uid, vampire, drain, showPopup: false);
     }
 
-    private void ApplyBloodlessBurn(EntityUid uid, VampireSunlightComponent sunlight)
+    private bool ApplyBloodlessBurn(EntityUid uid, VampireSunlightComponent sunlight)
     {
         if (!_proto.TryIndex(_heatTypeId, out var heat))
-            return;
+            return false;
 
         var spec = new DamageSpecifier(heat, sunlight.BloodlessBurnDamage);
         _damageableSystem.TryChangeDamage(uid, spec, true);
-        _audio.PlayPvs(_spaceBurnSound, uid);
+        return true;
     }
 
-    private void TryApplySpaceDamage(EntityUid uid, bool isHealthy, float chance, VampireSunlightComponent sunlight)
+    private bool TryApplySpaceDamage(EntityUid uid, bool isHealthy, float chance, VampireSunlightComponent sunlight)
     {
         if (!_rand.Prob(Math.Clamp(chance, 0f, 1f)))
-            return;
+            return false;
 
         if (isHealthy)
         {
@@ -279,7 +282,7 @@ public sealed partial class VampireSystem : EntitySystem
             _flammable.AdjustFireStacks(uid, sunlight.FireStacksOnIgnite, ignite: true);
         }
 
-        _audio.PlayPvs(_spaceBurnSound, uid);
+        return true;
     }
 
     private bool IsAboveHalfHealth(EntityUid uid, DamageableComponent? damageable, MobThresholdsComponent? thresholds)
@@ -459,9 +462,10 @@ public sealed partial class VampireSystem : EntitySystem
 
         _alerts.ClearAlertCategory(uid, "Hunger");
 
-        // Match crew hunger's starting fullness band.
-        comp.BloodFullness = comp.StartingBloodFullness
-            ?? _rand.Next((int) comp.PeckishFullness + 10, (int) comp.OverfedFullness);
+        // Match crew hunger's starting band and cap fullness at the configured maximum.
+        var minStart = (int) comp.PeckishFullness + 10;
+        var maxStart = Math.Max(minStart + 1, (int) comp.OverfedFullness);
+        comp.BloodFullness = MathF.Min(comp.MaxBloodFullness, comp.StartingBloodFullness ?? _rand.Next(minStart, maxStart));
         Dirty(uid, comp);
 
         UpdateVampireAlert(uid);

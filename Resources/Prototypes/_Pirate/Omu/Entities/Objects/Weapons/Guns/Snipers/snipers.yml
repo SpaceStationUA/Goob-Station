@@ -68,3 +68,6 @@
     minAngle: 0.5
     maxAngle: 1
     angleIncrease: 0.25
+  - type: GunWieldBonus # Base spread already matches the wielded spread.
+    minAngle: 0
+    maxAngle: 0

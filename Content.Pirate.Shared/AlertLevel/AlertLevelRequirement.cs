@@ -7,6 +7,7 @@ namespace Content.Pirate.Shared.AlertLevel;
 public sealed partial class AlertLevelRequirement
 {
     /// <summary>Ascending alert levels; keep this list aligned with the server-only stationAlerts prototype.</summary>
+    /// <remarks>Include every stationAlerts level in prototype order; vending gates compare positions in this list.</remarks>
     [DataField]
     public List<string> Levels = new()
     {
@@ -14,6 +15,13 @@ public sealed partial class AlertLevelRequirement
         "blue",
         "violet",
         "yellow",
+        "orange",
+        "omicron",
+        "octarine",
+        "honk",
+        "white",
+        "amber",
+        "cyan",
         "red",
         "gamma",
         "delta",
