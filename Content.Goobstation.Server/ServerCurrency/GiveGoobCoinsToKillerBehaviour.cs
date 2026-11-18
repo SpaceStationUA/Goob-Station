@@ -21,6 +21,15 @@ public sealed partial class GiveGoobcoinsToKillerBehaviour : IThresholdBehavior
         if (!system.EntityManager.TryGetComponent(killer, out ActorComponent? actor))
             return;
 
-        IoCManager.Resolve<ICommonCurrencyManager>().AddCurrency(actor.PlayerSession.UserId, Amount);
+        var userId = actor.PlayerSession.UserId;
+        try
+        {
+            IoCManager.Resolve<ICommonCurrencyManager>().AddCurrency(userId, Amount);
+        }
+        catch (Exception ex)
+        {
+            // Pirate: a failed reward must not interrupt the remaining destruction behaviors.
+            Logger.GetSawmill("server_currency").Error($"Could not award {Amount} currency to {userId} for destroying {owner}: {ex}");
+        }
     }
 }

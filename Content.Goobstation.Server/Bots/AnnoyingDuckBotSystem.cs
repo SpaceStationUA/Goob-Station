@@ -3,6 +3,8 @@
 using Content.Goobstation.Shared.Bots;
 using Content.Server.Animals.Components;
 using Content.Server.Animals.Systems;
+using Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
+using Content.Server.Sound;
 using Content.Server.Vocalization.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Sound.Components;
@@ -17,6 +19,7 @@ public sealed partial class AnnoyingDuckBotSystem : EntitySystem
     [Dependency] private AudioSystem _audio = default!;
     [Dependency] private EmagSystem _emag = default!;
     [Dependency] private EggLayerSystem _eggLayer = default!;
+    [Dependency] private EmitSoundSystem _emitSound = default!;
     [Dependency] private IGameTiming _timing = default!;
     [Dependency] private IRobustRandom _random = default!;
 
@@ -40,6 +43,7 @@ public sealed partial class AnnoyingDuckBotSystem : EntitySystem
 
             spam.MinInterval = comp.MinSoundInterval;
             spam.MaxInterval = comp.MaxSoundInterval;
+            _emitSound.SpamEmitSoundReset((uid, spam)); // Pirate: apply the new interval to the pending quack.
         }
 
         if (TryComp<EggLayerComponent>(uid, out var egg))
@@ -60,9 +64,9 @@ public sealed partial class AnnoyingDuckBotSystem : EntitySystem
     }
 
     [SubscribeLocalEvent]
-    private void OnHonk(EntityUid uid, EmaggableAnnoyingDuckBotComponent comp, ref AnnoyingDuckBotHonkEvent args)
+    private void OnHonk(EntityUid uid, EmaggableAnnoyingDuckBotComponent comp, ref HTNRaisedEvent args)
     {
-        if (comp.Sound != null)
+        if (args.Args is AnnoyingDuckBotHonkEvent && comp.Sound != null) // Pirate: the HTN wraps its payload.
             _audio.PlayPvs(comp.Sound, uid);
     }
 }

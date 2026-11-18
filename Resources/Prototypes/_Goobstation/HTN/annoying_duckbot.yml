@@ -52,7 +52,7 @@
   - !type:ComponentQuery
     components:
     - type: HumanoidAppearance
-      species: Human
+      species: Human # Pirate: required to deserialize HumanoidAppearance. The query matches any humanoid, as on HugBot.
   considerations:
   - !type:TargetDistanceCon
     curve: !type:PresetCurve

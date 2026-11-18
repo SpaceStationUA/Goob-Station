@@ -21,6 +21,10 @@ public sealed partial class EdibleComponent : Component
     [DataField]
     public string Solution = "food";
 
+    /// <summary>Whether using the item in hand starts eating it.</summary>
+    [DataField]
+    public bool EatOnUse = true; // Pirate: some foods open as gifts when activated.
+
     /// <summary>
     /// Should this entity be deleted when our solution is emptied?
     /// </summary>
