@@ -26,7 +26,7 @@ namespace Content.Goobstation.Server.Footprints;
 
 public sealed partial class FootprintSystem : EntitySystem
 {
-    [Dependency] private readonly RoundLitterSystem _litter = default!; // Pirate
+    [Dependency] private RoundLitterSystem _litter = default!; // Pirate
     [Dependency] private TransformSystem _transform = default!;
     [Dependency] private SharedMapSystem _map = default!;
     [Dependency] private SharedSolutionContainerSystem _solution = default!;
