@@ -512,6 +512,7 @@
     # Pirate Packs
     - SecurityEquipmentStaticPirate # Pirate: K9 durathread vest.
     - SecurityAmmoStaticPirate
+    - M16AmmoStaticPirate # Pirate: M16 magazine recipes
     - SecurityPeacekeeperAmmoStaticPirate
     - SecurityPeacekeeperWeaponsStaticPirate
     - PirateStraightjacketLatheRecipePackStatic # Pirate - tweak recipes | Add straint-jacket to med and sec fabs.
