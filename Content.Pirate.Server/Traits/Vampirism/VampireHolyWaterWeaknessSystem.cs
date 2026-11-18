@@ -1,5 +1,5 @@
 using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Goobstation.Shared.Religion;
 using Content.Pirate.Server.Traits.Vampirism.Components;
 using Content.Server.Atmos.EntitySystems;

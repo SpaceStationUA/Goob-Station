@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Shared.Administration; // Pirate: staff chats
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Server._EinsteinEngines.Language;
 using Content.Server.Administration.Managers;
 using Content.Server.Body.Components;

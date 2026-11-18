@@ -6,7 +6,7 @@ using System.Linq;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Events;
 using Robust.Server.Player;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Robotics;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;

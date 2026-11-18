@@ -14,7 +14,7 @@ using Robust.Shared.Map;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Content.Shared.CCVar;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Server.Radiation.Components;
 using Content.Shared.BloodCult;
 using Content.Server.BloodCult.Components;

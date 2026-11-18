@@ -141,7 +141,6 @@
   minPlayers: 5
   rules:
     - CalmDynamic
-    - SubGamemodesRule
     - RareIonStormScheduler
     - GlimmerEventScheduler # Pirate
 
@@ -156,7 +155,6 @@
   minPlayers: 30 # Pirate: Blueshift pirates
   rules:
     - CombatDynamic
-    - SubGamemodesRule
     - IonStormScheduler
     - GlimmerEventScheduler # Pirate
 
@@ -172,7 +170,6 @@
   roundCooldown: 3
   rules:
     - ChaoticDynamic
-    - SubGamemodesRule
     - IonStormScheduler
 
 - type: gamePreset
@@ -185,7 +182,6 @@
   showInVote: true
   rules:
     - ClassicDynamic
-    - SubGamemodesRule
     - IonStormScheduler
 
 - type: gamePreset

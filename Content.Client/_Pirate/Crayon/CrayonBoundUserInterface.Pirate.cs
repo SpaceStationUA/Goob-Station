@@ -17,8 +17,8 @@ public sealed partial class CrayonBoundUserInterface
         _menu.OnRotationSelected += degrees => SendPredictedMessage(new CrayonRotationMessage(degrees));
     }
 
-    private void SelectCustom(CrayonSymbol symbol)
+    private void SelectCustom(Guid id)
     {
-        SendMessage(new CrayonSelectSymbolMessage(symbol));
+        SendMessage(new CrayonSelectSymbolMessage(id));
     }
 }

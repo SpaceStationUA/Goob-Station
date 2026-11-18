@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Pirate.Server.ReactionChamber.Components;
 using Content.Pirate.Shared.ReactionChamber;
 using Content.Pirate.Shared.ReactionChamber.Components;

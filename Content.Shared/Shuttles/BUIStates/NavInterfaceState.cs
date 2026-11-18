@@ -24,6 +24,11 @@ public sealed class NavInterfaceState
     // Pirate - docking port data is sent separately to avoid replay duplication.
     public bool RotateWithEntity = true;
 
+    /// <summary>
+    /// Goobstation
+    /// </summary>
+    public bool RotateWithEye = false;
+
     // Frontier fields
 
     /// <summary>

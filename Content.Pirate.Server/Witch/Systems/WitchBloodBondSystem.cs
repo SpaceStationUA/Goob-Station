@@ -1,6 +1,6 @@
 using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
 using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Pirate.Shared.Witch.Components;
 using Content.Shared.Damage;
 using Content.Shared.Mobs.Components;

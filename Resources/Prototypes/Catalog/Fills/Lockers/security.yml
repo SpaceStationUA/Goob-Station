@@ -50,7 +50,7 @@
     #- id: NetworkConfigurator # Goobstation?
     - id: Binoculars
     - id: WardenGunCase # Pirate: Omu duty case
-    - id: ClothingHandsGlovesKravMaga # Goobstation - Martial Arts
+    - id: UndeterminedGlovesWarden # Goobstation - Martial Arts
     - id: BoxLethalInjection # Goobstation
     - id: ClothingHeadsetAltWarden # Goobstation
     - id: Multitool # Goobstation

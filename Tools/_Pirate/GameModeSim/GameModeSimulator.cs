@@ -13,7 +13,7 @@ using Content.Shared.Storage;
 
 namespace Content.Pirate.GameModeSim;
 
-public sealed class GameModeSimulator
+public sealed partial class GameModeSimulator
 {
     private const double TickSeconds = 1;
     private const double PopulationStepSeconds = 10;
@@ -1079,6 +1079,7 @@ public sealed class GameModeSimulator
         for (var i = 0; i < rule.Antags.Count; i++)
         {
             var def = rule.Antags[i];
+            var pickPlayer = def.PickPlayer && (instance.Roundstart || !rule.SelectionPrePlayerSpawn);
             var count = TargetAntagCount(instance.Defs, pool, i);
             instance.AntagTarget += count;
             var cost = budget != null ? DefinitionCost(budget, def) : 0;
@@ -1086,17 +1087,17 @@ public sealed class GameModeSimulator
             for (var k = 0; k < count; k++)
             {
                 // Charge ghost-role points on takeover; crew picks are charged immediately.
-                if (def.PickPlayer && budget != null && cost > 0 && cost > TpAvailable(instance))
+                if (pickPlayer && budget != null && cost > 0 && cost > TpAvailable(instance))
                 {
                     instance.AntagBlocked += count - k;
                     break;
                 }
 
                 SimPerson? person = null;
-                if (def.PickPlayer)
+                if (pickPlayer)
                     person = PickCrewAntag();
 
-                if (person == null && def.PickPlayer && !def.HasSpawner)
+                if (person == null && pickPlayer && !def.HasSpawner)
                 {
                     instance.AntagUnfilled += count - k;
                     break;
@@ -1117,7 +1118,7 @@ public sealed class GameModeSimulator
                     continue;
                 }
 
-                // Untaken ghost-role spawners persist for the whole round.
+                // Director purchases can expire untaken spawners; other schedulers retain them.
                 _pendingGhostRoles.Add(new PendingGhostRole
                 {
                     Instance = instance,
@@ -1246,42 +1247,12 @@ public sealed class GameModeSimulator
 
     private void DirectorAdded(DirectorState state)
     {
-        var d = state.Scheduler;
-        state.RoundstartAntags.Clear();
-        if (d.NoRoundstartAntags)
+        if (!TryStartNewStory(state, TotalPlayers(), null))
             return;
 
-        var playerCount = TotalPlayers();
-        if (!_data.WeightTables.TryGetValue(d.RoundstartTable, out var weights))
-        {
-            Warn($"{d.Id}: missing weight table {d.RoundstartTable}");
-            return;
-        }
-
-        var firstPick = PickWeighted(weights.Select(w => (w.Key, (double) w.Value)).ToList());
-        if (firstPick == null)
-            return;
-
-        DirectorTryStartGameMode(state, firstPick, playerCount);
-
-        if (!d.DualAntags)
-            return;
-
-        // The first rule excludes a second only when its incompatibleModes lists it.
-        var available = _data.IncompatibleModes.TryGetValue(firstPick, out var incompatible)
-            ? weights.Where(w => !incompatible.Contains(w.Key)).ToList()
-            : weights.ToList();
-        if (available.Count > 0 && PickWeighted(available.Select(w => (w.Key, (double) w.Value)).ToList()) is { } second)
-            DirectorTryStartGameMode(state, second, playerCount);
-    }
-
-    private void DirectorTryStartGameMode(DirectorState state, string ruleId, int playerCount)
-    {
-        if (!_data.Rules.TryGetValue(ruleId, out var rule) || rule.MinPlayers > playerCount)
-            return;
-
-        state.RoundstartAntags.Add(ruleId);
-        AddRule(ruleId, "roundstart");
+        // The scenario's initial crew is the ready pool; it is already fixed before spawning.
+        var ready = _scenario.RoundstartPlayers;
+        PlanDirectorRoundstart(state, _data.Stories[state.CurrentStory!], ready > 0 ? ready + _cfg.PlayerCountBias : TotalPlayers());
     }
 
     private void DirectorTick(DirectorState state)
@@ -1290,7 +1261,7 @@ public sealed class GameModeSimulator
         if (state.Ended || _now < state.TimeNextEvent)
             return;
 
-        if (d.Stories is not { Length: > 0 })
+        if (d.Stories.Count == 0)
         {
             state.Ended = true;
             return;
@@ -1307,26 +1278,45 @@ public sealed class GameModeSimulator
             state.FirstEventScheduled = true;
             state.TimeNextEvent = _now + _cfg.DirectorMinimumTimeUntilFirstEvent / speedup;
             state.LastBudgetUpdate = _now;
+            foreach (var department in d.SpotlightDepartments.Values)
+                state.LastSpotlight[department] = _now;
             return;
         }
 
         RegenerateDestructionBudget(state);
+        CleanupDirectorSpawners(state, false);
 
         var pending = CalculatePendingChaos(state);
         var effective = chaos + pending;
         var goal = EffectiveGoal(state, beat, count);
 
-        var chosen = DirectorChooseEvent(state, beat, goal, effective, count);
+        var relaxing = UpdateDirectorRelax(state, chaos, count);
+        var threat = MeasureDirectorThreat(state, beat, count);
+        if (TryDirectorArmedResponse(state, chaos, count)
+            || !relaxing && TryPurchaseDirectorThreat(state, count, threat))
+        {
+            ScheduleDirectorEvent(state, beat, count);
+            return;
+        }
+
+        var chosen = DirectorChooseEvent(state, beat, goal, effective, count, relaxing);
         if (chosen == null)
         {
             state.TimeNextEvent = _now + d.NoEventRetryDelay / speedup;
             return;
         }
 
-        AddRule(chosen.Rule.Id, "midround");
-        state.Fired.Add(new FiredDirectorEvent(chosen.Rule.Id, _now, chosen.Chaos));
+        var rule = AddRule(chosen.Rule.Id, "midround");
+        state.Fired.Add(new FiredDirectorEvent(rule, _now, chosen.Chaos));
+        if (IsDirectorHelpEvent(chosen))
+            state.LastHelp = _now;
+        foreach (var (metric, value) in chosen.Chaos.ChaosDict)
+        {
+            if (value > 0 && d.SpotlightDepartments.TryGetValue(metric, out var department))
+                state.LastSpotlight[department] = _now;
+        }
         state.DestructionBudget = MathF.Max(0f, state.DestructionBudget - chosen.Destruction);
-        state.TimeNextEvent = _now + NextFloat(beat.EventDelayMin, beat.EventDelayMax) / speedup;
+        ScheduleDirectorEvent(state, beat, count);
     }
 
     private void RegenerateDestructionBudget(DirectorState state)
@@ -1341,14 +1331,25 @@ public sealed class GameModeSimulator
     {
         var d = state.Scheduler;
         var speedup = _cfg.EventSpeedup;
-        var keep = Math.Max(d.PendingDuration, d.RepeatWindow);
+        var groupWindow = _data.EventGroups.Select(g => g.Window.TotalSeconds).DefaultIfEmpty(0).Max();
+        var keep = new[] { d.PendingDuration, d.RepeatWindow, d.EffectDelay, groupWindow }.Max();
         state.Fired.RemoveAll(fired => (_now - fired.Time) * speedup > keep);
 
         var pending = new ChaosMetrics();
         foreach (var fired in state.Fired)
         {
             var age = (_now - fired.Time) * speedup;
+            if (age >= d.PendingDuration)
+                continue;
+
+            var rule = fired.Rule;
             var remaining = 1.0 - age / d.PendingDuration;
+            if (rule.Rule.Event != null)
+            {
+                remaining = 1.0;
+                if (rule.Started && rule.EndAt is { } end && _now >= end)
+                    remaining = Math.Max(0.0, 1.0 - (_now - end) * speedup / d.SettleTime);
+            }
             if (remaining <= 0)
                 continue;
 
@@ -1387,7 +1388,7 @@ public sealed class GameModeSimulator
 
         SkipUnstaffedBeats(state, count);
 
-        if (state.RemainingBeats.Count == 0 && !TryStartNewStory(state, count))
+        if (state.RemainingBeats.Count == 0 && !TryStartNewStory(state, count.Connected, count))
             state.RemainingBeats.Add(state.Scheduler.FallbackBeat);
 
         return StartBeat(state, chaos, state.RemainingBeats[0]);
@@ -1435,6 +1436,7 @@ public sealed class GameModeSimulator
         if (_roundEndRequested && !active)
         {
             state.RemainingBeats.Insert(0, denouement);
+            CleanupDirectorSpawners(state, true);
         }
         else if (!_roundEndRequested && active)
         {
@@ -1464,42 +1466,30 @@ public sealed class GameModeSimulator
         return beat;
     }
 
-    private bool TryStartNewStory(DirectorState state, DirectorPlayerCount count)
+    private bool TryStartNewStory(DirectorState state, int connected, DirectorPlayerCount? count)
     {
-        if (state.Scheduler.Stories == null)
-            return false;
+        var candidates = state.Scheduler.Stories
+            .Where(p => p.Value > 0 && _data.Stories.TryGetValue(p.Key, out var story)
+                && story.Beats is { Length: > 0 } && story.MinPlayers <= connected && story.MaxPlayers >= connected)
+            .ToList();
 
-        var stories = state.Scheduler.Stories.ToList();
-        for (var n = stories.Count - 1; n > 0; n--)
+        while (candidates.Count > 0)
         {
-            var k = _rand.Next(n + 1);
-            (stories[k], stories[n]) = (stories[n], stories[k]);
-        }
-
-        foreach (var storyName in stories)
-        {
-            if (!_data.Stories.TryGetValue(storyName, out var story) || !IsStoryValid(state, story, count))
-                continue;
-
+            var chosen = DirectorPick(candidates, p => p.Value);
+            candidates.Remove(chosen);
+            var story = _data.Stories[chosen.Key];
             state.RemainingBeats.AddRange(story.Beats!.Select(b => b.Id));
-            SkipUnstaffedBeats(state, count);
+            if (count != null)
+                SkipUnstaffedBeats(state, count);
             if (state.RemainingBeats.Count == 0)
                 continue;
 
-            state.CurrentStory = storyName;
-            DirectorSetupEvents(state);
+            state.CurrentStory = chosen.Key;
+            DirectorSetupEvents(state, story);
             return true;
         }
 
         return false;
-    }
-
-    private static bool IsStoryValid(DirectorState state, StoryPrototype story, DirectorPlayerCount count)
-    {
-        return story.Beats is { Length: > 0 }
-               && story.MinPlayers <= count.InGame
-               && story.MaxPlayers >= count.InGame
-               && !state.RoundstartAntags.Any(id => story.BlockedRoundstartAntags.Contains(id));
     }
 
     private float PopulationScale(DirectorState state, DirectorPlayerCount count)
@@ -1533,11 +1523,12 @@ public sealed class GameModeSimulator
         return goal;
     }
 
-    private void DirectorSetupEvents(DirectorState state)
+    private void DirectorSetupEvents(DirectorState state, StoryPrototype story)
     {
         state.PossibleEvents.Clear();
         IEnumerable<SimRule> rules;
-        if (state.Scheduler.Table is { } table)
+        var selected = story.Events is { } events ? _data.Tables[events.Id] : state.Scheduler.Table;
+        if (selected is { } table)
         {
             var seen = new HashSet<string>();
             var list = new List<SimRule>();
@@ -1551,11 +1542,15 @@ public sealed class GameModeSimulator
         }
         else
         {
-            rules = _data.StationEvents;
+            rules = _data.StationEvents.Where(rule => rule.Event!.IsSelectable);
         }
 
+        var threatTable = _data.ThreatTables[state.Scheduler.ThreatTable];
         foreach (var rule in rules)
-            state.PossibleEvents.Add(CreatePossibleEvent(rule));
+        {
+            if (!threatTable.Rules.TryGetValue(rule.Id, out var threat) || threat <= 0)
+                state.PossibleEvents.Add(CreatePossibleEvent(rule));
+        }
     }
 
     private static DirectorEvent CreatePossibleEvent(SimRule rule)
@@ -1600,40 +1595,57 @@ public sealed class GameModeSimulator
         return required;
     }
 
-    private static float DirectorScore(ChaosMetrics chaos)
+    private static float DirectorMetricScale(SimDirector d, ChaosMetric metric, float populationScale)
     {
-        return chaos.ChaosDict.Values.Sum(v => (float) v * (float) v);
+        var scale = d.MetricScales.GetValueOrDefault(metric, 100f);
+        if (d.PopulationScaledMetrics.Contains(metric))
+            scale *= populationScale;
+        return MathF.Max(1f, scale);
+    }
+
+    private static float DirectorBenefit(SimDirector d, ChaosMetrics desired, ChaosMetrics change, float populationScale)
+    {
+        var benefit = 0f;
+        foreach (var (metric, want) in desired.ChaosDict)
+        {
+            var scale = DirectorMetricScale(d, metric, populationScale);
+            var wanted = (float) want / scale;
+            var residual = wanted - (float) change.ChaosDict.GetValueOrDefault(metric) / scale;
+            var penalty = residual != 0f && MathF.Sign(residual) != MathF.Sign(wanted) ? d.OvershootPenalty : 1f;
+            benefit += wanted * wanted - penalty * residual * residual;
+        }
+        return benefit;
     }
 
     private DirectorEvent? DirectorChooseEvent(DirectorState state, StoryBeatPrototype beat, ChaosMetrics goal,
-        ChaosMetrics chaos, DirectorPlayerCount count)
+        ChaosMetrics chaos, DirectorPlayerCount count, bool relaxing)
     {
-        if (beat.AllowReinforcements && TryChooseReinforcement(state, beat, count) is { } reinforcement)
+        if ((beat.AllowReinforcements || relaxing) && TryChooseReinforcement(state, beat, count, relaxing) is { } reinforcement)
             return reinforcement;
 
         var desiredChange = goal.ExclusiveSubtract(chaos);
-        var noEventScore = DirectorScore(desiredChange);
+        var populationScale = PopulationScale(state, count);
 
         var ranked = new List<(DirectorEvent Event, float Score)>();
         var calm = new List<(DirectorEvent Event, float Score)>();
         foreach (var possible in state.PossibleEvents)
         {
-            if (possible.Reinforces.Count > 0 || !CanDirectorRun(state, beat, possible, count))
+            if (possible.Reinforces.Count > 0 || !CanDirectorRun(state, beat, possible, count, relaxing))
                 continue;
 
             var repeat = RepeatMultiplier(state, possible.Rule.Id);
             if (possible.Chaos.Empty)
             {
-                if (beat.AllowCalmEvents && possible.EventType != "HostilesSpawn")
+                if (beat.AllowCalmEvents && !relaxing && possible.EventType != "HostilesSpawn")
                     calm.Add((possible, possible.Weight * repeat));
                 continue;
             }
 
-            var benefit = noEventScore - DirectorScore(desiredChange.ExclusiveSubtract(possible.Chaos));
+            var benefit = DirectorBenefit(state.Scheduler, desiredChange, possible.Chaos, populationScale);
             if (benefit <= 0)
                 continue;
 
-            ranked.Add((possible, benefit * repeat));
+            ranked.Add((possible, benefit * repeat * DirectorSpotlightMultiplier(state, possible, count)));
         }
 
         if (ranked.Count > 0)
@@ -1645,7 +1657,7 @@ public sealed class GameModeSimulator
         return calm.Count == 0 ? null : DirectorPickWeighted(calm, r => r.Score);
     }
 
-    private DirectorEvent? TryChooseReinforcement(DirectorState state, StoryBeatPrototype beat, DirectorPlayerCount count)
+    private DirectorEvent? TryChooseReinforcement(DirectorState state, StoryBeatPrototype beat, DirectorPlayerCount count, bool relaxing)
     {
         var d = state.Scheduler;
         if (state.HasReinforced && (_now - state.LastReinforcement) * _cfg.EventSpeedup < d.ReinforcementCooldown)
@@ -1660,7 +1672,7 @@ public sealed class GameModeSimulator
 
             var threshold = Math.Max(1, (int) MathF.Round(possible.UnderstaffedBelow * scale));
             var understaffed = possible.Reinforces.Count(dep => count.Staff(dep) < threshold);
-            if (understaffed == 0 || !CanDirectorRun(state, beat, possible, count))
+            if (understaffed == 0 || !CanDirectorRun(state, beat, possible, count, relaxing))
                 continue;
 
             candidates.Add((possible, possible.Weight * understaffed * RepeatMultiplier(state, possible.Rule.Id)));
@@ -1675,13 +1687,16 @@ public sealed class GameModeSimulator
         return picked;
     }
 
-    private bool CanDirectorRun(DirectorState state, StoryBeatPrototype beat, DirectorEvent possible, DirectorPlayerCount count)
+    private bool CanDirectorRun(DirectorState state, StoryBeatPrototype beat, DirectorEvent possible, DirectorPlayerCount count, bool relaxing)
     {
         var d = state.Scheduler;
         if (possible.Destruction > beat.MaxDestruction
             || possible.Destruction > state.DestructionBudget
             || possible.RequiredGhosts > count.Ghosts
             || beat.BlockedEventTypes.Any(t => t.Id == possible.EventType)
+            || (beat.HelpOnly || relaxing) && possible.Chaos.ChaosDict.Values.Any(v => v > 0)
+            || IsDirectorHelpEvent(possible) && state.LastHelp != 0
+                && (_now - state.LastHelp) * _cfg.EventSpeedup < d.HelpCooldown
             || !HasResponders(d, possible.Chaos, count)
             || possible.RequiresStaff.Any(dep => count.Staff(dep) < d.MinResponders))
             return false;
@@ -1705,35 +1720,62 @@ public sealed class GameModeSimulator
     private float RepeatMultiplier(DirectorState state, string ruleId)
     {
         var d = state.Scheduler;
+        var groups = _data.EventGroups.Where(g => g.Events.Any(e => e.Id == ruleId)).ToList();
         var multiplier = 1f;
         foreach (var fired in state.Fired)
         {
-            if (fired.Id != ruleId)
+            var age = (_now - fired.Time) * _cfg.EventSpeedup;
+            if (fired.Rule.Rule.Id == ruleId)
+            {
+                multiplier *= DirectorRecovery(d.RepeatFactor, age, d.RepeatWindow);
                 continue;
+            }
 
-            var progress = (float) Math.Clamp((_now - fired.Time) * _cfg.EventSpeedup / d.RepeatWindow, 0.0, 1.0);
-            multiplier *= d.RepeatFactor + (1f - d.RepeatFactor) * progress;
+            foreach (var group in groups)
+            {
+                if (group.Events.Any(e => e.Id == fired.Rule.Rule.Id))
+                    multiplier *= DirectorRecovery(group.Factor, age, group.Window.TotalSeconds);
+            }
         }
-
         return multiplier;
     }
 
-    private DirectorEvent DirectorPickWeighted(List<(DirectorEvent Event, float Score)> events,
-        Func<(DirectorEvent Event, float Score), float> weight)
+    private static float DirectorRecovery(float factor, double age, double window)
     {
-        var total = events.Sum(e => Math.Max(0f, weight(e)));
+        return factor + (1f - factor) * (float) Math.Clamp(age / window, 0.0, 1.0);
+    }
+
+    private float DirectorSpotlightMultiplier(DirectorState state, DirectorEvent possible, DirectorPlayerCount count)
+    {
+        var d = state.Scheduler;
+        var idle = 0f;
+        foreach (var (metric, value) in possible.Chaos.ChaosDict)
+        {
+            if (value <= 0 || !d.SpotlightDepartments.TryGetValue(metric, out var department)
+                || count.Staff(department) < d.MinResponders || !state.LastSpotlight.TryGetValue(department, out var last))
+                continue;
+            idle = MathF.Max(idle, (float) Math.Clamp((_now - last) * _cfg.EventSpeedup / d.SpotlightWindow, 0.0, 1.0));
+        }
+        return 1f + d.SpotlightBonus * idle;
+    }
+
+    private DirectorEvent DirectorPickWeighted(List<(DirectorEvent Event, float Score)> events,
+        Func<(DirectorEvent Event, float Score), float> weight) => DirectorPick(events, weight).Event;
+
+    private T DirectorPick<T>(IReadOnlyList<T> items, Func<T, float> weight)
+    {
+        var total = items.Sum(e => Math.Max(0f, weight(e)));
         if (total <= 0f)
-            return events[_rand.Next(events.Count)].Event;
+            return items[_rand.Next(items.Count)];
 
         var roll = NextFloat(0f, total);
-        foreach (var e in events)
+        foreach (var item in items)
         {
-            roll -= Math.Max(0f, weight(e));
+            roll -= Math.Max(0f, weight(item));
             if (roll <= 0f)
-                return e.Event;
+                return item;
         }
-
-        return events[^1].Event;
+        return items[^1];
     }
 
     private DirectorPlayerCount DirectorCount()
@@ -1763,6 +1805,7 @@ public sealed class GameModeSimulator
 
         count.Players += _cfg.PlayerCountBias;
         count.InGame += _cfg.PlayerCountBias;
+        count.Connected = Math.Max(TotalPlayers(), count.InGame);
         return count;
     }
 
@@ -1813,6 +1856,7 @@ public sealed class GameModeSimulator
             { ChaosMetric.Security, Math.Max(0, hostile - securityStrength) + World(ChaosMetric.Security) },
             { ChaosMetric.Anomaly, World(ChaosMetric.Anomaly) },
             { ChaosMetric.Atmos, World(ChaosMetric.Atmos) },
+            { ChaosMetric.Fire, World(ChaosMetric.Fire) },
             { ChaosMetric.Power, World(ChaosMetric.Power) },
             { ChaosMetric.Infestation, World(ChaosMetric.Infestation) },
             { ChaosMetric.Mess, World(ChaosMetric.Mess) },
@@ -2130,10 +2174,27 @@ public sealed class DirectorState(SimDirector scheduler)
     public double LastBudgetUpdate;
     public bool HasReinforced;
     public double LastReinforcement;
-    public readonly List<string> RoundstartAntags = new();
+    public double LastHelp;
+    public double RelaxUntil;
+    public double OverwhelmedSince;
+    public double LastArmedResponse;
+    public int ArmedResponseCount;
+    public readonly Dictionary<string, double> LastSpotlight = new();
+    public readonly List<DirectorPurchase> Purchases = new();
 }
 
-public readonly record struct FiredDirectorEvent(string Id, double Time, ChaosMetrics Chaos);
+public readonly record struct FiredDirectorEvent(RuleInstance Rule, double Time, ChaosMetrics Chaos);
+
+public sealed class DirectorPurchase
+{
+    public RuleInstance Rule = default!;
+    public float Threat;
+    public int Count;
+    public double Time;
+    public bool Roundstart;
+    public bool GhostRole;
+    public bool SpawnersCleared;
+}
 
 public sealed class DirectorEvent
 {
@@ -2150,6 +2211,7 @@ public sealed class DirectorEvent
 
 public sealed class DirectorPlayerCount
 {
+    public int Connected;
     public int Players;
     public int Ghosts;
     public int InGame;

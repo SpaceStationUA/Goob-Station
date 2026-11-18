@@ -22,7 +22,7 @@ using Content.Shared.Destructible;
 using Content.Shared.Destructible.Thresholds.Triggers;
 using Robust.Shared.Audio;
 using Content.Shared.Physics;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.CombatMode;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;

@@ -7,7 +7,7 @@ using System;
 using System.Numerics;
 using Content.Shared.Actions;
 using Content.Shared.Damage;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared._Pirate.MalfAI;
 using Content.Server.Damage.Systems;
 using Content.Shared.Silicons.StationAi;

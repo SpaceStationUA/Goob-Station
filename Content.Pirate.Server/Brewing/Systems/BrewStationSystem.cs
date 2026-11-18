@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Pirate.Shared.Brewing;
 using Content.Pirate.Shared.Brewing.Components;
 using Content.Server.Chemistry.EntitySystems;

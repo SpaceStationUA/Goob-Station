@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // Pirate: adapted from AU-14/ColonialMarinesUniverse#2179.
 
-using System.Linq;
 using Content.Shared._Pirate.Crayon;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
@@ -9,7 +8,7 @@ using Robust.Shared.Utility;
 namespace Content.Client._Pirate.Crayon;
 
 /// <summary>
-/// The player's saved crayon symbols, one per line in user data: name|size|colours|pixels.
+/// Reads pre-library drawings for players who choose to import them into a server library.
 /// </summary>
 public sealed class CrayonSymbolStorage
 {
@@ -25,24 +24,6 @@ public sealed class CrayonSymbolStorage
         Load();
     }
 
-    public string Save(string name, CrayonSymbol symbol)
-    {
-        // Editors can outlive their crayon window, so merge against the latest library.
-        Load();
-        name = name.Replace('|', ' ').Replace('\r', ' ').Replace('\n', ' ');
-        Symbols.RemoveAll(s => s.Name == name);
-        Symbols.Add((name, symbol));
-        Write();
-        return name;
-    }
-
-    public void Delete(string name)
-    {
-        Load();
-        Symbols.RemoveAll(s => s.Name == name);
-        Write();
-    }
-
     private void Load()
     {
         Symbols.Clear();
@@ -54,16 +35,6 @@ public sealed class CrayonSymbolStorage
         {
             if (Parse(line) is { } entry)
                 Symbols.Add(entry);
-        }
-    }
-
-    private void Write()
-    {
-        using var writer = _resources.UserData.OpenWriteText(File);
-        foreach (var (name, symbol) in Symbols)
-        {
-            var colors = string.Join(',', symbol.Palette.Select(c => c.ToHex()));
-            writer.WriteLine($"{name}|{symbol.Size}|{colors}|{Convert.ToBase64String(symbol.Pixels)}");
         }
     }
 

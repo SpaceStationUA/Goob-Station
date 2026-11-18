@@ -2,7 +2,7 @@
 
 using Content.Shared.Damage.Components; // Pirate: upstream damage namespace migration.
 using System.Linq;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.EntityEffects;

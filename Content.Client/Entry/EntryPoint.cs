@@ -136,6 +136,9 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("storyBeat"); // Goobstation
             _prototypeManager.RegisterIgnore("weatherScheduler"); // starcup
             _prototypeManager.RegisterIgnore("pirateVoting"); // Pirate: voting penalties and runoffs
+            _prototypeManager.RegisterIgnore("antagPool"); // Goobstation
+            _prototypeManager.RegisterIgnore("antagThreat"); // Goobstation
+            _prototypeManager.RegisterIgnore("directorEventGroup"); // Goobstation
 
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();

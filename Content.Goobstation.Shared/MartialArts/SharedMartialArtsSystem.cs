@@ -544,7 +544,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         {
             var original = new DamageSpecifier();
             foreach (var (type, amount) in knowledge.OriginalFistDamage)
-                original.DamageDict[type] = Content.Goobstation.Maths.FixedPoint.FixedPoint2.New(amount);
+                original.DamageDict[type] = Content.Shared.FixedPoint.FixedPoint2.New(amount);
 
             melee.Damage = original;
         }

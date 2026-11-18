@@ -67,8 +67,8 @@
     - !type:GroupSelector
       weight: 7
       children:
-      - id: MailSpamLetter # Pirate: one localized prototype replaces the numbered spam IDs.
-        weight: 12
+      - id: MailSpamLetter
+        weight: 12 # Pirate: preserve the existing spam frequency.
       - id: MailSELFSpamLetter # Pirate: SELF
         weight: 0.4
 
