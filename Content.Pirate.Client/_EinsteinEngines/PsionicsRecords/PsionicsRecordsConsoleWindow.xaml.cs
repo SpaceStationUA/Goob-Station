@@ -271,7 +271,7 @@ public sealed partial class PsionicsRecordsConsoleWindow : DefaultWindow
 
         return state == null
             ? new SpriteSpecifier.Rsi(new ResPath("Interface/Misc/job_icons.rsi"), "Unknown")
-            : new SpriteSpecifier.Rsi(new ResPath("_EinsteinEngines/Interface/Misc/psionics_icons.rsi"), state);
+            : new SpriteSpecifier.Rsi(new ResPath("_Pirate/_EinsteinEngines/Interface/Misc/psionics_icons.rsi"), state);
     }
 
     private static string GetGenderName(Gender gender)

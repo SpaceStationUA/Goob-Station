@@ -23,3 +23,15 @@
   parent: [ClothingEyesEyepatchHudTintedSecurity, ClothingHeadEyeBaseFlipped]
   id: ClothingEyesEyepatchHudTintedSecurityFlipped
   name: "тонована охоронна пов'язка"
+
+- type: entity
+  parent: [ClothingEyesBase, BaseMantisContraband]
+  id: ClothingEyesHudEpistemics
+  name: epi psionics hud
+  description: A heads-up display that scans the humanoids in view and provides accurate data about their psionics records.
+  components:
+  - type: Sprite
+    sprite: _Pirate/_EinsteinEngines/Clothing/Eyes/Hud/epi.rsi
+  - type: Clothing
+    sprite: _Pirate/_EinsteinEngines/Clothing/Eyes/Hud/epi.rsi
+  - type: ShowPsionicsRecordIcons

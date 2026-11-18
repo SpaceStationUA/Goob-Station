@@ -95,7 +95,7 @@ public sealed partial class PsionicsMenu : FancyWindow
 	        if (_prototypeManager.TryIndex<JobIconPrototype>(stationRecord.JobIcon, out var proto))
 	            PersonJobIcon.Texture = _spriteSystem.Frame0(proto.Icon);
 	        if (psionicsRecord.Status != PsionicsStatus.None)
-	            specifier = new SpriteSpecifier.Rsi(new ResPath("_EinsteinEngines/Interface/Misc/psionics_icons.rsi"), GetStatusIcon(psionicsRecord.Status));
+	            specifier = new SpriteSpecifier.Rsi(new ResPath("_Pirate/_EinsteinEngines/Interface/Misc/psionics_icons.rsi"), GetStatusIcon(psionicsRecord.Status));
 
         PersonStatusTX.SetFromSpriteSpecifier(specifier);
         PersonStatusTX.DisplayRect.TextureScale = new Vector2(3f, 3f);

@@ -221,3 +221,15 @@
   - type: IdCard
     jobTitle: job-name-security-instructor
     jobIcon: JobIconSecurityInstructor
+
+- type: entity
+  parent: IDCardStandard
+  id: ForensicMantisIDCard
+  name: psionic mantis ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idmantis # Pirate: use the existing local Mantis ID icon instead of porting DV job icons.
+  - type: PresetIdCard
+    job: ForensicMantis

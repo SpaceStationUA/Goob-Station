@@ -159,3 +159,22 @@
     Steel: 1000
     Plastic: 500
     Silver: 150
+
+- type: latheRecipe
+  id: ClothingHeadCage
+  icon:
+    sprite: _Pirate/Nyanotrasen/Clothing/Head/Hats/cage.rsi
+    state: icon
+  result: ClothingHeadCage
+  completetime: 4
+  materials:
+    Steel: 400
+    BSCrystal: 20
+
+- type: latheRecipe
+  id: ClothingHeadHelmetInsulated
+  result: ClothingHeadHelmetInsulated
+  completetime: 4
+  materials:
+    Steel: 400
+    BSCrystal: 20

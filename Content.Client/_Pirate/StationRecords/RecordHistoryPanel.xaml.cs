@@ -22,7 +22,7 @@ public sealed partial class RecordHistoryPanel : BoxContainer
 
     private static readonly ResPath LogIcons = new("_Pirate/Interface/record_log_icons.rsi");
     private static readonly ResPath SecurityIcons = new("Interface/Misc/security_icons.rsi");
-    private static readonly ResPath PsionicsIcons = new("_EinsteinEngines/Interface/Misc/psionics_icons.rsi");
+    private static readonly ResPath PsionicsIcons = new("_Pirate/_EinsteinEngines/Interface/Misc/psionics_icons.rsi");
     private static readonly ResPath JobIcons = new("Interface/Misc/job_icons.rsi");
     private static readonly Color NoteColor = Color.FromHex("#8EAAD4");
     private static readonly Color BackgroundColor = Color.FromHex("#EFB04A");

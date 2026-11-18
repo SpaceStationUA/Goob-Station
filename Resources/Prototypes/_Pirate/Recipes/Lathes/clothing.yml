@@ -27,3 +27,13 @@
   completetime: 4
   materials:
     Cloth: 300
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitMantis
+  result: ClothingUniformJumpsuitMantis
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformSkirtMantis
+  result: ClothingUniformSkirtMantis
