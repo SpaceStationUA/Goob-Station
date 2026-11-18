@@ -124,7 +124,8 @@ public sealed class RoundLitterTest : InteractionTest
         var puddles = Server.System<PuddleSystem>();
         await Server.WaitAssertion(() =>
         {
-            puddles.SpillPersistentAt(ToServer(PlayerCoords), new Solution("Blood", 10), sound: false);
+            var coords = MapSystem.GridTileToLocal(MapData.Grid, MapData.Grid.Comp, MapData.Tile.GridIndices);
+            puddles.SpillPersistentAt(coords, new Solution("Blood", 10), sound: false);
             Assert.That(puddles.TryGetPuddle(MapData.Tile, out var placed));
             Assert.That(puddles.TrySpillAt(MapData.Tile, new Solution("Blood", 1), out var existing, sound: false, tileReact: false));
             Assert.That(existing, Is.EqualTo(placed));
@@ -140,7 +141,7 @@ public sealed class RoundLitterTest : InteractionTest
         var dna = ("test DNA", TimeSpan.Zero);
         await Server.WaitAssertion(() =>
         {
-            var splash = new SplashOnWallEvent(ToServer(PlayerCoords), new Solution("Blood", 20));
+            var splash = new SplashOnWallEvent(Xform(wall).Coordinates, new Solution("Blood", 20));
             SEntMan.EventBus.RaiseEvent(EventSource.Local, ref splash);
             var children = Xform(wall).ChildEnumerator;
             while (children.MoveNext(out var child))
