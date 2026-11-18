@@ -18,7 +18,7 @@ using Content.Shared.Item;
 using Content.Shared.Standing;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;

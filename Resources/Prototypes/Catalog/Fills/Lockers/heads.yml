@@ -148,8 +148,6 @@
     - id: ClothingNeckGoldmedal
     - id: DoorRemoteService
     - id: HoPIDCard
-    - id: ComputerFundingAllocationFlatpack # Goobstation
-    - id: ComputerCargoRequestServiceFlatpack # Goobstation
     - id: WeaponDisabler
     - id: ClothingEyesHudCommand
     - id: ServiceTechFabCircuitboard # Goobstation - Service Techfab
@@ -158,6 +156,7 @@
     - id: Eftpos #Pirate banking
     - id: WalletCartridge #Pirate banking
     - id: PhotoAlbumDepartmentService
+    - id: ShredderFlatpack # Goob
 
 - type: entity
   id: LockerHeadOfPersonnelFilled

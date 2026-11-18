@@ -2,8 +2,7 @@
 
 - type: entity
   id: MailSpamLetter
-  # Pirate: Resolve the paper name, description, and body from the localized dataset.
-  name: spam letter
+  name: Spam letter
   description: Even space isn't safe from junk mail.
   parent: Paper
   components:

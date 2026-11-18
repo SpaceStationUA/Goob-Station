@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared._Pirate.Durability;
 using Content.Shared._Pirate.Knowledge.Quality;
 using Content.Shared.Damage.Components;

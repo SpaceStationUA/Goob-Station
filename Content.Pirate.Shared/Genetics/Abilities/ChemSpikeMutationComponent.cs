@@ -9,7 +9,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.Serialization;
 
 using Content.Shared.Actions.Components;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 
 namespace Content.Pirate.Shared.Genetics.Abilities;
 

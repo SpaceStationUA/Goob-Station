@@ -23,6 +23,7 @@ public sealed partial class CrayonWindow
 
     public void SetCrayon(EntityUid crayon)
     {
+        Library.Request();
         _crayon = crayon;
         PirateSyncRotation();
     }

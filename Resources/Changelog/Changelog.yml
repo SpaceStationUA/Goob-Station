@@ -8191,3 +8191,26 @@ Entries:
   id: 9411
   time: '2026-01-16T00:52:35.0000000+00:00'
   url: https://github.com/space-wizards/space-station-14/pull/42445
+- author: sowelipililimute
+  changes:
+  - message: "Використання однієї деталі пінпоінтера ядра на іншій більше не запускає зайвий рецепт складання."
+    type: Fix
+  id: 9412
+  time: '2026-01-16T02:09:01.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42446
+- author: neomoth
+  changes:
+  - message: "Виправлено опір зомбі-інфекції: тепер він належно зменшує ймовірність зараження, а не збільшує її."
+    type: Fix
+  id: 9413
+  time: '2026-01-16T08:40:47.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42451
+- author: Samuka
+  changes:
+  - message: "Материнський корабель тепер починає з більшим запасом матеріалів, тож збирати їх у космосі доведеться рідше."
+    type: Tweak
+  - message: "Оновлено поради щодо підготовки й тактики в розділі довідника про ксеноборгів."
+    type: Tweak
+  id: 9414
+  time: '2026-01-16T17:19:48.0000000+00:00'
+  url: https://github.com/space-wizards/space-station-14/pull/42448

@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Client.Humanoid;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;

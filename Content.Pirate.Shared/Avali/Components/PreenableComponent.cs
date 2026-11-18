@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
 
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;

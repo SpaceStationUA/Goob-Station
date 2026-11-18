@@ -1,5 +1,5 @@
 using Content.Shared.Chemistry;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared._Pirate.Plumbing;

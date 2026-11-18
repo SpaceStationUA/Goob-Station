@@ -746,17 +746,19 @@
   categories: [ HideSpawnMenu ]
   components:
   - type: GameDirector
-    noRoundstartAntags: true
+    # Antags remain owned by BlueshiftDraft and BlueshiftAntagScheduler.
+    roundstartThreatScale: 0
+    threatPerPlayer: 0
     maxDestructionBudget: 2
     destructionRegenPerMinute: 0.075
     repeatWindow: 25m
     stories:
-    - RelaxedAttack
-    - SlowBurn
-    - Infestation
-    - Blackout
-    - SkeletonCrew
-    - QuietShift
+      RelaxedAttack: 1
+      SlowBurn: 1
+      Infestation: 1
+      Blackout: 1
+      SkeletonCrew: 1
+      QuietShift: 1
   - type: SelectedGameRules
     scheduledGameRules: !type:NestedSelector
       tableId: BlueshiftEventsTable

@@ -2,7 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;

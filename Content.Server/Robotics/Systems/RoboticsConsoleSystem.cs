@@ -17,7 +17,7 @@ using Content.Shared.Store;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Content.Shared.Store.Components;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
 namespace Content.Server.Research.Systems;

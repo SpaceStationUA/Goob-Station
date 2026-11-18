@@ -4,7 +4,7 @@ using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
 using Content.Shared.Whitelist;

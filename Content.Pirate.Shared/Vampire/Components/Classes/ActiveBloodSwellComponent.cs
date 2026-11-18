@@ -1,7 +1,7 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Content.Shared.Damage.Prototypes;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 
 namespace Content.Pirate.Shared.Vampire.Components.Classes;
 

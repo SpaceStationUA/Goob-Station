@@ -67,6 +67,7 @@
   - HandheldCrewMonitor
   # Pirate - DefibrillatorCompact removed, belt defib recipes moved to _Pirate packs (DefibrillatorBeltsPirate)
   - ClothingHandsGlovesSurgical
+  - ClothingHandsGlovesEnviroglovesSurgical
 
 - type: latheRecipePack
   id: EnvirosuitExtinguisherRefill

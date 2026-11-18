@@ -6,7 +6,7 @@ Then it builds a dashboard that shows what spawns and when: antags, events, chao
 The tool starts a server only to read the live prototypes. Then it plays the rounds without a game world.
 
 The tool ports the scheduler logic line by line from the game: Secret+, Secret Salt+, Secret TP,
-the basic event scheduler, `CanRun` and the antag counts. The tool does not simulate real people.
+the basic event scheduler, GameDirector, `CanRun` and the antag counts. The tool does not simulate real people.
 Joins, deaths, revivals, jobs and ghost-role takeovers are assumptions that you set in `config.json`.
 Thus, compare the modes with each other. Do not compare the numbers with real rounds as absolute values.
 
@@ -92,8 +92,12 @@ To leave a mode out of the dashboard, add `--exclude A,B` (for example `--exclud
 ## GameDirector modes (estimates)
 
 Поводир (`TheGuide`), Спостерігач (`TheWatcher`) and Блюшифт (`Blueshift`, for its non-antag events) use the
-GameDirector. The simulator models roundstart picks, stories and beats, goals, event choices, repeats, destruction
-budget, reinforcements, responders and subgamemodes.
+GameDirector. The simulator reads the current story weights, antag pools, threat tables and event groups.
+It models roundstart threat allocation, midround purchases, live and pending threat, ghost reservations,
+weighted stories and beats, normalized event scoring, repeated event groups, department spotlight,
+destruction budget, help cooldowns, strain pauses, armed responses, low-population delays and spawner expiry.
+Responder requirements and subgamemodes are also preserved. The scenario fixes the ready crew before
+roundstart planning, so its ready-player adjustment has a scale of one.
 
 The director picks events by the chaos that it measures on the station. The simulator has no station, so it
 uses a world model (`directorWorld` in `config.json`):
@@ -102,13 +106,14 @@ uses a world model (`directorWorld` in `config.json`):
   dead bodies and living security. Hostile, Death and Security also get the chaos that events declare.
 - Medical comes from the simulated people (`medicalPerLivingCrew` for each living crew member and
   `medicalPerAliveAntag` for each living antag) and from the chaos that events declare.
-- The other metrics (Atmos, Power, Anomaly, Infestation, Mess, Hunger, Thirst, Charge) come only from the chaos
+- The other metrics (Atmos, Fire, Power, Anomaly, Infestation, Mess, Hunger, Thirst, Charge) come only from the chaos
   that each started event declares.
 - Declared chaos falls with a half-life for each metric, because the crew repairs the station. Without a
   responder department alive, repairs are slower.
 
 Thus the midround numbers for these three modes are estimates. The dashboard marks them with «≈».
-Reinforcement shuttles do not add crew in the simulator.
+Reinforcement shuttles and armed responses do not add crew in the simulator. Threat uses the simulated
+antag assignments and deaths; conversions and the actual effects of player actions remain world-model assumptions.
 
 ## Files
 
@@ -116,9 +121,9 @@ Reinforcement shuttles do not add crew in the simulator.
 | --- | --- |
 | `Program.cs` | The entry point: options, server start, the round loop and the seeds. |
 | `GameModeSimData.cs` | Reads the presets, rules and tables from the prototypes. |
-| `GameModeSimulator.cs` | The round model and the scheduler logic from the game. |
+| `GameModeSimulator.cs`, `GameModeSimulator.DirectorThreat.cs` | The round model and the scheduler logic from the game. |
 | `GameModeSimConfig.cs` | The config fields and their default values. |
 | `GameModeSimOutput.cs` | Writes the CSV files. |
 | `build_dashboard.py`, `dashboard.template.html` | The dashboard. The script uses only the Python standard library. |
 
-When the scheduler code in the game changes, update `GameModeSimulator.cs` manually.
+When the scheduler code in the game changes, update the `GameModeSimulator` partial files manually.

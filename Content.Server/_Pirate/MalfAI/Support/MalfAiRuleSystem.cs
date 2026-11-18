@@ -104,7 +104,7 @@ public sealed class MalfAiRuleSystem : GameRuleSystem<MalfAiRuleComponent>
             store.CurrencyWhitelist.Add("CPU");
 
         // Ensure UI updates and set starting balance to 0 CPU
-        _store.TryAddCurrency(new() { { "CPU", Content.Goobstation.Maths.FixedPoint.FixedPoint2.New(0) } }, aiEnt, store);
+        _store.TryAddCurrency(new() { { "CPU", Content.Shared.FixedPoint.FixedPoint2.New(0) } }, aiEnt, store);
 
         // Grant the Open Shop action to the AI entity
         _actions.AddAction(aiEnt, "ActionMalfAiOpenStore");

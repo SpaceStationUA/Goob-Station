@@ -1063,3 +1063,17 @@ ClothingBeltMilitaryWebbingBSOFilled: ClothingBeltChemBagBSOFilled
 # Pirate: retain our active suit selectors and debug loadouts.
 # The removed legacy storage-free controller still needs upstream migration.
 ClothingModsuitStandardNoStorage: ClothingModsuitStandard
+
+#2026-11-03
+MailRobustToolsSpam: MailSpamLetter
+MailNanotrasenSpam: MailSpamLetter
+MailSyndicateSpam: MailSpamLetter
+MailAlternativeDimensionSpam: MailSpamLetter
+MailNarsieCultSpam: MailSpamLetter
+MailRageCageSpam: MailSpamLetter
+MailVoyageAdvertisementSpam: MailSpamLetter
+MailScienceSpiderClanSpam: MailSpamLetter
+MailAllAccessSpam: MailSpamLetter
+MailCentcommRetributionSpam: MailSpamLetter
+MailEvilLizardSpam: MailSpamLetter
+MailParentsNeedMoneySpam: MailSpamLetter

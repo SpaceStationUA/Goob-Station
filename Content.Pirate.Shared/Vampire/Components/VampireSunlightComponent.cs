@@ -1,4 +1,4 @@
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 
 namespace Content.Pirate.Shared.Vampire.Components;
 

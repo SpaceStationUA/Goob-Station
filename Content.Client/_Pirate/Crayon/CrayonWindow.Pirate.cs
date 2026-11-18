@@ -17,7 +17,9 @@ public sealed partial class CrayonWindow
     [Dependency] private IClyde _pirateClyde = default!;
     [Dependency] private IPlayerManager _piratePlayer = default!;
 
-    private readonly CrayonSymbolStorage _pirateStorage = new();
+    [Dependency] private readonly IEntityManager _pirateEntities = default!;
+
+    private CrayonLibrarySystem Library => _entitySystem.GetEntitySystem<CrayonLibrarySystem>();
     private readonly List<OwnedTexture> _pirateTextures = new();
 
     // The player's stencil as this window last heard it from the server, and as it stands after
@@ -26,23 +28,25 @@ public sealed partial class CrayonWindow
     private CrayonSymbol? _pirateStencil;
 
     // The saved symbol that draws the stencil, if one does.
-    private string? _pirateSelected;
+    private Guid? _pirateSeenId;
+    private Guid? _pirateSelected;
 
-    public event Action<CrayonSymbol>? OnCustomSelected;
+    public event Action<Guid>? OnCustomSelected;
 
     private void PirateAddCustomSymbols()
     {
         PirateSyncStencil();
         PirateReleaseTextures();
         var grid = new GridContainer { Columns = 6, Margin = new Thickness(0, 0, 0, 8) };
-        foreach (var (name, symbol) in _pirateStorage.Symbols)
+        foreach (var drawing in Library.Drawings)
         {
+            var (id, name, symbol) = drawing;
             var texture = CrayonSymbolImage.ToTexture(_pirateClyde, symbol);
             _pirateTextures.Add(texture);
             var scale = 2f * CrayonSymbol.Small / symbol.Size;
             var button = new TextureButton { TextureNormal = texture, ToolTip = name, Scale = new Vector2(scale, scale) };
-            button.OnPressed += _ => PirateSelect(name, symbol);
-            grid.AddChild(_pirateSelected == name
+            button.OnPressed += _ => PirateSelect(drawing);
+            grid.AddChild(_pirateSelected == id
                 ? new PanelContainer
                 {
                     PanelOverride = new StyleBoxFlat { BackgroundColor = StyleNano.ButtonColorDefault },
@@ -51,30 +55,27 @@ public sealed partial class CrayonWindow
                 : button);
         }
 
-        var create = new Button { Text = Loc.GetString("pirate-crayon-custom-new") };
+        var create = new Button { Text = Loc.GetString("pirate-crayon-custom-new"), Disabled = !Library.CanDraw };
         create.OnPressed += _ => PirateOpenCanvas(null);
-        var edit = new Button { Text = Loc.GetString("pirate-crayon-custom-edit"), Disabled = _pirateSelected == null };
-        edit.OnPressed += _ => PirateOpenCanvas(_pirateSelected);
+        var edit = new Button { Text = Loc.GetString("pirate-crayon-custom-edit"), Disabled = !Library.CanDraw || _pirateSelected == null };
+        edit.OnPressed += _ =>
+        {
+            if (Library.Drawings.Find(d => d.Id == _pirateSelected) is { } drawing)
+                PirateOpenCanvas(drawing);
+        };
         var delete = new Button { Text = Loc.GetString("pirate-crayon-custom-delete"), Disabled = _pirateSelected == null };
         delete.OnPressed += _ =>
         {
-            if (_pirateSelected == null)
-                return;
-
-            _pirateStorage.Delete(_pirateSelected);
-            _pirateSelected = null;
-            // The selected symbol is the one being drawn, so the crayon goes back to its stock decal
-            // rather than stamping a symbol no longer listed.
-            if (_selected != null)
-            {
-                PirateClear();
-                OnSelected?.Invoke(_selected);
-            }
-
-            RefreshList();
+            if (_pirateSelected is { } selected)
+                Library.Delete(selected);
         };
 
-        Grids.AddChild(new Label { Text = Loc.GetString("pirate-crayon-custom-category") });
+        Grids.AddChild(new Label { Text = Loc.GetString("pirate-crayon-library-count",
+            ("count", Library.Drawings.Count), ("max", CrayonDrawing.Limit)) });
+        if (!Library.CanDraw)
+            Grids.AddChild(new RichTextLabel { Text = Loc.GetString("novice-protection-crayon-stickers") });
+        if (Library.Error != null)
+            Grids.AddChild(new Label { Text = Loc.GetString(Library.Error) });
         Grids.AddChild(grid);
         Grids.AddChild(new BoxContainer
         {
@@ -85,13 +86,16 @@ public sealed partial class CrayonWindow
         });
     }
 
-    private void PirateSelect(string name, CrayonSymbol symbol)
+    private void PirateSelect(CrayonDrawing drawing)
     {
-        _pirateSelected = name;
-        _pirateStencil = symbol;
+        _pirateSelected = drawing.Id;
+        if (Library.CanDraw)
+        {
+            _pirateStencil = drawing.Symbol;
+            OnCustomSelected?.Invoke(drawing.Id);
+        }
         // A search left in the box would otherwise pick its stock decal again on the next refresh.
         _autoSelected = null;
-        OnCustomSelected?.Invoke(symbol);
         RefreshList();
     }
 
@@ -109,52 +113,40 @@ public sealed partial class CrayonWindow
     /// </summary>
     private bool PirateSyncStencil()
     {
-        CrayonSymbol? stencil = null;
+        CrayonStencilComponent? stencil = null;
         if (_piratePlayer.LocalEntity is { } player)
-            _entitySystem.GetEntitySystem<CrayonStencilSystem>().TryGetStencil(player, out stencil);
+            _pirateEntities.TryGetComponent(player, out stencil);
 
-        if (ReferenceEquals(stencil, _pirateSeen))
+        if (ReferenceEquals(stencil?.Symbol, _pirateSeen) && stencil?.DrawingId == _pirateSeenId)
             return false;
 
-        _pirateSeen = stencil;
-        _pirateStencil = stencil;
-        _pirateSelected = PirateNameOf(stencil);
+        _pirateSeen = _pirateStencil = stencil?.Symbol;
+        _pirateSeenId = _pirateSelected = stencil?.DrawingId;
         return true;
     }
 
-    private string? PirateNameOf(CrayonSymbol? stencil)
+    private void PirateOpenCanvas(CrayonDrawing? editing)
     {
-        if (stencil == null)
-            return null;
+        if (!Library.CanDraw)
+            return;
 
-        // Two saved symbols can draw the same; keep the one picked.
-        if (_pirateSelected != null && _pirateStorage.Symbols.Find(s => s.Name == _pirateSelected).Symbol?.SameAs(stencil) == true)
-            return _pirateSelected;
+        var canvas = new CrayonCanvasWindow(_color, ColorSelector.Visible, editing?.Id);
+        if (editing != null)
+            canvas.Load(editing.Name, editing.Symbol);
 
-        foreach (var (name, symbol) in _pirateStorage.Symbols)
+        canvas.OnSaved += id =>
         {
-            if (symbol.SameAs(stencil))
-                return name;
-        }
-
-        return null;
-    }
-
-    private void PirateOpenCanvas(string? name)
-    {
-        var canvas = new CrayonCanvasWindow(_color, ColorSelector.Visible);
-        if (name != null && _pirateStorage.Symbols.Find(s => s.Name == name) is { Symbol: { } symbol })
-            canvas.Load(name, symbol);
-
-        canvas.OnSaved += (saved, symbol) =>
-        {
-            saved = _pirateStorage.Save(saved, symbol);
-            // This window goes when its crayon leaves the hand, but the drawing stays open: the symbol is
-            // still saved, there is just nothing left to select it on.
-            if (!Disposed)
-                PirateSelect(saved, symbol);
+            if (IsOpen && Library.Drawings.Find(d => d.Id == id) is { } saved)
+                PirateSelect(saved);
         };
         canvas.OpenCentered();
+    }
+
+    private void OnPirateLibraryChanged()
+    {
+        if (_pirateSelected != null && !Library.Drawings.Exists(d => d.Id == _pirateSelected))
+            _pirateSelected = null;
+        RefreshList();
     }
 
     private void PirateReleaseTextures()
@@ -170,15 +162,23 @@ public sealed partial class CrayonWindow
     protected override void FrameUpdate(FrameEventArgs args)
     {
         base.FrameUpdate(args);
+        Library.RefreshAccessIfDue();
         PirateSyncRotation();
         if (PirateSyncStencil())
             RefreshList();
     }
 
-    protected override void Dispose(bool disposing)
+    protected override void EnteredTree()
     {
-        base.Dispose(disposing);
-        if (disposing)
-            PirateReleaseTextures();
+        base.EnteredTree();
+        Library.Changed += OnPirateLibraryChanged;
+        OnPirateLibraryChanged();
+    }
+
+    protected override void ExitedTree()
+    {
+        Library.Changed -= OnPirateLibraryChanged;
+        PirateReleaseTextures();
+        base.ExitedTree();
     }
 }

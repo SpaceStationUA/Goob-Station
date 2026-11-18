@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Content.Client.HealthAnalyzer.UI;
 using Content.Client.Overlays;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
