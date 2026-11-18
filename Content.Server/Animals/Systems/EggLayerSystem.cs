@@ -56,8 +56,8 @@ public sealed partial class EggLayerSystem : EntitySystem // Goob - Made Partial
             if (_timing.CurTime < eggLayer.NextGrowth)
                 continue;
 
-            // Randomize next growth time for more organic egglaying.
-            eggLayer.NextGrowth += TimeSpan.FromSeconds(_random.NextFloat(eggLayer.EggLayCooldownMin, eggLayer.EggLayCooldownMax));
+            // Pirate: player-controlled egg layers can return to AI with an expired timer.
+            eggLayer.NextGrowth = _timing.CurTime + TimeSpan.FromSeconds(_random.NextFloat(eggLayer.EggLayCooldownMin, eggLayer.EggLayCooldownMax));
 
             if (_mobState.IsDead(uid))
                 continue;
