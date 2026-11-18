@@ -10,7 +10,7 @@ public sealed partial class CCVars
         CVarDef.Create("light.bloom", true, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     public static readonly CVarDef<float> PirateBloomIntensity =
-        CVarDef.Create("light.bloom_intensity", 0.5f, CVar.CLIENTONLY | CVar.ARCHIVE);
+        CVarDef.Create("light.bloom_intensity", 0.3f, CVar.CLIENTONLY | CVar.ARCHIVE);
 
     public static readonly CVarDef<float> PirateBloomThreshold =
         CVarDef.Create("light.bloom_threshold", 0.65f, CVar.CLIENTONLY | CVar.ARCHIVE);

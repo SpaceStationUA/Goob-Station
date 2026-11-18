@@ -4,6 +4,7 @@ using Content.Pirate.Shared.AlertLevel;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
@@ -12,6 +13,7 @@ using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
@@ -23,7 +25,9 @@ public sealed class MotionDetectorSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -149,6 +153,16 @@ public sealed class MotionDetectorSystem : EntitySystem
         _lastMoves.Remove(ent.Owner);
     }
 
+    public bool IsCarriedBy(EntityUid detector, EntityUid user)
+    {
+        if (_hands.IsHolding(user, detector))
+            return true;
+
+        return _container.TryGetContainingContainer(detector, out var container) &&
+               container.Owner == user &&
+               _inventory.TryGetContainingSlot(detector, out _);
+    }
+
     private TimeSpan GetRefreshRate(MotionDetectorComponent component)
     {
         return component.ShortRangeMode ? component.ShortRefresh : component.LongRefresh;
@@ -212,7 +226,7 @@ public sealed class MotionDetectorSystem : EntitySystem
 
             if (detector.LastUser is not { } user ||
                 TerminatingOrDeleted(user) ||
-                !_hands.IsHolding(user, uid))
+                !IsCarriedBy(uid, user))
             {
                 SetEnabled((uid, detector), false);
                 continue;

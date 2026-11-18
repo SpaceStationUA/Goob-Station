@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "cabinet, glass and glass-up taken from tgstation at https://github.com/tgstation/tgstation/commit/21ce3d66d4ceff1e547f6e2c137231c599efcf2a (icons/obj/wallmounts.dmi, jaws_of_recovery, glass and glass_raised); cabinet interior repainted with a syringe gun silhouette. syringe_gun is the syringe gun icon (taken from tgstation at https://github.com/tgstation/tgstation/commit/67d7577947b5079408dce1b7646fdd6c3df13bb5, slightly modified by Mocho), shortened by 6 columns to fit the cabinet.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cabinet"
+    },
+    {
+      "name": "syringe_gun"
+    },
+    {
+      "name": "glass"
+    },
+    {
+      "name": "glass-up"
+    }
+  ]
+}

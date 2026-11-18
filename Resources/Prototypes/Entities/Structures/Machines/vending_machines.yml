@@ -1185,6 +1185,9 @@
       levels: [red, gamma, delta, epsilon] # Pirate: deep space scanner; matches the component's minimum level
       denialMessage: security-red-alert-vending-denied # Pirate: deep space scanner
     # endregion Pirate: deep space scanner
+  - type: VendingPriceOverride # Pirate: vending price override
+    prices: # Pirate: vending price override
+      HandHeldDeepSpaceScanner: 0 # Pirate: vending price override
   - type: DatasetVocalizer
     dataset: SecTechAds
   - type: SpeakOnUIClosed

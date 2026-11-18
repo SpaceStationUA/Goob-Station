@@ -1,12 +1,10 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-# Pirate: ported from OmuStation d61692d693fd1870b2a00e26f25cbfda27b6c49e.
-
 - type: entity
   name: M1 Garand
   parent: [ BaseWeaponRifle, BaseSecurityContraband ]
-  id: WeaponSniperM1Garand
-  description: An ancient, adored weapon once wielded by infantrymen on Sol. This one was gifted to the Sergeant.
+  id: WeaponSniperM1GarandSurplus
+  description: An ancient, adored weapon once wielded by infantrymen on Sol. This one came from a surplus stockpile.
   components:
   - type: Sprite
     sprite: _Pirate/Omu/Objects/Weapons/Guns/Snipers/ceremonial_rifle.rsi
@@ -51,3 +49,22 @@
     size: Large
     storedRotation: 45
   - type: AmmoCounter
+
+# The instructor's trophy rifle is better maintained, so it cycles faster and groups tighter.
+- type: entity
+  name: M1 Garand
+  parent: WeaponSniperM1GarandSurplus
+  id: WeaponSniperM1Garand
+  description: An ancient, adored weapon once wielded by infantrymen on Sol. This one was gifted to the Sergeant.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Omu/Objects/Weapons/Guns/Snipers/ceremonial_rifle.rsi
+    layers:
+    - state: base
+    - sprite: _Pirate/Objects/Weapons/Guns/Rifles/m1_garand_trophy.rsi
+      state: plaque
+  - type: Gun
+    fireRate: 0.99
+    minAngle: 0.5
+    maxAngle: 1
+    angleIncrease: 0.25

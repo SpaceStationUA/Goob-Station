@@ -8,6 +8,7 @@ using Content.Shared.Item.ItemToggle.Components;
 using Content.Shared.Popups;
 using Content.Shared.UserInterface;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Pirate.Shared.AlertLevel;
 
@@ -16,6 +17,10 @@ public sealed partial class AlertLevelRestrictionSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly ItemToggleSystem _toggle = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
+    // UI and toggle checks can fire in one interaction; suppress duplicate feedback per item, user and tick.
+    private (EntityUid Item, EntityUid User, GameTick Tick)? _lastDeny;
 
     public override void Initialize()
     {
@@ -56,8 +61,7 @@ public sealed partial class AlertLevelRestrictionSystem : EntitySystem
         if (!Resolve(ent, ref ent.Comp, false) || IsMet(user, ent.Comp.Requirement))
             return true;
 
-        _audio.PlayPredicted(ent.Comp.DenySound, ent, user);
-        _popup.PopupClient(Loc.GetString(ent.Comp.DenyMessage, ("item", ent.Owner), ("level", GetLevelName(ent.Comp))), ent, user, PopupType.SmallCaution);
+        DenyFeedback((ent.Owner, ent.Comp), user);
         return false;
     }
 
@@ -78,6 +82,10 @@ public sealed partial class AlertLevelRestrictionSystem : EntitySystem
             return;
 
         args.Cancelled = true;
+        if (!ShouldGiveDenyFeedback(ent.Owner, user))
+            return;
+
+        // ItemToggleSystem displays args.Popup.
         args.Popup = Loc.GetString(ent.Comp.DenyMessage, ("item", ent.Owner), ("level", GetLevelName(ent.Comp)));
         _audio.PlayPredicted(ent.Comp.DenySound, ent, user);
     }
@@ -89,11 +97,27 @@ public sealed partial class AlertLevelRestrictionSystem : EntitySystem
             return;
 
         args.Cancel();
-        if (args.Silent)
+        if (!args.Silent)
+            DenyFeedback(ent, args.User);
+    }
+
+    private void DenyFeedback(Entity<AlertLevelRestrictedComponent> ent, EntityUid user)
+    {
+        if (!ShouldGiveDenyFeedback(ent.Owner, user))
             return;
 
-        _audio.PlayPredicted(ent.Comp.DenySound, ent, args.User);
-        _popup.PopupClient(Loc.GetString(ent.Comp.DenyMessage, ("item", ent.Owner), ("level", GetLevelName(ent.Comp))), ent, args.User, PopupType.SmallCaution);
+        _audio.PlayPredicted(ent.Comp.DenySound, ent, user);
+        _popup.PopupClient(Loc.GetString(ent.Comp.DenyMessage, ("item", ent.Owner), ("level", GetLevelName(ent.Comp))), ent, user, PopupType.SmallCaution);
+    }
+
+    private bool ShouldGiveDenyFeedback(EntityUid item, EntityUid user)
+    {
+        var key = (item, user, _timing.CurTick);
+        if (_lastDeny == key)
+            return false;
+
+        _lastDeny = key;
+        return true;
     }
 
     private void OnRevoked(Entity<AlertLevelRestrictedComponent> ent, ref AlertLevelRestrictionRevokedEvent args)

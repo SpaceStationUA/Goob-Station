@@ -1,0 +1,14 @@
+ent-GunSafeRifleM16 = сейф для М16А4
+    .desc = { ent-ClosetBase.desc }
+ent-GunSafeRifleVulcanM = сейф для Вулкана-М
+    .desc = { ent-ClosetBase.desc }
+ent-GunSafeRifleAk = сейф для АКМ
+    .desc = { ent-ClosetBase.desc }
+ent-GunSafeSubMachineGunVector = сейф для «Траєкторії»
+    .desc = { ent-ClosetBase.desc }
+ent-GunSafeSubMachineGunBRDIR25 = сейф для BRDI R-25
+    .desc = { ent-ClosetBase.desc }
+ent-GunSafeEnergyGun = сейф для енергетичної зброї
+    .desc = { ent-ClosetBase.desc }
+ent-GunSafeRifleM1GarandSurplus = сейф зі списаними M1 «Ґаранд»
+    .desc = { ent-ClosetBase.desc }

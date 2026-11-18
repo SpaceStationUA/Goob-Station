@@ -26,8 +26,14 @@
   - type: ItemToggle
     onUse: false
     onActivate: false # UI open toggles scanning; do not activate again after a denied open.
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
   - type: PowerCellDraw
-    drawRate: 2 # Higher draw than the 1.5 W mass scanner for the longer range.
+    drawRate: 1
+    useCharge: 0 # Draw while the radar is open; opening it costs no charge.
   - type: DeepSpaceScanner
   - type: AlertLevelRestricted
     requirement:
