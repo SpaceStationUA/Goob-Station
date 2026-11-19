@@ -53,6 +53,8 @@
     slots:
     - HEAD
     - neck
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: HatDecor # Pirate: clothing accessories
   - type: Construction
     graph: flowerwreath
     node: flowerwreath
@@ -388,6 +390,8 @@
     sprite: Clothing/Head/Misc/hairflower.rsi
   - type: Clothing
     sprite: Clothing/Head/Misc/hairflower.rsi
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: HatDecor # Pirate: clothing accessories
 
 - type: entity
   parent: ClothingHeadBase

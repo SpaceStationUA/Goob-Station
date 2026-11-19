@@ -4,6 +4,10 @@
   id: ClothingHeadEnvirohelmBase
   name: base envirosuit helmet
   components:
+  #region Pirate: clothing accessories - helmets and hoods do not hold hat decor
+  - type: ClothingAccessoryHolder
+    limits: {}
+  #endregion Pirate: clothing accessories
   - type: Sprite
     layers:
     - state: icon

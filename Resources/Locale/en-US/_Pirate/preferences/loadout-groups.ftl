@@ -36,3 +36,5 @@ loadout-group-mantis-Mask = Mantis mask
 loadout-group-mantis-Ranged = Mantis ranged weapon
 loadout-group-mantis-Melee = Mantis melee weapon
 loadout-group-mantis-Equipment = Mantis equipment
+
+loadout-group-rings = Rings

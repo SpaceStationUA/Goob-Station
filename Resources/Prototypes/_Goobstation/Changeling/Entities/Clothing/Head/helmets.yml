@@ -7,6 +7,10 @@
   description: An all-consuming chitinous mass of armor.
   suffix: Unremoveable
   components:
+  #region Pirate: clothing accessories - helmets and hoods do not hold hat decor
+  - type: ClothingAccessoryHolder
+    limits: {}
+  #endregion Pirate: clothing accessories
   - type: Sprite
     sprite: _Goobstation/Changeling/ling_armor_helmet.rsi
   - type: Clothing

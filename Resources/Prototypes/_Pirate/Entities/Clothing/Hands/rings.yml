@@ -1,0 +1,88 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+- type: entity
+  parent: [ RingBase, GoldRingBase ]
+  id: RingBloodDiamond
+  name: blood diamond ring
+  description: A ring of pure gold with a beautiful blood-red diamond in its center. The maker's mark reads "brothers S&K - jewelry factory".
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Hands/Rings/blood.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Pirate/Clothing/Hands/Rings/blood.rsi
+  - type: StaticPrice
+    price: 800 # gold 400 + stone 400
+
+- type: entity
+  parent: [ RingBase, GoldRingBase ]
+  id: RingEmerald
+  name: emerald ring
+  description: A golden classic among rings. Neat and stylish, the perfect gift for the love of your life. The maker's mark reads "brothers S&K - jewelry factory".
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Hands/Rings/emerald.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Pirate/Clothing/Hands/Rings/emerald.rsi
+  - type: StaticPrice
+    price: 800 # gold 400 + stone 400
+
+- type: entity
+  parent: [ RingBase, GoldRingBase ]
+  id: RingPlasma
+  name: plasma ring
+  description: An elegant ring with a piece of solid plasma in its center. Where did they get solid plasma? Do not ask. The maker's mark reads "brothers S&K - jewelry factory".
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Hands/Rings/plasma.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Pirate/Clothing/Hands/Rings/plasma.rsi
+  - type: StaticPrice
+    price: 800 # gold 400 + stone 400
+
+- type: entity
+  parent: [ RingBase, GoldRingBase ]
+  id: RingTurkenite
+  name: turkenite ring
+  description: A pretty ring with a blue turkenite stone. Nothing special, but fair for its price. The maker's mark reads "brothers S&K - jewelry factory".
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Hands/Rings/turkenite.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Pirate/Clothing/Hands/Rings/turkenite.rsi
+  - type: StaticPrice
+    price: 800 # gold 400 + stone 400
+
+- type: entity
+  parent: [ RingBase, SilverRingBase ]
+  id: RingSignet
+  name: signet ring
+  description: A signet ring, for when you are too sophisticated to sign letters.
+  components:
+  - type: Sprite
+    layers:
+    - state: signet
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+      - state: signet-equipped-HAND
+  - type: StaticPrice
+    price: 100
+
+- type: entity
+  parent: [ RingBase, GoldRingBase ]
+  id: RingMasonic
+  name: masonic ring
+  description: The Square and Compasses feature prominently on this Masonic ring.
+  components:
+  - type: Sprite
+    layers:
+    - state: masonic
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+      - state: masonic-equipped-HAND
+  - type: StaticPrice
+    price: 100

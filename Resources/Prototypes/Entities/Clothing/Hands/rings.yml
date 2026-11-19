@@ -6,10 +6,15 @@
   name: gold ring
   description: A precious ring.
   components:
+  #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
     layers:
-      - state: ring
-        color: "#ffc833"
+      - state: gold
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+        - state: gold-equipped-HAND
+  #endregion Pirate: rings
 
 - type: entity
   parent: [ RingBase, SilverRingBase ]
@@ -17,9 +22,15 @@
   name: silver ring
   description: Looks slightly less valuable than a gold one.
   components:
+  #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
     layers:
-      - state: ring
+      - state: silver
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+        - state: silver-equipped-HAND
+  #endregion Pirate: rings
 
 - type: entity
   parent: [ RingBase, GoldRingBase ]
@@ -27,14 +38,19 @@
   name: gold diamond ring
   description: Made from ethically mined space diamonds.
   components:
+  #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
     layers:
-      - state: ring
-        color: "#ffc833"
-      - state: gem
-        color: "#c1ffff"
+      - state: gold
+      - state: diamond
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+        - state: gold-equipped-HAND
+        - state: diamond-equipped-HAND
+  #endregion Pirate: rings
   - type: StaticPrice
-    price: 1500
+    price: 800 # Pirate: rings - gold 400 + stone 400
 
 - type: entity
   parent: [ RingBase, SilverRingBase ]
@@ -42,13 +58,19 @@
   name: silver diamond ring
   description: Made from ethically mined space diamonds.
   components:
+  #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
     layers:
-      - state: ring
-      - state: gem
-        color: "#c1ffff"
+      - state: silver
+      - state: diamond
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+        - state: silver-equipped-HAND
+        - state: diamond-equipped-HAND
+  #endregion Pirate: rings
   - type: StaticPrice
-    price: 1400
+    price: 600 # Pirate: rings - silver 200 + stone 400
 
 - type: entity
   parent: [ RingBase, GoldRingBase ]
@@ -56,14 +78,20 @@
   name: gold gem ring
   description: Shiny and valuable!
   components:
+  #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
     layers:
-      - state: ring
-        color: "#ffc833"
+      - state: gold
       - state: gem
         map: [ "gemColor" ]
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+        - state: gold-equipped-HAND
+        - state: gem-equipped-HAND
+  #endregion Pirate: rings
   - type: StaticPrice
-    price: 2100
+    price: 800 # Pirate: rings - gold 400 + stone 400
   - type: RandomSprite
     getAllGroups: true
     available:
@@ -76,13 +104,20 @@
   name: silver gem ring
   description: Shiny and not quite as valuable!
   components:
+  #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
     layers:
-      - state: ring
+      - state: silver
       - state: gem
         map: [ "gemColor" ]
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+        - state: silver-equipped-HAND
+        - state: gem-equipped-HAND
+  #endregion Pirate: rings
   - type: StaticPrice
-    price: 2000
+    price: 600 # Pirate: rings - silver 200 + stone 400
   - type: RandomSprite
     getAllGroups: true
     available:

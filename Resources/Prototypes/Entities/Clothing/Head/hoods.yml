@@ -7,6 +7,10 @@
   suffix: Generic
   description: A hood that protects the head and face from biological contaminants.
   components:
+  #region Pirate: clothing accessories - helmets and hoods do not hold hat decor
+  - type: ClothingAccessoryHolder
+    limits: {}
+  #endregion Pirate: clothing accessories
   - type: Sprite
     sprite: Clothing/Head/Hoods/Bio/general.rsi
   - type: Clothing
@@ -185,6 +189,10 @@
   name: radiation hood
   description: A hood of the hazmat suit, designed for protection from high radioactivity.
   components:
+  #region Pirate: clothing accessories - helmets and hoods do not hold hat decor
+  - type: ClothingAccessoryHolder
+    limits: {}
+  #endregion Pirate: clothing accessories
   - type: Sprite
     sprite: Clothing/Head/Hoods/rad.rsi
   - type: Clothing

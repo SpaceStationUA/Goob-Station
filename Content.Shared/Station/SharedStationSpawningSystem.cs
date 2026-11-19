@@ -231,6 +231,9 @@ public abstract partial class SharedStationSpawningSystem : EntitySystem // Pira
                     }
                     if (TryDeferLoadoutAccessory(equipmentEntity, slot.Name, null)) // Pirate: clothing accessories
                         continue; // Pirate: clothing accessories
+                    // Pirate: rings
+                    if (InventorySystem.TryGetSlotEntity(entity, slot.Name, out var pirateOccupant) && TryEquipOverAccessory(entity, slot.Name, pirateOccupant.Value, equipmentEntity)) // Pirate: rings
+                        continue; // Pirate: rings
                     InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, silent: true, force: true);
                 }
             }

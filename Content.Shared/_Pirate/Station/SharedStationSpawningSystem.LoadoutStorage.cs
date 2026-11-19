@@ -40,9 +40,15 @@ public abstract partial class SharedStationSpawningSystem
         InventorySystem.TryGetSlotEntity(owner, "back", out var backpack);
         foreach (var (slot, item) in displaced)
         {
-            if (!InventorySystem.TryGetSlotEntity(owner, slot, out _) &&
-                InventorySystem.TryEquip(owner, item, slot, silent: true, force: true))
+            if (!InventorySystem.TryGetSlotEntity(owner, slot, out var occupant))
+            {
+                if (InventorySystem.TryEquip(owner, item, slot, silent: true, force: true))
+                    continue;
+            }
+            else if (TryEquipOverAccessory(owner, slot, occupant.Value, item))
+            {
                 continue;
+            }
 
             if (backpack is { } storageUid && item != storageUid &&
                 _storageQuery.TryComp(storageUid, out var storage) &&
@@ -110,6 +116,33 @@ public abstract partial class SharedStationSpawningSystem
         }
 
         EquipDeferredLoadoutAccessories(owner, deferred);
+    }
+
+    public bool TryEquipOverAccessory(EntityUid owner, string slot, EntityUid occupant, EntityUid item)
+    {
+        var check = new LoadoutAccessoryCheckEvent();
+        RaiseLocalEvent(occupant, ref check);
+        if (!check.IsAccessory)
+            return false;
+
+        if (!InventorySystem.TryUnequip(owner, slot, silent: true, force: true))
+            return false;
+
+        if (!InventorySystem.TryEquip(owner, item, slot, silent: true, force: true))
+        {
+            InventorySystem.TryEquip(owner, occupant, slot, silent: true, force: true);
+            return false;
+        }
+
+        var attach = new LoadoutAccessoryAttachEvent(owner);
+        RaiseLocalEvent(occupant, ref attach);
+        if (!attach.Attached)
+        {
+            InventorySystem.TryGetSlotEntity(owner, "back", out var backpack);
+            InsertSelectedLoadoutStorage(owner, backpack, occupant);
+        }
+
+        return true;
     }
 
     private bool TryDeferLoadoutAccessory(EntityUid item, string? slot, string? storageSlot)

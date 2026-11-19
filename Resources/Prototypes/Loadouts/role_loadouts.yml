@@ -22,6 +22,7 @@
   - CaptainEnvirosuit
   - CaptainEnvirogloves
   - CaptainGloves
+  - Rings # Pirate: rings
 
 - type: roleLoadout
   id: JobHeadOfPersonnel
@@ -45,6 +46,7 @@
   - HoPEnvirosuit
   - HoPEnvirogloves
   - HoPGloves
+  - Rings # Pirate: rings
 # Silicons
 - type: roleLoadout
   id: JobBorg
@@ -73,6 +75,7 @@
   #- PassengerNeck # Pirate wardrobe
   - PassengerFace
   - PassengerGloves
+  - Rings # Pirate: rings
   #- PassengerOuterClothing # Pirate wardrobe
   #- PassengerShoes # Pirate wardrobe
   - Glasses
@@ -96,6 +99,7 @@
   - BartenderOuterClothing
   - Glasses
   - Survival
+  - Rings # Pirate: rings
   - Trinkets
   - BartenderJobTrinkets
   - Animals # Goobstation
@@ -114,6 +118,7 @@
   - CommonBackpack
   - Glasses
   - Survival
+  - Rings # Pirate: rings
   - Trinkets
   - ServiceWorkerJobTrinkets
   - Animals # Goobstation
@@ -134,6 +139,7 @@
   - ChefOuterClothing
   - Glasses
   - Survival
+  - Rings # Pirate: rings
   - Trinkets
   - ChefJobTrinkets
   - Animals # Goobstation
@@ -151,6 +157,7 @@
   - CommonBackpack
   - Glasses
   - Survival
+  - Rings # Pirate: rings
   - Trinkets
   - LibrarianJobTrinkets
   - Animals # Goobstation
@@ -169,6 +176,7 @@
   - CommonBackpack
   - Glasses
   - Survival
+  - Rings # Pirate: rings
   - Trinkets
   - LawyerJobTrinkets
   - Animals # Goobstation
@@ -192,6 +200,7 @@
   # - ChaplainBible ## Goobstation chaplain gets a bible through ChaplainUndeterminedBible
   - Glasses
   - Survival
+  - Rings # Pirate: rings
   - Trinkets
   - ChaplainJobTrinkets
   - Animals # Goobstation
@@ -208,6 +217,7 @@
   - JanitorHead
   - JanitorJumpsuit
   - JanitorGloves
+  - Rings # Pirate: rings
   - CommonBackpack
   - JanitorOuterClothing
   - Glasses
@@ -231,6 +241,7 @@
   - BotanistOuterClothing
   - Glasses
   - Survival
+  - Rings # Pirate: rings
   - Trinkets
   - BotanistJobTrinkets
   - Animals # Goobstation
@@ -252,6 +263,7 @@
   - ClownShoes
   - Glasses
   - SurvivalClown
+  - Rings # Pirate: rings
   - Trinkets
   - ClownJobTrinkets
   - Animals # Goobstation
@@ -271,6 +283,7 @@
   - MimeBackpack
   - MimeOuterClothing
   - MimeGloves # Goobstation
+  - Rings # Pirate: rings
   - MimeShoes # Goobstation
   - MimeBelt
   - Glasses
@@ -294,6 +307,7 @@
   - MusicianOuterClothing
   - Glasses
   - Survival
+  - Rings # Pirate: rings
   - Trinkets
   - MusicianJobTrinkets
   - Instruments
@@ -319,6 +333,7 @@
   - CommandSelfDefense # Pirate
   - TrinketsCommand # Pirate
   - Survival
+  - Rings # Pirate: rings
   - Trinkets
   - QuartermasterJobTrinkets
   - Animals # Goobstation
@@ -340,6 +355,7 @@
   - CargoTechnicianID
   - Glasses
   - Survival
+  - Rings # Pirate: rings
   - Trinkets
   - CargoTechnicianJobTrinkets
   - Animals # Goobstation
@@ -360,6 +376,7 @@
   - SalvageSpecialistShoes
   - Glasses
   - Survival
+  - Rings # Pirate: rings
   - Trinkets
   - SalvageSpecialistJobTrinkets
   - Animals # Goobstation
@@ -384,6 +401,7 @@
   - TrinketsCommand # Pirate
   - TrinketsEngineering # Pirate
   - SurvivalExtended
+  - Rings # Pirate: rings
   - Trinkets
   - ChiefEngineerJobTrinkets
   - Animals # Goobstation
@@ -402,6 +420,7 @@
   - TechnicalAssistantEquipment # Pirate
   - TrinketsEngineering # Pirate
   - SurvivalExtended
+  - Rings # Pirate: rings
   - Trinkets
   - TechnicalAssistantJobTrinkets
   - Animals # Goobstation
@@ -424,6 +443,7 @@
   - StationEngineerEquipment # Pirate
   - TrinketsEngineering # Pirate
   - SurvivalExtended
+  - Rings # Pirate: rings
   - Trinkets
   - StationEngineerJobTrinkets
   - Animals # Goobstation
@@ -446,6 +466,7 @@
   - StationEngineerEquipment # Pirate
   - TrinketsEngineering # Pirate
   - SurvivalExtended
+  - Rings # Pirate: rings
   - Trinkets
   - AtmosphericTechnicianJobTrinkets
   - Animals # Goobstation
@@ -466,6 +487,7 @@
   - ScientistBackpack
   - ResearchDirectorOuterClothing
   - ScientistGloves
+  - Rings # Pirate: rings
   - ResearchDirectorShoes
   - MantisEyes
   - CommandSelfDefense # Pirate
@@ -490,6 +512,7 @@
   - ScientistBackpack
   - ScientistOuterClothing
   - ScientistGloves
+  - Rings # Pirate: rings
   - ScientistShoes
   - ScientistPDA
   - Glasses
@@ -511,6 +534,7 @@
   - ScientistBackpack
   - Glasses
   - Survival
+  - Rings # Pirate: rings
   - Trinkets
   - ResearchAssistantJobTrinkets
   - Animals # Goobstation
@@ -546,6 +570,7 @@
   - HeadofSecurityEnvirosuit
   - HeadofSecurityEnvirogloves
   - HeadofSecurityGloves
+  - Rings # Pirate: rings
 
 - type: roleLoadout
   id: JobWarden
@@ -560,6 +585,7 @@
   - WardenOuterClothing
   - SecurityShoes
   - SecurityGloves #goob
+  - Rings # Pirate: rings
   - SurvivalSecurity
   - Trinkets
   - WardenJobTrinkets
@@ -582,6 +608,7 @@
   - SecurityOuterClothing
   - SecurityShoes
   - SecurityGloves #goob
+  - Rings # Pirate: rings
   - SecurityNeck
   - SecurityPDA
   - SecurityBelt
@@ -615,6 +642,7 @@
   - DetectiveEnvirosuit
   - DetectiveEnvirogloves
   - DetectiveGloves
+  - Rings # Pirate: rings
 
 - type: roleLoadout
   id: JobSecurityCadet
@@ -627,6 +655,7 @@
   - SecurityNeck
   - SecurityCadetOuterClothing # Pirate
   - SecurityOfficerMask # Pirate
+  - Rings # Pirate: rings
   - Trinkets
   - SecurityCadetJobTrinkets
   - Animals # Goobstation
@@ -645,6 +674,7 @@
   - MedicalMask
   - ChiefMedicalOfficerJumpsuit
   - MedicalGloves
+  - Rings # Pirate: rings
   - MedicalBackpack
   - ChiefMedicalOfficerOuterClothing
   - ChiefMedicalOfficerNeck
@@ -671,6 +701,7 @@
   - MedicalMask
   - MedicalDoctorJumpsuit
   - MedicalGloves
+  - Rings # Pirate: rings
   - MedicalBackpack
   - MedicalDoctorOuterClothing
   - MedicalShoes
@@ -695,6 +726,7 @@
   - MedicalBackpack
   - MedicalEyewear
   - SurvivalMedical
+  - Rings # Pirate: rings
   - Trinkets
   - TrinketsMedical # Pirate
   - MedicalInternJobTrinkets
@@ -713,6 +745,7 @@
   - MedicalMask
   - ChemistJumpsuit
   - MedicalGloves
+  - Rings # Pirate: rings
   - ChemistBackpack
   - ChemistOuterClothing
   - MedicalShoes
@@ -735,6 +768,7 @@
   - MedicalMask
   - ParamedicJumpsuit
   - MedicalGloves
+  - Rings # Pirate: rings
   - MedicalBackpack
   - ParamedicOuterClothing
   - ParamedicShoes
@@ -761,6 +795,7 @@
   - CommonBackpack
   - Glasses
   - Survival
+  - Rings # Pirate: rings
   - Trinkets
   - ReporterJobTrinkets
   - Animals # Goobstation
@@ -778,6 +813,7 @@
   - MedicalBackpack
   - Glasses
   - Survival
+  - Rings # Pirate: rings
   - Trinkets
   - TrinketsMedical # Pirate
   - PsychologistJobTrinkets

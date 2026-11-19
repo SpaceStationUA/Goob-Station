@@ -63,7 +63,10 @@ public sealed class ClothingAccessorySystem : EntitySystem
 
     private void OnHolderInteractUsing(Entity<ClothingAccessoryHolderComponent> ent, ref InteractUsingEvent args)
     {
-        if (args.Handled || !TryComp<ClothingAccessoryComponent>(args.Used, out var accessory))
+        // Let other interaction handlers process rejected items.
+        if (args.Handled ||
+            !TryComp<ClothingAccessoryComponent>(args.Used, out var accessory) ||
+            !Accepts(ent, accessory.Category))
             return;
 
         args.Handled = true;
@@ -174,7 +177,7 @@ public sealed class ClothingAccessorySystem : EntitySystem
         while (slots.NextItem(out var item))
         {
             if (!TryComp<ClothingAccessoryHolderComponent>(item, out var holder) ||
-                !holder.Limits.ContainsKey(accessory.Comp.Category))
+                !Accepts((item, holder), accessory.Comp.Category))
                 continue;
 
             if (TryAttach((item, holder), accessory, null))
@@ -348,7 +351,7 @@ public sealed class ClothingAccessorySystem : EntitySystem
         while (slots.NextItem(out var item))
         {
             if (!TryComp<ClothingAccessoryHolderComponent>(item, out var comp) ||
-                !comp.Limits.ContainsKey(accessory.Category))
+                !Accepts((item, comp), accessory.Category))
                 continue;
 
             holder = (item, comp);
@@ -358,11 +361,18 @@ public sealed class ClothingAccessorySystem : EntitySystem
         return false;
     }
 
+    // Accessories are not holders, even when their base item grants a holder component.
+    public bool Accepts(Entity<ClothingAccessoryHolderComponent> holder, string category)
+    {
+        return holder.Comp.Limits.ContainsKey(category) && !HasComp<ClothingAccessoryComponent>(holder);
+    }
+
     public bool CanAttach(Entity<ClothingAccessoryHolderComponent> holder,
         Entity<ClothingAccessoryComponent> accessory,
         EntityUid? user)
     {
-        if (!holder.Comp.Limits.TryGetValue(accessory.Comp.Category, out var limit))
+        if (!Accepts(holder, accessory.Comp.Category) ||
+            !holder.Comp.Limits.TryGetValue(accessory.Comp.Category, out var limit))
         {
             Popup("pirate-clothing-accessory-not-allowed", holder, accessory, user);
             return false;

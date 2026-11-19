@@ -108,8 +108,9 @@
   components:
   - type: Clothing
     slots: [ gloves, neck ]
+    sprite: _Pirate/Clothing/Hands/Rings/rings.rsi # Pirate: rings - worn on the hand
   - type: Sprite
-    sprite: Clothing/Hands/Rings/basic.rsi
+    sprite: _Pirate/Clothing/Hands/Rings/rings.rsi # Pirate: rings - new sprites
   - type: Appearance
   - type: Item
     size: Tiny
@@ -127,7 +128,7 @@
     materialComposition:
       Gold: 200
   - type: StaticPrice
-    price: 300
+    price: 400 # Pirate: rings - sell price
 
 - type: entity
   abstract: true
@@ -139,4 +140,4 @@
       materialComposition:
         Silver: 200 # 2 bars
     - type: StaticPrice
-      price: 275
+      price: 200 # Pirate: rings - sell price

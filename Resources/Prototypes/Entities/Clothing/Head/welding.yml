@@ -6,6 +6,10 @@
   name: welding mask
   abstract: true
   components:
+  #region Pirate: clothing accessories - helmets and hoods do not hold hat decor
+  - type: ClothingAccessoryHolder
+    limits: {}
+  #endregion Pirate: clothing accessories
   - type: Item
     storedRotation: 0
   - type: IngestionBlocker

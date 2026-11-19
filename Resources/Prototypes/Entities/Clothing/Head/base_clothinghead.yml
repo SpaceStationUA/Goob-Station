@@ -49,6 +49,11 @@
   #region Pirate: wetness
   - type: Wettable
   #endregion Pirate: wetness
+  #region Pirate: clothing accessories - a hair flower or bow on a hat
+  - type: ClothingAccessoryHolder
+    limits:
+      HatDecor: 1
+  #endregion Pirate: clothing accessories
 
 - type: entity
   abstract: true
@@ -76,6 +81,10 @@
   name: base helmet with light
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: clothing accessories - helmets and hoods do not hold hat decor
+  - type: ClothingAccessoryHolder
+    limits: {}
+  #endregion Pirate: clothing accessories
   - type: Sprite
     layers:
     - state: icon
@@ -136,6 +145,10 @@
   id: ClothingHeadEVAHelmetBase
   name: base space helmet
   components:
+  #region Pirate: clothing accessories - helmets and hoods do not hold hat decor
+  - type: ClothingAccessoryHolder
+    limits: {}
+  #endregion Pirate: clothing accessories
 # SlotBlocker blocked until UI change
 #  - type: SlotBlock
 #    slots: [ears, eyes, mask]

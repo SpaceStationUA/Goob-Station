@@ -1,11 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Based on the accessory visuals of space_station_ADT (ADTAccessoryVisualsSystem, AGPL-3.0).
 
+using System.Numerics;
 using Content.Client.Clothing;
+using Content.Client.DisplacementMap;
+using Content.Goobstation.Common.Clothing;
 using Content.Pirate.Shared.Clothing.Accessories;
 using Content.Shared._Pirate.Loadouts;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
+using Content.Shared.DisplacementMap;
+using Content.Shared.Humanoid;
+using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -17,13 +23,16 @@ namespace Content.Pirate.Client.Clothing.Accessories;
 public sealed class ClothingAccessoryVisualsSystem : EntitySystem
 {
     [Dependency] private ClothingAccessorySystem _accessory = default!;
+    [Dependency] private DisplacementMapSystem _displacement = default!;
     [Dependency] private IResourceCache _cache = default!;
+    [Dependency] private InventorySystem _inventory = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
     private const string IconLayerPrefix = "pirate-accessory-icon-";
 
     private static readonly Dictionary<string, string> SlotStates = new()
     {
+        { "head", "HELMET" },
         { "neck", "NECK" },
         { "gloves", "HAND" },
         { "jumpsuit", "INNERCLOTHING" },
@@ -37,6 +46,7 @@ public sealed class ClothingAccessoryVisualsSystem : EntitySystem
         // Accessory layers must follow clothing layers.
         SubscribeLocalEvent<ClothingAccessoryHolderComponent, GetEquipmentVisualsEvent>(OnGetVisuals,
             after: [typeof(ClientClothingSystem)]);
+        SubscribeLocalEvent<ClothingAccessoryHolderComponent, EquipmentVisualsUpdatedEvent>(OnVisualsUpdated);
         SubscribeLocalEvent<ClothingAccessoryHolderComponent, ComponentStartup>(OnHolderStartup);
         SubscribeLocalEvent<ClothingAccessoryHolderComponent, ClothingAccessoriesChangedEvent>(OnAccessoriesChanged);
     }
@@ -46,11 +56,77 @@ public sealed class ClothingAccessoryVisualsSystem : EntitySystem
     private void OnGetVisuals(Entity<ClothingAccessoryHolderComponent> ent, ref GetEquipmentVisualsEvent args)
     {
         var i = 0;
-        foreach (var layer in GetLayers(ent, args.Equipee))
+        foreach (var (layer, _) in GetLayers(ent, args.Equipee))
         {
-            args.Layers.Add(($"{args.Slot}-pirate-accessory-{i}", layer));
+            args.Layers.Add((LayerKey(args.Slot, i), layer));
             i++;
         }
+    }
+
+    private static string LayerKey(string slot, int index) => $"{slot}-pirate-accessory-{index}";
+
+    private void OnVisualsUpdated(Entity<ClothingAccessoryHolderComponent> ent, ref EquipmentVisualsUpdatedEvent args)
+    {
+        if (!TryComp<SpriteComponent>(args.Equipee, out var spriteComp))
+            return;
+
+        Entity<SpriteComponent?> sprite = (args.Equipee, spriteComp);
+        var layers = GetLayers(ent, args.Equipee);
+
+        for (var i = 0; i < layers.Count; i++)
+        {
+            var (data, category) = layers[i];
+            var drawAt = category.DrawAt;
+            var key = LayerKey(args.Slot, i);
+            if (drawAt == null || !args.RevealedLayers.Contains(key))
+                continue;
+
+            _sprite.RemoveLayer(sprite, key, false);
+            _sprite.RemoveLayer(sprite, $"{key}-displacement", false);
+
+            if (!_sprite.LayerMapTryGet(sprite, drawAt, out var index, false))
+                continue;
+
+            _sprite.AddBlankLayer((args.Equipee, spriteComp), index);
+            _sprite.LayerMapSet(sprite, key, index);
+            _sprite.LayerSetData(sprite, index, data);
+
+            if (_inventory.TryGetSlot(args.Equipee, drawAt, out var slotDef) &&
+                spriteComp[index] is SpriteComponent.Layer layer)
+            {
+                _sprite.LayerSetOffset(layer, layer.Offset + slotDef.Offset);
+            }
+
+            var hidden = new CheckClothingSlotHiddenEvent(drawAt);
+            RaiseLocalEvent(args.Equipee, ref hidden);
+            _sprite.LayerSetVisible(sprite, index, hidden.Visible);
+
+            if (GetDisplacement(args.Equipee, drawAt) is { } displacement &&
+                !(data.State is { } state && Comp<InventoryComponent>(args.Equipee).SpeciesId is { } species && state.EndsWith(species)) &&
+                _displacement.TryAddDisplacement(displacement, (args.Equipee, spriteComp), index, key, out var displacementKey))
+            {
+                args.RevealedLayers.Add(displacementKey);
+            }
+        }
+    }
+
+    private DisplacementData? GetDisplacement(EntityUid equipee, string slot)
+    {
+        if (!TryComp<InventoryComponent>(equipee, out var inventory))
+            return null;
+
+        var data = inventory.Displacements.GetValueOrDefault(slot);
+        switch (CompOrNull<HumanoidAppearanceComponent>(equipee)?.Sex)
+        {
+            case Sex.Male when inventory.MaleDisplacements.Count > 0:
+                data = inventory.MaleDisplacements.GetValueOrDefault(slot);
+                break;
+            case Sex.Female when inventory.FemaleDisplacements.Count > 0:
+                data = inventory.FemaleDisplacements.GetValueOrDefault(slot);
+                break;
+        }
+
+        return data;
     }
 
     #endregion
@@ -80,19 +156,34 @@ public sealed class ClothingAccessoryVisualsSystem : EntitySystem
         }
 
         var n = 0;
-        foreach (var layer in GetLayers(ent, null))
+        foreach (var (layer, category) in GetLayers(ent, null))
         {
+            if (category.IconOffset != Vector2.Zero)
+                layer.Offset = (layer.Offset ?? default) + category.IconOffset / EyeManager.PixelsPerMeter;
+
             var index = _sprite.AddLayer(sprite, layer, null);
             _sprite.LayerMapSet(sprite, IconLayerPrefix + n, index);
+            _sprite.LayerSetDirOffset(sprite, index, GetDirOffset(category.IconDirection));
             n++;
         }
     }
 
+    private static SpriteComponent.DirectionOffset GetDirOffset(Direction direction)
+    {
+        return direction switch
+        {
+            Direction.West => SpriteComponent.DirectionOffset.Clockwise,
+            Direction.East => SpriteComponent.DirectionOffset.CounterClockwise,
+            Direction.North => SpriteComponent.DirectionOffset.Flip,
+            _ => SpriteComponent.DirectionOffset.None,
+        };
+    }
+
     #endregion
 
-    private List<PrototypeLayerData> GetLayers(Entity<ClothingAccessoryHolderComponent> ent, EntityUid? equipee)
+    private List<(PrototypeLayerData Layer, ClothingAccessoryCategoryPrototype Category)> GetLayers(Entity<ClothingAccessoryHolderComponent> ent, EntityUid? equipee)
     {
-        var result = new List<PrototypeLayerData>();
+        var result = new List<(PrototypeLayerData, ClothingAccessoryCategoryPrototype)>();
         var perCategory = new Dictionary<string, int>();
         var layers = new List<PrototypeLayerData>();
 
@@ -116,7 +207,7 @@ public sealed class ClothingAccessoryVisualsSystem : EntitySystem
                     layer.Offset = (layer.Offset ?? default) + offset;
                 }
 
-                result.Add(layer);
+                result.Add((layer, category));
             }
         }
 

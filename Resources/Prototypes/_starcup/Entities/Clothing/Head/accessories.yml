@@ -12,6 +12,8 @@
     slots:
     - HEAD
     - neck
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: HatDecor # Pirate: clothing accessories
 
 - type: entity
   parent: ClothingHeadBase
@@ -26,6 +28,8 @@
     slots:
     - HEAD
     - neck
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: HatDecor # Pirate: clothing accessories
 
 - type: entity
   parent: ClothingHeadBase
@@ -42,6 +46,8 @@
     - belt
     equipDelay: 0.2
     unequipDelay: 0.2
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: HatDecor # Pirate: clothing accessories
 
 - type: entity
   parent: ClothingHeadBase
@@ -58,6 +64,8 @@
     - belt
     equipDelay: 0.2
     unequipDelay: 0.2
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: HatDecor # Pirate: clothing accessories
 
 - type: entity
   parent: ClothingHeadBase
