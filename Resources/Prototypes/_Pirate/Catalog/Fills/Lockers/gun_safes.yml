@@ -1,0 +1,137 @@
+# Preserve the upstream locker quantities while changing the weapon selections.
+# Double the Garand rifle count because it is weak.
+
+- type: entity
+  parent: [GunSafeBaseSecure, BaseSecurityContraband]
+  id: GunSafeRifleM16
+  name: m16a4 safe
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillGunSafeRifleM16
+
+- type: entityTable
+  id: FillGunSafeRifleM16
+  table: !type:AllSelector
+    children:
+    - id: WeaponRifleM16
+      amount: 2
+    - id: MagazineRifleM16
+      amount: 4
+
+- type: entity
+  parent: [GunSafeBaseSecure, BaseSecurityContraband]
+  id: GunSafeRifleVulcanM
+  name: vulkan-m safe
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillGunSafeRifleVulcanM
+
+- type: entityTable
+  id: FillGunSafeRifleVulcanM
+  table: !type:AllSelector
+    children:
+    - id: WeaponRifleVulcanM
+      amount: 2
+    - id: MagazineLightRifle
+      amount: 4
+
+- type: entity
+  parent: [GunSafeBaseSecure, BaseSecurityContraband]
+  id: GunSafeRifleAk
+  name: akm safe
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillGunSafeRifleAk
+
+- type: entityTable
+  id: FillGunSafeRifleAk
+  table: !type:AllSelector
+    children:
+    - id: WeaponRifleAk
+      amount: 2
+    - id: MagazineLightRifle
+      amount: 4
+
+- type: entity
+  parent: [GunSafeBaseSecure, BaseSecurityContraband]
+  id: GunSafeSubMachineGunVector
+  name: vector safe
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillGunSafeSubMachineGunVector
+
+- type: entityTable
+  id: FillGunSafeSubMachineGunVector
+  table: !type:AllSelector
+    children:
+    - id: WeaponSubMachineGunVector
+      amount: 2
+    - id: MagazinePistolHighCapacity
+      amount: 4
+
+- type: entity
+  parent: [GunSafeBaseSecure, BaseSecurityContraband]
+  id: GunSafeSubMachineGunBRDIR25
+  name: brdi r-25 safe
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillGunSafeSubMachineGunBRDIR25
+
+- type: entityTable
+  id: FillGunSafeSubMachineGunBRDIR25
+  table: !type:AllSelector
+    children:
+    - id: WeaponSubMachineGunBRDIR25
+      amount: 2
+    - id: MagazineCaselessRifleStandard
+      amount: 4
+
+- type: entity
+  parent: [GunSafeBaseSecure, BaseSecurityContraband]
+  id: GunSafeEnergyGun
+  name: energy gun safe
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillGunSafeEnergyGun
+
+- type: entityTable
+  id: FillGunSafeEnergyGun
+  table: !type:AllSelector
+    children:
+    - id: WeaponEnergyGun
+      amount: 3
+    - id: WeaponTemperatureGun
+      amount: 2
+    - id: WeaponEnergyIonRifle
+      amount: 2
+
+- type: entity
+  parent: [GunSafeBaseSecure, BaseSecurityContraband]
+  id: GunSafeRifleM1GarandSurplus
+  name: surplus m1 garand safe
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:NestedSelector
+        tableId: FillGunSafeRifleM1GarandSurplus
+
+- type: entityTable
+  id: FillGunSafeRifleM1GarandSurplus
+  table: !type:AllSelector
+    children:
+    - id: WeaponSniperM1GarandSurplus
+      amount: 4
+    - id: MagazineClipM1Garand
+      amount: 8

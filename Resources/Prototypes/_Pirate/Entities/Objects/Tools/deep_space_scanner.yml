@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: HandHeldDeepSpaceScanner
+  parent: HandHeldMassScanner
+  name: '"Echo" void tracker'
+  description: A security tracker, for people who think open space is a good place to hide.
+  components:
+  - type: Item
+    sprite: _Pirate/Objects/Tools/deep_space_scanner.rsi
+  - type: Sprite
+    sprite: _Pirate/Objects/Tools/deep_space_scanner.rsi
+    state: icon
+    layers:
+      - state: icon
+      - state: screen
+        shader: unshaded
+        visible: false
+        map: [ "enum.ToggleableVisuals.Layer" ]
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: { visible: true }
+          False: { visible: false }
+  - type: ItemToggle
+    onUse: false
+    onActivate: false # UI open toggles scanning; do not activate again after a denied open.
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+  - type: PowerCellDraw
+    drawRate: 1
+    useCharge: 0 # Draw while the radar is open; opening it costs no charge.
+  - type: DeepSpaceScanner
+  - type: AlertLevelRestricted
+    requirement:
+      minimum: red
+  - type: StaticPrice
+    price: 400

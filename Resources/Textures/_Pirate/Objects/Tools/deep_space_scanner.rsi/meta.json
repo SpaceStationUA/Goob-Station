@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "icon and screen created by CyberLanos (GitHub) for Pirate Station, palette from the bluesec uniform and the security radio; in-hands recoloured from Objects/Devices/securityhandy.rsi (taken from cev-eris and modified by Swept at https://github.com/discordia-space/CEV-Eris/commit/efce5b6c3be75458ce238dcc01510e8f8a653ca6, resprite by Vareniko)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "screen",
+      "delays": [
+        [
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          2.5,
+          2.5,
+          2.75,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

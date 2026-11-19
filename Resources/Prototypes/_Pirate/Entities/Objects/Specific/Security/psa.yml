@@ -23,6 +23,9 @@
           True: { visible: true }
           False: { visible: false }
   - type: ItemToggle
+  - type: AlertLevelRestricted
+    requirement:
+      minimum: blue
   - type: ProximityBeeper
   - type: ProximityDetector
     range: 10
@@ -40,11 +43,11 @@
 
 - type: entity
   id: PSA
-  parent: [ PSAUnpowered, PowerCellSlotSmallItem ]
+  parent: [ PSAUnpowered, PowerCellSlotMediumItem ]
   suffix: Powered
   components:
   - type: PowerCellDraw
-    drawRate: 3
+    drawRate: 1
     useCharge: 0
   - type: ToggleCellDraw
 

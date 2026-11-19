@@ -38,6 +38,7 @@
     radius: 10
     softness: 1
     offset: "0, -0.5"
+  - type: LampGlow # Pirate: light effects
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -263,6 +264,9 @@
   suffix: Always Powered
   parent: AlwaysPoweredWallLight
   components:
+    - type: LampGlow # Pirate: light effects
+      offset: 0, 0.38 # Pirate: light effects
+      size: 0.55 # Pirate: light effects
     - type: AmbientSound
       volume: -15
       range: 2
@@ -449,6 +453,10 @@
   parent: AlwaysPoweredWallLight
   suffix: ""
   components:
+  - type: LampGlow # Pirate: light effects
+    offset: 0, 0.42 # Pirate: light effects
+    size: 0.6 # Pirate: light effects
+    cone: false # Pirate: light effects
   - type: PointLight
     enabled: false
     radius: 5

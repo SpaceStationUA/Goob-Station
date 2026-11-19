@@ -2,3 +2,4 @@
 
 security-alert-gated-vending-denied = Це спорядження доступне за синього рівня загрози або вищого.
 security-elevated-alert-vending-denied = Це спорядження доступне за синього коду або вищого рівня тривоги.
+security-red-alert-vending-denied = Це спорядження доступне за червоного коду або вищого рівня тривоги.

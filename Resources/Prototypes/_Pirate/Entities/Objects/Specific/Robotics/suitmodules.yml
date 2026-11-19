@@ -1270,14 +1270,14 @@
   parent: JetpackSuitModule
   id: JetpackAdvancedSuitModule
   name: advanced jetpack suit module
-  description: "A high-performance ion propulsion system favored by Nanotrasen security forces. Features enhanced thrust output and improved fuel efficiency compared to the standard model. Perfect for pursuit operations or rapid emergency response."
+  description: "A high-performance ion propulsion system favored by Nanotrasen security forces. Features finer thrust control and half the power draw of the standard model. Perfect for long patrols outside the station."
   components:
   - type: Sprite
     state: jetpack_advanced
   - type: ModularSuitItemModule
     item: JetpackSecurityModule
   - type: ModularSuitModule
-    powerUsage: 3
+    powerUsage: 0.625
     verbIcon:
       sprite: *modules-rsi
       state: jetpack_advanced

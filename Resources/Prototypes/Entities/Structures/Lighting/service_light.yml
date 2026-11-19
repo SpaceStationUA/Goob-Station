@@ -6,6 +6,8 @@
   name: janitorial service light
   description: A wall-mounted janitorial sign. If the light is blinking, a janitor's service is required.
   components:
+  - type: LampGlow # Pirate: light effects
+    enabled: false # Pirate: light effects
   - type: Sprite
     sprite: Structures/Wallmounts/service_light.rsi
     drawdepth: WallMountedItems

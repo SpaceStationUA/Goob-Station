@@ -1,0 +1,98 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: FireAxeCabinet
+  id: PirateSyringeGunCabinet
+  name: syringe gun cabinet
+  suffix: Medical
+  description: There is a small label that reads "For medical emergencies only" along with details for safe use of the syringe gun. As if.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Wallmounts/syringe_gun_cabinet.rsi
+    layers:
+    - state: cabinet
+    - state: syringe_gun
+      map: ["enum.ItemCabinetVisuals.Layer"]
+      visible: true
+    - state: glass
+      map: ["enum.OpenableVisuals.Layer"]
+  - type: ItemSlots
+    slots:
+      ItemCabinet:
+        ejectOnInteract: true
+        whitelist:
+          components:
+          - SyringeGun
+        blacklist:
+          components:
+          - Wieldable # The Pnuey shotgun also has SyringeGun.
+  - type: AccessReader
+    access: [["Medical"], ["Command"]]
+
+- type: entity
+  parent: PirateSyringeGunCabinet
+  id: PirateSyringeGunCabinetOpen
+  suffix: Medical, Open
+  components:
+  - type: Openable
+    opened: true
+  - type: Lock
+    locked: false
+
+- type: entity
+  parent: PirateSyringeGunCabinet
+  id: PirateSyringeGunCabinetFilled
+  suffix: Medical, Filled
+  components:
+  - type: ContainerFill
+    containers:
+      ItemCabinet:
+      - SyringeGun
+
+- type: entity
+  parent: PirateSyringeGunCabinetFilled
+  id: PirateSyringeGunCabinetFilledOpen
+  suffix: Medical, Filled, Open
+  components:
+  - type: Openable
+    opened: true
+  - type: Lock
+    locked: false
+
+- type: entity
+  parent: PirateSyringeGunCabinet
+  id: PirateSyringeGunCabinetSecurity
+  suffix: Security
+  components:
+  - type: AccessReader
+    access: [["Security"], ["Command"]]
+
+- type: entity
+  parent: PirateSyringeGunCabinetSecurity
+  id: PirateSyringeGunCabinetSecurityOpen
+  suffix: Security, Open
+  components:
+  - type: Openable
+    opened: true
+  - type: Lock
+    locked: false
+
+- type: entity
+  parent: PirateSyringeGunCabinetSecurity
+  id: PirateSyringeGunCabinetSecurityFilled
+  suffix: Security, Filled
+  components:
+  - type: ContainerFill
+    containers:
+      ItemCabinet:
+      - SyringeGun
+
+- type: entity
+  parent: PirateSyringeGunCabinetSecurityFilled
+  id: PirateSyringeGunCabinetSecurityFilledOpen
+  suffix: Security, Filled, Open
+  components:
+  - type: Openable
+    opened: true
+  - type: Lock
+    locked: false

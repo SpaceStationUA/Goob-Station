@@ -22,6 +22,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 <CheckBox Name="ViewportLowResCheckBox" Text="{Loc 'ui-options-vp-low-res'}" />
                 <CheckBox Name="ParallaxLowQualityCheckBox" Text="{Loc 'ui-options-parallax-low-quality'}" />
                 <CheckBox Name="AmbientOcclusionCheckBox" Text="{Loc 'ui-options-ambient-occlusion'}" />
+                <CheckBox Name="BloomCheckBox" Text="{Loc 'ui-options-bloom'}" ToolTip="{Loc 'ui-options-bloom-tooltip'}" /> <!-- Pirate: light effects -->
+                <ui:OptionSlider Name="BloomIntensitySlider" Title="{Loc 'ui-options-bloom-intensity'}" /> <!-- Pirate: light effects -->
+                <CheckBox Name="LampGlowCheckBox" Text="{Loc 'ui-options-lamp-glow'}" ToolTip="{Loc 'ui-options-lamp-glow-tooltip'}" /> <!-- Pirate: light effects -->
+                <CheckBox Name="LampGlowConeCheckBox" Text="{Loc 'ui-options-lamp-glow-cone'}" ToolTip="{Loc 'ui-options-lamp-glow-cone-tooltip'}" /> <!-- Pirate: light effects -->
+                <ui:OptionSlider Name="LampGlowIntensitySlider" Title="{Loc 'ui-options-lamp-glow-intensity'}" /> <!-- Pirate: light effects -->
 
                 <!-- Interface -->
                 <Label Text="{Loc 'ui-options-interface-label'}" StyleClasses="LabelKeyText"/>

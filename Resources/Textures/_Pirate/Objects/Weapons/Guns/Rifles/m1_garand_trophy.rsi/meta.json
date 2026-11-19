@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Brass plaque and heel overlay for the M1 Garand sprite in _Pirate/Omu/Objects/Weapons/Guns/Snipers/ceremonial_rifle.rsi (InterBay13, edited by stikfigz and Marikiii), made for Pirate Station",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "plaque"
+        }
+    ]
+}

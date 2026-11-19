@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Pirate.Shared.AlertLevel;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
@@ -11,6 +13,7 @@ using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio.Systems;
+using Robust.Shared.Containers;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
@@ -18,10 +21,13 @@ namespace Content.Pirate.Shared.MotionDetector;
 
 public sealed class MotionDetectorSystem : EntitySystem
 {
+    [Dependency] private readonly AlertLevelRestrictionSystem _alertRestriction = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly INetManager _net = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -43,6 +49,7 @@ public sealed class MotionDetectorSystem : EntitySystem
         SubscribeLocalEvent<MotionDetectorComponent, PowerCellSlotEmptyEvent>(OnPowerCellEmpty);
         SubscribeLocalEvent<MotionDetectorComponent, ComponentStartup>(OnDetectorStartup);
         SubscribeLocalEvent<MotionDetectorComponent, ComponentShutdown>(OnDetectorShutdown);
+        SubscribeLocalEvent<MotionDetectorComponent, AlertLevelRestrictionRevokedEvent>(OnAlertRestrictionRevoked);
 
         SubscribeLocalEvent<MobStateComponent, MoveEvent>(OnMobMoved);
         SubscribeLocalEvent<MobStateComponent, ComponentShutdown>(OnMobShutdown);
@@ -66,6 +73,9 @@ public sealed class MotionDetectorSystem : EntitySystem
             return;
 
         args.Handled = true;
+        if (!ent.Comp.Enabled && !_alertRestriction.TryUse(ent.Owner, args.User))
+            return;
+
         ent.Comp.LastUser = args.User;
         SetEnabled(ent, !ent.Comp.Enabled);
         _audio.PlayPredicted(ent.Comp.ToggleSound, ent, args.User);
@@ -121,6 +131,15 @@ public sealed class MotionDetectorSystem : EntitySystem
         SetEnabled(ent, false);
     }
 
+    private void OnAlertRestrictionRevoked(Entity<MotionDetectorComponent> ent, ref AlertLevelRestrictionRevokedEvent args)
+    {
+        if (!ent.Comp.Enabled)
+            return;
+
+        SetEnabled(ent, false);
+        args.Disabled = true;
+    }
+
     private void OnMobMoved(Entity<MobStateComponent> ent, ref MoveEvent args)
     {
         if (_net.IsClient || _activeDetectors.Count == 0 || args.OldPosition == args.NewPosition)
@@ -132,6 +151,16 @@ public sealed class MotionDetectorSystem : EntitySystem
     private void OnMobShutdown(Entity<MobStateComponent> ent, ref ComponentShutdown args)
     {
         _lastMoves.Remove(ent.Owner);
+    }
+
+    public bool IsCarriedBy(EntityUid detector, EntityUid user)
+    {
+        if (_hands.IsHolding(user, detector))
+            return true;
+
+        return _container.TryGetContainingContainer(detector, out var container) &&
+               container.Owner == user &&
+               _inventory.TryGetContainingSlot(detector, out _);
     }
 
     private TimeSpan GetRefreshRate(MotionDetectorComponent component)
@@ -197,9 +226,17 @@ public sealed class MotionDetectorSystem : EntitySystem
 
             if (detector.LastUser is not { } user ||
                 TerminatingOrDeleted(user) ||
-                !_hands.IsHolding(user, uid))
+                !IsCarriedBy(uid, user))
             {
                 SetEnabled((uid, detector), false);
+                continue;
+            }
+
+            // Recheck on each scan because a new holder may have a stale cached level.
+            if (TryComp<AlertLevelRestrictedComponent>(uid, out var restricted) &&
+                !_alertRestriction.IsMet(user, restricted.Requirement))
+            {
+                _alertRestriction.Revoke((uid, restricted));
                 continue;
             }
 

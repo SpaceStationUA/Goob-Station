@@ -22,6 +22,7 @@ using Robust.Shared.Timing;
 using Content.Shared._Mono.Radar;
 using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
+using Content.Client._Pirate.DeepSpaceScanner; // Pirate: deep space scanner
 using Robust.Shared.Physics.Collision.Shapes; // Pirate port - Monolith shields
 
 namespace Content.Client.Shuttles.UI;
@@ -661,6 +662,11 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 }
             }
         }
+        #endregion
+
+        #region Pirate: deep space scanner
+        if (_consoleEntity != null)
+            EntManager.System<DeepSpaceScannerRadarSystem>().Draw(handle, _consoleEntity.Value, worldToShuttle * shuttleToView, MinimapScale);
         #endregion
     }
 

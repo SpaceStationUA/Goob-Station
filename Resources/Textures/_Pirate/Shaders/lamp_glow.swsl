@@ -1,0 +1,14 @@
+// Use the light map for luminance; it includes FOV, unlike unshaded lamp sprites.
+uniform highp float DARK_OPACITY;
+uniform highp float DARK_LUMINANCE;
+uniform highp float BRIGHT_LUMINANCE;
+
+void fragment() {
+    highp vec4 glow = zTexture(UV);
+    highp float luminance = dot(lightSample, vec3(0.2126, 0.7152, 0.0722));
+    highp float fade = mix(DARK_OPACITY, 1.0, smoothstep(DARK_LUMINANCE, BRIGHT_LUMINANCE, luminance));
+    COLOR = vec4(glow.rgb, glow.a * fade);
+    // The glow is light itself; do not shade it by the light map.
+    lightSample = vec3(1.0);
+    LIGHT = vec4(1.0);
+}
