@@ -13,3 +13,5 @@ pirate-clothing-accessory-examine-sublist = {"    "}◦ { $id ->
      [empty] {$item}
     *[other] [enttex id={$id} size={ $size }/]{$item}
 }
+
+pirate-armband-switch-arm = Switch arm

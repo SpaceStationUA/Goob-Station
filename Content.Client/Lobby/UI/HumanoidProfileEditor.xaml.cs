@@ -819,6 +819,8 @@ namespace Content.Client.Lobby.UI
 
                     AddLoadoutChoiceSections(categoryTabs[category], categoryChoices, CombinedLoadoutKind.Job, loadoutSystem);
                     AddLoadoutChoiceSections(categoryTabs[category], categoryChoices, CombinedLoadoutKind.Generic, loadoutSystem);
+                    AddLoadoutChoiceSections(categoryTabs[category], categoryChoices, CombinedLoadoutKind.Job, loadoutSystem, showLast: true); // Pirate: armbands
+                    AddLoadoutChoiceSections(categoryTabs[category], categoryChoices, CombinedLoadoutKind.Generic, loadoutSystem, showLast: true); // Pirate: armbands
                 }
 
                 RefreshSelectedLoadoutsList(choices, loadoutSystem);
@@ -947,7 +949,8 @@ namespace Content.Client.Lobby.UI
             CombinedLoadoutKind kind,
             LoadoutSystem loadoutSystem,
             string? categoryPrefix = null, // Pirate: loadout
-            bool register = true) // Pirate: loadout
+            bool register = true, // Pirate: armbands
+            bool showLast = false) // Pirate: armbands
         {
             var groupIds = choices
                 .SelectMany(choice => choice.Locations)
@@ -963,6 +966,9 @@ namespace Content.Client.Lobby.UI
                 if (!_prototypeManager.TryIndex(groupId, out LoadoutGroupPrototype? group))
                     continue;
 
+                if (group.ShowLast != showLast) // Pirate: armbands
+                    continue; // Pirate: armbands
+
                 var sectionChoices = choices
                     .Where(choice => choice.Locations.Any(location =>
                         location.Active &&
@@ -977,11 +983,33 @@ namespace Content.Client.Lobby.UI
                 sections.Add(new CombinedLoadoutSection(groupId, Loc.GetString(group.Name), group.MaxLimit, sectionChoices)); // Pirate: loadout
             }
 
-            foreach (var section in sections.OrderBy(section => section.Title))
+            foreach (var section in OrderLoadoutSections(sections)) // Pirate: armbands
             {
                 AddLoadoutChoiceSection(categoryBody, section, loadoutSystem, categoryPrefix, register); // Pirate: loadout
             }
         }
+
+        #region Pirate: armbands
+        private List<CombinedLoadoutSection> OrderLoadoutSections(List<CombinedLoadoutSection> sections)
+        {
+            var ordered = sections.OrderBy(section => section.Title).ToList();
+            var moved = ordered
+                .Where(section => _prototypeManager.TryIndex(section.Group, out LoadoutGroupPrototype? group) &&
+                                  group.ShowAfter is { } after &&
+                                  ordered.Any(other => other.Group == after))
+                .ToList();
+
+            foreach (var section in moved)
+            {
+                ordered.Remove(section);
+                var after = _prototypeManager.Index(section.Group).ShowAfter!.Value;
+                var index = ordered.FindIndex(other => other.Group == after);
+                ordered.Insert(index + 1, section);
+            }
+
+            return ordered;
+        }
+        #endregion Pirate: armbands
 
         private void AddLoadoutChoiceSection(
             BoxContainer categoryBody,
@@ -1613,6 +1641,8 @@ namespace Content.Client.Lobby.UI
                 var prefix = GetLoadoutCategoryTitle(category);
                 AddLoadoutChoiceSections(LoadoutSearchResultsBody, categoryChoices, CombinedLoadoutKind.Job, loadoutSystem, prefix, register: false);
                 AddLoadoutChoiceSections(LoadoutSearchResultsBody, categoryChoices, CombinedLoadoutKind.Generic, loadoutSystem, prefix, register: false);
+                AddLoadoutChoiceSections(LoadoutSearchResultsBody, categoryChoices, CombinedLoadoutKind.Job, loadoutSystem, prefix, register: false, showLast: true); // Pirate: armbands
+                AddLoadoutChoiceSections(LoadoutSearchResultsBody, categoryChoices, CombinedLoadoutKind.Generic, loadoutSystem, prefix, register: false, showLast: true); // Pirate: armbands
             }
 
             LoadoutSearchResultsLabel.Text = Loc.GetString("loadout-search-results", ("count", matchCount), ("query", query));

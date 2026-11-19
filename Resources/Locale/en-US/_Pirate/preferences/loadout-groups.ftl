@@ -38,3 +38,5 @@ loadout-group-mantis-Melee = Mantis melee weapon
 loadout-group-mantis-Equipment = Mantis equipment
 
 loadout-group-hands-rings = Rings
+loadout-group-armbands = Armbands
+loadout-group-security-armbands = Security armbands

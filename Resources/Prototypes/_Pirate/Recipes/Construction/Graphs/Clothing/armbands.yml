@@ -1,0 +1,169 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: constructionGraph
+  id: PirateArmband
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: ClothingNeckArmband
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandDouble
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandMedical
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandEngineering
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandHydroponics
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandOperations
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandInterstellarAidCorps
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandIdris
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandPMCG
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandPMCGAlt
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandTauCeti
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandSCC
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandActingCaptain
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandAzszau
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandKutzis
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandUnathiFleet
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandGuard
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandDeputy
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandCargoGuard
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandEngineeringGuard
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandScienceGuard
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandHydroponicsGuard
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+    - to: ClothingNeckArmbandMedicalGuardBlue
+      steps:
+      - material: Cloth
+        amount: 1
+        doAfter: 2
+  - node: ClothingNeckArmband
+    entity: ClothingNeckArmband
+  - node: ClothingNeckArmbandDouble
+    entity: ClothingNeckArmbandDouble
+  - node: ClothingNeckArmbandMedical
+    entity: ClothingNeckArmbandMedical
+  - node: ClothingNeckArmbandEngineering
+    entity: ClothingNeckArmbandEngineering
+  - node: ClothingNeckArmbandHydroponics
+    entity: ClothingNeckArmbandHydroponics
+  - node: ClothingNeckArmbandOperations
+    entity: ClothingNeckArmbandOperations
+  - node: ClothingNeckArmbandInterstellarAidCorps
+    entity: ClothingNeckArmbandInterstellarAidCorps
+  - node: ClothingNeckArmbandIdris
+    entity: ClothingNeckArmbandIdris
+  - node: ClothingNeckArmbandPMCG
+    entity: ClothingNeckArmbandPMCG
+  - node: ClothingNeckArmbandPMCGAlt
+    entity: ClothingNeckArmbandPMCGAlt
+  - node: ClothingNeckArmbandTauCeti
+    entity: ClothingNeckArmbandTauCeti
+  - node: ClothingNeckArmbandSCC
+    entity: ClothingNeckArmbandSCC
+  - node: ClothingNeckArmbandActingCaptain
+    entity: ClothingNeckArmbandActingCaptain
+  - node: ClothingNeckArmbandAzszau
+    entity: ClothingNeckArmbandAzszau
+  - node: ClothingNeckArmbandKutzis
+    entity: ClothingNeckArmbandKutzis
+  - node: ClothingNeckArmbandUnathiFleet
+    entity: ClothingNeckArmbandUnathiFleet
+  - node: ClothingNeckArmbandGuard
+    entity: ClothingNeckArmbandGuard
+  - node: ClothingNeckArmbandDeputy
+    entity: ClothingNeckArmbandDeputy
+  - node: ClothingNeckArmbandCargoGuard
+    entity: ClothingNeckArmbandCargoGuard
+  - node: ClothingNeckArmbandEngineeringGuard
+    entity: ClothingNeckArmbandEngineeringGuard
+  - node: ClothingNeckArmbandScienceGuard
+    entity: ClothingNeckArmbandScienceGuard
+  - node: ClothingNeckArmbandHydroponicsGuard
+    entity: ClothingNeckArmbandHydroponicsGuard
+  - node: ClothingNeckArmbandMedicalGuardBlue
+    entity: ClothingNeckArmbandMedicalGuardBlue

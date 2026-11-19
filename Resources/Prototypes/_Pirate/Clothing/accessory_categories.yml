@@ -33,6 +33,11 @@
   id: Ring
   slot: gloves
 
+# The neck layer keeps armbands visible over armor.
+- type: clothingAccessoryCategory
+  id: Armband
+  drawAt: neck
+
 # Hair flowers, hair bows, large hair ribbons and flower wreaths (crowns), attached to a hat.
 # They draw their head sprite with the hat, over it, as in a hat band. A wreath covers the top of the hat.
 # On the hat icon they are shown from the side (bows are on the back of the head) and lower,

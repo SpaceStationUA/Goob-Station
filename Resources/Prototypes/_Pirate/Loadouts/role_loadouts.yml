@@ -12,6 +12,7 @@
   - Glasses
   - Survival
   - Rings
+  - Armbands
   - Trinkets
   - Animals
   - GroupSpeciesBreathTool
@@ -34,6 +35,7 @@
   - MantisOuterClothing
   - MantisGloves
   - Rings
+  - Armbands
   - MantisShoes
   - MantisBelt
   - MantisEyes
@@ -54,10 +56,12 @@
   - InstructorJumpsuit
   - SecurityBackpack
   - SecurityMelee
+  - SecurityArmbands
   - SecurityOuterClothing
   - SecurityShoes
   - SecurityGloves
   - Rings
+  - Armbands
   - InstructorNeck
   - InstructorBelt
   - PirateInstructorWeapon # Pirate: Omu sergeant duty choices
@@ -89,6 +93,7 @@
   - InterdyneSurgery
   - InterdyneOfficerGloves
   - Rings
+  - Armbands
   - InterdyneShoes
   - InterdyneOfficerStamp
   - SecurityMelee # Goobstation
@@ -110,6 +115,7 @@
   - InterdyneSurgery
   - InterdyneOfficerGloves
   - Rings
+  - Armbands
   - InterdyneShoes
   - InterdyneDeputyStamp
   - SecurityMelee # Goobstation
@@ -131,6 +137,7 @@
   - InterdyneSurgery
   - InterdyneOfficerGloves
   - Rings
+  - Armbands
   - InterdyneShoes
   - SecurityMelee # Goobstation
   - SeniorSecurityWeapon # Pirate
@@ -155,6 +162,7 @@
   - Animals
   - GroupSpeciesBreathTool
   - Rings
+  - Armbands
 
 - type: roleLoadout # Функція parent не допомогла, тому просто продублював речі
   id: JobInterdyneMed
@@ -173,6 +181,7 @@
   - Animals
   - GroupSpeciesBreathTool
   - Rings
+  - Armbands
 
 - type: roleLoadout
   id: JobInterdyneEngineer
@@ -191,6 +200,7 @@
   - Animals
   - GroupSpeciesBreathTool
   - Rings
+  - Armbands
 
 - type: roleLoadout
   id: JobInterdyneSecure
@@ -209,6 +219,7 @@
   - Animals
   - GroupSpeciesBreathTool
   - Rings
+  - Armbands
 
 - type: roleLoadout
   id: JobInterdyneService
@@ -227,6 +238,7 @@
   - Animals
   - GroupSpeciesBreathTool
   - Rings
+  - Armbands
 
 - type: roleLoadout
   id: JobInterdyneShaftMiners
@@ -245,5 +257,6 @@
   - Animals
   - GroupSpeciesBreathTool
   - Rings
+  - Armbands
 
 # Other

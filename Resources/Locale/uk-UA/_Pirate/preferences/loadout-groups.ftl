@@ -44,3 +44,5 @@ loadout-group-service-worker-head = Головний убір сервісник
 loadout-group-role-restriction = Цей предмет доступний лише для відповідної посади.
 loadout-group-reporter-head = Головний убір репортера
 loadout-group-hands-rings = Каблучки
+loadout-group-armbands = Пов'язки
+loadout-group-security-armbands = Пов'язки служби безпеки
