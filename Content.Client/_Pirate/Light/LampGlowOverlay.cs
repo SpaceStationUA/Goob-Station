@@ -7,6 +7,7 @@ using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.Graphics;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -20,10 +21,10 @@ public sealed class LampGlowOverlay : Overlay
 {
     private static readonly ProtoId<ShaderPrototype> GlowShader = "PirateLampGlow";
 
-    private const float ConeDarkOpacity = 0f;
-    private const float PointDarkOpacity = 0.25f;
-    private const float DarkLuminance = 0.02f;
-    private const float BrightLuminance = 0.3f;
+    // Light map values, before floor colour; dim lamps and unlit or hidden areas show no glow.
+    private const float DarkOpacity = 0f;
+    private const float DarkLuminance = 0.1f;
+    private const float BrightLuminance = 0.6f;
 
     // Local coordinates use +Y for the wall and -Y for the lamp's beam.
     private const float PointRadiusX = 0.6f;
@@ -36,16 +37,16 @@ public sealed class LampGlowOverlay : Overlay
 
     private const float EdgeFade = 0.15f;
 
-    private static readonly Box2 ConeBox = new(-1.5f, -2.8f, 1.5f, 0.2f);
-    private const float ConeLength = 2.8f;
-    private const float ConeStartWidth = 0.35f;
-    private const float ConeWidthPerTile = 0.42f;
+    // The texture edge fade hides the Gaussian cutoff at two radii.
+    private const float FanRadius = 1.1f;
+    private const float FanAngleExponent = 0.6f;
+    private static readonly Box2 ConeBox = new(-FanRadius * 2f, -FanRadius * 2f, FanRadius * 2f, 0.3f);
 
     private const float PointAlpha = 0.55f;
-    private const float ConeAlpha = 0.2f;
+    private const float ConeAlpha = 0.14f;
 
-    // Sqrt energy keeps weak and bright lamps within a usable range.
-    private const float MinEnergyFactor = 0.5f;
+    // Sqrt energy keeps bright lamps within a usable range; weak lamps glow less.
+    private const float MinEnergyFactor = 0.2f;
     private const float MaxEnergyFactor = 1.2f;
 
     private const int TexturePixelsPerTile = 32;
@@ -56,10 +57,9 @@ public sealed class LampGlowOverlay : Overlay
 
     private readonly EntityLookupSystem _lookup;
     private readonly SharedTransformSystem _xforms;
+    private readonly OccluderSystem _occluders;
     private readonly EntityQuery<PointLightComponent> _lightQuery;
-    // Separate instances avoid queued draws observing later parameter changes.
-    private readonly ShaderInstance _coneShader;
-    private readonly ShaderInstance _pointShader;
+    private readonly ShaderInstance _shader;
     private readonly OwnedTexture _point;
     private readonly OwnedTexture _cone;
     private readonly HashSet<Entity<LampGlowComponent>> _lamps = new();
@@ -69,16 +69,18 @@ public sealed class LampGlowOverlay : Overlay
     public bool DrawCones = true;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities;
-    public override bool RequestScreenTexture => true;
 
     public LampGlowOverlay()
     {
         IoCManager.InjectDependencies(this);
         _lookup = _entMan.System<EntityLookupSystem>();
         _xforms = _entMan.System<SharedTransformSystem>();
+        _occluders = _entMan.System<OccluderSystem>();
         _lightQuery = _entMan.GetEntityQuery<PointLightComponent>();
-        _coneShader = MakeShader(ConeDarkOpacity);
-        _pointShader = MakeShader(PointDarkOpacity);
+        _shader = _proto.Index(GlowShader).InstanceUnique();
+        _shader.SetParameter("DARK_OPACITY", DarkOpacity);
+        _shader.SetParameter("DARK_LUMINANCE", DarkLuminance);
+        _shader.SetParameter("BRIGHT_LUMINANCE", BrightLuminance);
         _point = MakeTexture("pirate-lamp-glow-point", PointBox, PointShape);
         _cone = MakeTexture("pirate-lamp-glow-cone", ConeBox, ConeShape);
 
@@ -92,9 +94,6 @@ public sealed class LampGlowOverlay : Overlay
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (ScreenTexture == null)
-            return;
-
         _lamps.Clear();
         // Use a spatial query because the client retains all seen entities; expand bounds for off-screen cones.
         var margin = MathF.Max(-ConeBox.Bottom, ConeBox.Right) * 2f;
@@ -102,6 +101,11 @@ public sealed class LampGlowOverlay : Overlay
             LookupFlags.Static | LookupFlags.Approximate);
         if (_lamps.Count == 0)
             return;
+
+        // Observers without FOV, and views of another map, see every lamp.
+        var eye = args.Viewport.Eye;
+        var checkSight = eye is { DrawFov: true } && eye.Position.MapId == args.MapId;
+        var eyePosition = eye?.Position.Position ?? Vector2.Zero;
 
         _visible.Clear();
         foreach (var (uid, glow) in _lamps)
@@ -114,16 +118,19 @@ public sealed class LampGlowOverlay : Overlay
             if (strength <= 0f)
                 continue;
 
+            var matrix = _xforms.GetWorldMatrix(uid);
+            // FOV leaves walls visible and lit from both sides. Test the floor tile before each lamp.
+            if (checkSight && !InSight(args.MapId, eyePosition, matrix.Translation))
+                continue;
+
             // Copy the color here; the render sandbox allows reading engine data but not invoking methods on it.
-            _visible.Add((_xforms.GetWorldMatrix(uid), glow, light.Color, strength));
+            _visible.Add((matrix, glow, light.Color, strength));
         }
 
         var handle = args.WorldHandle;
-        // Draw against the original screen copy so overlapping lamps do not change each other's fade.
+        handle.UseShader(_shader);
         if (DrawCones)
         {
-            _coneShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-            handle.UseShader(_coneShader);
             foreach (var (matrix, glow, color, strength) in _visible)
             {
                 if (!glow.Cone)
@@ -135,8 +142,6 @@ public sealed class LampGlowOverlay : Overlay
             }
         }
 
-        _pointShader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        handle.UseShader(_pointShader);
         foreach (var (matrix, glow, color, strength) in _visible)
         {
             handle.SetTransform(matrix);
@@ -149,13 +154,14 @@ public sealed class LampGlowOverlay : Overlay
         handle.UseShader(null);
     }
 
-    private ShaderInstance MakeShader(float darkOpacity)
+    private bool InSight(MapId map, Vector2 from, Vector2 to)
     {
-        var shader = _proto.Index(GlowShader).InstanceUnique();
-        shader.SetParameter("DARK_OPACITY", darkOpacity);
-        shader.SetParameter("DARK_LUMINANCE", DarkLuminance);
-        shader.SetParameter("BRIGHT_LUMINANCE", BrightLuminance);
-        return shader;
+        var direction = to - from;
+        var length = direction.Length();
+        if (length < 0.01f)
+            return true;
+
+        return _occluders.IntersectRay(map, new Ray(from, direction / length), length) == null;
     }
 
     private static Box2 Place(Box2 shape, LampGlowComponent glow)
@@ -173,10 +179,10 @@ public sealed class LampGlowOverlay : Overlay
     private static float ConeShape(Vector2 p)
     {
         var d = -p.Y;
-        var along = SmoothStep(-0.2f, 0.3f, d) * MathF.Pow(Math.Clamp(1f - d / ConeLength, 0f, 1f), 1.5f);
-        var half = ConeStartWidth + ConeWidthPerTile * MathF.Max(d, 0f);
-        var across = 1f - SmoothStep(0.35f * half, half, MathF.Abs(p.X));
-        return along * across;
+        var r = MathF.Sqrt(p.X * p.X + d * d) + 1e-6f;
+        var angle = MathF.Pow(Math.Clamp(d / r, 0f, 1f), FanAngleExponent);
+        var radial = MathF.Exp(-(r / FanRadius) * (r / FanRadius));
+        return SmoothStep(-0.2f, 0.4f, d) * angle * radial;
     }
 
     private static float SmoothStep(float edge0, float edge1, float x)
@@ -212,8 +218,7 @@ public sealed class LampGlowOverlay : Overlay
 
     protected override void DisposeBehavior()
     {
-        _coneShader.Dispose();
-        _pointShader.Dispose();
+        _shader.Dispose();
         _point.Dispose();
         _cone.Dispose();
         base.DisposeBehavior();

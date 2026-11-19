@@ -78,8 +78,15 @@ public sealed partial class DeepSpaceScannerSystem : EntitySystem
         var query = EntityQueryEnumerator<DeepSpaceScannerComponent>();
         while (query.MoveNext(out var uid, out var scanner))
         {
-            if (time < scanner.NextScan || !_toggle.IsActivated(uid))
+            if (!_toggle.IsActivated(uid))
                 continue;
+
+            // A map change (other deck, other sector) makes the last pings wrong: scan again now, not at NextScan.
+            if (time < scanner.NextScan &&
+                (scanner.LastScan == null || Transform(uid).MapID == scanner.LastScanMap))
+            {
+                continue;
+            }
 
             _actors.Clear();
             _actors.UnionWith(_ui.GetActors(uid, RadarConsoleUiKey.Key));

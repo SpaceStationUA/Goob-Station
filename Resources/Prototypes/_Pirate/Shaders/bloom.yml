@@ -19,3 +19,12 @@
   id: PirateBloomComposite
   kind: source
   path: "/Textures/_Pirate/Shaders/bloom_composite.swsl"
+
+- type: shader
+  id: PirateBloomCompositeInView
+  kind: source
+  path: "/Textures/_Pirate/Shaders/bloom_composite.swsl"
+  stencil:
+    ref: 1
+    op: Keep
+    func: NotEqual

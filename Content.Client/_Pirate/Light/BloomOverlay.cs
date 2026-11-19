@@ -8,6 +8,7 @@ using Robust.Client.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Graphics;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client._Pirate.Light;
@@ -52,6 +53,7 @@ public sealed class BloomOverlay : Overlay
     private static readonly ProtoId<ShaderPrototype> DownsampleShader = "PirateBloomDownsample";
     private static readonly ProtoId<ShaderPrototype> UpsampleShader = "PirateBloomUpsample";
     private static readonly ProtoId<ShaderPrototype> CompositeShader = "PirateBloomComposite";
+    private static readonly ProtoId<ShaderPrototype> CompositeInViewShader = "PirateBloomCompositeInView";
 
     // Adjust level count so the halo keeps the same world-space radius at every render scale.
     private const int BaseLevels = 5;
@@ -65,27 +67,32 @@ public sealed class BloomOverlay : Overlay
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
+    private readonly SharedMapSystem _mapSystem;
     private readonly OverlayResourceCache<BloomResources> _resources = new();
     private readonly ShaderInstance _prefilter;
     private readonly ShaderInstance _downsample;
     private readonly ShaderInstance _upsample;
     private readonly ShaderInstance _composite;
+    private readonly ShaderInstance _compositeInView;
     private readonly Vector2i[] _sizes = new Vector2i[BloomResources.MaxLevels];
 
     public float Intensity;
     public float Threshold;
     public float Spread;
 
+    // Run after hard FOV so hidden lamps cannot bloom through walls.
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
 
     public BloomOverlay()
     {
         IoCManager.InjectDependencies(this);
+        _mapSystem = _entMan.System<SharedMapSystem>();
         _prefilter = _proto.Index(PrefilterShader).InstanceUnique();
         _downsample = _proto.Index(DownsampleShader).InstanceUnique();
         _upsample = _proto.Index(UpsampleShader).InstanceUnique();
         _composite = _proto.Index(CompositeShader).InstanceUnique();
+        _compositeInView = _proto.Index(CompositeInViewShader).InstanceUnique();
 
         // Render before screen effects so they also apply to the glow.
         ZIndex = -2;
@@ -178,17 +185,27 @@ public sealed class BloomOverlay : Overlay
             lower = res.Up[i]!;
         }
 
+        // The hard-FOV stencil marks hidden pixels; composite only where it is clear.
+        var composite = HardFovApplied(eye, args.MapId) ? _compositeInView : _composite;
+
         // Do not normalize the weighted sum; normalization makes the wider spread levels too faint.
-        _composite.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        _composite.SetParameter("BLOOM_TEXTURE", lower.Texture);
-        _composite.SetParameter("BLOOM_UV_SCALE", new Vector2(0.5f) / _sizes[0]);
-        _composite.SetParameter("BLOOM_TEXEL", Vector2.One / _sizes[0]);
-        _composite.SetParameter("INTENSITY", Intensity);
+        composite.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+        composite.SetParameter("BLOOM_TEXTURE", lower.Texture);
+        composite.SetParameter("BLOOM_UV_SCALE", new Vector2(0.5f) / _sizes[0]);
+        composite.SetParameter("BLOOM_TEXEL", Vector2.One / _sizes[0]);
+        composite.SetParameter("INTENSITY", Intensity);
 
         handle.SetTransform(Matrix3x2.Identity);
-        handle.UseShader(_composite);
+        handle.UseShader(composite);
         handle.DrawRect(args.WorldBounds, Color.White);
         handle.UseShader(null);
+    }
+
+    private bool HardFovApplied(IEye eye, MapId map)
+    {
+        return _lightManager.DrawHardFov && eye.DrawFov &&
+               _entMan.TryGetComponent(_mapSystem.GetMapOrInvalid(map), out MapComponent? mapComp) &&
+               mapComp.LightingEnabled;
     }
 
     private static void DrawPass(DrawingHandleWorld handle, IRenderTexture target, Vector2i size, ShaderInstance shader)
@@ -208,6 +225,7 @@ public sealed class BloomOverlay : Overlay
         _downsample.Dispose();
         _upsample.Dispose();
         _composite.Dispose();
+        _compositeInView.Dispose();
         base.DisposeBehavior();
     }
 }
