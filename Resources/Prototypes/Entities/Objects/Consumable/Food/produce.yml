@@ -1604,6 +1604,8 @@
     slots:
     - HEAD
     quickEquip: false
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: HatDecor # Pirate: clothing accessories
   - type: FlavorProfile
     flavors:
       - medicine
@@ -1639,6 +1641,14 @@
   id: FoodLily
   description: A beautiful orange flower containing topical medicine.
   components:
+  #region Pirate: clothing accessories - worn in the hair or on a hat, as the poppy
+  - type: Clothing
+    slots:
+    - HEAD
+    quickEquip: false
+  - type: ClothingAccessory
+    category: HatDecor
+  #endregion Pirate: clothing accessories
   - type: FlavorProfile
     flavors:
       - medicine

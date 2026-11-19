@@ -41,6 +41,8 @@
   parent: ClothingNeckBase
   id: ClothingScarfBase
   components:
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Scarf # Pirate: clothing accessories
   - type: Tag
     tags:
     - Scarf

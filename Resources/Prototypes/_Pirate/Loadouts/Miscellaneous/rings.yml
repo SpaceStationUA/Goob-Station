@@ -1,0 +1,84 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# Rings go in the gloves slot. A ring is equipped after the other loadout items:
+# it is attached to the gloves if there are gloves, and worn on the hand if there are none.
+
+- type: loadout
+  id: LoadoutRingGold
+  equipment:
+    gloves: GoldRing
+
+- type: loadout
+  id: LoadoutRingSilver
+  equipment:
+    gloves: SilverRing
+
+- type: loadout
+  id: LoadoutRingGoldDiamond
+  equipment:
+    gloves: GoldRingDiamond
+
+- type: loadout
+  id: LoadoutRingSilverDiamond
+  equipment:
+    gloves: SilverRingDiamond
+
+- type: loadout
+  id: LoadoutRingGoldGem
+  equipment:
+    gloves: GoldRingGem
+
+- type: loadout
+  id: LoadoutRingSilverGem
+  equipment:
+    gloves: SilverRingGem
+
+- type: loadout
+  id: LoadoutRingBloodDiamond
+  equipment:
+    gloves: RingBloodDiamond
+
+- type: loadout
+  id: LoadoutRingEmerald
+  equipment:
+    gloves: RingEmerald
+
+- type: loadout
+  id: LoadoutRingPlasma
+  equipment:
+    gloves: RingPlasma
+
+- type: loadout
+  id: LoadoutRingTurkenite
+  equipment:
+    gloves: RingTurkenite
+
+- type: loadout
+  id: LoadoutRingSignet
+  equipment:
+    gloves: RingSignet
+
+- type: loadout
+  id: LoadoutRingMasonic
+  equipment:
+    gloves: RingMasonic
+
+- type: loadoutGroup
+  id: Rings
+  # "hands" in the name key puts the group in the Hands category of the profile editor
+  # (HumanoidProfileEditor.GetLoadoutGroupCategory reads keywords in the ID and name key).
+  name: loadout-group-hands-rings
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - LoadoutRingGold
+  - LoadoutRingSilver
+  - LoadoutRingGoldDiamond
+  - LoadoutRingSilverDiamond
+  - LoadoutRingGoldGem
+  - LoadoutRingSilverGem
+  - LoadoutRingBloodDiamond
+  - LoadoutRingEmerald
+  - LoadoutRingPlasma
+  - LoadoutRingTurkenite
+  - LoadoutRingSignet
+  - LoadoutRingMasonic

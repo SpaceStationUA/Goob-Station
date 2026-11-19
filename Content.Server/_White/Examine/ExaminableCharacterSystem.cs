@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Chat.Managers;
+using Content.Pirate.Shared.Clothing.Accessories; // Pirate: clothing accessories
 using Content.Shared.IdentityManagement;
 using Content.Goobstation.Common.Examine; // Goobstation Change
 using Content.Goobstation.Common.CCVar; // Goobstation Change
@@ -21,6 +22,7 @@ public sealed class ExaminableCharacterSystem : EntitySystem
     [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly INetConfigurationManager _netConfigManager = default!;
+    [Dependency] private readonly ClothingAccessorySystem _accessory = default!; // Pirate: clothing accessories
 
     private List<string> _logLines = new();
 
@@ -95,9 +97,27 @@ public sealed class ExaminableCharacterSystem : EntitySystem
             {
                 var itemName = FormattedMessage.EscapeText(metaData.EntityName);
                 var itemTex = Loc.GetString(slotLabel, ("item", itemName), ("ent", uid), ("id", GetNetEntity(slotEntity.Value, metaData).Id), ("size", 14));
+                #region Pirate: clothing accessories
+                var examineText = Loc.GetString(slotLabel, ("item", itemName), ("ent", uid), ("id", "empty"));
+                var accessoryLines = new List<string>();
+                foreach (var accessory in _accessory.GetAccessories(slotEntity.Value))
+                {
+                    var accessoryName = FormattedMessage.EscapeText(Name(accessory));
+                    examineText += "\n" + Loc.GetString("pirate-clothing-accessory-examine-sublist", ("item", accessoryName), ("id", "empty"));
+                    accessoryLines.Add(Loc.GetString("pirate-clothing-accessory-examine-sublist",
+                        ("item", accessoryName), ("id", GetNetEntity(accessory).Id), ("size", 12)));
+                }
+
                 if (showExamine)
-                    args.PushMarkup($"[font size=10]{Loc.GetString(slotLabel, ("item", itemName), ("ent", uid), ("id", "empty"))}[/font]", priority);
+                    args.PushMarkup($"[font size=10]{examineText}[/font]", priority);
+                else
+                    _accessory.AddWearerExamine(slotEntity.Value, uid, args);
                 _logLines.Add($"[color=DarkGray][font size=10]{itemTex}[/font][/color]");
+                foreach (var line in accessoryLines)
+                {
+                    _logLines.Add($"[color=DarkGray][font size=10]{line}[/font][/color]");
+                }
+                #endregion Pirate: clothing accessories
                 priority--;
             }
         }

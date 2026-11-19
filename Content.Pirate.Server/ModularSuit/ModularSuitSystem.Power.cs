@@ -326,6 +326,25 @@ public sealed partial class ModularSuitSystem
         return false;
     }
 
+    public void AddCoreCharge(Entity<ModularSuitComponent?> suit, float amount)
+    {
+        if (!Resolve(suit, ref suit.Comp) || !float.IsFinite(amount) || amount <= 0)
+            return;
+
+        var coreContainer = Container.GetContainer(suit, CoreContainer);
+        if (coreContainer.ContainedEntities.Count == 0
+            || !TryComp<ModularSuitCoreComponent>(coreContainer.ContainedEntities[0], out var core)
+            || core.Infinite
+            || core.Charge >= core.MaxCharge)
+            return;
+
+        core.Charge = Math.Min(core.MaxCharge, core.Charge + amount);
+        Dirty(coreContainer.ContainedEntities[0], core);
+
+        var ev = new ModularSuitChargeChangedEvent(core.Charge, core.MaxCharge);
+        RaiseLocalEvent(suit.Owner, ref ev);
+    }
+
     public bool TryUseCoreCharge(
         Entity<ModularSuitComponent?> suit,
         float amount,

@@ -3365,6 +3365,8 @@
   name: tie
   description: A neosilk clip-on tie.
   components:
+  - type: ClothingAccessory
+    category: Tie
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Ties/color.rsi
   - type: Clothing
@@ -3381,6 +3383,8 @@
   name: short tie
   description: A short tie, perfect for vests.
   components:
+  - type: ClothingAccessory
+    category: Tie
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Ties/shorttie.rsi
   - type: Clothing
@@ -3393,6 +3397,8 @@
   name: neck bow
   description: A bow for adorning the neck.
   components:
+  - type: ClothingAccessory
+    category: Tie
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Ties/bow.rsi
   - type: Clothing
@@ -3405,6 +3411,8 @@
   name: bow tie
   description: A bow tie. Snazzy!
   components:
+  - type: ClothingAccessory
+    category: Tie
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Ties/bowtie.rsi
   - type: Clothing
@@ -3417,6 +3425,8 @@
   name: neck ribbon
   description: A ribbon for adorning the neck.
   components:
+  - type: ClothingAccessory
+    category: Tie
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Ties/ribbon.rsi
   - type: Clothing
@@ -3428,6 +3438,8 @@
   name: crucifix
   description: A small cross on a piece of string. Commonly associated with the Christian faith, it is a main symbol of this religion.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Crucifixes/color.rsi
   - type: Clothing
@@ -3440,6 +3452,8 @@
   name: Saint Peter crucifix
   description: A small cross on a piece of string. Being inverted and thus upside down marks it as the cross of Saint Peter.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Crucifixes/color-inverted.rsi
   - type: Clothing
@@ -3452,6 +3466,8 @@
   name: gold crucifix
   description: A small, gold cross on a piece of string. Commonly associated with the Christian faith, it is a main symbol of this religion.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Crucifixes/gold.rsi
   - type: Clothing
@@ -3464,6 +3480,8 @@
   name: gold Saint Peter crucifix
   description: A small, gold cross on a piece of string. Being inverted and thus upside down marks it as the cross of Saint Peter.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Crucifixes/gold-inverted.rsi
   - type: Clothing
@@ -3476,6 +3494,8 @@
   name: silver crucifix
   description: A small, silver cross on a piece of string. Commonly associated with the Christian faith, it is a main symbol of this religion.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Crucifixes/silver.rsi
   - type: Clothing
@@ -3488,6 +3508,8 @@
   name: silver Saint Peter crucifix
   description: A small, silver cross on a piece of string. Being inverted and thus upside down marks it as the cross of Saint Peter.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Crucifixes/silver-inverted.rsi
   - type: Clothing
@@ -3500,6 +3522,8 @@
   name: scapular
   description: As Christian garment that serves to remind the wearer of their commitment to live a Christian life.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Misc/scapular.rsi
   - type: Clothing
@@ -3512,6 +3536,8 @@
   name: tallit
   description: A fringed garment worn as a prayer shawl by Jewish people.
   components:
+  - type: ClothingAccessory
+    category: Scarf
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Misc/tallit.rsi
   - type: Clothing
@@ -3523,6 +3549,8 @@
   name: necklace
   description: A piece of jewelry that goes around your neck.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Necklaces/standard.rsi
   - type: Clothing
@@ -3535,6 +3563,8 @@
   name: low-hanging necklace
   description: A long piece of jewelry that hangs quite low from the neck of its wearer.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Necklaces/low.rsi
   - type: Clothing
@@ -3547,6 +3577,8 @@
   name: round necklace
   description: A piece of jewelry that goes around your neck.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Necklaces/round.rsi
   - type: Clothing
@@ -3559,6 +3591,8 @@
   name: small necklace
   description: A diminutive necklace.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Necklaces/small.rsi
   - type: Clothing
@@ -3571,6 +3605,8 @@
   name: gold necklace
   description: A piece of golden jewelry that goes around your neck.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Necklaces/gold.rsi
   - type: Clothing
@@ -3583,6 +3619,8 @@
   name: silver necklace
   description: A piece of silver jewelry that goes around your neck.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Necklaces/silver.rsi
   - type: Clothing
@@ -3595,6 +3633,8 @@
   name: gold chain necklace
   description: A winding chain of golden links, fashioned into an exquisite necklace.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Necklaces/chain_gold.rsi
   - type: Clothing
@@ -3607,6 +3647,8 @@
   name: silver chain necklace
   description: A winding chain of silver links, fashioned into an exquisite necklace.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Necklaces/chain_silver.rsi
   - type: Clothing
@@ -3619,6 +3661,8 @@
   name: gold pendant necklace
   description: A heavy gemstone tethered to a golden necklace by a chain.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Necklaces/pendant_gold.rsi
     layers:
@@ -3638,6 +3682,8 @@
   name: large gold pendant necklace
   description: A large gemstone tethered to a golden necklace by a chain.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Necklaces/pendant_gold_large.rsi
     layers:
@@ -3657,6 +3703,8 @@
   name: silver pendant necklace
   description: A heavy gemstone tethered to a silver necklace by a chain.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Necklaces/pendant_silver.rsi
     layers:
@@ -3676,6 +3724,8 @@
   name: large silver pendant necklace
   description: A large gemstone tethered to a silver necklace by a chain.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Necklaces/pendant_silver_large.rsi
     layers:
@@ -3751,6 +3801,8 @@
   name: dogtags
   description: A pair of engraved metal identification tags.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Loadouts/EEGeneric/Clothing/Neck/Misc/dogtags.rsi
   - type: Clothing

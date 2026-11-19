@@ -1,2 +1,3 @@
+# Pirate: ring descriptions
 ent-SilverRingBase = срібний перстень
-    .desc = Виглядає трохи менш цінним, ніж золотий.
+    .desc = Простий обідок зі стерлінгового срібла.

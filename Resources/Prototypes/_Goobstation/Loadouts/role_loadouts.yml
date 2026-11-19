@@ -17,6 +17,8 @@
   - GroupSpeciesBreathTool
   - Survival
   - NanotrasenRepresentativeGloves
+  - Rings # Pirate: rings
+  - Armbands # Pirate: armbands
   # Goobstation - EE Plasmeme Change.
   - NanotrasenRepresentativeEnvirohelm
   - NanotrasenRepresentativeEnvirosuit
@@ -42,6 +44,8 @@
   - BlueshieldOfficerEnvirosuit
   - BlueshieldOfficerEnvirogloves
   - BlueshieldOfficerGloves
+  - Rings # Pirate: rings
+  - Armbands # Pirate: armbands
   - PirateBlueshieldBelt # Pirate: webbing or Grognard sheath
 
 - type: roleLoadout
@@ -54,6 +58,8 @@
   - NanotrasenTrainerBackpack
   - NanotrasenTrainerShoes
   - NanotrasenTrainerGloves
+  - Rings # Pirate: rings
+  - Armbands # Pirate: armbands
   - NanotrasenTrainerBelt
   - Trinkets
   - NanotrasenTrainerJobTrinkets
@@ -82,6 +88,8 @@
   - RoboticistBackpack
   - RoboticistOuterClothing
   - RoboticistGloves
+  - Rings # Pirate: rings
+  - Armbands # Pirate: armbands
   - RoboticistShoes
   - RoboticistPDA
    #- Glasses # Pirate
@@ -101,8 +109,11 @@
   - BrigmedicJumpsuit
   - BrigmedicOuterClothing
   - BrigmedicGloves
+  - Rings # Pirate: rings
+  - Armbands # Pirate: armbands
   - BrigmedicBackpack
   - SecurityMelee # EE parity, make corpsman able to carry weapons like the rest of security
+  - SecurityArmbands # Pirate: armbands
   - PirateBrigmedicWeapon # Pirate: Omu frontline case
   - SecurityShoes
   - SecurityNeck
@@ -122,6 +133,8 @@
   - RadioHostJumpsuit
   - CommonBackpack
   - Survival
+  - Rings # Pirate: rings
+  - Armbands # Pirate: armbands
   - Trinkets
   - Animals
   - GroupSpeciesBreathTool
@@ -146,6 +159,8 @@
   - ClownBackpack
   - SurvivalSecurity
   - GroupSpeciesBreathToolSecurity
+  - Armbands # Pirate: armbands
+  - SecurityArmbands # Pirate: armbands
 
 - type: roleLoadout
   id: JobCommandMaid
@@ -170,6 +185,8 @@
    - MedicalMask
    - VirologistJumpsuit
    - MedicalGloves
+   - Rings # Pirate: rings
+   - Armbands # Pirate: armbands
    - VirologistBackpack
    - VirologistOuterClothing
    - MedicalShoes

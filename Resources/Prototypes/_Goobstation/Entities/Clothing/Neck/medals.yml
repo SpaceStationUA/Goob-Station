@@ -21,3 +21,5 @@
     tags:
       - Medal
       - WhitelistChameleon
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Decor # Pirate: clothing accessories

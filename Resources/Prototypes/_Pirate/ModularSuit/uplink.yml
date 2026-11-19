@@ -28,8 +28,9 @@
   - !type:ListingLimitedStockCondition
     stock: 1
 
+# Keep module listings near the matching hardsuit's price.
 - type: listing
-  id: UplinkModularSuitSyndicateNukeOps
+  id: UplinkModularSuitSyndicate
   name: uplink-syndie-modsuit-name
   description: uplink-syndie-modsuit-desc
   icon: { sprite: _Pirate/Clothing/Modular/Syndicate/control.rsi, state: icon }
@@ -37,12 +38,30 @@
   categories:
   - UplinkWearables
   cost:
-    Telecrystal: 50
+    Telecrystal: 60
+  reputation: 60
   conditions:
   - !type:StoreWhitelistCondition
-    whitelist:
+    blacklist:
       tags:
-      - NukeOpsUplink
+      - ContractorUplink
+
+- type: listing
+  id: UplinkModularSuitElite
+  name: uplink-elite-modsuit-name
+  description: uplink-elite-modsuit-desc
+  icon: { sprite: _Pirate/Clothing/Modular/Elite/control.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateEliteControllerBundle
+  categories:
+  - UplinkWearables
+  cost:
+    Telecrystal: 90
+  reputation: 80
+  conditions:
+  - !type:StoreWhitelistCondition
+    blacklist:
+      tags:
+      - ContractorUplink
 
 - type: listing
   id: UplinkHolsterSuitModuleNukeOps

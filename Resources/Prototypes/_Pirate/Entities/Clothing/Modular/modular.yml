@@ -1637,6 +1637,13 @@
   - type: PointLight
     color: "#ffd480"
   - type: Armor
+    # Match syndicate suit trauma protection.
+    traumaDeductions:
+      Dismemberment: 0.5
+      OrganDamage: 0.5
+      BoneDamage: 0.5
+      VeinsDamage: 0
+      NerveDamage: 0
     modifiers:
       coefficients:
         Blunt: 0.9
@@ -1663,6 +1670,13 @@
       sprite: _Pirate/Clothing/Modular/Elite/chestplate.rsi
       state: icon-sealed
   - type: Armor
+    # Match syndicate suit trauma protection.
+    traumaDeductions:
+      Dismemberment: 0.5
+      OrganDamage: 0.5
+      BoneDamage: 0.5
+      VeinsDamage: 0
+      NerveDamage: 0
     modifiers:
       coefficients:
         Blunt: 0.6

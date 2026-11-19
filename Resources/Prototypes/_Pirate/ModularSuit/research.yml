@@ -12,10 +12,10 @@
   - InjectorSuitModule
   - MedicalPlating
   - SolutionScannerSuitModule
-  - PatientTransportSuitModule # Pirate: upstream MOD module.
-  - ThreadRipperSuitModule # Pirate: upstream MOD module.
-  - NightVisorSuitModule # Pirate: upstream MOD module.
-  - PlasmaStabilizerSuitModule # Pirate: upstream MOD module.
+  - PatientTransportSuitModule
+  - ThreadRipperSuitModule
+  - NightVisorSuitModule
+  - PlasmaStabilizerSuitModule
   position: -1,3 # Pirate: avoid overlapping the upstream AdvancedCleaning node.
 
 - type: technology
@@ -32,10 +32,14 @@
   - BurgerDispenserSuitModule
   - ApparatusSuitModule
   - AdvancedFlashlightSuitModule
-  - RecyclerSuitModule # Pirate: upstream MOD module.
-  - DonkRecyclerSuitModule # Pirate: upstream MOD module.
-  - JanitorMisterSuitModule # Pirate: upstream MOD module.
-  - GloveTranslatorSuitModule # Pirate: upstream MOD module.
+  - RecyclerSuitModule
+  - DonkRecyclerSuitModule
+  - JanitorMisterSuitModule
+  - GloveTranslatorSuitModule
+  - WaddleSuitModule
+  - BalloonBlowerSuitModule
+  - StamperSuitModule
+  - FishingGloveSuitModule
   position: 1,3
 
 - type: technology
@@ -51,8 +55,9 @@
   - OreBagSuitModule
   - DrillSuitModule
   - EngineeringPlating
-  - MisterSuitModule # Pirate: upstream MOD module.
-  - HeadProtectorSuitModule # Pirate: upstream MOD module.
+  - MisterSuitModule
+  - HeadProtectorSuitModule
+  - CandelaSpoolSuitModule
   position: -1,-3
 
 - type: technology
@@ -67,6 +72,7 @@
   recipeUnlocks:
   - QuickCarrySuitModule
   - GrabberSuitModule
+  - QuickCarryAdvancedSuitModule
   position: -1,-4
 
 - type: technology
@@ -82,8 +88,8 @@
   - StorageLargeSuitModule
   - JetpackSuitModule
   - ConstructorSuitModule
-  - ResinMisterSuitModule # Pirate: upstream MOD module.
-  - JumpJetSuitModule # Pirate: upstream MOD module.
+  - ResinMisterSuitModule
+  - JumpJetSuitModule
   technologyPrerequisites:
   - IndustrialModifier
   position: -2,-6

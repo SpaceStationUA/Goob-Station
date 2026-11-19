@@ -125,3 +125,87 @@
   result: JumpJetSuitModule
   categories:
   - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleHatStabilizer
+  id: HatStabilizerSuitModule
+  result: HatStabilizerSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleQuickCarryAdvanced
+  id: QuickCarryAdvancedSuitModule
+  result: QuickCarryAdvancedSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleMegaphone
+  id: MegaphoneSuitModule
+  result: MegaphoneSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModulePepperShoulders
+  id: PepperShouldersSuitModule
+  result: PepperShouldersSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleRestraintAssist
+  id: RestraintAssistSuitModule
+  result: RestraintAssistSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleBulwark
+  id: BulwarkSuitModule
+  result: BulwarkSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleWaddle
+  id: WaddleSuitModule
+  result: WaddleSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleCandelaSpool
+  id: CandelaSpoolSuitModule
+  result: CandelaSpoolSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleBalloonBlower
+  id: BalloonBlowerSuitModule
+  result: BalloonBlowerSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleStamper
+  id: StamperSuitModule
+  result: StamperSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleFishingGlove
+  id: FishingGloveSuitModule
+  result: FishingGloveSuitModule
+  categories:
+  - ModesuitModule
+
+- type: latheRecipe
+  parent: ModsuitModuleJointTorsion
+  id: JointTorsionSuitModule
+  result: JointTorsionSuitModule
+  categories:
+  - ModesuitModule

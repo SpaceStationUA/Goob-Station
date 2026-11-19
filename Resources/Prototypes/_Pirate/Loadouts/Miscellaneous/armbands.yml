@@ -1,0 +1,158 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: loadout
+  id: LoadoutArmband
+  customColorTint: true
+  equipment:
+    neck: ClothingNeckArmband
+
+- type: loadout
+  id: LoadoutArmbandDouble
+  customColorTint: true
+  equipment:
+    neck: ClothingNeckArmbandDouble
+
+- type: loadout
+  id: LoadoutArmbandMedical
+  equipment:
+    neck: ClothingNeckArmbandMedical
+
+- type: loadout
+  id: LoadoutArmbandEngineering
+  equipment:
+    neck: ClothingNeckArmbandEngineering
+
+- type: loadout
+  id: LoadoutArmbandHydroponics
+  equipment:
+    neck: ClothingNeckArmbandHydroponics
+
+- type: loadout
+  id: LoadoutArmbandOperations
+  equipment:
+    neck: ClothingNeckArmbandOperations
+
+- type: loadout
+  id: LoadoutArmbandInterstellarAidCorps
+  equipment:
+    neck: ClothingNeckArmbandInterstellarAidCorps
+
+- type: loadout
+  id: LoadoutArmbandIdris
+  equipment:
+    neck: ClothingNeckArmbandIdris
+
+- type: loadout
+  id: LoadoutArmbandPMCG
+  equipment:
+    neck: ClothingNeckArmbandPMCG
+
+- type: loadout
+  id: LoadoutArmbandPMCGAlt
+  equipment:
+    neck: ClothingNeckArmbandPMCGAlt
+
+- type: loadout
+  id: LoadoutArmbandTauCeti
+  equipment:
+    neck: ClothingNeckArmbandTauCeti
+
+- type: loadout
+  id: LoadoutArmbandSCC
+  equipment:
+    neck: ClothingNeckArmbandSCC
+
+- type: loadout
+  id: LoadoutArmbandActingCaptain
+  equipment:
+    neck: ClothingNeckArmbandActingCaptain
+
+- type: loadout
+  id: LoadoutArmbandAzszau
+  equipment:
+    neck: ClothingNeckArmbandAzszau
+
+- type: loadout
+  id: LoadoutArmbandKutzis
+  equipment:
+    neck: ClothingNeckArmbandKutzis
+
+- type: loadout
+  id: LoadoutArmbandUnathiFleet
+  equipment:
+    neck: ClothingNeckArmbandUnathiFleet
+
+- type: loadout
+  id: LoadoutArmbandGuard
+  customColorTint: true
+  equipment:
+    neck: ClothingNeckArmbandGuard
+
+- type: loadout
+  id: LoadoutArmbandDeputy
+  equipment:
+    neck: ClothingNeckArmbandDeputy
+
+- type: loadout
+  id: LoadoutArmbandCargoGuard
+  equipment:
+    neck: ClothingNeckArmbandCargoGuard
+
+- type: loadout
+  id: LoadoutArmbandEngineeringGuard
+  equipment:
+    neck: ClothingNeckArmbandEngineeringGuard
+
+- type: loadout
+  id: LoadoutArmbandScienceGuard
+  equipment:
+    neck: ClothingNeckArmbandScienceGuard
+
+- type: loadout
+  id: LoadoutArmbandHydroponicsGuard
+  equipment:
+    neck: ClothingNeckArmbandHydroponicsGuard
+
+- type: loadout
+  id: LoadoutArmbandMedicalGuardBlue
+  equipment:
+    neck: ClothingNeckArmbandMedicalGuardBlue
+
+- type: loadoutGroup
+  id: Armbands
+  name: loadout-group-armbands
+  showLast: true
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - LoadoutArmband
+  - LoadoutArmbandDouble
+  - LoadoutArmbandMedical
+  - LoadoutArmbandEngineering
+  - LoadoutArmbandHydroponics
+  - LoadoutArmbandOperations
+  - LoadoutArmbandInterstellarAidCorps
+  - LoadoutArmbandIdris
+  - LoadoutArmbandPMCG
+  - LoadoutArmbandPMCGAlt
+  - LoadoutArmbandTauCeti
+  - LoadoutArmbandSCC
+  - LoadoutArmbandActingCaptain
+  - LoadoutArmbandAzszau
+  - LoadoutArmbandKutzis
+  - LoadoutArmbandUnathiFleet
+
+- type: loadoutGroup
+  id: SecurityArmbands
+  name: loadout-group-security-armbands
+  showAfter: SecurityMelee
+  minLimit: 0
+  maxLimit: 1
+  loadouts:
+  - LoadoutArmbandGuard
+  - LoadoutArmbandDeputy
+  - LoadoutArmbandCargoGuard
+  - LoadoutArmbandEngineeringGuard
+  - LoadoutArmbandScienceGuard
+  - LoadoutArmbandHydroponicsGuard
+  - LoadoutArmbandMedicalGuardBlue

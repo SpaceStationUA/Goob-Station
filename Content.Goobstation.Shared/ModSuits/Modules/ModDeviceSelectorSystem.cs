@@ -59,7 +59,7 @@ public sealed partial class ModDeviceSelectorSystem : EntitySystem
     [SubscribeLocalEvent]
     private void OnInstalled(Entity<ModDeviceSelectorComponent> ent, ref ModModuleInstalledEvent args)
     {
-        if (TryComp<ModSuitComponent>(args.Suit, out var suit) && suit.Wearer is { } wearer)
+        if (_modSuit.TryGetSuitModuleHost(args.Suit, out var suit) && suit.Wearer is { } wearer) // Pirate: MOD module bridge
             GrantSelectAction(ent, wearer);
     }
 
@@ -94,8 +94,8 @@ public sealed partial class ModDeviceSelectorSystem : EntitySystem
     private void OnSelectAction(Entity<ModDeviceSelectorComponent> ent, ref ModSelectDeviceActionEvent args)
     {
         if (args.Handled
-            || !_modSuit.TryGetModuleSuit(ent, out var suit)
-            || suit.Comp.Wearer != args.Performer
+            || !_modSuit.TryGetModuleHost(ent, out var suit) // Pirate: MOD module bridge
+            || suit.Wearer != args.Performer // Pirate: MOD module bridge
             || !_modSuit.CanAccess(suit, args.Performer))
             return;
 
@@ -113,8 +113,8 @@ public sealed partial class ModDeviceSelectorSystem : EntitySystem
         _ui.CloseUi(ent.Owner, RadialSelectorUiKey.Key, args.Actor);
 
         var selected = args.SelectedItem;
-        if (!_modSuit.TryGetModuleSuit(ent, out var suit)
-            || suit.Comp.Wearer != args.Actor
+        if (!_modSuit.TryGetModuleHost(ent, out var suit) // Pirate: MOD module bridge
+            || suit.Wearer != args.Actor // Pirate: MOD module bridge
             || !TryComp<ModDeviceModuleComponent>(ent, out var device)
             || ent.Comp.Entries.All(entry => entry.Prototype != selected)
             || !_proto.HasIndex<EntityPrototype>(selected))

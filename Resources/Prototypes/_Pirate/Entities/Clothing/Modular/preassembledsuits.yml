@@ -327,11 +327,13 @@
   - type: ModularSuitPreassembled
     modules:
     - EMPShieldAdvancedSuitModule
-    - MagnetSuitModule
+    - MagnetAdvancedSuitModule
     - JetpackAdvancedSuitModule
     - ArmorBossterSuitModule
     - StorageSyndicateSuitModule
     - AdvancedFlashlightSuitModuleGold
+    - NightVisorSuitModule
+    - WeldingSuitModule
   - type: ItemSlots
     slots:
       cell_slot:

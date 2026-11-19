@@ -111,6 +111,17 @@ public sealed partial class VoiceMaskSystem
 
     private EntityUid? GetWearer(EntityUid mask)
     {
-        return _container.TryGetContainingContainer(mask, out var container) ? container.Owner : null;
+        // Modules sit inside suits, so walk up to the wearer inventory.
+        var current = mask;
+        EntityUid? holder = null;
+        while (_container.TryGetContainingContainer(current, out var container))
+        {
+            current = container.Owner;
+            holder ??= current;
+            if (HasComp<InventoryComponent>(current))
+                return current;
+        }
+
+        return holder;
     }
 }

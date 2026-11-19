@@ -7,6 +7,7 @@ using Content.Server.Decals;
 using Content.Shared.Charges.Components;
 using Content.Shared.Crayon;
 using Content.Shared._Pirate.Crayon;
+using Content.Shared._Pirate.Loadouts;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Components;
@@ -107,7 +108,7 @@ public sealed class LightPaintSystem : EntitySystem
 
     private bool TryStartPainting(Entity<LightPaintComponent> ent, EntityUid target, EntityUid user)
     {
-        if (!TryGetBulb(target, out _))
+        if (!HasComp<SprayPaintableComponent>(target) && !TryGetBulb(target, out _))
         {
             if (HasComp<PoweredLightComponent>(target))
             {
@@ -175,19 +176,31 @@ public sealed class LightPaintSystem : EntitySystem
         if (args.Handled || args.Cancelled || args.Target is not { } target)
             return;
 
-        if (!TryGetBulb(target, out var bulb))
+        var paintable = HasComp<SprayPaintableComponent>(target);
+        var bulb = EntityUid.Invalid;
+        if (!paintable && !TryGetBulb(target, out bulb))
             return;
 
         if (TryComp<LimitedChargesComponent>(ent, out var charges)
             && !_charges.TryUseCharges((ent, charges), ent.Comp.ChargeCost))
             return;
 
-        PaintBulb(bulb, ent.Comp.Color, remember: true);
+        if (paintable)
+            PaintItem(target, ent.Comp.Color);
+        else
+            PaintBulb(bulb, ent.Comp.Color, remember: true);
 
         _audio.PlayPvs(ent.Comp.Spray, ent);
-        _popup.PopupEntity(Loc.GetString("light-paint-success", ("target", bulb)), args.User, args.User);
+        _popup.PopupEntity(Loc.GetString("light-paint-success", ("target", paintable ? target : bulb)), args.User, args.User);
 
         args.Handled = true;
+    }
+
+    public void PaintItem(EntityUid item, Color color)
+    {
+        var tint = EnsureComp<LoadoutTintComponent>(item);
+        tint.Color = color;
+        Dirty(item, tint);
     }
 
     public void PaintBulb(EntityUid bulb, Color color, bool remember)

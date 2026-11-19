@@ -6,6 +6,8 @@
   name: chaplain stole
   description: An elegantly designed stole, with a vibrant gold plus on either end.
   components:
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Scarf # Pirate: clothing accessories
   - type: Sprite
     sprite: Clothing/Neck/Stoles/chaplain.rsi
   - type: Clothing

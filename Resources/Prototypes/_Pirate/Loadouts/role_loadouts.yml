@@ -11,6 +11,8 @@
   - CommonBackpack
   - Glasses
   - Survival
+  - Rings
+  - Armbands
   - Trinkets
   - Animals
   - GroupSpeciesBreathTool
@@ -32,6 +34,8 @@
   - MantisBack
   - MantisOuterClothing
   - MantisGloves
+  - Rings
+  - Armbands
   - MantisShoes
   - MantisBelt
   - MantisEyes
@@ -52,9 +56,12 @@
   - InstructorJumpsuit
   - SecurityBackpack
   - SecurityMelee
+  - SecurityArmbands
   - SecurityOuterClothing
   - SecurityShoes
   - SecurityGloves
+  - Rings
+  - Armbands
   - InstructorNeck
   - InstructorBelt
   - PirateInstructorWeapon # Pirate: Omu sergeant duty choices
@@ -85,6 +92,8 @@
   - InterdyneClothing
   - InterdyneSurgery
   - InterdyneOfficerGloves
+  - Rings
+  - Armbands
   - InterdyneShoes
   - InterdyneOfficerStamp
   - SecurityMelee # Goobstation
@@ -105,6 +114,8 @@
   - InterdyneClothing
   - InterdyneSurgery
   - InterdyneOfficerGloves
+  - Rings
+  - Armbands
   - InterdyneShoes
   - InterdyneDeputyStamp
   - SecurityMelee # Goobstation
@@ -125,6 +136,8 @@
   - InterdyneClothing
   - InterdyneSurgery
   - InterdyneOfficerGloves
+  - Rings
+  - Armbands
   - InterdyneShoes
   - SecurityMelee # Goobstation
   - SeniorSecurityWeapon # Pirate
@@ -148,6 +161,8 @@
   - SurvivalSecurity
   - Animals
   - GroupSpeciesBreathTool
+  - Rings
+  - Armbands
 
 - type: roleLoadout # Функція parent не допомогла, тому просто продублював речі
   id: JobInterdyneMed
@@ -165,6 +180,8 @@
   - SurvivalSecurity
   - Animals
   - GroupSpeciesBreathTool
+  - Rings
+  - Armbands
 
 - type: roleLoadout
   id: JobInterdyneEngineer
@@ -182,6 +199,8 @@
   - SurvivalSecurity
   - Animals
   - GroupSpeciesBreathTool
+  - Rings
+  - Armbands
 
 - type: roleLoadout
   id: JobInterdyneSecure
@@ -199,6 +218,8 @@
   - SurvivalSecurity
   - Animals
   - GroupSpeciesBreathTool
+  - Rings
+  - Armbands
 
 - type: roleLoadout
   id: JobInterdyneService
@@ -216,6 +237,8 @@
   - SurvivalSecurity
   - Animals
   - GroupSpeciesBreathTool
+  - Rings
+  - Armbands
 
 - type: roleLoadout
   id: JobInterdyneShaftMiners
@@ -233,5 +256,7 @@
   - SurvivalSecurity
   - Animals
   - GroupSpeciesBreathTool
+  - Rings
+  - Armbands
 
 # Other
