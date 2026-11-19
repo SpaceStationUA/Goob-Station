@@ -37,6 +37,7 @@ public sealed class ClothingAccessorySystem : EntitySystem
     [Dependency] private SharedItemSystem _item = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
 
+    private const SlotFlags WornHolderSlots = SlotFlags.WITHOUT_POCKET & ~SlotFlags.SUITSTORAGE;
     private static readonly VerbCategory DetachCategory = new("pirate-clothing-accessory-verb-category", null);
 
     public override void Initialize()
@@ -57,6 +58,7 @@ public sealed class ClothingAccessorySystem : EntitySystem
         SubscribeLocalEvent<ClothingAccessoryComponent, ClothingAccessoryAttachDoAfterEvent>(OnAttachDoAfter);
         SubscribeLocalEvent<ClothingAccessoryComponent, LoadoutAccessoryCheckEvent>(OnLoadoutCheck);
         SubscribeLocalEvent<ClothingAccessoryComponent, LoadoutAccessoryAttachEvent>(OnLoadoutAttach);
+        SubscribeLocalEvent<ClothingAccessoryComponent, GetClothingAccessoryWearerEvent>(OnGetWearer);
     }
 
     #region Interaction
@@ -173,7 +175,7 @@ public sealed class ClothingAccessorySystem : EntitySystem
 
     public bool TryAttachToWorn(EntityUid wearer, Entity<ClothingAccessoryComponent> accessory)
     {
-        var slots = _inventory.GetSlotEnumerator(wearer);
+        var slots = _inventory.GetSlotEnumerator(wearer, WornHolderSlots);
         while (slots.NextItem(out var item))
         {
             if (!TryComp<ClothingAccessoryHolderComponent>(item, out var holder) ||
@@ -319,8 +321,16 @@ public sealed class ClothingAccessorySystem : EntitySystem
         wearer = null;
         return HasComp<ClothingAccessoryComponent>(accessory) &&
                _container.TryGetContainingContainer(accessory, out var container) &&
-               HasComp<ClothingAccessoryHolderComponent>(container.Owner) &&
+               TryComp<ClothingAccessoryHolderComponent>(container.Owner, out var holder) &&
+               container.ID == holder.ContainerId &&
+               _inventory.InSlotWithAnyFlags(container.Owner, WornHolderSlots) &&
                _inventory.TryGetContainingEntity(container.Owner, out wearer);
+    }
+
+    private void OnGetWearer(Entity<ClothingAccessoryComponent> ent, ref GetClothingAccessoryWearerEvent args)
+    {
+        if (TryGetWearer(ent, out var wearer))
+            args.Wearer = wearer;
     }
 
     #endregion
@@ -347,7 +357,7 @@ public sealed class ClothingAccessorySystem : EntitySystem
     {
         holder = null;
 
-        var slots = _inventory.GetSlotEnumerator(wearer);
+        var slots = _inventory.GetSlotEnumerator(wearer, WornHolderSlots);
         while (slots.NextItem(out var item))
         {
             if (!TryComp<ClothingAccessoryHolderComponent>(item, out var comp) ||

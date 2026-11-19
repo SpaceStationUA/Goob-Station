@@ -68,8 +68,6 @@
     clothingVisuals:
       gloves:
       - state: signet-equipped-HAND
-  - type: StaticPrice
-    price: 100
 
 - type: entity
   parent: [ RingBase, GoldRingBase ]
@@ -84,5 +82,3 @@
     clothingVisuals:
       gloves:
       - state: masonic-equipped-HAND
-  - type: StaticPrice
-    price: 100

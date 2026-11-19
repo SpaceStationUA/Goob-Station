@@ -1,3 +1,4 @@
+using Content.Shared._Pirate.Clothing; // Pirate: clothing accessories
 using Content.Shared.Actions;
 using Content.Shared.Damage.Components;
 using Content.Shared.DoAfter;
@@ -8,7 +9,6 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
-using Robust.Shared.Containers;
 
 namespace Content.Shared.Medical.Stethoscope;
 
@@ -17,7 +17,7 @@ public sealed class StethoscopeSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!; // Pirate: clothing accessories
 
     // The damage type to "listen" for with the stethoscope.
     private const string DamageToListenFor = "Asphyxiation";
@@ -64,15 +64,8 @@ public sealed class StethoscopeSystem : EntitySystem
 
     private void StartListening(Entity<StethoscopeComponent> ent, EntityUid target)
     {
-        if (!_container.TryGetContainingContainer((ent, null, null), out var container))
+        if (GetWearer(ent) is not { } user) // Pirate: clothing accessories
             return;
-
-        #region Pirate: clothing accessories
-        // The stethoscope is contained by the clothing, not the wearer.
-        var user = container.Owner;
-        while (!HasComp<InventoryComponent>(user) && _container.TryGetContainingContainer((user, null, null), out var outer))
-            user = outer.Owner;
-        #endregion Pirate: clothing accessories
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, ent.Comp.Delay, new StethoscopeDoAfterEvent(), ent, target: target, used: ent) // Pirate: clothing accessories
         {
@@ -87,7 +80,7 @@ public sealed class StethoscopeSystem : EntitySystem
     {
         var target = args.Target;
 
-        if (args.Handled || target == null || args.Cancelled)
+        if (args.Handled || target == null || args.Cancelled || GetWearer(ent) != args.Args.User) // Pirate: clothing accessories
         {
             ent.Comp.LastMeasuredDamage = null;
             return;
@@ -97,6 +90,19 @@ public sealed class StethoscopeSystem : EntitySystem
 
         args.Repeat = true;
     }
+
+    #region Pirate: clothing accessories
+    private EntityUid? GetWearer(EntityUid stethoscope)
+    {
+        if (_inventory.InSlotWithAnyFlags(stethoscope, SlotFlags.NECK) &&
+            _inventory.TryGetContainingEntity(stethoscope, out var wearer))
+            return wearer;
+
+        var ev = new GetClothingAccessoryWearerEvent();
+        RaiseLocalEvent(stethoscope, ref ev);
+        return ev.Wearer;
+    }
+    #endregion Pirate: clothing accessories
 
     private void ExamineWithStethoscope(Entity<StethoscopeComponent> stethoscope, EntityUid user, EntityUid target)
     {

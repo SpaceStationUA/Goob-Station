@@ -323,6 +323,9 @@
   id: ClothingModularGauntletsBase
   abstract: true
   components:
+  - type: ClothingAccessoryHolder
+    limits:
+      Ring: 1
   - type: Item
     size: Small
     storedRotation: -90

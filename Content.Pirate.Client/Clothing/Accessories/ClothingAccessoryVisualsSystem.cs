@@ -111,7 +111,8 @@ public sealed class ClothingAccessoryVisualsSystem : EntitySystem
 
             var hidden = new CheckClothingSlotHiddenEvent(drawAt);
             RaiseLocalEvent(args.Equipee, ref hidden);
-            _sprite.LayerSetVisible(sprite, index, hidden.Visible);
+            if (!hidden.Visible)
+                _sprite.LayerSetVisible(sprite, index, false);
 
             if (GetDisplacement(args.Equipee, drawAt) is { } displacement &&
                 !(data.State is { } state && Comp<InventoryComponent>(args.Equipee).SpeciesId is { } species && state.EndsWith(species)) &&

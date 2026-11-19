@@ -330,7 +330,7 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
 
     private void OnDoAfterComplete(Entity<ModularSuitComponent> suit, ref ModularSuitExtractDoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || args.Used == null)
+        if (args.Handled || args.Cancelled || args.Used == null || !CanAccess(suit, args.User))
             return;
 
         var container = Container.GetContainer(suit, GetContainerForType(args.Type));
