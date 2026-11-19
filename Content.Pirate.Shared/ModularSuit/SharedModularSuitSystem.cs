@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Goobstation.Shared.ModSuits;
 using Content.Shared.Actions;
 using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
@@ -91,6 +92,9 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
 
     protected void ToggleDeploy(Entity<ModularSuitComponent> ent, EntityUid wearer, EntityUid? actor = null)
     {
+        if (!CanAccess(ent, actor ?? wearer))
+            return;
+
         if (!ent.Comp.Deployed)
         {
             DeploySuit(ent, wearer);
@@ -110,6 +114,25 @@ public abstract partial class SharedModularSuitSystem : EntitySystem
     {
         Popup.PopupEntity(Loc.GetString(reason), ent.Owner, recipient, PopupType.SmallCaution);
         _audioSystem.PlayEntity(ent.Comp.BuzzSound, recipient, recipient);
+    }
+
+    public bool CanAccess(Entity<ModularSuitComponent> ent, EntityUid user)
+    {
+        if (!Container.TryGetContainer(ent, ModuleContainer, out var modules))
+            return true;
+
+        var ev = new ModSuitAccessAttemptEvent(user);
+        foreach (var module in modules.ContainedEntities)
+        {
+            RaiseLocalEvent(module, ref ev);
+            if (!ev.Cancelled)
+                continue;
+
+            Refuse(ent, user, "modsuit-access-denied");
+            return false;
+        }
+
+        return true;
     }
 
     private void OnToggleActivateAction(Entity<ModularSuitComponent> ent, ref ToggleActivateSuitActionEvent args)

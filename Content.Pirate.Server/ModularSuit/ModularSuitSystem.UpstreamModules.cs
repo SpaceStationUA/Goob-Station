@@ -21,6 +21,12 @@ public sealed partial class ModularSuitSystem
         SubscribeLocalEvent<UpstreamSuitModuleComponent, ComponentShutdown>(OnUpstreamModuleShutdown);
         SubscribeLocalEvent<ModularSuitComponent, ExternalModModuleCommandEvent>(OnExternalModuleCommand);
         SubscribeLocalEvent<ModularSuitComponent, ConsumeUpstreamModuleChargeEvent>(OnConsumeModuleCharge);
+        SubscribeLocalEvent<ModularSuitComponent, ExternalModSuitAddChargeEvent>(OnAddModuleCharge);
+    }
+
+    private void OnAddModuleCharge(Entity<ModularSuitComponent> ent, ref ExternalModSuitAddChargeEvent args)
+    {
+        AddCoreCharge(ent.AsNullable(), args.Amount);
     }
 
     private void OnUpstreamModuleInit(Entity<UpstreamSuitModuleComponent> ent, ref MapInitEvent args)
@@ -264,7 +270,8 @@ public sealed partial class ModularSuitSystem
         }
 
         if (args.User is not { } user
-            || suit.Comp.Wearer != user && (upstream.AllowFlags & ModModuleAllowFlags.Unworn) == 0)
+            || suit.Comp.Wearer != user && (upstream.AllowFlags & ModModuleAllowFlags.Unworn) == 0
+            || !CanAccess(suit, user))
             return;
 
         if (args.Command == ExternalModModuleCommand.Use && upstream.Type is (ModModuleType.Toggle or ModModuleType.Active) && upstream.Active)
@@ -279,7 +286,9 @@ public sealed partial class ModularSuitSystem
 
         if (args.Command == ExternalModModuleCommand.StartUse)
         {
-            if (!upstream.Active || !TryUseCoreCharge(suit.AsNullable(), upstream.UsePower, deferDeactivation: true))
+            // Only toggle modules must be active; action modules run when invoked.
+            if (upstream.Type != ModModuleType.Usable && !upstream.Active
+                || !TryUseCoreCharge(suit.AsNullable(), upstream.UsePower, deferDeactivation: true))
                 return;
         }
         else if (upstream.Type == ModModuleType.Usable)

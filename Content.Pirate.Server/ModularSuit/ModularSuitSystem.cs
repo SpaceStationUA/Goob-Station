@@ -313,6 +313,9 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
 
     private void StartExtractDoAfter(EntityUid suit, EntityUid target, float delay, EntityUid user, ModularSuitPart type)
     {
+        if (!TryComp<ModularSuitComponent>(suit, out var suitComp) || !CanAccess((suit, suitComp), user))
+            return;
+
         var doAfterArgs = new DoAfterArgs(EntityManager, user, delay,
             new ModularSuitExtractDoAfterEvent(type), suit, suit, target)
         {
@@ -389,6 +392,16 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
             return;
 
         var used = args.Used;
+
+        // A DNA-locked suit refuses every core, part and module change from others.
+        if ((HasComp<ModularSuitCoreComponent>(used)
+             || HasComp<ModularSuitPartComponent>(used)
+             || HasComp<ModularSuitModuleComponent>(used))
+            && !CanAccess(suit, args.User))
+        {
+            args.Handled = true;
+            return;
+        }
 
         // Core
         if (TryComp<ModularSuitCoreComponent>(used, out var core))
@@ -563,7 +576,11 @@ public sealed partial class ModularSuitSystem : SharedModularSuitSystem
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png")),
             Impact = LogImpact.Low,
             DoContactInteraction = true,
-            Act = () => StartPartToggleDoAfter(user, part, !activated)
+            Act = () =>
+            {
+                if (CanAccess((attached.Suit.Value, suit), user))
+                    StartPartToggleDoAfter(user, part, !activated);
+            }
         };
 
         args.Verbs.Add(toggleVerb);

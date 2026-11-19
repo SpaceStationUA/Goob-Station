@@ -59,6 +59,41 @@ public sealed partial class ModSuitSystem
         return query.Succeeded;
     }
 
+    public void AddCharge(ModSuitModuleHost host, float amount)
+    {
+        if (amount <= 0f || !float.IsFinite(amount))
+            return;
+
+        if (TryComp<ModSuitComponent>(host.Owner, out var native))
+        {
+            if (GetBattery((host.Owner, native)) is { } battery)
+                _battery.ChangeCharge(battery.AsNullable(), amount);
+            return;
+        }
+
+        var ev = new ExternalModSuitAddChargeEvent(amount);
+        RaiseLocalEvent(host.Owner, ref ev);
+    }
+
+    public bool CanAccess(ModSuitModuleHost host, EntityUid user)
+    {
+        if (TryComp<ModSuitComponent>(host.Owner, out var native))
+            return CanAccess((host.Owner, native), user);
+
+        var ev = new ModSuitAccessAttemptEvent(user);
+        foreach (var module in host.ModulesContainer.ContainedEntities)
+        {
+            RaiseLocalEvent(module, ref ev);
+            if (!ev.Cancelled)
+                continue;
+
+            _popup.PopupClient(Loc.GetString("modsuit-access-denied"), host.Owner, user);
+            return false;
+        }
+
+        return true;
+    }
+
     public void SetModuleActive(ModSuitModuleHost host, Entity<ModModuleComponent> module, bool active)
     {
         if (TryComp<ModSuitComponent>(host.Owner, out var native))

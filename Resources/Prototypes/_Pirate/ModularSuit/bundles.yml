@@ -17,6 +17,20 @@
           tableId: SyndicateHardsuitExtrasEntityTable
 
 - type: entity
+  parent: ClothingBackpackDuffelSyndicateControllerBundle
+  id: ClothingBackpackDuffelSyndicateEliteControllerBundle
+  name: elite syndicate modular suit bundle
+  description: Contains a preassembled elite Syndicate modular suit.
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      storagebase: !type:AllSelector
+        children:
+        - id: ClothingModularControllerElitePreassembled
+        - !type:NestedSelector
+          tableId: SyndicateHardsuitExtrasEntityTable
+
+- type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelEnergyShieldModuleBundle
   name: energy shield module bundle

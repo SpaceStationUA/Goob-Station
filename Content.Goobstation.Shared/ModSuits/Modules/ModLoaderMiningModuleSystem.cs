@@ -285,8 +285,8 @@ public sealed partial class ModLoaderMiningModuleSystem : EntitySystem
         while (query.MoveNext(out var uid, out var candela, out var module))
         {
             if (!module.Active
-                || !_modSuit.TryGetModuleSuit(uid, out var suit)
-                || suit.Comp.Wearer is not { } wearer)
+                || !_modSuit.TryGetModuleHost(uid, out var suit) // Pirate: MOD module bridge
+                || suit.Wearer is not { } wearer) // Pirate: MOD module bridge
                 continue;
 
             var wearerXform = Transform(wearer);
@@ -321,9 +321,25 @@ public sealed partial class ModLoaderMiningModuleSystem : EntitySystem
         }
     }
 
-    private EntityUid? FindBeacon(Entity<ModSuitComponent> suit, ModCandelaModuleComponent candela)
+    #region Pirate: MOD module bridge
+    // Storage modules hold our suit beacons.
+    private EntityUid? FindBeacon(ModSuitModuleHost suit, ModCandelaModuleComponent candela)
     {
-        if (!TryComp<StorageComponent>(suit, out var storage))
+        if (FindBeaconIn(suit.Owner, candela) is { } beacon)
+            return beacon;
+
+        foreach (var module in suit.ModulesContainer.ContainedEntities)
+        {
+            if (FindBeaconIn(module, candela) is { } moduleBeacon)
+                return moduleBeacon;
+        }
+
+        return null;
+    }
+
+    private EntityUid? FindBeaconIn(EntityUid holder, ModCandelaModuleComponent candela)
+    {
+        if (!TryComp<StorageComponent>(holder, out var storage))
             return null;
 
         foreach (var item in storage.Container.ContainedEntities)
@@ -334,6 +350,7 @@ public sealed partial class ModLoaderMiningModuleSystem : EntitySystem
 
         return null;
     }
+    #endregion
 
     public override void Update(float frameTime)
     {

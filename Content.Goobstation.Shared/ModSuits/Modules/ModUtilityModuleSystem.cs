@@ -85,8 +85,8 @@ public sealed partial class ModUtilityModuleSystem : EntitySystem
         while (query.MoveNext(out var uid, out var torsion, out var module))
         {
             if (!module.Active
-                || !_modSuit.TryGetModuleSuit(uid, out var suit)
-                || suit.Comp.Wearer is not { } wearer
+                || !_modSuit.TryGetModuleHost(uid, out var suit) // Pirate: MOD module bridge
+                || suit.Wearer is not { } wearer // Pirate: MOD module bridge
                 || _container.IsEntityInContainer(wearer)
                 || _gravity.IsWeightless(wearer))
             {
@@ -101,10 +101,10 @@ public sealed partial class ModUtilityModuleSystem : EntitySystem
                 continue;
 
             var moved = MathF.Min((position.Position - previous.Position).Length(), torsion.MaxTilesPerUpdate);
-            if (moved <= 0.01f || _modSuit.GetBattery(suit) is not { } battery)
+            if (moved <= 0.01f)
                 continue;
 
-            _battery.ChangeCharge(battery.AsNullable(), moved * torsion.ChargePerTile);
+            _modSuit.AddCharge(suit, moved * torsion.ChargePerTile); // Pirate: MOD module bridge
         }
     }
 
@@ -112,8 +112,8 @@ public sealed partial class ModUtilityModuleSystem : EntitySystem
     private void OnHatStabilizerInstalled(Entity<ModHatStabilizerModuleComponent> ent, ref ModModuleInstalledEvent args)
     {
         if (_timing.ApplyingState
-            || !TryComp<ModSuitComponent>(args.Suit, out var suit)
-            || _modSuit.GetPart((args.Suit, suit), HatSlotPart) is not { } helmet
+            || !_modSuit.TryGetSuitModuleHost(args.Suit, out var suit) // Pirate: MOD module bridge
+            || _modSuit.GetPart(suit, HatSlotPart) is not { } helmet // Pirate: MOD module bridge
             || HasComp<ModHatHolderComponent>(helmet))
             return;
 

@@ -1,8 +1,64 @@
-# Pirate: upstream chameleon adapted to our MOD controllers.
 - type: listing
   id: UplinkModsuitModuleChameleon
   productEntity: ChameleonSuitModule
   cost:
     Telecrystal: 10
+  categories:
+  - UplinkWearables
+
+# Keep these listings above our own MOD module prices.
+- type: listing
+  id: UplinkModsuitModuleCloak
+  productEntity: CloakSuitModule
+  cost:
+    Telecrystal: 20
+  categories:
+  - UplinkWearables
+
+- type: listing
+  id: UplinkModsuitModuleAdrenalineBoost
+  productEntity: AdrenalineBoostSuitModule
+  cost:
+    Telecrystal: 15
+  categories:
+  - UplinkWearables
+
+- type: listing
+  id: UplinkModsuitModuleDnaLock
+  productEntity: DnaLockSuitModule
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkWearables
+
+- type: listing
+  id: UplinkModsuitModuleInfiltrator
+  productEntity: InfiltratorSuitModule
+  cost:
+    Telecrystal: 6
+  categories:
+  - UplinkWearables
+
+- type: listing
+  id: UplinkModsuitModulePowerKick
+  productEntity: PowerKickSuitModule
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkWearables
+
+- type: listing
+  id: UplinkModsuitModuleMedbeam
+  productEntity: MedbeamSuitModule
+  cost:
+    Telecrystal: 40
+  categories:
+  - UplinkWearables
+
+- type: listing
+  id: UplinkModsuitModuleEmpPulse
+  productEntity: EmpPulseSuitModule
+  cost:
+    Telecrystal: 15
   categories:
   - UplinkWearables

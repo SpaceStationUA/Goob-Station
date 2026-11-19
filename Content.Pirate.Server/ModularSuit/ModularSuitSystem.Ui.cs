@@ -43,6 +43,9 @@ public sealed partial class ModularSuitSystem
     {
         var recipient = actor ?? wearer;
 
+        if (!CanAccess(ent, recipient))
+            return;
+
         if (!ent.Comp.Deployed)
         {
             Refuse(ent, recipient, "modsuit-seal-blocked-undeployed");
@@ -67,7 +70,7 @@ public sealed partial class ModularSuitSystem
 
     private void RequestSetActive(Entity<ModularSuitComponent> ent, EntityUid user, bool active)
     {
-        if (ent.Comp.Wearer != user)
+        if (ent.Comp.Wearer != user || !CanAccess(ent, user))
             return;
 
         if (active && !ent.Comp.Assembled && TryStartSuitSealing(ent, user))
@@ -97,7 +100,7 @@ public sealed partial class ModularSuitSystem
             return;
         }
 
-        if (!module.CanBeDisabled)
+        if (!module.CanBeDisabled || !CanAccess(ent, args.Actor))
         {
             UpdateUiState(ent);
             return;
