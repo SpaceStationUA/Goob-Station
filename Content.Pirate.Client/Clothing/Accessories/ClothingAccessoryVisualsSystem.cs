@@ -12,6 +12,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.DisplacementMap;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
+using Content.Shared.Item;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -26,6 +27,7 @@ public sealed class ClothingAccessoryVisualsSystem : EntitySystem
     [Dependency] private DisplacementMapSystem _displacement = default!;
     [Dependency] private IResourceCache _cache = default!;
     [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedItemSystem _item = default!;
     [Dependency] private SpriteSystem _sprite = default!;
 
     private const string IconLayerPrefix = "pirate-accessory-icon-";
@@ -49,6 +51,16 @@ public sealed class ClothingAccessoryVisualsSystem : EntitySystem
         SubscribeLocalEvent<ClothingAccessoryHolderComponent, EquipmentVisualsUpdatedEvent>(OnVisualsUpdated);
         SubscribeLocalEvent<ClothingAccessoryHolderComponent, ComponentStartup>(OnHolderStartup);
         SubscribeLocalEvent<ClothingAccessoryHolderComponent, ClothingAccessoriesChangedEvent>(OnAccessoriesChanged);
+        SubscribeLocalEvent<ClothingAccessoryHolderComponent, VisualsChangedEvent>(OnAccessoryVisualsChanged);
+    }
+
+    private void OnAccessoryVisualsChanged(Entity<ClothingAccessoryHolderComponent> ent, ref VisualsChangedEvent args)
+    {
+        if (args.ContainerId != ent.Comp.ContainerId)
+            return;
+
+        _item.VisualsChanged(ent.Owner);
+        UpdateIcon(ent);
     }
 
     #region Worn

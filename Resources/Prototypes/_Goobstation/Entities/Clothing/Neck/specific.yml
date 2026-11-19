@@ -33,9 +33,33 @@
   - type: CameraActiveVision # Pirate: syndicate remote monitoring - EMP-disabled bodycams stop providing vision
   - type: Sprite
     sprite: _Pirate/Clothing/Neck/Misc/bodycam.rsi # Pirate bodycam resprite
+    layers: # Pirate: bodycam toggle
+    - state: icon # Pirate: bodycam toggle
+      map: [ "enum.ToggleableVisuals.Layer" ] # Pirate: bodycam toggle
   - type: Clothing
     sprite: _Pirate/Clothing/Neck/Misc/bodycam.rsi # Pirate bodycam resprite
     quickEquip: true
+  #region Pirate: bodycam toggle
+  - type: ItemToggle
+    activated: true
+    soundActivate:
+      path: /Audio/Items/flashlight_on.ogg
+    soundDeactivate:
+      path: /Audio/Items/flashlight_off.ogg
+  - type: ToggleClothing
+    action: ActionPirateToggleBodycam
+  - type: ToggleClothingPrefix
+    prefixOn: null
+    prefixOff: off
+  - type: ToggleableCamera
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableVisuals.Enabled:
+        enum.ToggleableVisuals.Layer:
+          True: { state: icon }
+          False: { state: icon-off }
+  #endregion
 
 - type: entity
   parent: ClothingNeckBase
