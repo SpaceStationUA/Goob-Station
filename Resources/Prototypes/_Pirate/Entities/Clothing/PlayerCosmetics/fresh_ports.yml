@@ -479,6 +479,8 @@
   name: eye amulet
   description: A watchful eye set in a simple pendant.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/eye_amulet.rsi
   - type: Clothing
@@ -490,6 +492,8 @@
   name: moon amulet
   description: A small pendant that shines like moonlight.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/moon_amulet.rsi
   - type: Clothing
@@ -501,6 +505,8 @@
   name: star amulet
   description: A star-shaped pendant with a gentle shimmer.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/star_amulet.rsi
   - type: Clothing
@@ -512,6 +518,8 @@
   name: sun amulet
   description: A warm golden pendant that catches the light.
   components:
+  - type: ClothingAccessory
+    category: Necklace
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/sun_amulet.rsi
   - type: Clothing
@@ -523,6 +531,8 @@
   name: bunny gang scarf
   description: A soft scarf with a playful gang emblem.
   components:
+  - type: ClothingAccessory
+    category: Scarf
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Fresh/Starlight/Neck/Misc/bunnygang.rsi
   - type: Clothing

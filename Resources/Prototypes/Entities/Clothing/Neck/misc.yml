@@ -6,6 +6,8 @@
   name: stethoscope
   description: An outdated medical apparatus for listening to the sounds of the human body. It also makes you look like you know what you're doing.
   components:
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Stethoscope # Pirate: clothing accessories
   - type: Item
     size: Small
   - type: Sprite
@@ -53,6 +55,8 @@
   name: lawyer badge
   description: A badge to show that the owner is a 'legitimate' lawyer who passed the NT bar exam required to practice law.
   components:
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Decor # Pirate: clothing accessories
   - type: Sprite
     sprite: Clothing/Neck/Misc/lawyerbadge.rsi
   - type: Clothing
@@ -66,6 +70,8 @@
   name: star sticker
   description: A dinky lil star for only the hardest working security officers! It's not even sticky anymore.
   components:
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Decor # Pirate: clothing accessories
   - type: Sprite
     sprite: Clothing/Neck/Misc/dinkystar.rsi
     state: icon

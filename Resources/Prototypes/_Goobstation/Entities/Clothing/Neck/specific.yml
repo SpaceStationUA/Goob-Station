@@ -6,6 +6,8 @@
   name: security bodycam
   description: A body mounted camera. It's watching you.
   components:
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Bodycam # Pirate: clothing accessories
   - type: DeviceNetwork
     deviceNetId: Wired # :clueless:
     receiveFrequencyId: SurveillanceCameraSecurity

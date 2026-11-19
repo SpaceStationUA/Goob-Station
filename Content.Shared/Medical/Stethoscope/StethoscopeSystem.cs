@@ -67,7 +67,14 @@ public sealed class StethoscopeSystem : EntitySystem
         if (!_container.TryGetContainingContainer((ent, null, null), out var container))
             return;
 
-        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, container.Owner, ent.Comp.Delay, new StethoscopeDoAfterEvent(), ent, target: target, used: ent)
+        #region Pirate: clothing accessories
+        // The stethoscope is contained by the clothing, not the wearer.
+        var user = container.Owner;
+        while (!HasComp<InventoryComponent>(user) && _container.TryGetContainingContainer((user, null, null), out var outer))
+            user = outer.Owner;
+        #endregion Pirate: clothing accessories
+
+        _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, ent.Comp.Delay, new StethoscopeDoAfterEvent(), ent, target: target, used: ent) // Pirate: clothing accessories
         {
             DuplicateCondition = DuplicateConditions.SameEvent,
             BreakOnMove = true,

@@ -54,6 +54,11 @@
     slots: [GLOVES]
     requiresSealed: true
   #endregion Pirate: wetness
+  #region Pirate: clothing accessories
+  - type: ClothingAccessoryHolder
+    limits:
+      Ring: 1
+  #endregion Pirate: clothing accessories
   - type: DamageOnInteractProtection
     damageProtection:
       flatReductions:
@@ -111,6 +116,8 @@
   - type: Tag
     tags:
     - Ring
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Ring # Pirate: clothing accessories
 
 - type: entity
   abstract: true

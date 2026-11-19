@@ -5,6 +5,8 @@
   name: Syndicate neckpin
   description: A pin specially dedicated to show loyalty to the Syndicate!
   components:
+  - type: ClothingAccessory
+    category: Decor
   - type: Sprite
     sprite: _Pirate/Clothing/Neck/SynDrobe/syndicateneckpin.rsi
   - type: Clothing

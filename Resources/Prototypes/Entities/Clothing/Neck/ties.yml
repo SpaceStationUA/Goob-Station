@@ -5,6 +5,8 @@
   id: ClothingNeckTieBase
   abstract: true
   components:
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Tie # Pirate: clothing accessories
   - type: Item
     storedRotation: -45
 

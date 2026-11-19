@@ -8,6 +8,8 @@
   name: red bowtie
   description: A cute little red clip-on bow that can be mounted to apparel or clipped into hair.
   components:
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Tie # Pirate: clothing accessories
   - type: Sprite
     sprite: _starcup/Clothing/Head/Accessories/hairbow_small_red.rsi
   - type: Clothing
@@ -22,6 +24,8 @@
   name: black bowtie
   description: A cute little black clip-on bow that can be mounted to apparel or clipped into hair.
   components:
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Tie # Pirate: clothing accessories
   - type: Sprite
     sprite: _starcup/Clothing/Head/Accessories/hairbow_small_black.rsi
   - type: Clothing
@@ -36,6 +40,8 @@
   name: black neck ribbon
   description: A ribbon for adorning the neck.
   components:
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Tie # Pirate: clothing accessories
   - type: Sprite
     sprite: _starcup/Clothing/Neck/Ties/ribbon_black.rsi
   - type: Clothing
@@ -47,6 +53,8 @@
   name: red neck ribbon
   description: A ribbon for adorning the neck.
   components:
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Tie # Pirate: clothing accessories
   - type: Sprite
     sprite: _starcup/Clothing/Neck/Ties/ribbon_red.rsi
   - type: Clothing
