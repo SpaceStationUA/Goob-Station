@@ -219,7 +219,7 @@ public abstract class BasePsionicPowerSystem<T, T1> : EntitySystem where T : Bas
         // and broadcast subscribers (ForceSpeechSystem, XATPsionicUsageSystem) all receive this event.
         RaiseLocalEvent(psionicSource, ev, broadcast: true);
 
-        _glimmer.Glimmer += Random.Next(psionicSource.Comp.MinGlimmerChanged, psionicSource.Comp.MaxGlimmerChanged);
+        _glimmer.AdjustGlimmer(Random.Next(psionicSource.Comp.MinGlimmerChanged, psionicSource.Comp.MaxGlimmerChanged), $"psionic power {power}", performer);
     }
 
     /// <summary>

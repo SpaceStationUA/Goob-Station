@@ -254,7 +254,7 @@ namespace Content.Server.Psionics.Glimmer
             }
 
             var removed = (float) _glimmerSystem.Glimmer * _random.NextFloat(0.06f, 0.08f);
-            _glimmerSystem.Glimmer -= (int) removed;
+            _glimmerSystem.AdjustGlimmer(-(int) removed, "prober collapse", uid);
             BeamRandomNearProber(uid, _glimmerSystem.Glimmer / 350, _glimmerSystem.Glimmer / 50);
             _explosionSystem.QueueExplosion(uid, "Default", totalIntensity, slope, maxIntensity);
         }

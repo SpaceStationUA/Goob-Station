@@ -32,7 +32,7 @@ public sealed partial class SharedGlimmerResearchSystem : EntitySystem
         arg.GeneratedGlimmer = (int)(arg.ResearchPoints / console.Comp.ResearchPerGlimmer);
 
         if (arg.ShouldUpdateGlimmer)
-            _glimmer.Glimmer += arg.GeneratedGlimmer;
+            _glimmer.AdjustGlimmer(arg.GeneratedGlimmer, "artifact research", console.Owner);
     }
 }
 

@@ -15,15 +15,41 @@ namespace Content.Shared.Psionics.Glimmer
         public int Glimmer
         {
             get { return _glimmer; }
-            set
-            {
-                var newGlimmer = _enabled ? Math.Clamp(value, 0, 1000) : 0;
-                if (_glimmer == newGlimmer)
-                    return;
+            set => SetGlimmer(value, "unspecified");
+        }
 
-                _glimmer = newGlimmer;
-                RaiseNetworkEvent(new GlimmerChangedEvent(_glimmer));
-            }
+        /// <summary>
+        /// Sets glimmer and records why it changed. Prefer this over assigning <see cref="Glimmer"/> directly,
+        /// since the reason is what makes glimmer changes traceable in the admin logs.
+        /// </summary>
+        /// <param name="value">The new glimmer value.</param>
+        /// <param name="reason">Human-readable cause of the change.</param>
+        /// <param name="source">Optional entity that caused the change.</param>
+        /// <param name="changeType">Whether this is a player-driven or ambient change.</param>
+        public void SetGlimmer(int value, string reason, EntityUid? source = null,
+            GlimmerChangeType changeType = GlimmerChangeType.Active)
+        {
+            var oldGlimmer = _glimmer;
+            var newGlimmer = _enabled ? Math.Clamp(value, 0, MaxGlimmer) : 0;
+            if (oldGlimmer == newGlimmer)
+                return;
+
+            _glimmer = newGlimmer;
+            RaiseNetworkEvent(new GlimmerChangedEvent(_glimmer));
+            RaiseLocalEvent(new GlimmerChangedLogEvent(oldGlimmer, newGlimmer, reason, source, changeType));
+        }
+
+        /// <summary>
+        /// Adjusts glimmer by a delta and records why it changed.
+        /// </summary>
+        /// <param name="delta">How much to add (negative values subtract).</param>
+        /// <param name="reason">Human-readable cause of the change.</param>
+        /// <param name="source">Optional entity that caused the change.</param>
+        /// <param name="changeType">Whether this is a player-driven or ambient change.</param>
+        public void AdjustGlimmer(int delta, string reason, EntityUid? source = null,
+            GlimmerChangeType changeType = GlimmerChangeType.Active)
+        {
+            SetGlimmer(_glimmer + delta, reason, source, changeType);
         }
 
         /// <summary>
@@ -45,7 +71,7 @@ namespace Content.Shared.Psionics.Glimmer
 
         private void Reset(RoundRestartCleanupEvent args)
         {
-            Glimmer = 0;
+            SetGlimmer(0, "round restart", changeType: GlimmerChangeType.Passive);
         }
 
         /// <summary>
@@ -88,6 +114,39 @@ namespace Content.Shared.Psionics.Glimmer
         public GlimmerChangedEvent(int glimmer)
         {
             Glimmer = glimmer;
+        }
+    }
+
+    /// <summary>
+    /// Whether a glimmer change is player-driven and should be recorded in admin logs,
+    /// or ambient and should only be announced in the server debug log.
+    /// </summary>
+    public enum GlimmerChangeType : byte
+    {
+        Passive,
+        Active,
+    }
+
+    /// <summary>
+    /// Raised locally whenever glimmer changes so the server can write it to the admin logs.
+    /// </summary>
+    public sealed class GlimmerChangedLogEvent : EntityEventArgs
+    {
+        public int OldGlimmer { get; }
+        public int NewGlimmer { get; }
+        public int Delta => NewGlimmer - OldGlimmer;
+        public string Reason { get; }
+        public EntityUid? Source { get; }
+        public GlimmerChangeType ChangeType { get; }
+
+        public GlimmerChangedLogEvent(int oldGlimmer, int newGlimmer, string reason, EntityUid? source,
+            GlimmerChangeType changeType)
+        {
+            OldGlimmer = oldGlimmer;
+            NewGlimmer = newGlimmer;
+            Reason = reason;
+            Source = source;
+            ChangeType = changeType;
         }
     }
 }

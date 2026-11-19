@@ -60,7 +60,7 @@ public abstract partial class SharedPsionicSystem : EntitySystem
         if (!ev.Success)
             return;
         // Reduce glimmer a bit.
-        Glimmer.Glimmer -= Random.Next(50, 70);
+        Glimmer.AdjustGlimmer(-Random.Next(50, 70), "psionic mindbreak", psionic.Owner);
         // Stun if stun is desired. Zombies shouldn't get stunned on zombification.
         if (stun && psionic.Comp.StunOnRemoval)
         {
@@ -106,7 +106,7 @@ public abstract partial class SharedPsionicSystem : EntitySystem
 
         // Reduce glimmer a bit, like a regular mindbreak.
         if (ev.Success)
-            Glimmer.Glimmer -= Random.Next(50, 70);
+            Glimmer.AdjustGlimmer(-Random.Next(50, 70), "permanent psionic mindbreak", uid);
         // Stun like a regular mindbreak.
         if (stun && TryComp<PsionicComponent>(uid, out var psionic) && psionic.StunOnRemoval)
         {
