@@ -73,6 +73,18 @@
   #region Pirate: wetness
   - type: Wettable
   #endregion Pirate: wetness
+  #region Pirate: clothing accessories
+  - type: ClothingAccessoryHolder
+    maxAccessories: 9 # Pirate: armbands
+    limits:
+      Decor: 3
+      Tie: 1
+      Scarf: 1
+      Necklace: 1
+      Stethoscope: 1
+      Bodycam: 1
+      Armband: 1 # Pirate: armbands
+  #endregion Pirate: clothing accessories
 
 - type: entity
   abstract: true

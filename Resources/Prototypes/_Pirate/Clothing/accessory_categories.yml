@@ -1,0 +1,49 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+# Stagger stacked medals so they stay on the chest.
+- type: clothingAccessoryCategory
+  id: Decor
+  drawAt: neck
+  offsets:
+  - -1, 0
+  - 1, -3
+  - 2, 0
+
+- type: clothingAccessoryCategory
+  id: Tie
+  drawAt: neck
+
+- type: clothingAccessoryCategory
+  id: Scarf
+  drawAt: neck
+
+- type: clothingAccessoryCategory
+  id: Necklace
+  drawAt: neck
+
+- type: clothingAccessoryCategory
+  id: Stethoscope
+  drawAt: neck
+
+- type: clothingAccessoryCategory
+  id: Bodycam
+  drawAt: neck
+
+- type: clothingAccessoryCategory
+  id: Ring
+  slot: gloves
+
+# The neck layer keeps armbands visible over armor.
+- type: clothingAccessoryCategory
+  id: Armband
+  drawAt: neck
+
+# Hair flowers, hair bows, large hair ribbons and flower wreaths (crowns), attached to a hat.
+# They draw their head sprite with the hat, over it, as in a hat band. A wreath covers the top of the hat.
+# On the hat icon they are shown from the side (bows are on the back of the head) and lower,
+# because the hat icon is lower than a hat on the head.
+- type: clothingAccessoryCategory
+  id: HatDecor
+  slot: head
+  iconOffset: 0, -6
+  iconDirection: West

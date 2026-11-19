@@ -49,6 +49,11 @@
   #region Pirate: wetness
   - type: Wettable
   #endregion Pirate: wetness
+  #region Pirate: clothing accessories - a hair flower or bow on a hat
+  - type: ClothingAccessoryHolder
+    limits:
+      HatDecor: 1
+  #endregion Pirate: clothing accessories
 
 - type: entity
   abstract: true
@@ -178,6 +183,11 @@
   name: base hardsuit helmet
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: clothing accessories - a hair flower, bow or wreath on the head item
+  - type: ClothingAccessoryHolder
+    limits:
+      HatDecor: 1
+  #endregion Pirate: clothing accessories
 # SlotBlocker blocked until UI change
 #  - type: SlotBlock
 #    slots: [ears, eyes, mask]
@@ -315,6 +325,11 @@
   description: A hood, made to keep your head warm.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: clothing accessories - a hair flower, bow or wreath on the head item
+  - type: ClothingAccessoryHolder
+    limits:
+      HatDecor: 1
+  #endregion Pirate: clothing accessories
   - type: Sprite
     state: icon
   - type: Clickable

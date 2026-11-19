@@ -35,6 +35,8 @@
   - HealthAnalyzerSuitModule
   - FlashlightSuitModule
   - PaperDispenserSuitModule
+  - HatStabilizerSuitModule
+  - JointTorsionSuitModule
 
 - type: latheRecipePack
   id: ModesuitModuleReach
@@ -59,18 +61,24 @@
   - ConstructorSuitModule
   - DrillSuitModule
   - AdvancedFlashlightSuitModule
-  - RecyclerSuitModule # Pirate: upstream MOD module.
-  - DonkRecyclerSuitModule # Pirate: upstream MOD module.
-  - PatientTransportSuitModule # Pirate: upstream MOD module.
-  - ThreadRipperSuitModule # Pirate: upstream MOD module.
-  - HeadProtectorSuitModule # Pirate: upstream MOD module.
-  - MisterSuitModule # Pirate: upstream MOD module.
-  - ResinMisterSuitModule # Pirate: upstream MOD module.
-  - JanitorMisterSuitModule # Pirate: upstream MOD module.
-  - NightVisorSuitModule # Pirate: upstream MOD module.
-  - GloveTranslatorSuitModule # Pirate: upstream MOD module.
-  - PlasmaStabilizerSuitModule # Pirate: upstream MOD module.
-  - JumpJetSuitModule # Pirate: upstream MOD module.
+  - RecyclerSuitModule
+  - DonkRecyclerSuitModule
+  - PatientTransportSuitModule
+  - ThreadRipperSuitModule
+  - HeadProtectorSuitModule
+  - MisterSuitModule
+  - ResinMisterSuitModule
+  - JanitorMisterSuitModule
+  - NightVisorSuitModule
+  - GloveTranslatorSuitModule
+  - PlasmaStabilizerSuitModule
+  - JumpJetSuitModule
+  - QuickCarryAdvancedSuitModule
+  - CandelaSpoolSuitModule
+  - WaddleSuitModule
+  - BalloonBlowerSuitModule
+  - StamperSuitModule
+  - FishingGloveSuitModule
   # Pirate: Wega keeps TemperatureRegulatorSuitModule research disabled.
 
 - type: latheRecipePack
@@ -85,9 +93,13 @@
   - EMPShieldSuitModule
   - ArmorBossterSuitModule
   - SecurityPlating
-  - CriminalCaptureSuitModule # Pirate: upstream MOD module.
-  - MagneticHarnessSuitModule # Pirate: upstream MOD module.
-  - ProjectileDampenerSuitModule # Pirate: upstream MOD module.
-  - ShootingAssistantSuitModule # Pirate: upstream MOD module.
-  - ThermalVisorSuitModule # Pirate: upstream MOD module.
-  - ShockAbsorberSuitModule # Pirate: upstream MOD module.
+  - CriminalCaptureSuitModule
+  - MagneticHarnessSuitModule
+  - ProjectileDampenerSuitModule
+  - ShootingAssistantSuitModule
+  - ThermalVisorSuitModule
+  - ShockAbsorberSuitModule
+  - MegaphoneSuitModule
+  - PepperShouldersSuitModule
+  - RestraintAssistSuitModule
+  - BulwarkSuitModule

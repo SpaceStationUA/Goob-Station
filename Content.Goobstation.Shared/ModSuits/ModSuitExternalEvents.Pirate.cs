@@ -37,3 +37,6 @@ public record struct ExternalModSuitChargeEvent(float Amount, bool Consume)
 {
     public bool Succeeded;
 }
+
+[ByRefEvent]
+public record struct ExternalModSuitAddChargeEvent(float Amount);

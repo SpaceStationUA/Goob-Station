@@ -22,6 +22,7 @@ using Robust.Shared.Timing;
 using Content.Shared._Mono.Radar;
 using Content.Shared._Pirate.ZLevels.Core.Components; // Pirate: multiz
 using Content.Shared._Pirate.ZLevels.Core.EntitySystems; // Pirate: multiz
+using Content.Client._Pirate.DeepSpaceScanner; // Pirate: deep space scanner
 using Robust.Shared.Physics.Collision.Shapes; // Pirate port - Monolith shields
 
 namespace Content.Client.Shuttles.UI;
@@ -52,6 +53,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
     public bool ShowIFFShuttles { get; set; } = true;
     public bool ShowDocks { get; set; } = true;
     public bool RotateWithEntity { get; set; } = true;
+    public bool RotateWithEye { get; set; } = false; // Goobstation
 
     public float MaximumIFFDistance { get; set; } = -1f; // Frontier
     public bool HideCoords { get; set; } = false; // Frontier
@@ -229,6 +231,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         ActualRadarRange = Math.Clamp(ActualRadarRange, WorldMinRange, WorldMaxRange);
 
         RotateWithEntity = state.RotateWithEntity;
+        RotateWithEye = state.RotateWithEye; // Goobstation
 
         // Frontier
         if (state.MaxIffRange != null)
@@ -267,6 +270,7 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
         var mapPos = _transform.ToMapCoordinates(_coordinates.Value);
         var posMatrix = Matrix3Helpers.CreateTransform(_coordinates.Value.Position, _rotation.Value);
         var ourEntRot = RotateWithEntity ? _transform.GetWorldRotation(xform) : _rotation.Value;
+        ourEntRot = RotateWithEye ? -IoCManager.Resolve<IEyeManager>().CurrentEye.Rotation : ourEntRot; // Goobstation
         var ourEntMatrix = Matrix3Helpers.CreateTransform(_transform.GetWorldPosition(xform), ourEntRot);
         var shuttleToWorld = Matrix3x2.Multiply(posMatrix, ourEntMatrix);
         Matrix3x2.Invert(shuttleToWorld, out var worldToShuttle);
@@ -658,6 +662,11 @@ public sealed partial class ShuttleNavControl : BaseShuttleControl
                 }
             }
         }
+        #endregion
+
+        #region Pirate: deep space scanner
+        if (_consoleEntity != null)
+            EntManager.System<DeepSpaceScannerRadarSystem>().Draw(handle, _consoleEntity.Value, worldToShuttle * shuttleToView, MinimapScale);
         #endregion
     }
 

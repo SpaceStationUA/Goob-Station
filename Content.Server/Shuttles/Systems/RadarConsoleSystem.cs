@@ -69,6 +69,7 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
             }
 
             state.RotateWithEntity = !component.FollowEntity;
+            state.RotateWithEye = component.RotateWithEye; // Goobstation
 
             _uiSystem.SetUiState(uid,
                 RadarConsoleUiKey.Key,

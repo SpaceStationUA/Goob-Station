@@ -1,5 +1,5 @@
 using System.Linq;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.IntegrationTests.Tests.Interaction;
 using Content.Shared._Shitmed.Body;
 using Content.Shared.Atmos.Components;

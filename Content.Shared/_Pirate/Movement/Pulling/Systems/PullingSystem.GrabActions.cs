@@ -1,7 +1,7 @@
 using System;
 using Content.Goobstation.Common.Grab;
 using Content.Goobstation.Common.MartialArts;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared._Pirate;
 using Content.Shared._Pirate.Movement.Pulling.Events;
 using Content.Shared._Shitmed.Medical.Surgery.Traumas;

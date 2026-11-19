@@ -1,5 +1,5 @@
 ﻿using Content.Shared.Body.Components;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Prototypes;
 using Robust.Shared.Audio;
@@ -20,6 +20,10 @@ public sealed partial class EdibleComponent : Component
     /// </summary>
     [DataField]
     public string Solution = "food";
+
+    /// <summary>Whether using the item in hand starts eating it.</summary>
+    [DataField]
+    public bool EatOnUse = true; // Pirate: some foods open as gifts when activated.
 
     /// <summary>
     /// Should this entity be deleted when our solution is emptied?

@@ -1,4 +1,4 @@
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 
 namespace Content.Pirate.Shared.Vampire.Components;
 
@@ -41,17 +41,8 @@ public sealed partial class VampireSunlightComponent : Component
     [DataField]
     public float FireStacksOnIgnite = 2f;
 
-    /// <summary>
-    ///     Genetic damage applied each tick when the vampire has no blood
-    /// </summary>
     [DataField]
-    public FixedPoint2 GeneticDamagePerInterval = FixedPoint2.New(10);
-
-    /// <summary>
-    ///     Threshold of accumulated genetic damage after which the vampire turns to ash
-    /// </summary>
-    [DataField]
-    public FixedPoint2 GeneticDustThreshold = FixedPoint2.New(100);
+    public FixedPoint2 BloodlessBurnDamage = FixedPoint2.New(5);
 
     /// <summary>
     ///     How long a vampire can linger in space before they start taking damage

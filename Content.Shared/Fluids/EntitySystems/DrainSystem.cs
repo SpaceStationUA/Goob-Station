@@ -6,7 +6,7 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -153,7 +153,8 @@ public sealed class DrainSystem : EntitySystem
             }
 
             // Remove a bit from the buffer.
-            _solutionContainerSystem.SplitSolution(drain.Solution.Value, drain.UnitsDestroyedPerSecond * drain.DrainInterval.TotalSeconds);
+            if (drainSolution.Volume > 0) // Pirate: an empty buffer has no chemistry to update.
+                _solutionContainerSystem.SplitSolution(drain.Solution.Value, drain.UnitsDestroyedPerSecond * drain.DrainInterval.TotalSeconds);
 
             // This will ensure that UnitsPerSecond is per second...
             var amount = drain.UnitsPerSecond * drain.DrainInterval.TotalSeconds;

@@ -1,0 +1,435 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  abstract: true
+  parent: ClothingNeckBase
+  id: ClothingNeckArmbandBase
+  components:
+  - type: Item
+    size: Tiny
+  - type: ClothingAccessory
+    category: Armband
+  - type: Butcherable
+    butcherDelay: 1.0
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 1
+  - type: PhysicalComposition
+    materialComposition:
+      Cloth: 50
+  - type: StaticPrice
+    price: 10
+
+- type: entity
+  abstract: true
+  id: ClothingNeckArmbandSideBase
+  components:
+  - type: ArmbandSide
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ArmbandSideVisuals.Flipped:
+        enum.ArmbandSideLayers.Base:
+          True: { state: flipped-icon }
+          False: { state: icon }
+
+# Greyscale sprites allow tinting.
+- type: entity
+  abstract: true
+  id: ClothingNeckArmbandPaintableBase
+  components:
+  - type: SprayPaintable
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandSideBase, ClothingNeckArmbandPaintableBase ]
+  id: ClothingNeckArmband
+  name: armband
+  description: A plain cloth band worn around the upper arm.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/colorable.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/colorable.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmband
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandPaintableBase ]
+  id: ClothingNeckArmbandDouble
+  name: double armband
+  description: A pair of plain cloth bands, one for each arm.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/colorable_double.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/colorable_double.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandDouble
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandSideBase ]
+  id: ClothingNeckArmbandMedical
+  name: medical armband
+  description: A white cloth band with a green stripe.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/medical.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/medical.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandMedical
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandSideBase ]
+  id: ClothingNeckArmbandEngineering
+  name: engineering armband
+  description: An orange cloth band with a yellow stripe.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/engineering.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/engineering.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandEngineering
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandSideBase ]
+  id: ClothingNeckArmbandHydroponics
+  name: hydroponics armband
+  description: A green cloth band with a blue stripe.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/hydroponics.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/hydroponics.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandHydroponics
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandSideBase ]
+  id: ClothingNeckArmbandOperations
+  name: operations armband
+  description: A mustard yellow cloth band worn around the upper arm.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/operations.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/operations.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandOperations
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandSideBase ]
+  id: ClothingNeckArmbandInterstellarAidCorps
+  name: Interstellar Aid Corps armband
+  description: A white cloth band with a pale blue stripe.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/interstellar_aid_corps.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/interstellar_aid_corps.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandInterstellarAidCorps
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandSideBase ]
+  id: ClothingNeckArmbandIdris
+  name: Idris Incorporated armband
+  description: A teal cloth band with a white chevron.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/idris.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/idris.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandIdris
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandSideBase ]
+  id: ClothingNeckArmbandPMCG
+  name: PMCG armband
+  description: A black cloth band with a bright blue zigzag.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/pmcg.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/pmcg.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandPMCG
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandSideBase ]
+  id: ClothingNeckArmbandPMCGAlt
+  name: grey PMCG armband
+  description: A dark grey cloth band with a pale blue zigzag.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/pmcg_alternate.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/pmcg_alternate.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandPMCGAlt
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandSideBase ]
+  id: ClothingNeckArmbandTauCeti
+  name: Tau Ceti armband
+  description: A dark blue cloth band with a white and red emblem.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/tau_ceti.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/tau_ceti.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandTauCeti
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandSideBase ]
+  id: ClothingNeckArmbandSCC
+  name: Stellar Corporate Conglomerate armband
+  description: A steel blue cloth band with gold stripes.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/stellar_corporate_conglomerate.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/stellar_corporate_conglomerate.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandSCC
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandSideBase ]
+  id: ClothingNeckArmbandActingCaptain
+  name: acting captain's armband
+  description: A yellow cloth band with a green stripe.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/acting_captain.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/acting_captain.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandActingCaptain
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandSideBase ]
+  id: ClothingNeckArmbandAzszau
+  name: azszau armband
+  description: An orange cloth band with a pale green stripe.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/azszau.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/azszau.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandAzszau
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandSideBase ]
+  id: ClothingNeckArmbandKutzis
+  name: kutzis armband
+  description: An orange cloth band with a pale teal stripe.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/kutzis.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/kutzis.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandKutzis
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandSideBase ]
+  id: ClothingNeckArmbandUnathiFleet
+  name: unathi fleet armband
+  description: A teal cloth band with a dark mottled pattern and an orange emblem.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/unathi_fleet.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/unathi_fleet.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandUnathiFleet
+
+- type: entity
+  parent: [ ClothingNeckArmbandBase, ClothingNeckArmbandPaintableBase ]
+  id: ClothingNeckArmbandGuard
+  name: guard armband
+  description: A plain red cloth band, sewn into a loop.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/red_guard.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/red_guard.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandGuard
+  - type: LoadoutTint
+    color: "#dd2b2b"
+
+- type: entity
+  parent: ClothingNeckArmbandBase
+  id: ClothingNeckArmbandDeputy
+  name: security deputy armband
+  description: A bright blue cloth band, sewn into a loop.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/deputy.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/deputy.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandDeputy
+
+- type: entity
+  parent: ClothingNeckArmbandBase
+  id: ClothingNeckArmbandCargoGuard
+  name: cargo bay guard armband
+  description: A mustard yellow cloth band, sewn into a loop.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/cargo_guard.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/cargo_guard.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandCargoGuard
+
+- type: entity
+  parent: ClothingNeckArmbandBase
+  id: ClothingNeckArmbandEngineeringGuard
+  name: engineering guard armband
+  description: An orange cloth band with a yellow stripe, sewn into a loop.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/engineering_guard.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/engineering_guard.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandEngineeringGuard
+
+- type: entity
+  parent: ClothingNeckArmbandBase
+  id: ClothingNeckArmbandScienceGuard
+  name: science guard armband
+  description: A purple cloth band, sewn into a loop.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/science_guard.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/science_guard.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandScienceGuard
+
+- type: entity
+  parent: ClothingNeckArmbandBase
+  id: ClothingNeckArmbandHydroponicsGuard
+  name: hydroponics guard armband
+  description: A green cloth band with a blue stripe, sewn into a loop.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/hydroponics_guard.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/hydroponics_guard.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandHydroponicsGuard
+
+- type: entity
+  parent: ClothingNeckArmbandBase
+  id: ClothingNeckArmbandMedicalGuardBlue
+  name: medical guard armband
+  description: A white cloth band with a pale blue stripe, sewn into a loop.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Armbands/medical_guard_white_blue.rsi
+    layers:
+    - state: icon
+      map: [ "enum.ArmbandSideLayers.Base" ]
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Armbands/medical_guard_white_blue.rsi
+  - type: Construction
+    graph: PirateArmband
+    node: ClothingNeckArmbandMedicalGuardBlue

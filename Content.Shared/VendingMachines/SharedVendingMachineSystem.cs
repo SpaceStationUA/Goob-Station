@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using Content.Shared._Pirate.VendingMachines; // Pirate: vending price override
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Advertise.Components;
@@ -419,6 +420,8 @@ public abstract partial class SharedVendingMachineSystem : EntitySystem
                     restock = (uint) Math.Floor(amount * result / chanceOfMissingStock);
                 }
                 var price = GetEntryPrice(proto); // Pirate banking
+                if (TryComp<VendingPriceOverrideComponent>(uid, out var priceOverride) && priceOverride.Prices.TryGetValue(id, out var overridePrice)) // Pirate: vending price override
+                    price = overridePrice; // Pirate: vending price override
 
                 if (inventory.TryGetValue(id, out var entry))
                 {

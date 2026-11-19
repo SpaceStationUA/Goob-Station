@@ -7,7 +7,7 @@ using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.Magic.Components;
 using Content.Shared.Speech.Components;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared._Goobstation.Wizard.Chuuni;
 using Content.Shared._Shitmed.Damage;
 using Content.Shared._Shitmed.Targeting;

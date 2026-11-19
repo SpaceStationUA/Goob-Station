@@ -3,7 +3,7 @@
 using System.Linq;
 using Content.Shared.Chemistry.Components;
 using Robust.Shared.Prototypes;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Chemistry.Reagent;
 
@@ -21,14 +21,26 @@ public abstract partial class SharedPuddleSystem
 
     private void UpdateEvaporation(EntityUid uid, Solution solution)
     {
-        if (_evaporationQuery.HasComp(uid))
-            return;
-
-        if (solution.GetTotalPrototypeQuantity(GetEvaporatingReagents(solution)) > FixedPoint2.Zero)
+        // Pirate: dry mixtures should leave the evaporation query immediately.
+        foreach (var (reagent, _) in solution.Contents)
         {
-            var evaporation = AddComp<EvaporationComponent>(uid);
-            evaporation.NextTick = _timing.CurTime + EvaporationCooldown;
-            Dirty<EvaporationComponent>((uid, evaporation));
+            if (_prototypeManager.Index<ReagentPrototype>(reagent.Prototype).EvaporationSpeed <= 0)
+                continue;
+
+            if (!_evaporationQuery.TryComp(uid, out var evaporation))
+            {
+                evaporation = AddComp<EvaporationComponent>(uid);
+                evaporation.NextTick = _timing.CurTime + EvaporationCooldown;
+                Dirty(uid, evaporation);
+            }
+            else
+            {
+                foreach (var id in evaporation.Remainders.Keys)
+                {
+                    if (!solution.ContainsPrototype(id) && evaporation.Remainders.Remove(id))
+                        Dirty(uid, evaporation);
+                }
+            }
             return;
         }
 
@@ -55,18 +67,35 @@ public abstract partial class SharedPuddleSystem
             // that to all of them.
             var evaporationSpeeds = GetEvaporationSpeeds(puddleSolution);
             if (evaporationSpeeds.Count == 0)
+            {
+                RemComp<EvaporationComponent>(uid); // Pirate: also recover stale saved state.
                 continue;
+            }
 
             // Can't use .Average because FixedPoint2
             var evaporationSpeed = evaporationSpeeds.Values.Sum() / evaporationSpeeds.Count;
-            var reagentProportions = evaporationSpeeds.ToDictionary(kv => kv.Key,
-                kv => puddleSolution.GetTotalPrototypeQuantity(kv.Key) / puddleSolution.Volume);
+            // Pirate: keep the original proportions for this entire tick, including traces.
+            var originalVolume = puddleSolution.Volume.Double();
+            var amount = evaporation.EvaporationAmount.Double() * EvaporationCooldown.TotalSeconds * evaporationSpeed.Double();
+            var changed = false;
 
             // Still have to iterate over one-by-one since the full solution could have non-evaporating solutions.
-            foreach (var (reagent, factor) in reagentProportions)
+            foreach (var reagent in evaporationSpeeds.Keys)
             {
-                var reagentTick = evaporation.EvaporationAmount * EvaporationCooldown.TotalSeconds * evaporationSpeed * factor;
-                puddleSolution.SplitSolutionWithOnly(reagentTick, reagent);
+                var quantity = puddleSolution.GetTotalPrototypeQuantity(reagent);
+                var due = evaporation.Remainders.GetValueOrDefault(reagent) + amount * quantity.Double() / originalVolume;
+                var removable = FixedPoint2.Min(quantity, FixedPoint2.New(due));
+                var remainder = due - removable.Double();
+                if (removable == quantity || remainder <= 0)
+                    evaporation.Remainders.Remove(reagent);
+                else
+                    evaporation.Remainders[reagent] = remainder;
+
+                if (removable <= 0)
+                    continue;
+
+                puddleSolution.SplitSolutionWithOnly(removable, reagent);
+                changed = true;
             }
 
             // Despawn if we're done
@@ -77,7 +106,8 @@ public abstract partial class SharedPuddleSystem
                 PredictedQueueDel(uid);
             }
 
-            _solutionContainerSystem.UpdateChemicals(puddle.Solution.Value);
+            if (changed) // Pirate: no reactions or solution replication for a fractional tick.
+                _solutionContainerSystem.UpdateChemicals(puddle.Solution.Value);
         }
     }
 
@@ -116,12 +146,11 @@ public abstract partial class SharedPuddleSystem
     public Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> GetEvaporationSpeeds(Solution solution)
     {
         Dictionary<ProtoId<ReagentPrototype>, FixedPoint2> evaporatingSpeeds = [];
-        foreach (var solProto in solution.GetReagentPrototypes(_prototypeManager).Keys)
+        foreach (var (reagent, _) in solution.Contents) // Pirate: no intermediate quantity dictionary.
         {
-            if (solProto.EvaporationSpeed > FixedPoint2.Zero)
-            {
-                evaporatingSpeeds.Add(solProto.ID, solProto.EvaporationSpeed);
-            }
+            var proto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
+            if (proto.EvaporationSpeed > 0)
+                evaporatingSpeeds.TryAdd(proto.ID, proto.EvaporationSpeed);
         }
         return evaporatingSpeeds;
     }

@@ -1,5 +1,5 @@
 using Content.Goobstation.Common.Religion;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Pirate.Server.Traits.Vampirism.Components;
 using Content.Pirate.Server.Vampire.Systems;
 using Content.Pirate.Shared.Vampire.Components;
@@ -379,7 +379,9 @@ namespace Content.Pirate.Server.Traits.Vampirism.Systems
         {
             _bloodstreamSystem.TryModifyBloodLevel((bloodsucker, suckerBlood), comp.BloodRestorePerUnit * units);
             _bloodstreamSystem.TryModifyBleedAmount((bloodsucker, suckerBlood), -comp.BleedReductionPerUnit * units);
-            _hunger.ModifyHunger(bloodsucker, comp.HungerPerUnit * units);
+            // Vampires use blood fullness instead of HungerComponent.
+            if (TryComp<HungerComponent>(bloodsucker, out var hunger))
+                _hunger.ModifyHunger(bloodsucker, comp.HungerPerUnit * units, hunger);
 
             if (TryComp<ThirstComponent>(bloodsucker, out var thirst))
                 _thirst.ModifyThirst(bloodsucker, thirst, comp.ThirstPerUnit * units);

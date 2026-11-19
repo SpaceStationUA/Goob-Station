@@ -68,7 +68,7 @@ anomaly-scanner-particle-unstable-unknown = - [color=plum]Нестабільни
 anomaly-scanner-particle-containment-unknown = - [color=goldenrod]Тип вмісту:[/color] [color=red]ПОМИЛКА[/color]
 anomaly-scanner-particle-transformation-unknown = - [color=#6b75fa]Тип перетворення:[/color] [color=red]ПОМИЛКА[/color]
 anomaly-behavior-unknown = [color=red]ПОМИЛКА. Неможливо прочитати.[/color]
-anomaly-behavior-title = аналіз відхилень у поведінці:
+anomaly-behavior-title = аналіз відхилень поведінки:
 anomaly-behavior-point = [color=gold]Аномалія приносить {$mod}% очок[/color]
 anomaly-behavior-safe = [color=forestgreen]Аномалія надзвичайно стабільна. Вкрай рідкісні пульсації.[/color]
 anomaly-behavior-slow = [color=forestgreen]Частота пульсацій набагато менша[/color]
@@ -88,3 +88,4 @@ anomaly-scanner-scan-copied = Скановані дані аномалії ск�
 anomaly-behavior-invisibility = Виявлено спотворення світлових хвиль.
 anomaly-sync-disconnect-verb-text = Від'єднати аномалію
 anomaly-sync-disconnect-verb-message = Від'єднати підключену аномалію від {THE($machine)}.
+anomaly-secret-admin = [color=red](ПОМИЛКА)[/color]

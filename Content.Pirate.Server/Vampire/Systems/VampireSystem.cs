@@ -20,7 +20,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Mobs;
@@ -85,7 +85,6 @@ public sealed partial class VampireSystem : EntitySystem
     private ISawmill? _sawmill;
     private static readonly ProtoId<DamageGroupPrototype> _bruteGroupId = "Brute";
     private static readonly ProtoId<DamageGroupPrototype> _burnGroupId = "Burn";
-    private static readonly ProtoId<DamageGroupPrototype> _geneticGroupId = "Genetic";
     private static readonly ProtoId<DamageTypePrototype> _cellularTypeId = "Cellular";
     private static readonly ProtoId<DamageTypePrototype> _poisonTypeId = "Poison";
     private static readonly ProtoId<DamageTypePrototype> _oxyLossTypeId = "Asphyxiation";
@@ -215,9 +214,7 @@ public sealed partial class VampireSystem : EntitySystem
         if (_timing.CurTime < nextDamage)
             return;
 
-        if (!ProcessSpaceExposureTick(uid, vampire, sunlight))
-            return;
-
+        ProcessSpaceExposureTick(uid, vampire, sunlight);
         sunlight.NextDamageTime = now + damageInterval;
     }
 
@@ -228,29 +225,24 @@ public sealed partial class VampireSystem : EntitySystem
         sunlight.NextWarningPopup = TimeSpan.Zero;
     }
 
-    private bool ProcessSpaceExposureTick(EntityUid uid, VampireComponent vampire, VampireSunlightComponent sunlight)
+    private void ProcessSpaceExposureTick(EntityUid uid, VampireComponent vampire, VampireSunlightComponent sunlight)
     {
         var hadBlood = vampire.DrunkBlood > 0;
 
+        var burned = false;
         if (hadBlood)
-        {
             DrainBlood(uid, vampire, sunlight);
-
-        }
         else
-        {
-            if (!ApplyGeneticSpaceDamage(uid, sunlight))
-                return false;
-        }
+            burned = ApplyBloodlessBurn(uid, sunlight);
 
         var damageable = CompOrNull<DamageableComponent>(uid);
         var thresholds = CompOrNull<MobThresholdsComponent>(uid);
         var healthy = IsAboveHalfHealth(uid, damageable, thresholds);
 
         var chance = hadBlood ? sunlight.BloodEffectChance : sunlight.BloodlessEffectChance;
-        TryApplySpaceDamage(uid, healthy, chance, sunlight);
-
-        return true;
+        // One burn sound per tick, even when the direct burn and the extra effect both hit.
+        if (TryApplySpaceDamage(uid, healthy, chance, sunlight) | burned)
+            _audio.PlayPvs(_spaceBurnSound, uid);
     }
 
     private void DrainBlood(EntityUid uid, VampireComponent vampire, VampireSunlightComponent sunlight)
@@ -262,34 +254,20 @@ public sealed partial class VampireSystem : EntitySystem
         TrySpendBlood(uid, vampire, drain, showPopup: false);
     }
 
-    private bool ApplyGeneticSpaceDamage(EntityUid uid, VampireSunlightComponent sunlight)
+    private bool ApplyBloodlessBurn(EntityUid uid, VampireSunlightComponent sunlight)
     {
-        if (!_proto.TryIndex<DamageGroupPrototype>(_geneticGroupId, out var damageGroup))
-            return true;
+        if (!_proto.TryIndex(_heatTypeId, out var heat))
+            return false;
 
-        var spec = new DamageSpecifier(damageGroup, sunlight.GeneticDamagePerInterval);
+        var spec = new DamageSpecifier(heat, sunlight.BloodlessBurnDamage);
         _damageableSystem.TryChangeDamage(uid, spec, true);
-
-        if (!TryComp(uid, out DamageableComponent? damageable) ||
-            damageable == null ||
-            !damageable.DamagePerGroup.TryGetValue(_geneticGroupId, out var geneticDamage))
-        {
-            return true;
-        }
-
-        _audio.PlayPvs(_spaceBurnSound, uid);
-
-        if (geneticDamage < sunlight.GeneticDustThreshold)
-            return true;
-
-        DustEntity(uid);
-        return false;
+        return true;
     }
 
-    private void TryApplySpaceDamage(EntityUid uid, bool isHealthy, float chance, VampireSunlightComponent sunlight)
+    private bool TryApplySpaceDamage(EntityUid uid, bool isHealthy, float chance, VampireSunlightComponent sunlight)
     {
         if (!_rand.Prob(Math.Clamp(chance, 0f, 1f)))
-            return;
+            return false;
 
         if (isHealthy)
         {
@@ -304,7 +282,7 @@ public sealed partial class VampireSystem : EntitySystem
             _flammable.AdjustFireStacks(uid, sunlight.FireStacksOnIgnite, ignite: true);
         }
 
-        _audio.PlayPvs(_spaceBurnSound, uid);
+        return true;
     }
 
     private bool IsAboveHalfHealth(EntityUid uid, DamageableComponent? damageable, MobThresholdsComponent? thresholds)
@@ -328,14 +306,6 @@ public sealed partial class VampireSystem : EntitySystem
 
         var current = damageable.TotalDamage.Float();
         return current <= max * 0.5f;
-    }
-
-    private void DustEntity(EntityUid uid)
-    {
-        var coords = Transform(uid).Coordinates;
-        _popup.PopupEntity(Loc.GetString("admin-smite-turned-ash-other", ("name", uid)), uid, PopupType.LargeCaution);
-        QueueDel(uid);
-        Spawn("Ash", coords);
     }
 
     private bool IsInSpace(TransformComponent xform)
@@ -362,7 +332,8 @@ public sealed partial class VampireSystem : EntitySystem
         if (before > 0f && _gameTicker.RunLevel < GameRunLevel.PostRound) // No hunger EOR
         {
             comp.StarvationDrunkBloodDrainAccumulator = 0f;
-            comp.BloodFullness = MathF.Max(0f, before - (comp.FullnessDecayPerSecond * elapsed));
+            var decay = comp.FullnessDecayPerSecond * GetFullnessDecayModifier(comp, before);
+            comp.BloodFullness = MathF.Max(0f, before - (decay * elapsed));
             changed = !MathF.Abs(comp.BloodFullness - before).Equals(0f);
 
             if (changed)
@@ -390,6 +361,17 @@ public sealed partial class VampireSystem : EntitySystem
         }
 
         return changed;
+    }
+
+    private static float GetFullnessDecayModifier(VampireComponent comp, float fullness)
+    {
+        if (fullness > comp.OverfedFullness)
+            return comp.OverfedDecayModifier;
+        if (fullness > comp.PeckishFullness)
+            return comp.OkayDecayModifier;
+        if (fullness > comp.StarvingFullness)
+            return comp.PeckishDecayModifier;
+        return comp.StarvingDecayModifier;
     }
 
     private void RefreshAllActions(EntityUid uid, VampireComponent comp)
@@ -479,6 +461,12 @@ public sealed partial class VampireSystem : EntitySystem
         RemComp<RespiratorComponent>(uid);
 
         _alerts.ClearAlertCategory(uid, "Hunger");
+
+        // Match crew hunger's starting band and cap fullness at the configured maximum.
+        var minStart = (int) comp.PeckishFullness + 10;
+        var maxStart = Math.Max(minStart + 1, (int) comp.OverfedFullness);
+        comp.BloodFullness = MathF.Min(comp.MaxBloodFullness, comp.StartingBloodFullness ?? _rand.Next(minStart, maxStart));
+        Dirty(uid, comp);
 
         UpdateVampireAlert(uid);
         UpdateVampireFedAlert(uid, comp);

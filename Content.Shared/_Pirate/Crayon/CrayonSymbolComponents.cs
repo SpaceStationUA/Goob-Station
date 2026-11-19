@@ -3,6 +3,7 @@
 
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
+using Robust.Shared.Network;
 
 namespace Content.Shared._Pirate.Crayon;
 
@@ -24,6 +25,11 @@ public sealed partial class CrayonStencilComponent : Component
     [DataField, AutoNetworkedField]
     public CrayonSymbol? Symbol;
 
+    [DataField, AutoNetworkedField]
+    public Guid? DrawingId;
+
+    [DataField] public string? DrawingName;
+
     // Only the player's own crayon windows show it.
     public override bool SendOnlyToOwner => true;
 }
@@ -36,10 +42,15 @@ public sealed partial class CrayonStampComponent : Component
 {
     [DataField, AutoNetworkedField]
     public CrayonSymbol Symbol = new();
+
+    // The server supplies the character name on examine. The account is only used for moderation.
+    [DataField] public string? ArtistName;
+    [DataField] public NetUserId? Artist;
+    [DataField] public string? DrawingName;
 }
 
 [Serializable, NetSerializable]
-public sealed class CrayonSelectSymbolMessage(CrayonSymbol symbol) : BoundUserInterfaceMessage
+public sealed class CrayonSelectSymbolMessage(Guid id) : BoundUserInterfaceMessage
 {
-    public readonly CrayonSymbol Symbol = symbol;
+    public readonly Guid Id = id;
 }

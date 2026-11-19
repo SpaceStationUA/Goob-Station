@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // Pirate: adapted from AU-14/ColonialMarinesUniverse#2179.
 
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using Content.Shared._Pirate.Crayon;
@@ -20,7 +21,13 @@ public sealed class CrayonCanvasWindow : DefaultWindow
 {
     [Dependency] private IEntityManager _entities = default!;
 
+    [Dependency] private readonly IFileDialogManager _files = default!;
+
     private readonly CrayonPaletteSystem _palette;
+    private CrayonLibrarySystem Library => _entities.System<CrayonLibrarySystem>();
+    private readonly Guid? _editing;
+    private bool _saving;
+    private bool _importing;
     private readonly CrayonCanvas _canvas = new();
     private readonly LineEdit _name = new() { HorizontalExpand = true };
     private readonly BoxContainer _tones = new() { Orientation = BoxContainer.LayoutOrientation.Horizontal, SeparationOverride = 2 };
@@ -32,6 +39,8 @@ public sealed class CrayonCanvasWindow : DefaultWindow
     private readonly Button _popOut = new() { Text = Loc.GetString("pirate-crayon-canvas-pop-out"), StyleClasses = { "OpenRight" }, VerticalAlignment = VAlignment.Center };
     private bool _saved;
     private readonly BoxContainer _body;
+    private readonly BoxContainer _editor = new() { Orientation = BoxContainer.LayoutOrientation.Vertical };
+    private readonly Label _savingNotice = new() { Text = Loc.GetString("pirate-crayon-saving"), Visible = false };
     private OSWindow? _outside;
     private readonly PanelContainer _gradientA = SwatchPanel(Color.White);
     private readonly PanelContainer _gradientB = SwatchPanel(Color.Black);
@@ -41,12 +50,13 @@ public sealed class CrayonCanvasWindow : DefaultWindow
     // A gradient between two box crayons steps through their tones; one with a rainbow crayon's colour blends in this many.
     private const int RainbowGradientSteps = 8;
 
-    public event Action<string, CrayonSymbol>? OnSaved;
+    public event Action<Guid>? OnSaved;
 
-    public CrayonCanvasWindow(Color brush, bool selectableColor)
+    public CrayonCanvasWindow(Color brush, bool selectableColor, Guid? editing = null)
     {
         IoCManager.InjectDependencies(this);
         _palette = _entities.System<CrayonPaletteSystem>();
+        _editing = editing;
         Title = Loc.GetString("pirate-crayon-canvas-title");
 
         _small.OnPressed += _ => ResizeCanvas(CrayonSymbol.Small);
@@ -92,6 +102,8 @@ public sealed class CrayonCanvasWindow : DefaultWindow
 
         var clear = new Button { Text = Loc.GetString("pirate-crayon-canvas-clear") };
         clear.OnPressed += _ => _canvas.Clear();
+        var import = new Button { Text = Loc.GetString("pirate-crayon-import"), ToolTip = Loc.GetString("pirate-crayon-import-hint") };
+        import.OnPressed += _ => ImportPng();
         var save = new Button { Text = Loc.GetString("pirate-crayon-canvas-save"), MinWidth = 80 };
         save.OnPressed += _ => Save();
         _popOut.OnPressed += _ => PopOut();
@@ -120,11 +132,15 @@ public sealed class CrayonCanvasWindow : DefaultWindow
                 _needs,
                 _error,
                 new PanelContainer { MinHeight = 2, PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#3A3A3A") } },
-                Row(new Label { Text = Loc.GetString("pirate-crayon-canvas-mirror") }, mirrors, clear),
+                Row(new Label { Text = Loc.GetString("pirate-crayon-canvas-mirror") }, mirrors, clear, import),
                 Row(new Label { Text = Loc.GetString("pirate-crayon-canvas-name") }, _name, save),
             },
         };
-        Contents.AddChild(_body);
+        if (editing == null)
+            AddLegacyDrawings();
+        _editor.AddChild(_body);
+        _editor.AddChild(_savingNotice);
+        Contents.AddChild(_editor);
 
         // Pirate: expose the held rainbow crayon's color picker inside the symbol editor as well.
         if (selectableColor)
@@ -158,6 +174,29 @@ public sealed class CrayonCanvasWindow : DefaultWindow
         UpdateNeeds();
     }
 
+    protected override void EnteredTree()
+    {
+        base.EnteredTree();
+        Library.Changed += OnLibraryChanged;
+    }
+
+    protected override void ExitedTree()
+    {
+        // A popped-out editor stays open in its OS window until PopIn.
+        if (_outside == null)
+            Library.Changed -= OnLibraryChanged;
+        base.ExitedTree();
+    }
+
+    private void OnLibraryChanged()
+    {
+        if (!Library.CanDraw)
+        {
+            _outside?.Close();
+            Close();
+        }
+    }
+
     public void Load(string name, CrayonSymbol symbol)
     {
         _name.Text = name;
@@ -182,10 +221,10 @@ public sealed class CrayonCanvasWindow : DefaultWindow
         if (_outside != null)
             return;
 
-        _body.Orphan();
+        _editor.Orphan();
         _outside = new OSWindow { Title = Title ?? string.Empty, SetSize = Size };
         _outside.Show();
-        _outside.Root?.AddChild(_body);
+        _outside.Root?.AddChild(_editor);
         _outside.Closed += PopIn;
         Close();
     }
@@ -195,12 +234,13 @@ public sealed class CrayonCanvasWindow : DefaultWindow
         if (_outside == null)
             return;
 
+        Library.Changed -= OnLibraryChanged;
         _outside = null;
-        if (_saved)
+        if (_saved || !Library.CanDraw)
             return;
 
-        _body.Orphan();
-        Contents.AddChild(_body);
+        _editor.Orphan();
+        Contents.AddChild(_editor);
         OpenCentered();
     }
 
@@ -328,23 +368,107 @@ public sealed class CrayonCanvasWindow : DefaultWindow
         _needs.Text = Loc.GetString("pirate-crayon-canvas-needs", ("crayons", string.Join(", ", names.Distinct())));
     }
 
-    private void Save()
+    private async void ImportPng()
     {
+        if (_importing || _saving)
+            return;
+
+        _importing = true;
+        try
+        {
+            await using var file = await _files.OpenFile(new FileDialogFilters(new FileDialogFilters.Group("png")), FileAccess.Read);
+            if (file == null || Disposed || !IsOpen && _outside == null)
+                return;
+
+            var symbol = CrayonPngImport.Read(file, _canvas.Size, _palette.Crayons);
+            if (symbol == null)
+                _error.Text = Loc.GetString("pirate-crayon-import-error");
+            else
+            {
+                _canvas.Load(symbol);
+                _error.Text = string.Empty;
+            }
+        }
+        catch (Exception)
+        {
+            _error.Text = Loc.GetString("pirate-crayon-import-error");
+        }
+        finally
+        {
+            _importing = false;
+        }
+    }
+
+    private void AddLegacyDrawings()
+    {
+        var legacy = new CrayonSymbolStorage().Symbols;
+        if (legacy.Count == 0)
+            return;
+
+        var choose = new OptionButton();
+        choose.AddItem(Loc.GetString("pirate-crayon-import-legacy"));
+        foreach (var (name, _) in legacy)
+            choose.AddItem(name);
+        choose.OnItemSelected += args =>
+        {
+            if (args.Id <= 0)
+                return;
+            var (name, symbol) = legacy[args.Id - 1];
+            Load(name, symbol);
+        };
+        _body.AddChild(choose);
+    }
+
+    private async void Save()
+    {
+        if (_saving || _importing)
+            return;
+
         var symbol = _canvas.ToSymbol();
         var name = _name.Text.Trim();
         if (name.Length == 0)
             _error.Text = Loc.GetString("pirate-crayon-canvas-error-name");
+        else if (name.Length > CrayonDrawing.MaxNameLength)
+            _error.Text = Loc.GetString("pirate-crayon-library-invalid");
         else if (symbol.Palette.Count > CrayonSymbol.MaxColors)
             _error.Text = Loc.GetString("pirate-crayon-canvas-error-colors", ("max", CrayonSymbol.MaxColors));
         else if (!symbol.IsValid())
             _error.Text = Loc.GetString("pirate-crayon-canvas-error-empty");
         else
         {
-            OnSaved?.Invoke(name, symbol);
-            _saved = true;
-            _outside?.Close();
-            Close();
+            SetSaving(true);
+            try
+            {
+                var result = await Library.Save(_editing, name, symbol);
+                if (Disposed || !IsOpen && _outside == null)
+                    return;
+                if (result.Saved is not { } saved)
+                {
+                    _error.Text = Loc.GetString(result.Error ?? "pirate-crayon-library-unavailable");
+                    return;
+                }
+
+                OnSaved?.Invoke(saved);
+                _saved = true;
+                _outside?.Close();
+                Close();
+            }
+            finally
+            {
+                if (!Disposed)
+                    SetSaving(false);
+            }
         }
+    }
+
+    private void SetSaving(bool saving)
+    {
+        _saving = saving;
+        if (saving)
+            _name.ReleaseKeyboardFocus();
+        _body.Visible = !saving;
+        _savingNotice.Visible = saving;
+        _popOut.Disabled = saving;
     }
 
     private static Button Swatch(Color color, string name, Action pressed)

@@ -112,11 +112,11 @@ public sealed partial class VampireComponent : Component
     [DataField]
     public float Rot4Efficiency = 0.0f;
 
-    /// <summary>
-    /// Current blood fullness used instead of normal food needs.
-    /// </summary>
     [ViewVariables(VVAccess.ReadOnly), DataField, AutoNetworkedField]
-    public float BloodFullness = 90f;
+    public float BloodFullness;
+
+    [DataField]
+    public float? StartingBloodFullness;
 
     /// <summary>
     /// Max amount of blood which can be drained from one person.
@@ -124,11 +124,27 @@ public sealed partial class VampireComponent : Component
     [DataField]
     public float MaxBloodFullness = 200f;
 
-    /// <summary>
-    /// Decay rate per second for blood fullness.
-    /// </summary>
     [DataField]
-    public float FullnessDecayPerSecond = 0.15f;
+    public float FullnessDecayPerSecond = 150f / 3600f;
+
+    [DataField]
+    public float OverfedFullness = 150f;
+    [DataField]
+    public float PeckishFullness = 100f;
+    [DataField]
+    public float StarvingFullness = 50f;
+
+    [DataField]
+    public float FatFullness = 180f;
+
+    [DataField]
+    public float OverfedDecayModifier = 1.2f;
+    [DataField]
+    public float OkayDecayModifier = 1f;
+    [DataField]
+    public float PeckishDecayModifier = 0.8f;
+    [DataField]
+    public float StarvingDecayModifier = 0.6f;
 
     /// <summary>
     /// When <see cref="BloodFullness"/> is empty, apply a movement slowdown.

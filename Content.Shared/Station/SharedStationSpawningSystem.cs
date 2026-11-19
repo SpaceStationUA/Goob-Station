@@ -68,12 +68,15 @@ public abstract partial class SharedStationSpawningSystem : EntitySystem // Pira
             }
         }
 
+        EquipWithDeferredLoadoutAccessories(entity, () => // Pirate: clothing accessories
+        { // Pirate: clothing accessories
         // Backpack loadouts must equip before storage-only selections try to insert into them.
         foreach (var (items, loadoutProto) in selectedLoadouts.OrderByDescending(selected => HasEquipment(selected.Prototype)))
         {
             // Pirate: cameras (photo persistence)
             EquipStartingGear(entity, loadoutProto, raiseEvent: false, pirateFromSelectedLoadout: true, pirateLoadoutTint: items.CustomColorTint, pirateLoadoutName: items.CustomName, pirateLoadoutDescription: items.CustomDescription); // Pirate: loadout
         }
+        }); // Pirate: clothing accessories
         #endregion
 
         EquipRoleName(entity, loadout, roleProto);
@@ -226,6 +229,11 @@ public abstract partial class SharedStationSpawningSystem : EntitySystem // Pira
                         QueueDel(equipmentEntity);
                         continue;
                     }
+                    if (TryDeferLoadoutAccessory(equipmentEntity, slot.Name, null)) // Pirate: clothing accessories
+                        continue; // Pirate: clothing accessories
+                    // Pirate: rings
+                    if (InventorySystem.TryGetSlotEntity(entity, slot.Name, out var pirateOccupant) && TryEquipOverAccessory(entity, slot.Name, pirateOccupant.Value, equipmentEntity)) // Pirate: rings
+                        continue; // Pirate: rings
                     InventorySystem.TryEquip(entity, equipmentEntity, slot.Name, silent: true, force: true);
                 }
             }

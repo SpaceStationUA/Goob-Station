@@ -11,3 +11,6 @@ uplink-syndie-energy-shield-module-name = energy shield module Mk. II
 uplink-syndie-energy-shield-module-desc = A scaled-down starship deflector, with twice the reservoir of the standard model. Soaks anything that lands until its charge runs out.
 uplink-energy-shield-module-bundle-name = energy shield module bundle
 uplink-energy-shield-module-bundle-desc = Five Mk. II energy shield modules in a handy duffel, enough to kit out a full team.
+
+uplink-elite-modsuit-name = preassembled elite Syndicate modsuit
+uplink-elite-modsuit-desc = A bundle with an elite Cybersun Industries modsuit: no slowdown and better protection against heat, radiation and explosions. Comes with night vision, flash protection and advanced magnetic boots.

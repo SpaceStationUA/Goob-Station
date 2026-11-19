@@ -19,6 +19,8 @@
   id: ClothingGenderPinBase
   abstract: true
   components:
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Decor # Pirate: clothing accessories
   - type: ChameleonClothing
     slot: Neck
 #    default: ClothingNeckLGBTPin
@@ -248,6 +250,8 @@
   name: neurodivergent pin
   description: Be neurodivergent, do crime.
   components:
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Decor # Pirate: clothing accessories
   - type: Sprite
     state: autism
   - type: Clothing
@@ -259,6 +263,8 @@
   name: autism pin
   description: Be autistic, do crime.
   components:
+  - type: ClothingAccessory # Pirate: clothing accessories
+    category: Decor # Pirate: clothing accessories
   - type: Sprite
     state: goldautism
   - type: Clothing

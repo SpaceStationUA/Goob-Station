@@ -1,0 +1,18 @@
+light_mode unshaded;
+blend_mode none;
+
+// Linear target; texture2D avoids sRGB decoding.
+uniform sampler2D SOURCE_TEXTURE;
+uniform highp vec2 UV_SCALE;
+uniform highp vec2 SOURCE_TEXEL;
+
+void fragment() {
+    highp vec2 uv = FRAGCOORD.xy * UV_SCALE;
+    highp vec2 o = SOURCE_TEXEL;
+    highp vec3 sum = texture2D(SOURCE_TEXTURE, uv).rgb * 4.0;
+    sum += texture2D(SOURCE_TEXTURE, uv - o).rgb;
+    sum += texture2D(SOURCE_TEXTURE, uv + o).rgb;
+    sum += texture2D(SOURCE_TEXTURE, uv + vec2(o.x, -o.y)).rgb;
+    sum += texture2D(SOURCE_TEXTURE, uv + vec2(-o.x, o.y)).rgb;
+    COLOR = vec4(sum * 0.125, 1.0);
+}

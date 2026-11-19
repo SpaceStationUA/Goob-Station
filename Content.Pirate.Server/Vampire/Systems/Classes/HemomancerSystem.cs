@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Actions;
+using Content.Shared._Pirate.Cleanup;
 using Content.Server.Polymorph.Systems;
 using Content.Pirate.Shared.Vampire;
 using Content.Pirate.Shared.Vampire.Components;
@@ -13,7 +14,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Examine;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Ghost;
 using Content.Shared.Hands.Components;
@@ -256,7 +257,7 @@ public sealed class HemomancerSystem : EntitySystem
             && !_turf.IsSpace(centerTileRef)
             && !_vampire.IsTileBlockedByEntities(tileCoords))
         {
-            Spawn(pending.PuddlePrototype, tileCoords);
+            EntityManager.NotifyLitterProduced(Spawn(pending.PuddlePrototype, tileCoords));
         }
 
         var hitEnemies = new HashSet<EntityUid>();

@@ -1,4 +1,4 @@
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 
 namespace Content.Pirate.Shared.BurnableByThermite;

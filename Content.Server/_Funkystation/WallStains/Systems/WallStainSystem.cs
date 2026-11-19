@@ -1,14 +1,17 @@
 using System.Numerics;
+using Content.Server._Pirate.Cleanup; // Pirate
+using Content.Server._Pirate.Fluids; // Pirate
 using Content.Server.Atmos.Components;
 using Content.Shared._Funkystation.WallStains;
 using Content.Shared._Funkystation.WallStains.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager; // Pirate
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.DoAfter;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Forensics.Components;
@@ -54,6 +57,7 @@ public sealed partial class WallStainSystem : EntitySystem
     [Dependency] private IRobustRandom _random = null!;
     [Dependency] private SharedPuddleSystem _puddle = null!;
     [Dependency] private SharedAudioSystem _audio = null!;
+    [Dependency] private RoundLitterSystem _litter = null!; // Pirate
 
     private Shared.Chemistry.Reaction.ReactiveReagentEffectEntry _stainCleanEffectEntry = null!;
 
@@ -76,6 +80,9 @@ public sealed partial class WallStainSystem : EntitySystem
         SubscribeLocalEvent<SpillableComponent, AfterInteractEvent>(OnSpillableAfterInteract);
         SubscribeLocalEvent<SpillableComponent, PourOnWallDoAfterEvent>(OnPourDoAfter);
         SubscribeLocalEvent<SplashOnWallEvent>(OnSplashOnWall);
+        SubscribeLocalEvent<WallStainComponent, MapInitEvent>(OnStainMapInit); // Pirate
+        SubscribeLocalEvent<WallStainComponent, SolutionContainerChangedEvent>(OnStainSolutionChanged);
+        SubscribeLocalEvent<WallStainComponent, EntityTerminatingEvent>(OnStainTerminating);
     }
 
     private void OnSplashOnWall(ref SplashOnWallEvent args)
@@ -145,6 +152,7 @@ public sealed partial class WallStainSystem : EntitySystem
         if (stainUid == EntityUid.Invalid)
         {
             stainUid = Spawn("WallStain", Transform(wallUid).Coordinates);
+            _litter.TrackResidue(stainUid); // Pirate: direct map/admin spawns have no timer.
             _transform.SetParent(stainUid, wallUid);
 
             var baseOffset = new Vector2(direction.X * 0.48f, direction.Y * 0.48f);
@@ -173,7 +181,9 @@ public sealed partial class WallStainSystem : EntitySystem
             if (actualTransfer > 0)
             {
                 var split = solution.Clone().SplitSolution(actualTransfer);
-                _solution.TryAddSolution(stainSolution.Value, split);
+                if (!_solution.TryAddSolution(stainSolution.Value, split)) // Pirate
+                    return FixedPoint2.Zero;
+                _litter.RefreshResidue(stainUid); // Pirate
 
                 var wallForensics = EnsureComp<ForensicsComponent>(wallUid);
                 var dnas = _forensics.GetSolutionsDNA(split);
@@ -181,7 +191,8 @@ public sealed partial class WallStainSystem : EntitySystem
             }
         }
 
-        UpdateVisuals(stainUid, stainComp);
+        if (actualTransfer > 0) // Pirate: a full wall face has not changed.
+            UpdateVisuals(stainUid, stainComp);
         return actualTransfer;
     }
 
@@ -340,6 +351,8 @@ public sealed partial class WallStainSystem : EntitySystem
             }
 
             RemCompDeferred<StainedWallComponent>(uid);
+            if (TryComp<ReactiveComponent>(uid, out var reactive)) // Pirate
+                reactive.Reactions?.Remove(_stainCleanEffectEntry);
         }
     }
 
@@ -363,6 +376,49 @@ public sealed partial class WallStainSystem : EntitySystem
         Dirty(uid, comp);
     }
 
+    // Pirate: only wet and empty stains belong to the periodic evaporation query.
+    private void OnStainMapInit(Entity<WallStainComponent> ent, ref MapInitEvent args)
+    {
+        if (TryComp<SolutionContainerManagerComponent>(ent, out var manager))
+            _solution.EnsureAllSolutions((ent.Owner, manager));
+        if (_solution.TryGetSolution(ent.Owner, ent.Comp.SolutionName, out _, out var solution))
+            UpdateEvaporation(ent.Owner, solution);
+    }
+
+    private void OnStainSolutionChanged(Entity<WallStainComponent> ent, ref SolutionContainerChangedEvent args)
+    {
+        if (args.SolutionId == ent.Comp.SolutionName && !TerminatingOrDeleted(ent))
+            UpdateEvaporation(ent.Owner, args.Solution);
+    }
+
+    private void UpdateEvaporation(EntityUid uid, Solution solution)
+    {
+        if (solution.Volume == 0 || solution.ContainsPrototype(WaterReagent) || solution.ContainsPrototype(SpaceCleanerReagent))
+            EnsureComp<EvaporatingWallStainComponent>(uid);
+        else
+            RemComp<EvaporatingWallStainComponent>(uid);
+    }
+
+    private void OnStainTerminating(Entity<WallStainComponent> ent, ref EntityTerminatingEvent args)
+    {
+        var parent = Transform(ent).ParentUid;
+        if (!parent.IsValid() || TerminatingOrDeleted(parent) || !HasComp<StainedWallComponent>(parent))
+            return;
+
+        var children = Transform(parent).ChildEnumerator;
+        while (children.MoveNext(out var child))
+        {
+            if (child != ent.Owner && HasComp<WallStainComponent>(child) &&
+                !TerminatingOrDeleted(child) && !EntityManager.IsQueuedForDeletion(child))
+                return;
+        }
+
+        // Only detach the stain interaction. Other forensics on the wall have their own lifetime.
+        RemCompDeferred<StainedWallComponent>(parent);
+        if (TryComp<ReactiveComponent>(parent, out var reactive))
+            reactive.Reactions?.Remove(_stainCleanEffectEntry);
+    }
+
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
@@ -373,8 +429,8 @@ public sealed partial class WallStainSystem : EntitySystem
 
         _evaporationAccumulator -= 1f;
 
-        var query = EntityQueryEnumerator<WallStainComponent>();
-        while (query.MoveNext(out var uid, out var stain))
+        var query = EntityQueryEnumerator<EvaporatingWallStainComponent, WallStainComponent>(); // Pirate
+        while (query.MoveNext(out var uid, out _, out var stain))
         {
             if (!_solution.TryGetSolution(uid, stain.SolutionName, out var solComp))
                 continue;
@@ -406,37 +462,16 @@ public sealed partial class WallStainSystem : EntitySystem
                     _solution.RemoveReagent(solComp.Value, SpaceCleanerReagent, toRemove);
                 }
 
-                _solution.UpdateChemicals(solComp.Value);
+                // Pirate: RemoveReagent already updates the solution.
                 UpdateVisuals(uid, stain);
             }
 
             if (solution.Volume > 0)
                 continue;
-            var parent = Transform(uid).ParentUid;
 
             Spawn("WallStainSparkle", Transform(uid).Coordinates);
 
             QueueDel(uid);
-
-            if (!parent.IsValid())
-                continue;
-            var hasOtherStains = false;
-            var children = Transform(parent).ChildEnumerator;
-            while (children.MoveNext(out var child))
-            {
-                if (child == uid || !HasComp<WallStainComponent>(child))
-                    continue;
-                hasOtherStains = true;
-                break;
-            }
-
-            if (hasOtherStains)
-                continue;
-            RemCompDeferred<StainedWallComponent>(parent);
-            if (TryComp<ReactiveComponent>(parent, out var reactive))
-            {
-                reactive.Reactions?.Remove(_stainCleanEffectEntry);
-            }
         }
     }
 }

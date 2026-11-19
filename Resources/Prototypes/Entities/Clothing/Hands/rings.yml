@@ -4,66 +4,94 @@
   parent: [ RingBase, GoldRingBase ]
   id: GoldRing
   name: gold ring
-  description: A precious ring.
+  description: A plain band of polished gold, worn smooth on the inside. # Pirate: ring descriptions
   components:
+  #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
     layers:
-      - state: ring
-        color: "#ffc833"
+      - state: gold
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+        - state: gold-equipped-HAND
+  #endregion Pirate: rings
 
 - type: entity
   parent: [ RingBase, SilverRingBase ]
   id: SilverRing
   name: silver ring
-  description: Looks slightly less valuable than a gold one.
+  description: A plain band of sterling silver with a soft, cool shine. # Pirate: ring descriptions
   components:
+  #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
     layers:
-      - state: ring
+      - state: silver
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+        - state: silver-equipped-HAND
+  #endregion Pirate: rings
 
 - type: entity
   parent: [ RingBase, GoldRingBase ]
   id: GoldRingDiamond
   name: gold diamond ring
-  description: Made from ethically mined space diamonds.
+  description: A gold band with a single clear diamond held up in four prongs. # Pirate: ring descriptions
   components:
+  #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
     layers:
-      - state: ring
-        color: "#ffc833"
-      - state: gem
-        color: "#c1ffff"
+      - state: gold
+      - state: diamond
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+        - state: gold-equipped-HAND
+        - state: diamond-equipped-HAND
+  #endregion Pirate: rings
   - type: StaticPrice
-    price: 1500
+    price: 800 # Pirate: rings - gold 400 + stone 400
 
 - type: entity
   parent: [ RingBase, SilverRingBase ]
   id: SilverRingDiamond
   name: silver diamond ring
-  description: Made from ethically mined space diamonds.
+  description: A silver band with a small diamond set flush into the metal. # Pirate: ring descriptions
   components:
+  #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
     layers:
-      - state: ring
-      - state: gem
-        color: "#c1ffff"
+      - state: silver
+      - state: diamond
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+        - state: silver-equipped-HAND
+        - state: diamond-equipped-HAND
+  #endregion Pirate: rings
   - type: StaticPrice
-    price: 1400
+    price: 600 # Pirate: rings - silver 200 + stone 400
 
 - type: entity
   parent: [ RingBase, GoldRingBase ]
   id: GoldRingGem
   name: gold gem ring
-  description: Shiny and valuable!
+  description: A gold band with a cut gemstone in a raised setting. # Pirate: ring descriptions
   components:
+  #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
     layers:
-      - state: ring
-        color: "#ffc833"
+      - state: gold
       - state: gem
         map: [ "gemColor" ]
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+        - state: gold-equipped-HAND
+        - state: gem-equipped-HAND
+  #endregion Pirate: rings
   - type: StaticPrice
-    price: 2100
+    price: 800 # Pirate: rings - gold 400 + stone 400
   - type: RandomSprite
     getAllGroups: true
     available:
@@ -74,15 +102,22 @@
   parent: [ RingBase, SilverRingBase ]
   id: SilverRingGem
   name: silver gem ring
-  description: Shiny and not quite as valuable!
+  description: A silver band with a polished gemstone in a low bezel. # Pirate: ring descriptions
   components:
+  #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
     layers:
-      - state: ring
+      - state: silver
       - state: gem
         map: [ "gemColor" ]
+  - type: Clothing
+    clothingVisuals:
+      gloves:
+        - state: silver-equipped-HAND
+        - state: gem-equipped-HAND
+  #endregion Pirate: rings
   - type: StaticPrice
-    price: 2000
+    price: 600 # Pirate: rings - silver 200 + stone 400
   - type: RandomSprite
     getAllGroups: true
     available:

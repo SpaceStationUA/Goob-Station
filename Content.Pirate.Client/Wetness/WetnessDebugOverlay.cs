@@ -1,5 +1,5 @@
 using System.Numerics;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Pirate.Shared.Stains.Components;
 using Content.Pirate.Shared.Wetness.Components;
 using Content.Shared.Chemistry.Components;

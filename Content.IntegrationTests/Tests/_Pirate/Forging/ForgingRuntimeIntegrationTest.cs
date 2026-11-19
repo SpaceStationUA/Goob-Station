@@ -3,7 +3,7 @@
 using Content.Shared.Damage.Systems; // Pirate: upstream damage namespace migration.
 using System.Collections.Generic;
 using System.Linq;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Server.Cargo.Components;
 using Content.Server.Construction.Components;
 using Content.Server.Destructible;

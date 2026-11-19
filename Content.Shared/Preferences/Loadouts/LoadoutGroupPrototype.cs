@@ -59,6 +59,14 @@ public sealed partial class LoadoutGroupPrototype : IPrototype, IInheritingProto
     /// </summary>
     [DataField]
     public bool Deprecated;
+
+    #region Pirate: armbands
+    [DataField]
+    public bool ShowLast;
+
+    [DataField]
+    public ProtoId<LoadoutGroupPrototype>? ShowAfter;
+    #endregion Pirate: armbands
     #endregion Pirate: loadout
 
     [AlwaysPushInheritance]

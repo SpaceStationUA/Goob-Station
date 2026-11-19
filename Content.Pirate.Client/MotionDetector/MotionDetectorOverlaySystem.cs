@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
-using Content.Client.Hands.Systems;
 using Content.Client.UserInterface.Systems.Viewport;
 using Content.Pirate.Shared.MotionDetector;
 using Content.Shared.CCVar;
+using Content.Shared.Inventory;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -18,7 +18,7 @@ public sealed class MotionDetectorOverlaySystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
-    [Dependency] private readonly HandsSystem _hands = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly IClientNetManager _net = default!;
     [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IPlayerManager _player = default!;
@@ -52,7 +52,7 @@ public sealed class MotionDetectorOverlaySystem : EntitySystem
         var playerCoordinates = _transform.GetMapCoordinates(player);
         var time = _timing.CurTime;
 
-        foreach (var held in _hands.EnumerateHeld(player))
+        foreach (var held in _inventory.GetHandOrInventoryEntities(player))
         {
             if (!TryComp<MotionDetectorComponent>(held, out var detector) || !detector.Enabled)
                 continue;

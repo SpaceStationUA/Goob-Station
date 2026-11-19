@@ -1,4 +1,6 @@
 using Content.Goobstation.Shared.ModSuits;
+using Content.Goobstation.Shared.ModSuits.Modules;
+using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
 
@@ -15,6 +17,17 @@ public sealed partial class UpstreamSuitModuleHostSystem : EntitySystem
         SubscribeLocalEvent<ModularSuitComponent, QueryModSuitModuleHostEvent>(OnQueryHost);
         SubscribeLocalEvent<ModularSuitModuleComponent, QueryModSuitModuleHostEvent>(OnQueryModuleHost);
         SubscribeLocalEvent<ModularSuitComponent, ExternalModSuitChargeEvent>(OnCharge);
+        SubscribeLocalEvent<ModularSuitPartComponent, ItemSlotInsertAttemptEvent>(OnPartSlotInsertAttempt);
+    }
+
+    private void OnPartSlotInsertAttempt(Entity<ModularSuitPartComponent> ent, ref ItemSlotInsertAttemptEvent args)
+    {
+        // The hat stabilizer must also block our helmets from its hat slot.
+        // This event reaches the slot owner too; handle only the inserted part.
+        if (args.Item == ent.Owner
+            && TryComp<ModHatHolderComponent>(args.SlotEntity, out var holder)
+            && args.Slot.ID == holder.SlotId)
+            args.Cancelled = true;
     }
 
     private void OnQueryHost(Entity<ModularSuitComponent> ent, ref QueryModSuitModuleHostEvent args)

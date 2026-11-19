@@ -59,7 +59,7 @@ public sealed partial class ModCloakModuleSystem : EntitySystem
             || ent.Comp.Module is not { } module
             || !TryComp<ModModuleComponent>(module, out var moduleComp)
             || !moduleComp.Active
-            || !_modSuit.TryGetModuleSuit(module, out var suit))
+            || !_modSuit.TryGetModuleHost(module, out var suit)) // Pirate: MOD module bridge
             return;
 
         _modSuit.SetModuleActive(suit, (module, moduleComp), false);

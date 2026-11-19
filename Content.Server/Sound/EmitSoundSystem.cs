@@ -50,7 +50,7 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
         Dirty(entity);
     }
 
-    private void SpamEmitSoundReset(Entity<SpamEmitSoundComponent> entity)
+    public void SpamEmitSoundReset(Entity<SpamEmitSoundComponent> entity) // Pirate: also used after emagging a duckbot.
     {
         if (_net.IsClient)
             return;

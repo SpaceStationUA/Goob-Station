@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared._Pirate.Cleanup; // Pirate
+using Content.Shared.FixedPoint;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
@@ -153,6 +154,7 @@ public sealed partial class IngestionSystem
         foreach (var trash in trashes)
         {
             var spawnedTrash = EntityManager.PredictedSpawn(trash, position);
+            EntityManager.NotifyLitterProduced(spawnedTrash); // Pirate
 
             // If the user is holding the item
             if (!pickup)

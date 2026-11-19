@@ -1,0 +1,128 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: construction
+  abstract: true
+  id: PirateArmbandRecipe
+  graph: PirateArmband
+  startNode: start
+  category: construction-category-clothing
+  objectType: Item
+  theory: {}
+  practical:
+    TailoringKnowledge: 1
+  useQuality: false
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmband
+  targetNode: ClothingNeckArmband
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandDouble
+  targetNode: ClothingNeckArmbandDouble
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandMedical
+  targetNode: ClothingNeckArmbandMedical
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandEngineering
+  targetNode: ClothingNeckArmbandEngineering
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandHydroponics
+  targetNode: ClothingNeckArmbandHydroponics
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandOperations
+  targetNode: ClothingNeckArmbandOperations
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandInterstellarAidCorps
+  targetNode: ClothingNeckArmbandInterstellarAidCorps
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandIdris
+  targetNode: ClothingNeckArmbandIdris
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandPMCG
+  targetNode: ClothingNeckArmbandPMCG
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandPMCGAlt
+  targetNode: ClothingNeckArmbandPMCGAlt
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandTauCeti
+  targetNode: ClothingNeckArmbandTauCeti
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandSCC
+  targetNode: ClothingNeckArmbandSCC
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandActingCaptain
+  targetNode: ClothingNeckArmbandActingCaptain
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandAzszau
+  targetNode: ClothingNeckArmbandAzszau
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandKutzis
+  targetNode: ClothingNeckArmbandKutzis
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandUnathiFleet
+  targetNode: ClothingNeckArmbandUnathiFleet
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandGuard
+  targetNode: ClothingNeckArmbandGuard
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandDeputy
+  targetNode: ClothingNeckArmbandDeputy
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandCargoGuard
+  targetNode: ClothingNeckArmbandCargoGuard
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandEngineeringGuard
+  targetNode: ClothingNeckArmbandEngineeringGuard
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandScienceGuard
+  targetNode: ClothingNeckArmbandScienceGuard
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandHydroponicsGuard
+  targetNode: ClothingNeckArmbandHydroponicsGuard
+
+- type: construction
+  parent: PirateArmbandRecipe
+  id: ClothingNeckArmbandMedicalGuardBlue
+  targetNode: ClothingNeckArmbandMedicalGuardBlue

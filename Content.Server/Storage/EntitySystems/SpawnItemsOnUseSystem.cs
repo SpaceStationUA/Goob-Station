@@ -3,6 +3,7 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Cargo.Systems;
 using Content.Server.Storage.Components;
+using Content.Shared._Pirate.Cleanup; // Pirate
 using Content.Shared.Cargo;
 using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
@@ -79,6 +80,7 @@ namespace Content.Server.Storage.EntitySystems
             foreach (var proto in spawnEntities)
             {
                 entityToPlaceInHands = Spawn(proto, coords);
+                EntityManager.NotifyLitterProduced(entityToPlaceInHands.Value); // Pirate
                 _adminLogger.Add(LogType.EntitySpawn, LogImpact.Low, $"{ToPrettyString(args.User)} used {ToPrettyString(uid)} which spawned {ToPrettyString(entityToPlaceInHands.Value)}");
             }
 

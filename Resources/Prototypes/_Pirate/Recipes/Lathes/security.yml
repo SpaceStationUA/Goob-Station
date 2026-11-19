@@ -74,6 +74,14 @@
 
 - type: latheRecipe
   parent: BaseAmmoRecipe
+  id: MagazineCaselessRifleStandardShort
+  result: MagazineCaselessRifleStandardShort
+  completetime: 5
+  materials:
+    Steel: 270
+
+- type: latheRecipe
+  parent: BaseAmmoRecipe
   id: MagazineBoxCaselessRifleStandard
   result: MagazineBoxCaselessRifleStandard
   completetime: 5

@@ -3,6 +3,8 @@
 - type: entity
   parent: ModsuitModuleRecycler
   id: RecyclerSuitModule
+  name: recycler suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -11,6 +13,8 @@
 - type: entity
   parent: ModsuitModuleDonkRecycler
   id: DonkRecyclerSuitModule
+  name: Donksoft recycler suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -19,6 +23,8 @@
 - type: entity
   parent: ModsuitModulePatientTransport
   id: PatientTransportSuitModule
+  name: patient transport suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -27,6 +33,8 @@
 - type: entity
   parent: ModsuitModuleCriminalCapture
   id: CriminalCaptureSuitModule
+  name: criminal capture suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -35,6 +43,8 @@
 - type: entity
   parent: ModsuitModuleMagneticHarness
   id: MagneticHarnessSuitModule
+  name: magnetic harness suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -43,6 +53,8 @@
 - type: entity
   parent: ModsuitModuleProjectileDampener
   id: ProjectileDampenerSuitModule
+  name: projectile dampener suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -51,6 +63,8 @@
 - type: entity
   parent: ModsuitModuleShootingAssistant
   id: ShootingAssistantSuitModule
+  name: shooting assistant suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -59,6 +73,8 @@
 - type: entity
   parent: ModsuitModuleBuiltinSphereTransform
   id: SphereTransformSuitModule
+  name: sphere transform suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -67,6 +83,8 @@
 - type: entity
   parent: ModsuitModuleChameleon
   id: ChameleonSuitModule
+  name: chameleon suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -79,6 +97,8 @@
 - type: entity
   parent: ModsuitModuleThreadRipper
   id: ThreadRipperSuitModule
+  name: thread ripper suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -87,6 +107,8 @@
 - type: entity
   parent: ModsuitModuleHeadProtector
   id: HeadProtectorSuitModule
+  name: head protection suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -95,6 +117,8 @@
 - type: entity
   parent: ModsuitModuleMister
   id: MisterSuitModule
+  name: water mister suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -103,6 +127,8 @@
 - type: entity
   parent: ModsuitModuleResinMister
   id: ResinMisterSuitModule
+  name: resin mister suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -111,6 +137,8 @@
 - type: entity
   parent: ModsuitModuleJanitorMister
   id: JanitorMisterSuitModule
+  name: janitorial mister suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -119,6 +147,8 @@
 - type: entity
   parent: ModsuitModuleThermalVisor
   id: ThermalVisorSuitModule
+  name: thermal visor suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -128,6 +158,8 @@
 - type: entity
   parent: ModsuitModuleNightVisor
   id: NightVisorSuitModule
+  name: night visor suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -137,6 +169,8 @@
 - type: entity
   parent: ModsuitModuleGloveTranslator
   id: GloveTranslatorSuitModule
+  name: glove translator suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -145,6 +179,8 @@
 - type: entity
   parent: ModsuitModulePlasmaStabilizer
   id: PlasmaStabilizerSuitModule
+  name: plasma stabilizer suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -153,6 +189,8 @@
 - type: entity
   parent: ModsuitModuleShockAbsorber
   id: ShockAbsorberSuitModule
+  name: shock absorber suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
@@ -161,7 +199,209 @@
 - type: entity
   parent: ModsuitModuleJumpJet
   id: JumpJetSuitModule
+  name: jump jet suit module
+  suffix: ""
   components:
   - type: UpstreamSuitModule
   - type: ModularSuitModule
     modulePart: Torso
+
+- type: entity
+  parent: ModsuitModuleCloak
+  id: CloakSuitModule
+  name: cloaking suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Torso
+
+- type: entity
+  parent: ModsuitModuleAdrenalineBoost
+  id: AdrenalineBoostSuitModule
+  name: adrenaline boost suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Torso
+
+- type: entity
+  parent: ModsuitModuleDnaLock
+  id: DnaLockSuitModule
+  name: DNA lock suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Torso
+
+- type: entity
+  parent: ModsuitModuleInfiltrator
+  id: InfiltratorSuitModule
+  name: infiltration suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Helmet
+  # Footsteps stay silent.
+  - type: ModGrantComponentsModule
+    target: Wearer
+    components:
+    - type: FootstepModifier
+  - type: VoiceMask
+  - type: UserInterface
+    interfaces:
+      enum.VoiceMaskUIKey.Key:
+        type: VoiceMaskBoundUserInterface
+
+- type: entity
+  parent: ModsuitModulePowerKick
+  id: PowerKickSuitModule
+  name: power kick suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Boots
+
+- type: entity
+  parent: ModsuitModuleMedbeam
+  id: MedbeamSuitModule
+  name: medical beamgun suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Gloves
+
+- type: entity
+  parent: ModsuitModuleHatStabilizer
+  id: HatStabilizerSuitModule
+  name: hat stabilizer suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Helmet
+
+- type: entity
+  parent: ModsuitModuleQuickCarryAdvanced
+  id: QuickCarryAdvancedSuitModule
+  name: advanced quick carry suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Gloves
+
+- type: entity
+  parent: ModsuitModuleMegaphone
+  id: MegaphoneSuitModule
+  name: megaphone suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Helmet
+
+- type: entity
+  parent: ModsuitModulePepperShoulders
+  id: PepperShouldersSuitModule
+  name: pepper shoulders suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Torso
+
+- type: entity
+  parent: ModsuitModuleRestraintAssist
+  id: RestraintAssistSuitModule
+  name: restraint assist suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Gloves
+
+- type: entity
+  parent: ModsuitModuleBulwark
+  id: BulwarkSuitModule
+  name: bulwark suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Boots
+
+- type: entity
+  parent: ModsuitModuleWaddle
+  id: WaddleSuitModule
+  name: waddle suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Boots
+
+- type: entity
+  parent: ModsuitModuleEmpPulse
+  id: EmpPulseSuitModule
+  name: EMP pulse suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Torso
+
+- type: entity
+  parent: ModsuitModuleCandelaSpool
+  id: CandelaSpoolSuitModule
+  name: '"Candela" beacon spool suit module'
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Torso
+
+- type: entity
+  parent: ModsuitModuleBalloonBlower
+  id: BalloonBlowerSuitModule
+  name: balloon blower suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Helmet
+
+- type: entity
+  parent: ModsuitModuleStamper
+  id: StamperSuitModule
+  name: stamper suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Gloves
+
+- type: entity
+  parent: ModsuitModuleFishingGlove
+  id: FishingGloveSuitModule
+  name: fishing glove suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Gloves
+
+- type: entity
+  parent: ModsuitModuleJointTorsion
+  id: JointTorsionSuitModule
+  name: joint torsion ratchet suit module
+  suffix: ""
+  components:
+  - type: UpstreamSuitModule
+  - type: ModularSuitModule
+    modulePart: Boots

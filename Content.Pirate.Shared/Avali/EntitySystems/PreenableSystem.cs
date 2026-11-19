@@ -2,7 +2,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later OR MIT
 
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Pirate.Shared.Avali.Components;
 using Content.Pirate.Shared.Avali.Events;
 using Content.Shared.Body.Components;

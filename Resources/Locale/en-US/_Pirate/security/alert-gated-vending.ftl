@@ -2,3 +2,4 @@
 
 security-alert-gated-vending-denied = This equipment is available during blue alert or higher.
 security-elevated-alert-vending-denied = This equipment is available during blue alert or higher.
+security-red-alert-vending-denied = This equipment is available during red alert or higher.

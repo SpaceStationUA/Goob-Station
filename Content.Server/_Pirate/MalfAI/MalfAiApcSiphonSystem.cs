@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2025 Tyranex <bobthezombie4@gmail.com>
 // SPDX-License-Identifier: MIT
 
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Server.Administration.Logs;
 using Content.Server.Popups;
 using Content.Server.Power.Components;

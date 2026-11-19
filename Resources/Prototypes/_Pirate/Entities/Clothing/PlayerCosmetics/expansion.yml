@@ -75,6 +75,9 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/chamomile.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/chamomile.rsi
+  # Attaches to a hat, over it.
+  - type: ClothingAccessory
+    category: HatDecor
 
 - type: entity
   parent: ClothingHeadBase
@@ -86,6 +89,9 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/cornflower.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/cornflower.rsi
+  # Attaches to a hat, over it.
+  - type: ClothingAccessory
+    category: HatDecor
 
 - type: entity
   parent: ClothingHeadBase
@@ -97,6 +103,9 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/geranium.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/geranium.rsi
+  # Attaches to a hat, over it.
+  - type: ClothingAccessory
+    category: HatDecor
 
 - type: entity
   parent: ClothingHeadBase
@@ -108,6 +117,9 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/lily_of_the_valley.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/lily_of_the_valley.rsi
+  # Attaches to a hat, over it.
+  - type: ClothingAccessory
+    category: HatDecor
 
 - type: entity
   parent: ClothingHeadBase
@@ -119,6 +131,9 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/peony.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/peony.rsi
+  # Attaches to a hat, over it.
+  - type: ClothingAccessory
+    category: HatDecor
 
 - type: entity
   parent: ClothingHeadBase
@@ -130,6 +145,9 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/pink_lily.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/pink_lily.rsi
+  # Attaches to a hat, over it.
+  - type: ClothingAccessory
+    category: HatDecor
 
 - type: entity
   parent: ClothingHeadBase
@@ -141,6 +159,9 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/pink_tulip.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/pink_tulip.rsi
+  # Attaches to a hat, over it.
+  - type: ClothingAccessory
+    category: HatDecor
 
 - type: entity
   parent: ClothingHeadBase
@@ -152,6 +173,9 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/red_rose.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/red_rose.rsi
+  # Attaches to a hat, over it.
+  - type: ClothingAccessory
+    category: HatDecor
 
 - type: entity
   parent: ClothingHeadBase
@@ -163,6 +187,9 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/sunflower.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/sunflower.rsi
+  # Attaches to a hat, over it.
+  - type: ClothingAccessory
+    category: HatDecor
 
 - type: entity
   parent: ClothingHeadBase
@@ -174,6 +201,9 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/white_lily.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/white_lily.rsi
+  # Attaches to a hat, over it.
+  - type: ClothingAccessory
+    category: HatDecor
 
 - type: entity
   parent: ClothingHeadBase
@@ -185,6 +215,9 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/white_rose.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/white_rose.rsi
+  # Attaches to a hat, over it.
+  - type: ClothingAccessory
+    category: HatDecor
 
 - type: entity
   parent: ClothingHeadBase
@@ -196,6 +229,9 @@
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/yellow_tulip.rsi
   - type: Clothing
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Arcane/Head/Flowers/yellow_tulip.rsi
+  # Attaches to a hat, over it.
+  - type: ClothingAccessory
+    category: HatDecor
 
 - type: entity
   parent: ClothingHeadBase
@@ -286,6 +322,10 @@
   name: high-end headphones
   description: Premium headphones with animated lights that can be switched on and off.
   components:
+  # A hair flower, bow or wreath on the head item.
+  - type: ClothingAccessoryHolder
+    limits:
+      HatDecor: 1
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Multiple/headphones_high-end.rsi
     layers:
@@ -305,6 +345,10 @@
   name: purple cat headphones
   description: Purple cat-ear headphones with animated lights and a power switch.
   components:
+  # A hair flower, bow or wreath on the head item.
+  - type: ClothingAccessoryHolder
+    limits:
+      HatDecor: 1
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Box/Multiple/headphones_purple_cat.rsi
     layers:

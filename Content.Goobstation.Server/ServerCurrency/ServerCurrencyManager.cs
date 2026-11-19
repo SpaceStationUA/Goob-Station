@@ -28,7 +28,10 @@ namespace Content.Goobstation.Server.ServerCurrency
         /// <inheritdoc/>
         public void Shutdown()
         {
-            _task.BlockWaitOnTask(Task.WhenAll(_pendingSaveTasks));
+            Task pending;
+            lock (_pendingSaveTasks)
+                pending = Task.WhenAll(_pendingSaveTasks);
+            _task.BlockWaitOnTask(pending);
         }
 
         /// <inheritdoc/>
@@ -110,7 +113,7 @@ namespace Content.Goobstation.Server.ServerCurrency
         private async Task SetBalanceAsyncInternal(NetUserId userId, int amount, int oldAmount)
         {
             var task = Task.Run(() => _db.SetServerCurrency(userId, amount));
-            TrackPending(task);
+            _ = TrackPendingAsync(task);
             await task;
         }
 
@@ -146,25 +149,22 @@ namespace Content.Goobstation.Server.ServerCurrency
         private async Task<int> ModifyBalanceAsync(NetUserId userId, int amountDelta)
         {
             var task = Task.Run(() => _db.ModifyServerCurrency(userId, amountDelta));
-            TrackPending(task);
+            _ = TrackPendingAsync(task);
             return await task;
         }
 
         /// <summary>
         /// Track a database save task to make sure we block server shutdown on it.
         /// </summary>
-        private async void TrackPending(Task task)
+        private async Task TrackPendingAsync(Task task)
         {
-            _pendingSaveTasks.Add(task);
+            lock (_pendingSaveTasks)
+                _pendingSaveTasks.Add(task);
 
-            try
-            {
-                await task;
-            }
-            finally
-            {
+            // Pirate: the caller awaits the save and receives its exception. Only track completion here.
+            await task.ConfigureAwait(ConfigureAwaitOptions.SuppressThrowing);
+            lock (_pendingSaveTasks)
                 _pendingSaveTasks.Remove(task);
-            }
         }
 
         #endregion

@@ -1,6 +1,6 @@
 using Content.Pirate.Shared.Mage.Components;
 using Content.Shared.Alert;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 
 namespace Content.Pirate.Server.Mage.EntitySystems;

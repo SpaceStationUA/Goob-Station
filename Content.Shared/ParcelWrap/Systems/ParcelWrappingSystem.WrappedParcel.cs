@@ -1,3 +1,4 @@
+using Content.Shared._Pirate.Cleanup; // Pirate
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
@@ -132,6 +133,7 @@ public sealed partial class ParcelWrappingSystem
         if (parcel.Comp.UnwrapTrash is { } trashProto)
         {
             var trash = Spawn(trashProto, parcelTransform.Coordinates);
+            EntityManager.NotifyLitterProduced(trash); // Pirate
             _transform.DropNextTo((trash, null), (parcel, parcelTransform));
         }
 

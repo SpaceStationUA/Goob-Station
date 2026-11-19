@@ -14,6 +14,7 @@ using Content.Server.GameTicking.Presets;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Psionics.Glimmer;
 using Content.Server.StationEvents.Components;
+using Content.Shared.Antag;
 using Content.Shared.EntityTable;
 using Content.Shared.EntityTable.EntitySelectors;
 using Content.Shared.GameTicking.Components;
@@ -39,6 +40,9 @@ public sealed class GameModeSimData
 
     public readonly Dictionary<string, StoryPrototype> Stories = new();
     public readonly Dictionary<string, StoryBeatPrototype> Beats = new();
+    public readonly Dictionary<string, AntagPoolPrototype> AntagPools = new();
+    public readonly Dictionary<string, AntagThreatPrototype> ThreatTables = new();
+    public readonly List<DirectorEventGroupPrototype> EventGroups = new();
 
     public static GameModeSimData Extract(IPrototypeManager protos, IComponentFactory factory, IEnumerable<string> presetIds)
     {
@@ -93,6 +97,14 @@ public sealed class GameModeSimData
 
         foreach (var beat in protos.EnumeratePrototypes<StoryBeatPrototype>())
             data.Beats[beat.ID] = beat;
+
+        foreach (var pool in protos.EnumeratePrototypes<AntagPoolPrototype>())
+            data.AntagPools[pool.ID] = pool;
+
+        foreach (var table in protos.EnumeratePrototypes<AntagThreatPrototype>())
+            data.ThreatTables[table.ID] = table;
+
+        data.EventGroups.AddRange(protos.EnumeratePrototypes<DirectorEventGroupPrototype>());
 
         foreach (var department in protos.EnumeratePrototypes<DepartmentPrototype>())
         {
@@ -210,9 +222,7 @@ public sealed class GameModeSimData
         var sim = new SimDirector
         {
             Id = proto.ID,
-            DualAntags = d.DualAntags,
-            NoRoundstartAntags = d.NoRoundstartAntags,
-            Stories = d.Stories?.Select(s => s.Id).ToArray(),
+            Stories = d.Stories.ToDictionary(p => p.Key.Id, p => p.Value),
             FallbackBeat = d.FallbackBeatName.Id,
             PendingDuration = d.PendingDuration.TotalSeconds,
             RepeatWindow = d.RepeatWindow.TotalSeconds,
@@ -228,7 +238,37 @@ public sealed class GameModeSimData
             MinResponders = d.MinResponders,
             ReinforcementCooldown = d.ReinforcementCooldown.TotalSeconds,
             NoEventRetryDelay = d.NoEventRetryDelay.TotalSeconds,
-            RoundstartTable = d.RoundStartAntagsWeightTable.Id,
+            ThreatTable = d.ThreatTable.Id,
+            HelpCooldown = d.HelpCooldown.TotalSeconds,
+            ThreatPerPlayer = d.ThreatPerPlayer,
+            RoundstartThreatScale = d.RoundstartThreatScale,
+            MinRoundstartThreat = d.MinRoundstartThreat,
+            BaseThreatCap = d.BaseThreatCap,
+            ThreatCapPerSecurity = d.ThreatCapPerSecurity,
+            MinThreatPurchase = d.MinThreatPurchase,
+            PendingThreatTime = d.PendingThreatTime.TotalSeconds,
+            RoundstartPendingTime = d.RoundstartPendingTime.TotalSeconds,
+            CountStretch = d.CountStretch,
+            OutOfRangePenalty = d.OutOfRangePenalty,
+            OvershootPenalty = d.OvershootPenalty,
+            SettleTime = d.SettleTime.TotalSeconds,
+            EffectDelay = d.EffectDelay.TotalSeconds,
+            RelaxStrain = d.RelaxStrain,
+            RelaxTime = d.RelaxTime.TotalSeconds,
+            SpotlightWindow = d.SpotlightWindow.TotalSeconds,
+            SpotlightBonus = d.SpotlightBonus,
+            LowPopPlayers = d.LowPopPlayers,
+            MaxLowPopDelayScale = d.MaxLowPopDelayScale,
+            ArmedResponseThreshold = d.ArmedResponseThreshold,
+            ArmedResponseDelay = d.ArmedResponseDelay.TotalSeconds,
+            ArmedResponseCooldown = d.ArmedResponseCooldown.TotalSeconds,
+            MaxArmedResponses = d.MaxArmedResponses,
+            ArmedResponseGhosts = d.ArmedResponseGhosts,
+            SpawnerLifetime = d.SpawnerLifetime.TotalSeconds,
+            MetricScales = new Dictionary<ChaosMetric, float>(d.MetricScales),
+            RelaxMetrics = d.RelaxMetrics.ToHashSet(),
+            SpotlightDepartments = d.SpotlightDepartments.ToDictionary(p => p.Key, p => p.Value.Id),
+            ArmedResponses = d.ArmedResponses.Select(p => p.Id).ToList(),
         };
 
         if (proto.TryComp<SelectedGameRulesComponent>(out var selected, factory))
@@ -325,6 +365,7 @@ public sealed class GameModeSimData
                 MinimumPlayers = ev.MinimumPlayers,
                 MaxOccurrences = ev.MaxOccurrences,
                 OccursDuringRoundEnd = ev.OccursDuringRoundEnd,
+                IsSelectable = ev.IsSelectable,
                 EventType = ev.EventType.Id,
                 Chaos = new ChaosMetrics(ev.Chaos),
                 Destruction = ev.Destruction,
@@ -357,6 +398,7 @@ public sealed class GameModeSimData
 
         if (proto.TryComp<AntagSelectionComponent>(out var selection, factory))
         {
+            rule.SelectionPrePlayerSpawn = selection.SelectionTime == AntagSelectionTime.PrePlayerSpawn;
             rule.Antags = new List<SimAntagDef>();
             foreach (var def in selection.Definitions)
             {
@@ -417,6 +459,7 @@ public sealed class SimRule
     public bool LoneRun;
 
     public bool MalfAi;
+    public bool SelectionPrePlayerSpawn;
 
     public SimStationEvent? Event;
     public SimGlimmerBand? Glimmer;
@@ -440,6 +483,7 @@ public sealed class SimStationEvent
     public int MinimumPlayers;
     public int? MaxOccurrences;
     public bool OccursDuringRoundEnd;
+    public bool IsSelectable;
     public string EventType = "";
 
     public ChaosMetrics Chaos = new();
@@ -458,9 +502,7 @@ public sealed class SimDirector
 {
     public string Id = "";
     public EntityTableSelector? Table;
-    public bool DualAntags;
-    public bool NoRoundstartAntags;
-    public string[]? Stories;
+    public Dictionary<string, float> Stories = new();
     public string FallbackBeat = "";
     public double PendingDuration;
     public double RepeatWindow;
@@ -476,7 +518,37 @@ public sealed class SimDirector
     public int MinResponders;
     public double ReinforcementCooldown;
     public double NoEventRetryDelay;
-    public string RoundstartTable = "";
+    public string ThreatTable = "";
+    public double HelpCooldown;
+    public float ThreatPerPlayer;
+    public float RoundstartThreatScale;
+    public float MinRoundstartThreat;
+    public float BaseThreatCap;
+    public float ThreatCapPerSecurity;
+    public float MinThreatPurchase;
+    public double PendingThreatTime;
+    public double RoundstartPendingTime;
+    public float CountStretch;
+    public float OutOfRangePenalty;
+    public float OvershootPenalty;
+    public double SettleTime;
+    public double EffectDelay;
+    public float RelaxStrain;
+    public double RelaxTime;
+    public double SpotlightWindow;
+    public float SpotlightBonus;
+    public int LowPopPlayers;
+    public float MaxLowPopDelayScale;
+    public float ArmedResponseThreshold;
+    public double ArmedResponseDelay;
+    public double ArmedResponseCooldown;
+    public int MaxArmedResponses;
+    public int ArmedResponseGhosts;
+    public double SpawnerLifetime;
+    public Dictionary<ChaosMetric, float> MetricScales = new();
+    public HashSet<ChaosMetric> RelaxMetrics = new();
+    public Dictionary<ChaosMetric, string> SpotlightDepartments = new();
+    public List<string> ArmedResponses = new();
 }
 
 public sealed class SimGlimmerBand

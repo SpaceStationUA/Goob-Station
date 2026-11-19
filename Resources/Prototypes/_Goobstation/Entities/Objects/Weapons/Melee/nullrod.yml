@@ -317,6 +317,11 @@
   id: AtheistFedora
   description: The brim of the hat is as sharp as your wit. Throwing it at someone would hurt almost as much as disproving the existence of God.
   components:
+  #region Pirate: clothing accessories - a hair flower, bow or wreath on the head item
+  - type: ClothingAccessoryHolder
+    limits:
+      HatDecor: 1
+  #endregion Pirate: clothing accessories
   - type: WeaponClass # Pirate: weapon skills
     class: Knife # Pirate: weapon skills
   - type: Nullrod # Note - These are damages, not damage types. Specify blunt or something not brute.

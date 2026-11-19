@@ -12,7 +12,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Popups;
 using Robust.Shared.Audio.Systems;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using System.Linq;
 
 namespace Content.Server._Pirate.Weapons.Melee;

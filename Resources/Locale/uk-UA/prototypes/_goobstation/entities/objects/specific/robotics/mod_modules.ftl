@@ -230,9 +230,10 @@ ent-ModsuitDeviceStampDenied = штамп МОД (відмовлено)
     .desc = { ent-RubberStampBase.desc }
 ent-ModsuitDeviceFishingRod = вудка МОД
     .desc = { ent-FishingRod.desc }
+# Pirate: MOD module naming
 ent-ModsuitModuleBuiltinSphereTransformCorporate = { ent-ModsuitModuleBuiltinSphereTransform }
     .desc = { ent-ModsuitModuleBuiltinSphereTransform.desc }
-    .suffix = корпоративний
+    .suffix = Goob, корпоративний
 ent-ModsuitBalloonRed = { ent-RedBalloon }
     .desc = { ent-RedBalloon.desc }
     .suffix = МОД, без грошей

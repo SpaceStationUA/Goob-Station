@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Pirate.Shared.Stains.Components; // Pirate: stains
+using Content.Server._Pirate.Cleanup; // Pirate
 using Content.Server.Fluids.Components;
 using Content.Shared._Funkystation.WallStains; // Goob
 using Content.Server.Spreader;
@@ -13,7 +14,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
 using Content.Shared.Effects;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Fluids;
 using Content.Shared.Fluids.Components;
@@ -38,6 +39,8 @@ namespace Content.Server.Fluids.EntitySystems;
 /// </summary>
 public sealed partial class PuddleSystem : SharedPuddleSystem
 {
+    [Dependency] private readonly RoundLitterSystem _litter = default!; // Pirate
+    private bool _persistentSpill; // Pirate: tile reactions may spill again synchronously.
     [Dependency] private readonly SharedMapSystem _map = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
@@ -77,8 +80,20 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         _puddleQuery = GetEntityQuery<PuddleComponent>();
 
         SubscribeLocalEvent<PuddleComponent, SpreadNeighborsEvent>(OnPuddleSpread);
+        SubscribeLocalEvent<EdgeSpreaderComponent, MapInitEvent>(OnSpreaderMapInit); // Pirate
         SubscribeLocalEvent<PuddleComponent, SlipEvent>(OnPuddleSlip);
         SubscribeLocalEvent<PuddleComponent, StartCollideEvent>(OnPuddleStartCollide); // Pirate: stains
+    }
+
+    private void OnSpreaderMapInit(Entity<EdgeSpreaderComponent> ent, ref MapInitEvent args)
+    {
+        // Pirate: a pre-filled map puddle may already be overflowing on load.
+        if (!TryComp<PuddleComponent>(ent, out var puddle) || !TryComp<SolutionContainerManagerComponent>(ent, out var manager))
+            return;
+
+        _solutionContainerSystem.EnsureAllSolutions((ent.Owner, manager));
+        if (IsOverflowing(ent, puddle))
+            EnsureComp<ActiveEdgeSpreaderComponent>(ent);
     }
 
     // TODO: This can be predicted once https://github.com/space-wizards/RobustToolbox/pull/5849 is merged
@@ -92,6 +107,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             RemCompDeferred<ActiveEdgeSpreaderComponent>(entity);
             return;
         }
+        var temporary = HasComp<RoundLitterComponent>(entity); // Pirate: inherit spill origin.
 
         // For overflows, we never go to a fully evaporative tile just to avoid continuously having to mop it.
 
@@ -106,7 +122,11 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             foreach (var neighbor in args.NeighborFreeTiles)
             {
                 var split = overflow.SplitSolution(spillAmount);
-                TrySpillAt(_map.GridTileToLocal(neighbor.Tile.GridUid, neighbor.Grid, neighbor.Tile.GridIndices), split, out _, false);
+                var coords = _map.GridTileToLocal(neighbor.Tile.GridUid, neighbor.Grid, neighbor.Tile.GridIndices);
+                if (temporary)
+                    TrySpillAt(coords, split, out _, false);
+                else
+                    SpillPersistentAt(coords, split, false);
                 args.Updates--;
 
                 if (args.Updates <= 0)
@@ -167,11 +187,14 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
                 var split = overflow.SplitSolution(remaining);
 
-                if (puddle.Solution != null && !_solutionContainerSystem.TryAddSolution(puddle.Solution.Value, split))
+                if (split.Volume == 0 || puddle.Solution == null || !_solutionContainerSystem.TryAddSolution(puddle.Solution.Value, split))
                     continue;
 
+                if (temporary) // Pirate: only an actual transfer renews an existing spill.
+                    _litter.RefreshResidue(neighbor);
                 args.Updates--;
-                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
+                if (neighborSolution.Volume > puddle.OverflowVolume) // Pirate
+                    EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
 
                 if (args.Updates <= 0)
                     break;
@@ -249,11 +272,14 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                 var split = overflow.SplitSolution(spillThisNeighbor);
 
                 // If we can't do it, move on.
-                if (puddle.Solution != null && !_solutionContainerSystem.TryAddSolution(puddle.Solution.Value, split))
+                if (split.Volume == 0 || puddle.Solution == null || !_solutionContainerSystem.TryAddSolution(puddle.Solution.Value, split))
                     continue;
 
+                if (temporary) // Pirate
+                    _litter.RefreshResidue(neighbor);
                 // If we succeed, then ensure that this neighbour is also able to spread it's overflow onwards
-                EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
+                if (neighborSolution.Volume > puddle.OverflowVolume) // Pirate
+                    EnsureComp<ActiveEdgeSpreaderComponent>(neighbor);
                 args.Updates--;
 
                 if (args.Updates <= 0)
@@ -394,7 +420,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             return false;
         }
 
-        _solutionContainerSystem.AddSolution(puddleComponent.Solution.Value, addedSolution);
+        var added = _solutionContainerSystem.AddSolution(puddleComponent.Solution.Value, addedSolution);
+        if (added > 0 && !_persistentSpill) // Pirate: only a real top-up extends an existing timer.
+            _litter.RefreshResidue(puddleUid);
 
         if (checkForOverflow && IsOverflowing(puddleUid, puddleComponent))
         {
@@ -444,10 +472,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         }
 
         // TODO: This is going to fail with struct solutions.
-        var remaining = puddle.OverflowVolume;
-        var split = _solutionContainerSystem.SplitSolution(puddle.Solution.Value,
-            CurrentVolume(uid, puddle) - remaining);
-        return split;
+        var excess = puddle.Solution.Value.Comp.Solution.Volume - puddle.OverflowVolume;
+        // Pirate: topology changes may wake shallow neighbours. Avoid a no-op chemistry update.
+        return excess > 0 ? _solutionContainerSystem.SplitSolution(puddle.Solution.Value, excess) : new Solution();
     }
 
     #region Spill
@@ -567,6 +594,21 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         return TrySpillAt(_map.GetTileRef(gridUid.Value, mapGrid, coordinates), solution, out puddleUid, sound);
     }
 
+    // Pirate: preserve provenance through nested tile reactions without changing their chemistry.
+    public override void SpillPersistentAt(EntityCoordinates coordinates, Solution solution, bool sound = true)
+    {
+        var previous = _persistentSpill;
+        _persistentSpill = true;
+        try
+        {
+            TrySpillAt(coordinates, solution, out _, sound);
+        }
+        finally
+        {
+            _persistentSpill = previous;
+        }
+    }
+
     /// <inheritdoc/>
     public override bool TrySpillAt(EntityUid uid, Solution solution, out EntityUid puddleUid, bool sound = true,
         TransformComponent? transformComponent = null)
@@ -642,10 +684,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                 continue;
             // Corvax-Next-Footprints-End
 
-            if (TryAddSolution(ent.Value, solution.SplitSolution(solution.Volume), sound, puddleComponent: puddle)) // goobstation
-            {
-                EnsureComp<ActiveEdgeSpreaderComponent>(ent.Value);
-            }
+            // Pirate: TryAddSolution wakes overflowing puddles. A mapped puddle stays permanent.
+            TryAddSolution(ent.Value, solution.SplitSolution(solution.Volume), sound, puddleComponent: puddle);
 
             puddleUid = ent.Value;
             return true;
@@ -654,10 +694,8 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         var coords = _map.GridTileToLocal(gridId, mapGrid, tileRef.GridIndices);
         puddleUid = Spawn("Puddle", coords);
         EnsureComp<PuddleComponent>(puddleUid);
-        if (TryAddSolution(puddleUid, solution.SplitSolution(solution.Volume), sound)) // goobstation
-        {
-            EnsureComp<ActiveEdgeSpreaderComponent>(puddleUid);
-        }
+        if (TryAddSolution(puddleUid, solution.SplitSolution(solution.Volume), sound) && !_persistentSpill) // Pirate
+            _litter.TrackResidue(puddleUid);
 
         return true;
     }

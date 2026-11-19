@@ -4,6 +4,7 @@
   id: BaseModsuitModule
   categories: [ HideSpawnMenu ] # Pirate: normal gameplay uses Pirate modular suit modules.
   name: MOD module
+  suffix: Goob # Pirate: MOD module naming
   description: A module for a modular suit.
   components:
   - type: Sprite
@@ -1620,7 +1621,7 @@
 - type: entity
   parent: ModsuitModuleBuiltinSphereTransform
   id: ModsuitModuleBuiltinSphereTransformCorporate
-  suffix: Corporate
+  suffix: Goob, Corporate # Pirate: MOD module naming
   components:
   - type: ModSphereTransformModule
     primaryColor: "#254022"

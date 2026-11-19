@@ -191,6 +191,10 @@
   - CriminalCaptureSuitModule # Pirate: upstream MOD module.
   - MagneticHarnessSuitModule # Pirate: upstream MOD module.
   - ShockAbsorberSuitModule # Pirate: upstream MOD module. # Pirate: Wega modular suit port.
+  - MegaphoneSuitModule # Pirate: upstream MOD module.
+  - PepperShouldersSuitModule # Pirate: upstream MOD module.
+  - RestraintAssistSuitModule # Pirate: upstream MOD module.
+  - BulwarkSuitModule # Pirate: upstream MOD module.
   # Goobstation R&D Console rework start
   position: 5,3
   technologyPrerequisites:

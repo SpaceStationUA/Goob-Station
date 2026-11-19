@@ -163,7 +163,7 @@
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
     state: base
   product: CrateVendingMachineRestockSecTechFilled
-  cost: 2750 # Pirate: include Omu secarangs without creating restock resale arbitrage.
+  cost: 3600 # Pirate: include Omu secarangs, 2 PSA and 2 deep space scanners without creating restock resale arbitrage (sells for ~3515).
   category: cargoproduct-category-name-security
   group: market
 

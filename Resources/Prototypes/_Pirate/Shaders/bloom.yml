@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: shader
+  id: PirateBloomPrefilter
+  kind: source
+  path: "/Textures/_Pirate/Shaders/bloom_prefilter.swsl"
+
+- type: shader
+  id: PirateBloomDownsample
+  kind: source
+  path: "/Textures/_Pirate/Shaders/bloom_downsample.swsl"
+
+- type: shader
+  id: PirateBloomUpsample
+  kind: source
+  path: "/Textures/_Pirate/Shaders/bloom_upsample.swsl"
+
+- type: shader
+  id: PirateBloomComposite
+  kind: source
+  path: "/Textures/_Pirate/Shaders/bloom_composite.swsl"
+
+- type: shader
+  id: PirateBloomCompositeInView
+  kind: source
+  path: "/Textures/_Pirate/Shaders/bloom_composite.swsl"
+  stencil:
+    ref: 1
+    op: Keep
+    func: NotEqual

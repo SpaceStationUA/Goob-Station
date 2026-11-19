@@ -1,0 +1,53 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "gold, silver: NovaSector (Giz, 1fd989ca3d3) https://github.com/NovaSector/NovaSector; diamond, gem: cut from the NovaSector diamond ring; signet, masonic: Aurora.3 (Alberyk, 581f266ae8) https://github.com/Aurorastation/Aurora.3; worn states drawn for lanos-station after the space_station_ADT ring layout (KING_DICE).",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "gold"
+        },
+        {
+            "name": "silver"
+        },
+        {
+            "name": "diamond"
+        },
+        {
+            "name": "gem"
+        },
+        {
+            "name": "signet"
+        },
+        {
+            "name": "masonic"
+        },
+        {
+            "name": "gold-equipped-HAND",
+            "directions": 4
+        },
+        {
+            "name": "silver-equipped-HAND",
+            "directions": 4
+        },
+        {
+            "name": "diamond-equipped-HAND",
+            "directions": 4
+        },
+        {
+            "name": "gem-equipped-HAND",
+            "directions": 4
+        },
+        {
+            "name": "signet-equipped-HAND",
+            "directions": 4
+        },
+        {
+            "name": "masonic-equipped-HAND",
+            "directions": 4
+        }
+    ]
+}

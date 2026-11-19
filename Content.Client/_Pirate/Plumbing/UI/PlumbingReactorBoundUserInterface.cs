@@ -1,5 +1,5 @@
 using Content.Shared._Pirate.Plumbing;
-using Content.Goobstation.Maths.FixedPoint;
+using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 

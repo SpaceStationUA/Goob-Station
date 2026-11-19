@@ -126,6 +126,10 @@
   id: ClothingModularHelmetBase
   abstract: true
   components:
+  # A hair flower, bow or wreath on the head item.
+  - type: ClothingAccessoryHolder
+    limits:
+      HatDecor: 1
   - type: Item
     size: Normal
   - type: Clothing
@@ -319,6 +323,9 @@
   id: ClothingModularGauntletsBase
   abstract: true
   components:
+  - type: ClothingAccessoryHolder
+    limits:
+      Ring: 1
   - type: Item
     size: Small
     storedRotation: -90

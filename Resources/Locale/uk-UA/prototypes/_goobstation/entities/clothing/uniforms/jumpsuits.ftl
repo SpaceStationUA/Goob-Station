@@ -86,3 +86,6 @@ ent-ClothingUniformJumpsuitKris = сорочка іншої важливої о�
     .desc = Ваша любов стане їхньою.
 ent-ClothingUniformJumpsuitLash = вбрання Леша
     .desc = Змушує почуватися мудаком.
+
+ent-ClothingUniformJumpsuitHawaiFire = гавайська сорочка з полум’ям
+    .desc = Сувенір із Міста смаку.

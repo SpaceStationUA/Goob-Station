@@ -1,0 +1,12 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  parent: BaseAction
+  id: ActionPirateToggleBodycam
+  name: Toggle bodycam
+  description: Switches your body camera on or off.
+  components:
+  - type: Action
+    useDelay: 1
+  - type: InstantAction
+    event: !type:ToggleActionEvent

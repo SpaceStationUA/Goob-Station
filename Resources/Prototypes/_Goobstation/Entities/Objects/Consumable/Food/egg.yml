@@ -1,0 +1,6 @@
+- type: entity
+  parent: [ FoodEgg, PresentRandom ]
+  id: FoodEggAnnoyingDuck
+  components:
+  - type: Edible
+    eatOnUse: false # Pirate: open the surprise when used in hand.

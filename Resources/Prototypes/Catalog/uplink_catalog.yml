@@ -1623,6 +1623,10 @@
   conditions: # Pirate: scram implant purchase limit
   - !type:ListingLimitedStockCondition # Pirate: scram implant purchase limit
     stock: 1 # Pirate: scram implant purchase limit
+  - !type:StoreWhitelistCondition # Pirate: Scram implant uplink restriction
+    blacklist: # Pirate: Scram implant uplink restriction
+      tags: # Pirate: Scram implant uplink restriction
+      - NukeOpsUplink # Pirate: Scram implant uplink restriction; includes lone-op uplinks
 
 
 - type: listing

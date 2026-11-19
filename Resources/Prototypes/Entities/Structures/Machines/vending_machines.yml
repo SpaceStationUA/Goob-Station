@@ -1157,6 +1157,8 @@
     gatedItems:
     - NFWeaponLauncherGrenadeNfsd
     - NFBoxDartsTracking
+    - RMCMotionDetector # Pirate: SecTech gear rebalance
+    - PSA # Pirate: SecTech gear rebalance
     elevatedAlertItems: # Pirate: security breaching alert
     - HammerBreachingNT # Pirate: security breaching alert
     - BreachingCharge # Pirate: security breaching alert
@@ -1176,6 +1178,16 @@
     - white # Pirate: security vending alerts
     - amber # Pirate: security vending alerts
     - cyan # Pirate: security vending alerts
+    # region Pirate: deep space scanner
+    gates: # Pirate: deep space scanner
+    - items: # Pirate: deep space scanner
+      - HandHeldDeepSpaceScanner # Pirate: deep space scanner
+      levels: [red, gamma, delta, epsilon] # Pirate: deep space scanner; matches the component's minimum level
+      denialMessage: security-red-alert-vending-denied # Pirate: deep space scanner
+    # endregion Pirate: deep space scanner
+  - type: VendingPriceOverride # Pirate: vending price override
+    prices: # Pirate: vending price override
+      HandHeldDeepSpaceScanner: 0 # Pirate: vending price override
   - type: DatasetVocalizer
     dataset: SecTechAds
   - type: SpeakOnUIClosed

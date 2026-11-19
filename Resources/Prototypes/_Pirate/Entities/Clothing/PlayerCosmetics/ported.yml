@@ -275,6 +275,8 @@
   name: sailor's ascot
   description: The preferred accessory for mystery solving whtieboys
   components:
+  - type: ClothingAccessory
+    category: Tie
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Neck/Misc/sailorascot.rsi
   - type: Clothing

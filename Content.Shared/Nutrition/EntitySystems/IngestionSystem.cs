@@ -1,4 +1,4 @@
-﻿using Content.Goobstation.Maths.FixedPoint;
+﻿using Content.Shared.FixedPoint;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
@@ -99,7 +99,7 @@ public sealed partial class IngestionSystem : EntitySystem
     /// </summary>
     private void OnUseEdibleInHand(Entity<EdibleComponent> entity, ref UseInHandEvent ev)
     {
-        if (ev.Handled)
+        if (ev.Handled || !entity.Comp.EatOnUse) // Pirate: allow a food item to have its own in-hand action.
             return;
 
         ev.Handled = TryIngest(ev.User, entity);

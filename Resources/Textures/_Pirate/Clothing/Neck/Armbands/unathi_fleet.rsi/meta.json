@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Sprite art from Aurora.3. Converted from the original DMI sheets to RSI. Aurora custom item credit: captaingecko. https://github.com/Aurorastation/Aurora.3/blob/a4da3a88851d8a8838c69b7960265b13a5c6596f/icons/obj/custom_items/ahzi_items.dmi Worn states renamed for the neck slot.",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-NECK",
+      "directions": 4
+    },
+    {
+      "name": "flipped-icon"
+    },
+    {
+      "name": "flipped-equipped-NECK",
+      "directions": 4
+    }
+  ]
+}
