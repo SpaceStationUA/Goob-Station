@@ -81,10 +81,6 @@
   name: base helmet with light
   categories: [ HideSpawnMenu ]
   components:
-  #region Pirate: clothing accessories - helmets and hoods do not hold hat decor
-  - type: ClothingAccessoryHolder
-    limits: {}
-  #endregion Pirate: clothing accessories
   - type: Sprite
     layers:
     - state: icon
@@ -145,10 +141,6 @@
   id: ClothingHeadEVAHelmetBase
   name: base space helmet
   components:
-  #region Pirate: clothing accessories - helmets and hoods do not hold hat decor
-  - type: ClothingAccessoryHolder
-    limits: {}
-  #endregion Pirate: clothing accessories
 # SlotBlocker blocked until UI change
 #  - type: SlotBlock
 #    slots: [ears, eyes, mask]
@@ -191,6 +183,11 @@
   name: base hardsuit helmet
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: clothing accessories - a hair flower, bow or wreath on the head item
+  - type: ClothingAccessoryHolder
+    limits:
+      HatDecor: 1
+  #endregion Pirate: clothing accessories
 # SlotBlocker blocked until UI change
 #  - type: SlotBlock
 #    slots: [ears, eyes, mask]
@@ -328,6 +325,11 @@
   description: A hood, made to keep your head warm.
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: clothing accessories - a hair flower, bow or wreath on the head item
+  - type: ClothingAccessoryHolder
+    limits:
+      HatDecor: 1
+  #endregion Pirate: clothing accessories
   - type: Sprite
     state: icon
   - type: Clickable

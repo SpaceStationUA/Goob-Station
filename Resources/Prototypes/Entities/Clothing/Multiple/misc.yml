@@ -4,6 +4,11 @@
   name: headphones
   description: Quality headphones from Drunk Masters, with good sound insulation.
   components:
+  #region Pirate: clothing accessories - a hair flower, bow or wreath on the head item
+  - type: ClothingAccessoryHolder
+    limits:
+      HatDecor: 1
+  #endregion Pirate: clothing accessories
   - type: Sprite
     sprite: Clothing/Multiple/headphones.rsi
     layers:

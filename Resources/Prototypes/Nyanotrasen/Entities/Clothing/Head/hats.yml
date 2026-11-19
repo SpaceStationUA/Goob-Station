@@ -25,10 +25,6 @@
   suffix: SelfUnremovable
   description: Psionically insulates whoevers head is inside it. It takes time to resist out of.
   components:
-  #region Pirate: clothing accessories - helmets and hoods do not hold hat decor
-  - type: ClothingAccessoryHolder
-    limits: {}
-  #endregion Pirate: clothing accessories
   - type: Sprite
     sprite: Nyanotrasen/Clothing/Head/Hats/cage.rsi
   - type: Clothing
@@ -49,10 +45,6 @@
   name: insulative skullcap
   description: Psionically insulates whoevers head is inside it. It has some protection from physical damage.
   components:
-  #region Pirate: clothing accessories - helmets and hoods do not hold hat decor
-  - type: ClothingAccessoryHolder
-    limits: {}
-  #endregion Pirate: clothing accessories
   - type: Sprite
     sprite: Nyanotrasen/Clothing/Head/Helmets/insulative_skullcap.rsi
   - type: Clothing

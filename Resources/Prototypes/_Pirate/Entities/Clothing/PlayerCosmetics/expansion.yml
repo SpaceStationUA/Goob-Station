@@ -322,6 +322,10 @@
   name: high-end headphones
   description: Premium headphones with animated lights that can be switched on and off.
   components:
+  # A hair flower, bow or wreath on the head item.
+  - type: ClothingAccessoryHolder
+    limits:
+      HatDecor: 1
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Starlight/Multiple/headphones_high-end.rsi
     layers:
@@ -341,6 +345,10 @@
   name: purple cat headphones
   description: Purple cat-ear headphones with animated lights and a power switch.
   components:
+  # A hair flower, bow or wreath on the head item.
+  - type: ClothingAccessoryHolder
+    limits:
+      HatDecor: 1
   - type: Sprite
     sprite: _Pirate/Clothing/PlayerCosmetics/Expansion/Box/Multiple/headphones_purple_cat.rsi
     layers:

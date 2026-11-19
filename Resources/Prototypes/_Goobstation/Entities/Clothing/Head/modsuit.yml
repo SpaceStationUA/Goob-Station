@@ -7,6 +7,11 @@
   name: base modsuit helmet
   categories: [ HideSpawnMenu ]
   components:
+  #region Pirate: clothing accessories - a hair flower, bow or wreath on the head item
+  - type: ClothingAccessoryHolder
+    limits:
+      HatDecor: 1
+  #endregion Pirate: clothing accessories
   - type: Sprite
     state: icon
   - type: Clickable

@@ -134,7 +134,7 @@
   abstract: true
   id: SilverRingBase
   name: silver ring
-  description: Looks slightly less valuable than a gold one.
+  description: A plain band of sterling silver. # Pirate: ring descriptions
   components:
     - type: PhysicalComposition
       materialComposition:

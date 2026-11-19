@@ -1323,7 +1323,10 @@ namespace Content.Client.Lobby.UI
             if (selectedPrototype.Equipment.Count == 0)
                 return;
 
-            var occupiedSlots = selectedPrototype.Equipment.Keys.ToHashSet();
+            var occupiedSlots = OccupiedLoadoutSlots(selectedPrototype); // Pirate: clothing accessories
+            if (occupiedSlots.Count == 0) // Pirate: clothing accessories
+                return; // Pirate: clothing accessories
+
             var selectedGroupIsGeneric = GlobalLoadoutGroups.Groups.Contains(selectedGroup); // Pirate: loadout
 
             foreach (var (group, loadouts) in roleLoadout.SelectedLoadouts) // Pirate: loadout
@@ -1336,11 +1339,28 @@ namespace Content.Client.Lobby.UI
                     if (!_prototypeManager.TryIndex(loadouts[i].Prototype, out LoadoutPrototype? loadoutProto))
                         continue;
 
-                    if (loadoutProto.Equipment.Keys.Any(occupiedSlots.Contains))
+                    if (OccupiedLoadoutSlots(loadoutProto).Any(occupiedSlots.Contains)) // Pirate: clothing accessories
                         loadouts.RemoveAt(i);
                 }
             }
         }
+
+        #region Pirate: clothing accessories
+        private HashSet<string> OccupiedLoadoutSlots(LoadoutPrototype loadout)
+        {
+            var slots = new HashSet<string>();
+            foreach (var (slot, item) in loadout.Equipment)
+            {
+                if (_prototypeManager.TryIndex(item, out var itemProto) &&
+                    itemProto.Components.ContainsKey("ClothingAccessory"))
+                    continue;
+
+                slots.Add(slot);
+            }
+
+            return slots;
+        }
+        #endregion
 
         private void RefreshSelectedLoadoutsList(Dictionary<ProtoId<LoadoutPrototype>, CombinedLoadoutChoice> choices, LoadoutSystem loadoutSystem)
         {

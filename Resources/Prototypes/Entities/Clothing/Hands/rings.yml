@@ -4,7 +4,7 @@
   parent: [ RingBase, GoldRingBase ]
   id: GoldRing
   name: gold ring
-  description: A precious ring.
+  description: A plain band of polished gold, worn smooth on the inside. # Pirate: ring descriptions
   components:
   #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
@@ -20,7 +20,7 @@
   parent: [ RingBase, SilverRingBase ]
   id: SilverRing
   name: silver ring
-  description: Looks slightly less valuable than a gold one.
+  description: A plain band of sterling silver with a soft, cool shine. # Pirate: ring descriptions
   components:
   #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
@@ -36,7 +36,7 @@
   parent: [ RingBase, GoldRingBase ]
   id: GoldRingDiamond
   name: gold diamond ring
-  description: Made from ethically mined space diamonds.
+  description: A gold band with a single clear diamond held up in four prongs. # Pirate: ring descriptions
   components:
   #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
@@ -56,7 +56,7 @@
   parent: [ RingBase, SilverRingBase ]
   id: SilverRingDiamond
   name: silver diamond ring
-  description: Made from ethically mined space diamonds.
+  description: A silver band with a small diamond set flush into the metal. # Pirate: ring descriptions
   components:
   #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
@@ -76,7 +76,7 @@
   parent: [ RingBase, GoldRingBase ]
   id: GoldRingGem
   name: gold gem ring
-  description: Shiny and valuable!
+  description: A gold band with a cut gemstone in a raised setting. # Pirate: ring descriptions
   components:
   #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite
@@ -102,7 +102,7 @@
   parent: [ RingBase, SilverRingBase ]
   id: SilverRingGem
   name: silver gem ring
-  description: Shiny and not quite as valuable!
+  description: A silver band with a polished gemstone in a low bezel. # Pirate: ring descriptions
   components:
   #region Pirate: rings - new sprites, worn on the hand
   - type: Sprite

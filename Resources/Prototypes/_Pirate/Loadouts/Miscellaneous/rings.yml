@@ -64,7 +64,9 @@
 
 - type: loadoutGroup
   id: Rings
-  name: loadout-group-rings
+  # "hands" in the name key puts the group in the Hands category of the profile editor
+  # (HumanoidProfileEditor.GetLoadoutGroupCategory reads keywords in the ID and name key).
+  name: loadout-group-hands-rings
   minLimit: 0
   maxLimit: 1
   loadouts:

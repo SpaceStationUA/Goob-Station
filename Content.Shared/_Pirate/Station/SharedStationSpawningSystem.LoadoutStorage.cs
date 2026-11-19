@@ -173,7 +173,11 @@ public abstract partial class SharedStationSpawningSystem
 
             if (slot != null)
             {
-                InventorySystem.TryEquip(owner, item, slot, silent: true, force: true);
+                if (InventorySystem.TryEquip(owner, item, slot, silent: true, force: true))
+                    continue;
+
+                InventorySystem.TryGetSlotEntity(owner, "back", out var backpack);
+                InsertSelectedLoadoutStorage(owner, backpack, item);
                 continue;
             }
 

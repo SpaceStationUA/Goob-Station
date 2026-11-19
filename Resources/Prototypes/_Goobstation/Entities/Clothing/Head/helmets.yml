@@ -156,10 +156,6 @@
   name: crusader helmet
   description: Deus Vult.
   components:
-  #region Pirate: clothing accessories - helmets and hoods do not hold hat decor
-  - type: ClothingAccessoryHolder
-    limits: {}
-  #endregion Pirate: clothing accessories
   - type: Sprite
     sprite: _ShitChap/Clothing/Head/Misc/templar.rsi
     state: icon

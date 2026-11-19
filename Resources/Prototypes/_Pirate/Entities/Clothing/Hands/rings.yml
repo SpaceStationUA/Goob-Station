@@ -3,7 +3,7 @@
   parent: [ RingBase, GoldRingBase ]
   id: RingBloodDiamond
   name: blood diamond ring
-  description: A ring of pure gold with a beautiful blood-red diamond in its center. The maker's mark reads "brothers S&K - jewelry factory".
+  description: A gold band with a deep red diamond. Under a lamp the stone looks almost black.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Hands/Rings/blood.rsi
@@ -17,7 +17,7 @@
   parent: [ RingBase, GoldRingBase ]
   id: RingEmerald
   name: emerald ring
-  description: A golden classic among rings. Neat and stylish, the perfect gift for the love of your life. The maker's mark reads "brothers S&K - jewelry factory".
+  description: A gold band with a square-cut emerald, the green of old bottle glass.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Hands/Rings/emerald.rsi
@@ -31,7 +31,7 @@
   parent: [ RingBase, GoldRingBase ]
   id: RingPlasma
   name: plasma ring
-  description: An elegant ring with a piece of solid plasma in its center. Where did they get solid plasma? Do not ask. The maker's mark reads "brothers S&K - jewelry factory".
+  description: A gold band with a chip of plasma crystal sealed under a clear cap.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Hands/Rings/plasma.rsi
@@ -45,7 +45,7 @@
   parent: [ RingBase, GoldRingBase ]
   id: RingTurkenite
   name: turkenite ring
-  description: A pretty ring with a blue turkenite stone. Nothing special, but fair for its price. The maker's mark reads "brothers S&K - jewelry factory".
+  description: A gold band with a smooth, milky blue turkenite cabochon.
   components:
   - type: Sprite
     sprite: _Pirate/Clothing/Hands/Rings/turkenite.rsi
@@ -59,7 +59,7 @@
   parent: [ RingBase, SilverRingBase ]
   id: RingSignet
   name: signet ring
-  description: A signet ring, for when you are too sophisticated to sign letters.
+  description: A heavy silver ring with a flat face, engraved to press a seal into wax.
   components:
   - type: Sprite
     layers:
@@ -75,7 +75,7 @@
   parent: [ RingBase, GoldRingBase ]
   id: RingMasonic
   name: masonic ring
-  description: The Square and Compasses feature prominently on this Masonic ring.
+  description: A gold ring with the square and compasses cut into its face.
   components:
   - type: Sprite
     layers:
