@@ -30,6 +30,6 @@ public sealed class GlimmerAdminLogSystem : EntitySystem
             : string.Empty;
         var message = $"Glimmer changed from {ev.OldGlimmer} to {ev.NewGlimmer} ({deltaText}) due to {ev.Reason}{sourceText}.";
 
-        _adminLog.Add(LogType.Psionics, LogImpact.Low, message);
+        _adminLog.Add(LogType.Psionics, LogImpact.Low, $"{message}");
     }
 }
