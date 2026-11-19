@@ -86,11 +86,12 @@ public sealed class SummonFamiliarPowerSystem : SharedSummonFamiliarPowerSystem
     {
         var performer = args.Performer;
 
-        // One familiar at a time - refuse without consuming the cooldown.
+        // One familiar at a time - using the power again recalls the existing one
+        // to its master without consuming the cooldown.
         if (psionic.Comp.Summon is { } existing && Exists(existing) && !TerminatingOrDeleted(existing))
         {
             args.Handled = false;
-            _popup.PopupEntity(Loc.GetString("psionic-familiar-already-summoned"), performer, performer, PopupType.SmallCaution);
+            RecallFamiliar(existing, performer);
             return;
         }
 
@@ -137,6 +138,17 @@ public sealed class SummonFamiliarPowerSystem : SharedSummonFamiliarPowerSystem
 
         _popup.PopupEntity(Loc.GetString("psionic-familiar-summoned"), familiar, caster);
         return familiar;
+    }
+
+    /// <summary>
+    ///     Teleports an already summoned familiar back to its master. This is the old
+    ///     psionic familiar behaviour: reusing the summon power is a recall, not a refusal.
+    /// </summary>
+    private void RecallFamiliar(EntityUid familiar, EntityUid master)
+    {
+        _transform.SetCoordinates(familiar, Transform(master).Coordinates);
+        _transform.AttachToGridOrMap(familiar);
+        _popup.PopupEntity(Loc.GetString("psionic-familiar-recalled"), familiar, master);
     }
 
     /// <summary>
@@ -191,6 +203,10 @@ public sealed class SummonFamiliarPowerSystem : SharedSummonFamiliarPowerSystem
 
         power.Summon = null;
         _popup.PopupEntity(Loc.GetString("psionic-familiar-died"), familiar, familiar.Comp.Caster, PopupType.MediumCaution);
+
+        // Psionic familiars are sent back instead of leaving a corpse: old psionic
+        // familiars despawned on death, which also avoided organs and blood puddles.
+        QueueDel(familiar.Owner);
     }
 
     private void OnFamiliarTerminating(Entity<SummonedFamiliarComponent> familiar, ref EntityTerminatingEvent args)

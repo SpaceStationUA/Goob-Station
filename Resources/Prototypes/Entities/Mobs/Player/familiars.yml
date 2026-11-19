@@ -35,6 +35,12 @@
   - type: Alerts
   - type: Familiar
   - type: Dispellable # Pirate: Remilia can be dispelled by psionics
+  # Pirate: psionic familiars have no organs or blood, like the old PsionicFamiliar entity.
+  - type: Body
+    prototype: null
+  - type: Bloodstream
+    bloodReferenceSolution:
+      reagents: []
   - type: LanguageKnowledge
     speaks:
     - Mouse

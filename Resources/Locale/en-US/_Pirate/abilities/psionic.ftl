@@ -244,3 +244,5 @@ action-description-psychokinesis = Bend the fabric of space to instantly move ac
 action-name-rf-sensitivity = Toggle RF Sensitivity
 
 action-desc-rf-sensitivity = Toggle your ability to interpret radio waves on and off.
+
+psionic-familiar-recalled = Your familiar appears beside you.

@@ -246,6 +246,8 @@ psionic-flash-power-metapsionic-feedback = {CAPITALIZE($entity)} випромі�
 
 psionic-familiar-already-summoned = Ваш фамільяр вже поруч із вами.
 
+psionic-familiar-recalled = Ваш фамільяр з'являється поруч із вами.
+
 psionic-familiar-summoned = Крила розгортаються з темряви — ваш фамільяр тут.
 
 psionic-familiar-died = Ваш фамільяр загинув. Його крила розсипалися в нічний пил...

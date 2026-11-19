@@ -66,6 +66,7 @@
     damageModifierSet: ShockAbsorber
   - type: CargoSellBlacklist
   - type: AmbientSound
+    enabled: false
     range: 6
     volume: -6
     sound: /Audio/Nyanotrasen/Ambience/Objects/prober_hum_low.ogg
