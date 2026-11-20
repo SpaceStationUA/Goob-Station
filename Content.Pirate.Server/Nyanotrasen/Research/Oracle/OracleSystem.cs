@@ -181,7 +181,7 @@ public sealed class OracleSystem : EntitySystem
         Spawn(diskProto, Transform(user).Coordinates);
 
         // Silently drain a little glimmer when the request is fulfilled.
-        _glimmerSystem.Glimmer -= oracle.Comp.GlimmerReduction;
+        _glimmerSystem.AdjustGlimmer(-oracle.Comp.GlimmerReduction, "oracle trade", oracle.Owner);
 
         DispenseLiquidReward(oracle.Owner, oracle.Comp);
 

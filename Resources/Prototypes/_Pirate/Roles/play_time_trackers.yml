@@ -45,3 +45,6 @@
 
 - type: playTimeTracker
   id: JobCybersunCommand
+
+- type: playTimeTracker
+  id: JobForensicMantis

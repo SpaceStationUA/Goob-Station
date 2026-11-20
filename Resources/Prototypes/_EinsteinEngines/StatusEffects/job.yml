@@ -1,6 +1,0 @@
-- type: jobIcon
-  parent: JobIcon
-  id: JobIconForensicMantis
-  icon:
-    sprite: /Textures/_EinsteinEngines/Interface/Misc/job_icons.rsi
-    state: nyanoMantis

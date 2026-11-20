@@ -59,7 +59,7 @@ namespace Content.Server.Psionics.Glimmer
             // This math is just easier to do for pausing's sake.
             var actualGlimmerLost = _random.Next(0, 1 + maxGlimmerLost);
 
-            _glimmerSystem.Glimmer -= actualGlimmerLost;
+            _glimmerSystem.AdjustGlimmer(-actualGlimmerLost, "passive glimmer decay", changeType: GlimmerChangeType.Passive);
 
             _updateIncrementor++;
 

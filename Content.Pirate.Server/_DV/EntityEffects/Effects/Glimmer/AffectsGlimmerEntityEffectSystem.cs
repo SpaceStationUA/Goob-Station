@@ -19,6 +19,10 @@ public sealed partial class AffectsGlimmerEntityEffectSystem : EntitySystem
 
     private void OnExecute(ref ExecuteEntityEffectEvent<AffectsGlimmer> args)
     {
-        _glimmer.Glimmer += args.Effect.Amount;
+        var reason = args.Args is EntityEffectReagentArgs reagentArgs && reagentArgs.Reagent != null
+            ? $"reagent {reagentArgs.Reagent.ID}"
+            : "entity effect";
+
+        _glimmer.AdjustGlimmer(args.Effect.Amount, reason, args.Args.User ?? args.Args.TargetEntity);
     }
 }

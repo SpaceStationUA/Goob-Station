@@ -115,7 +115,7 @@ public sealed class PsionicEruptionSystem : BasePsionicPowerSystem<PsionicErupti
             if (curTime < comp.NextAnnoy)
                 continue;
 
-            _glimmer.Glimmer += _random.Next(1, 5); // Increase glimmer by a random amount.
+            _glimmer.AdjustGlimmer(_random.Next(1, 5), "psionic eruption power", psionic); // Increase glimmer by a random amount.
 
             var msg = GetSeverityMessage(psionic, out var messageSize, out var minWait);
             // Prompt the user to use the power.

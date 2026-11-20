@@ -148,7 +148,7 @@ public sealed class SacrificeAltarSystem : EntitySystem
         var glimMin = Math.Min(component.GlimmerReductionMin, component.GlimmerReductionMax);
         var glimMax = Math.Max(component.GlimmerReductionMin, component.GlimmerReductionMax);
         var glimmerReduction = _random.Next(glimMin, glimMax + 1);
-        _glimmer.Glimmer -= glimmerReduction;
+        _glimmer.AdjustGlimmer(-glimmerReduction, "sacrifice altar", uid);
 
         var coords = Transform(target).Coordinates;
 

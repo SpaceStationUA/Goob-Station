@@ -33,12 +33,12 @@ public sealed class GlimmerStructuresSystem : EntitySystem
         // needs to be made in the future. I suggest a GlimmerAnomaly
         // component.
         if (TryComp<AnomalyComponent>(uid, out var anomaly))
-            _glimmerSystem.Glimmer += (int) (5f * anomaly.Severity);
+            _glimmerSystem.AdjustGlimmer((int) (5f * anomaly.Severity), "anomaly pulse", uid);
     }
 
     private void OnAnomalySupercritical(EntityUid uid, GlimmerSourceComponent component, ref AnomalySupercriticalEvent args)
     {
-        _glimmerSystem.Glimmer += 100;
+        _glimmerSystem.AdjustGlimmer(100, "anomaly supercritical", uid);
     }
 
     public override void Update(float frameTime)
@@ -68,11 +68,11 @@ public sealed class GlimmerStructuresSystem : EntitySystem
                 source.Accumulator -= source.SecondsPerGlimmer;
                 if (source.AddToGlimmer)
                 {
-                    _glimmerSystem.Glimmer++;
+                    _glimmerSystem.AdjustGlimmer(1, "glimmer source", source.Owner, GlimmerChangeType.Passive);
                 }
                 else
                 {
-                    _glimmerSystem.Glimmer--;
+                    _glimmerSystem.AdjustGlimmer(-1, "glimmer drain", source.Owner, GlimmerChangeType.Passive);
                 }
             }
         }

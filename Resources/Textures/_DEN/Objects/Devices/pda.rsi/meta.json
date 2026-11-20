@@ -39,42 +39,6 @@
     },
     {
       "name": "light_overlay"
-    },
-    {
-      "name": "mantis-id_overlay"
-    },
-    {
-      "name": "mantis-equipped-BELT",
-      "directions": 4
-    },
-    {
-      "name": "mantis-equipped-IDCARD",
-      "directions": 4
-    },
-    {
-      "name": "mantis-inhand-left",
-      "directions": 4
-    },
-    {
-      "name": "mantis-inhand-right",
-      "directions": 4
-    },
-    {
-      "name": "mantis-insert_overlay"
-    },
-    {
-      "name": "mantis-light_overlay"
-    },
-    {
-      "name": "pda-mantis",
-      "delays": [
-        [
-          0.8,
-          0.8,
-          0.8,
-          0.8
-        ]
-      ]
     }
   ]
 }

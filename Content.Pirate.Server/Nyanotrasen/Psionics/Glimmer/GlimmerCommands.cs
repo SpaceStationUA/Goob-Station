@@ -34,6 +34,7 @@ public sealed class GlimmerSetCommand : IConsoleCommand
             return;
 
         var entMan = IoCManager.Resolve<IEntityManager>();
-        entMan.EntitySysManager.GetEntitySystem<GlimmerSystem>().Glimmer = glimmerValue;
+        var glimmerSystem = entMan.EntitySysManager.GetEntitySystem<GlimmerSystem>();
+        glimmerSystem.SetGlimmer(glimmerValue, "admin glimmers command", shell.Player?.AttachedEntity);
     }
 }
