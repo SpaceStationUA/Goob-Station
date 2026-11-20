@@ -4,8 +4,8 @@ meta:
   engineVersion: 293.0.0
   forkId: ""
   forkVersion: ""
-  time: 11/18/2026 15:00:11
-  entityCount: 32579
+  time: 11/20/2026 10:44:39
+  entityCount: 32578
 maps:
 - 1
 grids:
@@ -7872,16 +7872,11 @@ entities:
             Oxygen: 6666.982
         - temperature: 293.15
           volume: 2500
-          moles: {}
-        - temperature: 293.14975
-          volume: 2500
-          moles:
-            Oxygen: 20.078888
-            Nitrogen: 75.53487
-        - temperature: 293.15
-          volume: 2500
           moles:
             Plasma: 6666.982
+        - temperature: 293.15
+          volume: 2500
+          moles: {}
         tiles:
           -5,0:
             0: 57582
@@ -8864,7 +8859,7 @@ entities:
           16,-6:
             0: 143
             1: 8704
-            5: 32768
+            6: 32768
           13,-3:
             0: 62719
           13,-2:
@@ -9059,8 +9054,7 @@ entities:
           -4,9:
             0: 49083
           -5,9:
-            0: 56825
-            6: 4
+            0: 56829
           -4,10:
             0: 49035
           -5,10:
@@ -9712,34 +9706,34 @@ entities:
             1: 62464
           16,-4:
             1: 8738
-            7: 136
-            5: 32768
+            5: 136
+            6: 32768
           16,-3:
             1: 8738
-            5: 32904
+            6: 32904
           16,-2:
             1: 57890
-            5: 136
+            6: 136
           16,-5:
             1: 8738
-            7: 32768
-            5: 136
+            5: 32768
+            6: 136
           17,-4:
-            7: 51
-            5: 12288
+            5: 51
+            6: 12288
             0: 2176
             1: 32768
           17,-3:
-            5: 12339
+            6: 12339
             1: 34952
           17,-2:
-            5: 51
+            6: 51
             1: 55432
             0: 8192
           17,-5:
-            7: 12288
+            5: 12288
             0: 34816
-            5: 51
+            6: 51
             1: 136
           18,-4:
             0: 3975
@@ -9781,7 +9775,7 @@ entities:
             0: 7677
           17,-6:
             0: 31
-            5: 12288
+            6: 12288
             1: 34816
           17,-9:
             0: 65535
@@ -10172,7 +10166,7 @@ entities:
           3,-15:
             0: 4089
           3,-14:
-            5: 3822
+            6: 3822
             0: 16384
           4,-16:
             1: 1
@@ -13639,7 +13633,7 @@ entities:
       pos: 44.5,39.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -110667.24
+      secondsUntilStateChange: -110924.87
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -13941,7 +13935,7 @@ entities:
       pos: -7.5,32.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -121442.58
+      secondsUntilStateChange: -121700.2
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -14166,7 +14160,7 @@ entities:
       pos: 63.5,0.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -140666.4
+      secondsUntilStateChange: -140924.03
     - type: DeviceLinkSink
       invokeCounter: 1
     - type: DeviceLinkSource
@@ -14326,7 +14320,7 @@ entities:
       pos: 98.5,-4.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -144381.58
+      secondsUntilStateChange: -144639.2
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -14660,7 +14654,7 @@ entities:
       pos: -43.5,29.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -143528.58
+      secondsUntilStateChange: -143786.2
     - type: DeviceLinkSink
       invokeCounter: 2
     - type: DeviceLinkSource
@@ -14695,7 +14689,7 @@ entities:
       pos: -42.5,29.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -171248
+      secondsUntilStateChange: -171505.62
     - type: DeviceLinkSink
       invokeCounter: 2
     - type: DeviceLinkSource
@@ -15439,7 +15433,7 @@ entities:
       pos: -2.5,-81.5
     - type: Door
       state: Opening
-      secondsUntilStateChange: -126323.44
+      secondsUntilStateChange: -126581.06
     - type: DeviceLinkSource
       lastSignals:
         DoorStatus: True
@@ -21069,11 +21063,6 @@ entities:
     - type: Transform
       parent: 2
       pos: 25.5,-34.5
-  - uid: 1143
-    components:
-    - type: Transform
-      parent: 2
-      pos: 24.5,-34.5
   - uid: 19937
     components:
     - type: Transform
@@ -149165,7 +149154,7 @@ entities:
       pos: 26.5,-37.5
     - type: DeviceLinkSource
       linkedPorts:
-        20030:
+        1143:
         - - Pressed
           - Toggle
         20029:
@@ -155588,6 +155577,31 @@ entities:
       parent: 2
       rot: -1.5707963267948966 rad
       pos: 56.5,9.5
+  - uid: 1143
+    components:
+    - type: Transform
+      parent: 2
+      pos: 24.5,-34.5
+    - type: PointLight
+      enabled: False
+    - type: PoweredLight
+      on: False
+    - type: DamageOnInteract
+      isDamageActive: False
+    - type: ApcPowerReceiver
+      powerLoad: 0
+  - uid: 1159
+    components:
+    - type: Transform
+      parent: 2
+      rot: 1.5707963267948966 rad
+      pos: -21.5,-33.5
+  - uid: 1170
+    components:
+    - type: Transform
+      parent: 2
+      rot: 1.5707963267948966 rad
+      pos: -21.5,-47.5
   - uid: 2020
     components:
     - type: Transform
@@ -156977,11 +156991,6 @@ entities:
     - type: Transform
       parent: 2
       pos: 8.5,-18.5
-  - uid: 19956
-    components:
-    - type: Transform
-      parent: 2
-      pos: -31.5,-43.5
   - uid: 19958
     components:
     - type: Transform
@@ -157502,14 +157511,6 @@ entities:
       pos: 19.5,-39.5
     - type: ApcPowerReceiver
       powerLoad: 0
-  - uid: 20030
-    components:
-    - type: Transform
-      parent: 2
-      rot: -1.5707963267948966 rad
-      pos: 25.5,-34.5
-    - type: ApcPowerReceiver
-      powerLoad: 0
   - uid: 20031
     components:
     - type: Transform
@@ -157781,14 +157782,6 @@ entities:
     - type: Transform
       parent: 2
       pos: 5.5,-44.5
-  - uid: 20076
-    components:
-    - type: Transform
-      parent: 2
-      rot: 1.5707963267948966 rad
-      pos: -21.5,-36.5
-    - type: ApcPowerReceiver
-      powerLoad: 0
   - uid: 20077
     components:
     - type: Transform
@@ -207021,7 +207014,7 @@ entities:
         DoorStatus: True
     - type: Door
       state: Opening
-      secondsUntilStateChange: -140341
+      secondsUntilStateChange: -140598.62
     - type: Airlock
       autoClose: False
   - uid: 27609

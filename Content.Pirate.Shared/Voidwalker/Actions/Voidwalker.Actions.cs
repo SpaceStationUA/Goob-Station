@@ -27,3 +27,6 @@ public sealed partial class VoidwalkerKidnapDoAfterEvent : SimpleDoAfterEvent;
 
 [Serializable, NetSerializable]
 public sealed partial class VoidwalkerConvertWallDoAfterEvent : SimpleDoAfterEvent;
+
+[Serializable, NetSerializable]
+public sealed partial class VoidedCleanseDoAfterEvent : SimpleDoAfterEvent;
