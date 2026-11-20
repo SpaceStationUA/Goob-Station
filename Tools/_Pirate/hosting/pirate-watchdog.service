@@ -17,7 +17,7 @@ KillMode=control-group
 TimeoutStopSec=45
 UMask=0077
 Nice=-5
-OOMScoreAdjust=-1000
+OOMScoreAdjust=0
 LimitNOFILE=65536
 
 [Install]
