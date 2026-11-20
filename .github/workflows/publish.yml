@@ -55,6 +55,8 @@ jobs:
           PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
           PUBLISH_SSH_KEY: ${{ secrets.PUBLISH_SSH_KEY }}
           PUBLISH_SSH_KNOWN_HOSTS: ${{ secrets.PUBLISH_SSH_KNOWN_HOSTS }}
+          PUBLISH_SSH_EXTRA_KNOWN_HOSTS: ${{ vars.PUBLISH_SSH_EXTRA_KNOWN_HOSTS }}
+          PUBLISH_SSH_HOST: ${{ vars.PUBLISH_SSH_HOST }}
           ROBUST_CDN_URL: http://127.0.0.1:27691/
           FORK_ID: pirate-ua
         run: |
@@ -62,15 +64,17 @@ jobs:
           : "${PUBLISH_TOKEN:?Missing PUBLISH_TOKEN}"
           : "${PUBLISH_SSH_KEY:?Missing PUBLISH_SSH_KEY}"
           : "${PUBLISH_SSH_KNOWN_HOSTS:?Missing PUBLISH_SSH_KNOWN_HOSTS}"
+          : "${PUBLISH_SSH_HOST:?Missing PUBLISH_SSH_HOST}"
           key="$RUNNER_TEMP/publish.key"
           hosts="$RUNNER_TEMP/publish.known_hosts"
           control="$RUNNER_TEMP/publish.sock"
           umask 077
           printf '%s\n' "$PUBLISH_SSH_KEY" > "$key"
-          printf '%s\n' "$PUBLISH_SSH_KNOWN_HOSTS" > "$hosts"
-          trap 'ssh -S "$control" -O exit ss14-publish@31.14.17.169 || true; rm -f "$key" "$hosts"' EXIT
+          printf '%s\n' "$PUBLISH_SSH_KNOWN_HOSTS" "$PUBLISH_SSH_EXTRA_KNOWN_HOSTS" > "$hosts"
+          target="ss14-publish@$PUBLISH_SSH_HOST"
+          trap 'ssh -S "$control" -O exit "$target" || true; rm -f "$key" "$hosts"' EXIT
           ssh -fNM -S "$control" -i "$key" \
             -o BatchMode=yes -o IdentitiesOnly=yes -o ExitOnForwardFailure=yes \
             -o StrictHostKeyChecking=yes -o UserKnownHostsFile="$hosts" \
-            -L 127.0.0.1:27691:127.0.0.1:27691 ss14-publish@31.14.17.169
+            -L 127.0.0.1:27691:127.0.0.1:27691 "$target"
           python Tools/publish_multi_request.py
