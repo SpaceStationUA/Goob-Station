@@ -1,4 +1,6 @@
 using Content.Pirate.Shared.Voidwalker;
+using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Pirate.Server.Voidwalker.Kidnapping.Voided;
@@ -41,4 +43,16 @@ public sealed partial class VoidedComponent : Component
 
     [DataField]
     public string NebulaVomitProto = "NebulaVomit";
+
+    [DataField]
+    public TimeSpan CleanseTime = TimeSpan.FromSeconds(30);
+
+    [DataField]
+    public TimeSpan CleanseTimeChaplain = TimeSpan.FromSeconds(10);
+
+    [DataField]
+    public EntProtoId CleanseVFX = "CleanseEffectVFX";
+
+    [DataField]
+    public SoundSpecifier CleanseSound = new SoundPathSpecifier("/Audio/_DV/CosmicCult/cleanse_deconversion.ogg");
 }

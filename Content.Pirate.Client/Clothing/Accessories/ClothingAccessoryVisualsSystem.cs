@@ -90,15 +90,18 @@ public sealed class ClothingAccessoryVisualsSystem : EntitySystem
             var (data, category) = layers[i];
             var drawAt = category.DrawAt;
             var key = LayerKey(args.Slot, i);
-            if (drawAt == null || !args.RevealedLayers.Contains(key))
+            // Keep the accessory in place if the wearer has no target layer.
+            if (drawAt == null || !args.RevealedLayers.Contains(key) || !_sprite.LayerMapTryGet(sprite, drawAt, out _, false))
                 continue;
 
+            // Remove the stale key to avoid a missing-layer log on the next redraw.
+            var oldDisplacementKey = $"{key}-displacement";
             _sprite.RemoveLayer(sprite, key, false);
-            _sprite.RemoveLayer(sprite, $"{key}-displacement", false);
+            _sprite.RemoveLayer(sprite, oldDisplacementKey, false);
+            args.RevealedLayers.Remove(oldDisplacementKey);
 
-            if (!_sprite.LayerMapTryGet(sprite, drawAt, out var index, false))
-                continue;
-
+            // Removing layers shifts the target index.
+            _sprite.LayerMapTryGet(sprite, drawAt, out var index, false);
             _sprite.AddBlankLayer((args.Equipee, spriteComp), index);
             _sprite.LayerMapSet(sprite, key, index);
             _sprite.LayerSetData(sprite, index, data);

@@ -23,6 +23,10 @@
         enum.ToggleableVisuals.Layer:
           True: { visible: true }
           False: { visible: false }
+  - type: ActivatableUI
+    key: enum.RadarConsoleUiKey.Key
+    singleUser: true
+    inHandsOnly: false # Keep the UI open after the scanner leaves the hand.
   - type: ItemToggle
     onUse: false
     onActivate: false # UI open toggles scanning; do not activate again after a denied open.
@@ -37,6 +41,6 @@
   - type: DeepSpaceScanner
   - type: AlertLevelRestricted
     requirement:
-      minimum: red
+      minimum: blue
   - type: StaticPrice
     price: 400

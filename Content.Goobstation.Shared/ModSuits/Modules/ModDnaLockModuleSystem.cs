@@ -1,5 +1,6 @@
 using Content.Shared.Forensics.Components;
 using Content.Shared.Popups;
+using Robust.Shared.Audio; // Pirate: MODsuit action fixes
 using Robust.Shared.Audio.Systems;
 
 namespace Content.Goobstation.Shared.ModSuits.Modules;
@@ -25,22 +26,36 @@ public sealed partial class ModDnaLockModuleSystem : EntitySystem
         {
             ent.Comp.LockedDna = null;
             Dirty(ent);
-            _audio.PlayPredicted(ent.Comp.Sound, args.User, args.User);
-            _popup.PopupClient(Loc.GetString("modsuit-dna-unlocked"), args.User, args.User);
+            SendFeedback(args, "modsuit-dna-unlocked", ent.Comp.Sound); // Pirate: MODsuit action fixes
             return;
         }
 
         if (GetDna(args.User) is not { } dna)
         {
-            _popup.PopupClient(Loc.GetString("modsuit-dna-none"), args.User, args.User);
+            SendFeedback(args, "modsuit-dna-none"); // Pirate: MODsuit action fixes
             return;
         }
 
         ent.Comp.LockedDna = dna;
         Dirty(ent);
-        _audio.PlayPredicted(ent.Comp.Sound, args.User, args.User);
-        _popup.PopupClient(Loc.GetString("modsuit-dna-locked"), args.User, args.User);
+        SendFeedback(args, "modsuit-dna-locked", ent.Comp.Sound); // Pirate: MODsuit action fixes
     }
+
+    #region Pirate: MODsuit action fixes
+    private void SendFeedback(ModModuleUsedEvent args, LocId message, SoundSpecifier? sound = null)
+    {
+        var text = Loc.GetString(message);
+        if (args.ServerOnly)
+        {
+            _audio.PlayPvs(sound, args.User);
+            _popup.PopupEntity(text, args.User, args.User);
+            return;
+        }
+
+        _audio.PlayPredicted(sound, args.User, args.User);
+        _popup.PopupClient(text, args.User, args.User);
+    }
+    #endregion
 
     private string? GetDna(EntityUid user)
     {

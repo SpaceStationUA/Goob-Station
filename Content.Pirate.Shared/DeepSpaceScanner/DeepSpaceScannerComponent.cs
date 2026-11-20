@@ -16,8 +16,9 @@ public sealed partial class DeepSpaceScannerComponent : Component
     [DataField]
     public float Range = 75f;
 
+    // Keep this interval aligned with the screen animation duration.
     [DataField]
-    public TimeSpan ScanInterval = TimeSpan.FromSeconds(10);
+    public TimeSpan ScanInterval = TimeSpan.FromSeconds(7.5);
 
     [DataField(customTypeSerializer: typeof(TimeOffsetSerializer)), AutoPausedField]
     public TimeSpan NextScan;

@@ -46,8 +46,16 @@
       storagebase: !type:Container
 
 - type: entity
+  id: BasePersistentPhotoAlbumStorage
+  abstract: true
+  components:
+  - type: Storage
+    grid:
+    - 0,0,3,3
+
+- type: entity
   id: PhotoAlbumLoadoutSigned
-  parent: PhotoAlbum
+  parent: [BasePersistentPhotoAlbumStorage, PhotoAlbum]
   suffix: loadout
   components:
   - type: AutoSignPhotoAlbum
@@ -102,7 +110,7 @@
 
 - type: entity
   id: PhotoAlbumDepartmentService
-  parent: PhotoAlbumGreen
+  parent: [BasePersistentPhotoAlbumStorage, PhotoAlbumGreen]
   name: "фотоальбом сервісного відділу"
   components:
   - type: PersistentPhotoAlbum
@@ -112,7 +120,7 @@
 
 - type: entity
   id: PhotoAlbumDepartmentSecurity
-  parent: PhotoAlbumRed
+  parent: [BasePersistentPhotoAlbumStorage, PhotoAlbumRed]
   name: "фотоальбом охорони"
   components:
   - type: PersistentPhotoAlbum
@@ -122,7 +130,7 @@
 
 - type: entity
   id: PhotoAlbumDepartmentSupply
-  parent: PhotoAlbumBlue
+  parent: [BasePersistentPhotoAlbumStorage, PhotoAlbumBlue]
   name: "фотоальбом постачання"
   components:
   - type: PersistentPhotoAlbum
@@ -132,7 +140,7 @@
 
 - type: entity
   id: PhotoAlbumDepartmentScience
-  parent: PhotoAlbumBlue
+  parent: [BasePersistentPhotoAlbumStorage, PhotoAlbumBlue]
   name: "фотоальбом наукового відділу"
   components:
   - type: PersistentPhotoAlbum
@@ -142,7 +150,7 @@
 
 - type: entity
   id: PhotoAlbumDepartmentCommand
-  parent: PhotoAlbumBlue
+  parent: [BasePersistentPhotoAlbumStorage, PhotoAlbumBlue]
   name: "фотоальбом командування"
   components:
   - type: PersistentPhotoAlbum
@@ -152,7 +160,7 @@
 
 - type: entity
   id: PhotoAlbumDepartmentEngineering
-  parent: PhotoAlbumBlue
+  parent: [BasePersistentPhotoAlbumStorage, PhotoAlbumBlue]
   name: "фотоальбом інженерного відділу"
   components:
   - type: PersistentPhotoAlbum
@@ -162,7 +170,7 @@
 
 - type: entity
   id: PhotoAlbumDepartmentMedical
-  parent: PhotoAlbumBlue
+  parent: [BasePersistentPhotoAlbumStorage, PhotoAlbumBlue]
   name: "фотоальбом медичного відділу"
   components:
   - type: PersistentPhotoAlbum
@@ -172,7 +180,7 @@
 
 - type: entity
   id: PhotoAlbumCybersun
-  parent: PhotoAlbumRed
+  parent: [BasePersistentPhotoAlbumStorage, PhotoAlbumRed]
   name: "фотоальбом Cybersun"
   components:
   - type: PersistentPhotoAlbum

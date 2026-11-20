@@ -27,6 +27,7 @@ using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Popups;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Stealth;
+using Content.Shared.Stealth.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
@@ -89,6 +90,7 @@ public sealed partial class VoidwalkerSystem : EntitySystem
 
         SubscribeLocalEvent<VoidwalkerComponent, PullStartedMessage>(OnPullStarted);
         SubscribeLocalEvent<VoidwalkerComponent, PullStoppedMessage>(OnPullStopped);
+        SubscribeLocalEvent<VoidwalkerComponent, DamageChangedEvent>(OnDamageChanged);
 
         SubscribeAbilities();
     }
@@ -215,6 +217,22 @@ public sealed partial class VoidwalkerSystem : EntitySystem
     {
         if (!entity.Comp.EntityPulledWasSpaceImmune)
             RemComp<SpecialPressureImmunityComponent>(args.PulledUid);
+    }
+
+    private void OnDamageChanged(Entity<VoidwalkerComponent> entity, ref DamageChangedEvent args)
+    {
+        if (!args.DamageIncreased)
+            return;
+
+        var curTime = _timing.CurTime;
+
+        var healAt = curTime + entity.Comp.HealingDelayAfterDamage;
+        if (healAt > entity.Comp.NextHealingTick)
+            entity.Comp.NextHealingTick = healAt;
+
+        entity.Comp.RevealedUntil = curTime + entity.Comp.RevealOnDamageDuration;
+
+        RemComp<StealthComponent>(entity);
     }
 
     #endregion

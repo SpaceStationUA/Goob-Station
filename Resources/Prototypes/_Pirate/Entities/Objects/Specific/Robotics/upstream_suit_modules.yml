@@ -255,6 +255,8 @@
     interfaces:
       enum.VoiceMaskUIKey.Key:
         type: VoiceMaskBoundUserInterface
+        # The server checks that the user wears the suit.
+        interactionRange: 0
 
 - type: entity
   parent: ModsuitModulePowerKick

@@ -1,14 +1,21 @@
+using Content.Goobstation.Common.Religion;
+using Content.Goobstation.Shared.Bible;
 using Content.Pirate.Shared.Voidwalker;
+using Content.Pirate.Shared.Voidwalker.Actions;
 using Content.Shared.Medical;
 using Content.Shared.CombatMode.Pacification;
+using Content.Shared.DoAfter;
 using Content.Shared.GameTicking;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Robust.Shared.Audio.Systems;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Pirate.Server.Voidwalker.Kidnapping.Voided;
 
-public sealed class VoidedSystem : EntitySystem
+public sealed partial class VoidedSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = null!;
     [Dependency] private readonly IRobustRandom _random = null!;
@@ -16,6 +23,8 @@ public sealed class VoidedSystem : EntitySystem
     [Dependency] private readonly VoidwalkerSystem _voidwalker = null!;
     [Dependency] private readonly VoidwalkerKidnappedSystem _voidKidnapped = null!;
     [Dependency] private readonly VomitSystem _vomit = null!;
+    [Dependency] private SharedAudioSystem _audio = null!;
+    [Dependency] private SharedDoAfterSystem _doAfter = null!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -24,6 +33,8 @@ public sealed class VoidedSystem : EntitySystem
 
         SubscribeLocalEvent<VoidedComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<VoidedComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<VoidedComponent, InteractUsingEvent>(OnInteractUsing);
+        SubscribeLocalEvent<VoidedComponent, VoidedCleanseDoAfterEvent>(OnCleanseDoAfter);
 
         SubscribeLocalEvent<RoundEndMessageEvent>(OnRoundEnd);
     }
@@ -59,6 +70,63 @@ public sealed class VoidedSystem : EntitySystem
         RemComp<VoidedVisualsComponent>(entity);
         RemComp<VoidAccentComponent>(entity);
         RemComp<PacifiedComponent>(entity);
+    }
+
+    private void OnInteractUsing(Entity<VoidedComponent> entity, ref InteractUsingEvent args)
+    {
+        if (args.Handled || !HasComp<BibleComponent>(args.Used))
+            return;
+
+        args.Handled = true;
+
+        var time = HasComp<BibleUserComponent>(args.User)
+            ? entity.Comp.CleanseTimeChaplain
+            : entity.Comp.CleanseTime;
+
+        var doAfterArgs = new DoAfterArgs(EntityManager,
+            args.User,
+            time,
+            new VoidedCleanseDoAfterEvent(),
+            entity,
+            entity,
+            args.Used)
+        {
+            DistanceThreshold = 1.5f,
+            BreakOnDamage = true,
+            BreakOnDropItem = true,
+            BreakOnHandChange = true,
+            BreakOnMove = true,
+            BlockDuplicate = true,
+            NeedHand = true,
+        };
+
+        if (!_doAfter.TryStartDoAfter(doAfterArgs))
+            return;
+
+        var popup = Loc.GetString("voided-cleanse-begin",
+            ("user", Identity.Entity(args.User, EntityManager)),
+            ("target", Identity.Entity(entity.Owner, EntityManager)));
+        _popup.PopupEntity(popup, entity, PopupType.Medium);
+    }
+
+    private void OnCleanseDoAfter(Entity<VoidedComponent> entity, ref VoidedCleanseDoAfterEvent args)
+    {
+        if (args.Cancelled || args.Handled)
+            return;
+
+        args.Handled = true;
+
+        var coordinates = Transform(entity).Coordinates;
+        Spawn(entity.Comp.CleanseVFX, coordinates);
+        _audio.PlayPvs(entity.Comp.CleanseSound, coordinates);
+
+        var popup = Loc.GetString("voided-cleanse-finish",
+            ("user", Identity.Entity(args.User, EntityManager)),
+            ("target", Identity.Entity(entity.Owner, EntityManager)));
+        _popup.PopupEntity(popup, entity, PopupType.Medium);
+
+        // OnShutdown clears the effect components.
+        RemCompDeferred<VoidedComponent>(entity);
     }
 
     private void SetNextVomitTime(Entity<VoidedComponent> voided) =>

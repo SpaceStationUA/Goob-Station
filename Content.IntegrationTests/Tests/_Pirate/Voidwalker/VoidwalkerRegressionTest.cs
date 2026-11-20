@@ -3,9 +3,25 @@
 using System.Numerics;
 using Content.Pirate.Server.Voidwalker.Kidnapping;
 using Content.Pirate.Server.Voidwalker.Kidnapping.Voided;
+using Content.Pirate.Shared.Voidwalker;
+using Content.Pirate.Shared.Voidwalker.Actions;
+using Content.Shared.CCVar;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.DoAfter;
+using Content.Shared.FixedPoint;
+using Content.Shared.Gravity;
+using Content.Shared.Movement.Components;
+using Content.Shared.Movement.Events;
+using Content.Shared.Stealth.Components;
+using Content.Shared.Throwing;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -75,6 +91,133 @@ public sealed partial class VoidwalkerRegressionTest
         {
             entMan.DeleteEntity(firstMap);
             entMan.DeleteEntity(secondMap);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>
+    /// A hit in space removes stealth for a time and stops space healing for a time.
+    /// Piercing also checks the modifier set: Glass made 10 piercing into 5, FlimsyGlass keeps 10.
+    /// </summary>
+    [Test]
+    public async Task HitInSpaceRevealsAndDelaysHealing()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var maps = entMan.System<SharedMapSystem>();
+        var damageSys = entMan.System<DamageableSystem>();
+        var protoMan = server.ResolveDependency<IPrototypeManager>();
+        var timing = server.ResolveDependency<IGameTiming>();
+        EntityUid map = default;
+        EntityUid walker = default;
+        DamageableComponent damageable = null;
+        VoidwalkerComponent voidwalker = null;
+
+        await server.WaitPost(() =>
+        {
+            map = maps.CreateMap(out var mapId);
+            walker = entMan.SpawnEntity("BaseMobVoidWalker", new MapCoordinates(Vector2.Zero, mapId));
+            damageable = entMan.GetComponent<DamageableComponent>(walker);
+            voidwalker = entMan.GetComponent<VoidwalkerComponent>(walker);
+        });
+
+        await server.WaitRunTicks(5);
+        FixedPoint2 afterHit = default;
+        await server.WaitPost(() =>
+        {
+            Assert.That(voidwalker.IsInSpace, Is.True, "no grid under the voidwalker means space");
+            Assert.That(entMan.HasComponent<StealthComponent>(walker), Is.True, "stealthed in space");
+
+            var piercing = new DamageSpecifier(protoMan.Index<DamageTypePrototype>("Piercing"), 10);
+            Assert.That(damageSys.TryChangeDamage((walker, damageable), piercing), Is.True);
+            afterHit = damageable.TotalDamage;
+
+            Assert.That(afterHit.Float(), Is.EqualTo(10f).Within(0.1f), "no flat reduction on piercing");
+            Assert.That(entMan.HasComponent<StealthComponent>(walker), Is.False, "a hit removes stealth");
+        });
+
+        // 4 s is two heal ticks and two spaced checks: no heal and no stealth yet.
+        await server.WaitRunTicks((int) (timing.TickRate * 4));
+        await server.WaitPost(() =>
+        {
+            Assert.That(damageable.TotalDamage, Is.EqualTo(afterHit), "no space healing just after a hit");
+            Assert.That(entMan.HasComponent<StealthComponent>(walker), Is.False, "still revealed just after a hit");
+        });
+
+        // 12 s heal delay + one 2 s heal tick, with margin.
+        await server.WaitRunTicks((int) (timing.TickRate * 11));
+        await server.WaitPost(() =>
+        {
+            Assert.That(damageable.TotalDamage, Is.LessThan(afterHit), "space healing comes back after the delay");
+            Assert.That(entMan.HasComponent<StealthComponent>(walker), Is.True, "stealth comes back after the reveal");
+            entMan.DeleteEntity(map);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    /// <summary>
+    /// In space the voidwalker is weightless and moves like a jetpack wearer.
+    /// A Void Walk dash ends at its weightless sprint speed, so low friction cannot carry it far.
+    /// </summary>
+    [Test]
+    public async Task SpaceMovementHasMomentumAndDashIsCapped()
+    {
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
+        var entMan = server.EntMan;
+        var maps = entMan.System<SharedMapSystem>();
+        var gravity = entMan.System<SharedGravitySystem>();
+        var throwing = entMan.System<ThrowingSystem>();
+        var timing = server.ResolveDependency<IGameTiming>();
+        var cfg = server.ResolveDependency<IConfigurationManager>();
+        var actionEvent = new VoidwalkerVoidWalkEvent();
+        EntityUid map = default;
+        EntityUid walker = default;
+        MovementSpeedModifierComponent move = null;
+
+        await server.WaitPost(() =>
+        {
+            map = maps.CreateMap(out var mapId);
+            walker = entMan.SpawnEntity("BaseMobVoidWalker", new MapCoordinates(Vector2.Zero, mapId));
+            move = entMan.GetComponent<MovementSpeedModifierComponent>(walker);
+        });
+
+        await server.WaitRunTicks(5);
+        await server.WaitPost(() =>
+        {
+            var canMove = new CanWeightlessMoveEvent(walker);
+            entMan.EventBus.RaiseLocalEvent(walker, ref canMove);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(gravity.IsWeightless(walker), Is.True, "weightless in space");
+                Assert.That(canMove.CanMove, Is.True, "can push itself in space like a jetpack wearer");
+                // Between a jetpack (acceleration 1, friction 0.25) and walking: it keeps momentum, but less.
+                Assert.That(move.WeightlessAcceleration, Is.GreaterThan(1f), "more acceleration than a jetpack");
+                Assert.That(move.WeightlessAcceleration, Is.LessThan(move.Acceleration), "less acceleration than walking");
+                // Final weightless friction is the base value times the air friction CVar, the same as for a jetpack.
+                Assert.That(move.WeightlessFriction, Is.GreaterThan(0.25f * cfg.GetCVar(CCVars.AirFriction)),
+                    "more friction than a jetpack");
+                Assert.That(move.WeightlessFriction, Is.LessThan(move.Friction), "less friction than walking");
+                Assert.That(move.WeightlessFrictionNoInput, Is.EqualTo(move.WeightlessFriction).Within(0.001f),
+                    "jetpack friction without input");
+                Assert.That(move.WeightlessSprintSpeed, Is.EqualTo(3.6f).Within(0.01f), "space top speed");
+            });
+
+            throwing.TryThrow(walker, new Vector2(actionEvent.Distance, 0), actionEvent.Speed, animated: false);
+            Assert.That(entMan.HasComponent<ThrownItemComponent>(walker), Is.True, "the dash started");
+            Assert.That(entMan.GetComponent<PhysicsComponent>(walker).LinearVelocity.Length(),
+                Is.GreaterThan(move.WeightlessSprintSpeed), "the dash is faster than normal space speed");
+        });
+
+        await server.WaitRunTicks((int) (timing.TickRate * 2));
+        await server.WaitPost(() =>
+        {
+            Assert.That(entMan.HasComponent<ThrownItemComponent>(walker), Is.False, "the dash ended");
+            var speed = entMan.GetComponent<PhysicsComponent>(walker).LinearVelocity.Length();
+            Assert.That(speed, Is.LessThanOrEqualTo(move.WeightlessSprintSpeed + 0.01f), "dash speed is capped");
+            entMan.DeleteEntity(map);
         });
         await pair.CleanReturnAsync();
     }

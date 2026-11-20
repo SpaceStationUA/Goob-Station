@@ -21,20 +21,4 @@ public sealed partial class SecurityAlertGatedVendingComponent : Component
 
     [DataField]
     public HashSet<string> ElevatedAlertLevels = [];
-
-    [DataField]
-    public List<SecurityAlertVendingGate> Gates = [];
-}
-
-[DataDefinition]
-public sealed partial class SecurityAlertVendingGate
-{
-    [DataField(required: true)]
-    public List<EntProtoId> Items = [];
-
-    [DataField(required: true)]
-    public HashSet<string> Levels = [];
-
-    [DataField(required: true)]
-    public LocId DenialMessage;
 }
