@@ -116,6 +116,8 @@ namespace Content.Client.Construction.UI
                 {
                     Text = prototype.Name,
                     Margin = new(5, 0),
+                    ClipText = true, // Pirate: construction menu width
+                    HorizontalExpand = true, // Pirate: construction menu width
                 };
 
                 var box = new BoxContainer();

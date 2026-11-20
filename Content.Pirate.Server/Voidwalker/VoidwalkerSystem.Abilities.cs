@@ -6,6 +6,7 @@ using Content.Pirate.Shared.Voidwalker.Actions;
 using Content.Shared.Chat.Prototypes;
 using Content.Shared.DoAfter;
 using Content.Shared.Popups;
+using Content.Shared.Stealth.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Pirate.Server.Voidwalker;
@@ -160,7 +161,9 @@ public sealed partial class VoidwalkerSystem
         var speed = args.Speed;
 
         _throwing.TryThrow(args.Performer, vec, speed, animated: false);
-        _stealth.SetVisibility(entity, -1);
+        // Void Walk must not clear a hit reveal.
+        if (TryComp<StealthComponent>(entity, out var stealth))
+            _stealth.SetVisibility(entity, -1, stealth);
     }
 
     private void StartConvertWall(Entity<VoidwalkerComponent> entity, EntityUid target)

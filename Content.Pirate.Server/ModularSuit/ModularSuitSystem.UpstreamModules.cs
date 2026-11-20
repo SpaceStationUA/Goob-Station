@@ -293,7 +293,7 @@ public sealed partial class ModularSuitSystem
         }
         else if (upstream.Type == ModModuleType.Usable)
         {
-            var used = new ModModuleUsedEvent(suit, user);
+            var used = new ModModuleUsedEvent(suit, user) { ServerOnly = true };
             RaiseLocalEvent(module, ref used);
             if (!used.Handled || !TryUseCoreCharge(suit.AsNullable(), upstream.UsePower, deferDeactivation: true))
                 return;

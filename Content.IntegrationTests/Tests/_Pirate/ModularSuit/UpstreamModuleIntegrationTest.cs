@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Linq;
+using Content.Client.Popups;
 using Content.Goobstation.Shared.ModSuits.Components;
 using Content.Goobstation.Shared.ModSuits.Modules;
 using Content.Goobstation.Shared.ModSuits.Systems;
@@ -7,6 +9,7 @@ using Content.Goobstation.Shared.Loudspeaker.Components;
 using Content.Pirate.Shared.ModularSuit;
 using Content.Server.Speech.Components;
 using Content.Server.VoiceMask;
+using Content.Shared.Actions;
 using Content.Shared.Chat;
 using Content.Shared.Inventory;
 using Content.Shared.Actions.Components;
@@ -15,9 +18,12 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Forensics.Components;
 using Content.Shared.Stealth.Components;
+using Content.Shared.VoiceMask;
 using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Audio.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests._Pirate.ModularSuit;
@@ -206,6 +212,51 @@ public sealed class UpstreamModuleIntegrationTest
     }
 
     [Test]
+    public async Task DnaLockActionSendsFeedbackToWearer()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var server = pair.Server;
+        var client = pair.Client;
+        var entities = server.EntMan;
+        var map = await pair.CreateTestMap();
+        EntityUid wearer = default;
+        EntityUid module = default;
+        NetEntity action = default;
+        string dna = null;
+
+        await server.WaitAssertion(() =>
+        {
+            var (suit, user) = CreateSuit(entities, map.GridCoords);
+            wearer = user;
+            server.PlayerMan.SetAttachedEntity(pair.Player!, wearer);
+            Assert.That(server.System<InventorySystem>().TryEquip(wearer, suit, "back", silent: true, force: true), Is.True);
+            dna = entities.GetComponent<DnaComponent>(wearer).DNA;
+            Assert.That(dna, Is.Not.Null);
+            module = Install(entities, suit, wearer, "DnaLockSuitModule");
+            action = entities.GetNetEntity(entities.GetComponent<ModModuleComponent>(module).ActionEntity!.Value);
+        });
+        await pair.RunTicksSync(10);
+
+        async Task UseLock(string popup, string expectedDna)
+        {
+            await client.WaitPost(() => client.EntMan.RaisePredictiveEvent(new RequestPerformActionEvent(action)));
+            await pair.RunTicksSync(10);
+            await server.WaitAssertion(() => Assert.That(entities.GetComponent<ModDnaLockModuleComponent>(module).LockedDna,
+                Is.EqualTo(expectedDna)));
+            await client.WaitAssertion(() => Assert.That(client.System<PopupSystem>().WorldLabels.Select(label => label.Text),
+                Does.Contain(Loc.GetString(popup))));
+        }
+
+        await UseLock("modsuit-dna-locked", dna);
+        await client.WaitAssertion(() => Assert.That(client.EntMan.EntityQuery<AudioComponent>()
+            .Any(audio => audio.FileName == "/Audio/Machines/id_swipe.ogg"), Is.True));
+        await UseLock("modsuit-dna-unlocked", null);
+        await server.WaitPost(() => entities.RemoveComponent<DnaComponent>(wearer));
+        await UseLock("modsuit-dna-none", null);
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
     public async Task HatStabilizerAddsHatSlotToOurHelmet()
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
@@ -265,15 +316,23 @@ public sealed class UpstreamModuleIntegrationTest
     [Test]
     public async Task InfiltratorWorksLikeVoiceMask()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
         var server = pair.Server;
+        var client = pair.Client;
         var entities = server.EntMan;
         var map = await pair.CreateTestMap();
+        var inventory = server.System<InventorySystem>();
+        var ui = server.System<SharedUserInterfaceSystem>();
+        EntityUid suit = default;
+        EntityUid wearer = default;
+        EntityUid module = default;
+        NetEntity netAction = default;
         await server.WaitAssertion(() =>
         {
-            var (suit, wearer) = CreateSuit(entities, map.GridCoords);
-            var module = Install(entities, suit, wearer, "InfiltratorSuitModule");
-            Assert.That(server.System<InventorySystem>().TryEquip(wearer, suit, "back", silent: true, force: true), Is.True);
+            (suit, wearer) = CreateSuit(entities, map.GridCoords);
+            server.PlayerMan.SetAttachedEntity(pair.Player!, wearer);
+            module = Install(entities, suit, wearer, "InfiltratorSuitModule");
+            Assert.That(inventory.TryEquip(wearer, suit, "back", silent: true, force: true), Is.True);
             Assert.That(entities.HasComponent<VoiceOverrideComponent>(wearer), Is.False, "The fixed upstream voice is replaced.");
 
             var mask = entities.GetComponent<VoiceMaskComponent>(module);
@@ -281,8 +340,25 @@ public sealed class UpstreamModuleIntegrationTest
             var action = entities.GetComponent<ActionComponent>(mask.ActionEntity!.Value);
             Assert.That(action.AttachedEntity, Is.EqualTo(wearer));
             Assert.That(action.Container, Is.EqualTo(module), "The action opens the voice mask menu of the module.");
+            netAction = entities.GetNetEntity(mask.ActionEntity.Value);
 
-            mask.VoiceMaskName = "Agent Orange";
+            var other = entities.SpawnEntity("MobHuman", map.GridCoords);
+            Assert.That(ui.TryOpenUi(module, VoiceMaskUIKey.Key, other), Is.False);
+        });
+        await pair.RunTicksSync(10);
+        await client.WaitPost(() => client.EntMan.RaisePredictiveEvent(new RequestPerformActionEvent(netAction)));
+        await pair.RunTicksSync(10);
+        await client.WaitAssertion(() =>
+        {
+            var clientModule = pair.ToClientUid(module);
+            var clientUi = client.System<SharedUserInterfaceSystem>();
+            Assert.That(clientUi.TryGetOpenUi(clientModule, VoiceMaskUIKey.Key, out _), Is.True);
+            clientUi.ClientSendUiMessage(clientModule, VoiceMaskUIKey.Key, new VoiceMaskChangeNameMessage("Agent Orange"));
+        });
+        await pair.RunTicksSync(10);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(ui.IsUiOpen(module, VoiceMaskUIKey.Key, wearer), Is.True);
             var spoken = new TransformSpeakerNameEvent(wearer, "Real Name");
             entities.EventBus.RaiseLocalEvent(wearer, spoken);
             Assert.That(spoken.VoiceName, Is.EqualTo("Agent Orange"));
@@ -293,8 +369,21 @@ public sealed class UpstreamModuleIntegrationTest
             entities.EventBus.RaiseLocalEvent(wearer, unmasked);
             Assert.That(unmasked.VoiceName, Is.EqualTo("Real Name"), "An inactive module does not change the voice.");
 
+            Assert.That(inventory.TryUnequip(wearer, "back", silent: true, force: true), Is.True);
+            Assert.That(ui.IsUiOpen(module, VoiceMaskUIKey.Key, wearer), Is.False);
+            Assert.That(ui.TryOpenUi(module, VoiceMaskUIKey.Key, wearer), Is.False);
+
+            Assert.That(inventory.TryEquip(wearer, suit, "back", silent: true, force: true), Is.True);
+            Assert.That(ui.TryOpenUi(module, VoiceMaskUIKey.Key, wearer), Is.True);
+            var containers = server.System<SharedContainerSystem>();
+            var modules = containers.GetContainer(suit, SharedModularSuitSystem.ModuleContainer);
+            Assert.That(containers.Remove(module, modules), Is.True);
             var removed = new ModularSuitRemovedEvent(suit, wearer);
             entities.EventBus.RaiseLocalEvent(module, ref removed);
+            Assert.That(ui.IsUiOpen(module, VoiceMaskUIKey.Key, wearer), Is.False);
+            Assert.That(ui.TryOpenUi(module, VoiceMaskUIKey.Key, wearer), Is.False);
+            var mask = entities.GetComponent<VoiceMaskComponent>(module);
+            var action = entities.GetComponent<ActionComponent>(mask.ActionEntity!.Value);
             Assert.That(action.AttachedEntity, Is.Null, "Removing the module takes the action away.");
         });
         await pair.CleanReturnAsync();

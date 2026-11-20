@@ -3,6 +3,7 @@
 using Content.Pirate.Shared.AlertLevel;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
@@ -43,6 +44,8 @@ public sealed class MotionDetectorSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<MotionDetectorComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<MotionDetectorComponent, ActivateInWorldEvent>(OnActivateInWorld);
+        SubscribeLocalEvent<MotionDetectorComponent, GetVerbsEvent<ActivationVerb>>(OnGetActivationVerbs);
         SubscribeLocalEvent<MotionDetectorComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
         SubscribeLocalEvent<MotionDetectorComponent, DroppedEvent>(OnDropped);
         SubscribeLocalEvent<MotionDetectorComponent, ExaminedEvent>(OnExamined);
@@ -73,12 +76,40 @@ public sealed class MotionDetectorSystem : EntitySystem
             return;
 
         args.Handled = true;
-        if (!ent.Comp.Enabled && !_alertRestriction.TryUse(ent.Owner, args.User))
+        Toggle(ent, args.User);
+    }
+
+    // Only carried detectors can scan for their carrier.
+    private void OnActivateInWorld(Entity<MotionDetectorComponent> ent, ref ActivateInWorldEvent args)
+    {
+        if (args.Handled || !args.Complex || !IsCarriedBy(ent.Owner, args.User))
             return;
 
-        ent.Comp.LastUser = args.User;
+        args.Handled = true;
+        Toggle(ent, args.User);
+    }
+
+    private void OnGetActivationVerbs(Entity<MotionDetectorComponent> ent, ref GetVerbsEvent<ActivationVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || !args.CanComplexInteract || !IsCarriedBy(ent.Owner, args.User))
+            return;
+
+        var user = args.User;
+        args.Verbs.Add(new ActivationVerb
+        {
+            Text = Loc.GetString(ent.Comp.Enabled ? "item-toggle-deactivate" : "item-toggle-activate"),
+            Act = () => Toggle(ent, user),
+        });
+    }
+
+    private void Toggle(Entity<MotionDetectorComponent> ent, EntityUid user)
+    {
+        if (!ent.Comp.Enabled && !_alertRestriction.TryUse(ent.Owner, user))
+            return;
+
+        ent.Comp.LastUser = user;
         SetEnabled(ent, !ent.Comp.Enabled);
-        _audio.PlayPredicted(ent.Comp.ToggleSound, ent, args.User);
+        _audio.PlayPredicted(ent.Comp.ToggleSound, ent, user);
     }
 
     private void OnGetVerbs(Entity<MotionDetectorComponent> ent, ref GetVerbsEvent<AlternativeVerb> args)

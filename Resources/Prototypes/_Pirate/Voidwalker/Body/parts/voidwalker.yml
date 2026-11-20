@@ -10,7 +10,7 @@
     sprite: _Pirate/Mobs/Voidwalker/parts.rsi
   - type: Damageable
     damageContainer: ManifestedSpirit
-    damageModifierSet: Glass
+    damageModifierSet: FlimsyGlass # Glass reduced laser damage too much.
 
 - type: entity
   id: ChestVoidwalker

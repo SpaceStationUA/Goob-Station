@@ -23,6 +23,15 @@ public sealed partial class VoidwalkerComponent : Component
     [DataField]
     public TimeSpan HealingTickInterval = TimeSpan.FromSeconds(2);
 
+    [DataField]
+    public TimeSpan HealingDelayAfterDamage = TimeSpan.FromSeconds(12);
+
+    [DataField]
+    public TimeSpan RevealOnDamageDuration = TimeSpan.FromSeconds(6);
+
+    [ViewVariables(VVAccess.ReadOnly)]
+    public TimeSpan RevealedUntil;
+
     /// <summary>
     /// How much to heal the voidwalker by when they're spaced.
     /// </summary>

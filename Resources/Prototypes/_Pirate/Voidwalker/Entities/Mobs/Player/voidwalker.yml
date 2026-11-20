@@ -22,7 +22,7 @@
       ShardGlassPlasma: 5
   - type: Damageable
     damageContainer: ManifestedSpirit
-    damageModifierSet: Glass
+    damageModifierSet: FlimsyGlass # Glass reduced laser damage too much.
   - type: Destructible
     thresholds:
     - trigger:
@@ -113,9 +113,10 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 3.6
     baseSprintSpeed: 3.6
-    weightlessAcceleration: 2
-    weightlessFriction: 1
-    weightlessModifier: 1
+    # Keep momentum in space with a shorter coast and lower top speed than a jetpack.
+    baseWeightlessAcceleration: 2.5
+    baseWeightlessFriction: 2
+    baseWeightlessModifier: 1
   - type: Hands # Maybe limit this to just one? Dunno.
   - type: PressureImmunity
   - type: ZombieImmune
@@ -138,7 +139,6 @@
     - NamesVoidwalker
     nameFormat: name-format-slasher # If it works, it works.
   - type: Temperature
-  - type: MovementIgnoreGravity # Put the walk in voidwalk
   - type: Stealth
     hadOutline: true
     thermalsImmune: true

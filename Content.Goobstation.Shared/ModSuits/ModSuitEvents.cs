@@ -23,6 +23,7 @@ public record struct ModModuleDeactivatedEvent(EntityUid Suit, EntityUid? Wearer
 public record struct ModModuleUsedEvent(EntityUid Suit, EntityUid User)
 {
     public bool Handled;
+    public bool ServerOnly { get; init; } // Pirate: MODsuit action fixes
 }
 
 [ByRefEvent]
