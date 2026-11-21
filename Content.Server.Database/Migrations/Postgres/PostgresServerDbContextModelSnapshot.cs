@@ -3383,6 +3383,35 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.Navigation("Rounds");
                 });
+            modelBuilder.Entity("Content.Server.Database.PirateCurrencyReceipt", b =>
+                {
+                    b.Property<string>("OperationId")
+                        .HasMaxLength(36)
+                        .HasColumnType("character varying(36)")
+                        .HasColumnName("operation_id");
+
+                    b.Property<int?>("Balance")
+                        .HasColumnType("integer")
+                        .HasColumnName("balance");
+
+                    b.Property<string>("RequestHash")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("request_hash");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasMaxLength(24)
+                        .HasColumnType("character varying(24)")
+                        .HasColumnName("state");
+
+                    b.HasKey("OperationId")
+                        .HasName("PK_pirate_currency_receipt");
+
+                    b.ToTable("pirate_currency_receipt", (string)null);
+                });
+
             modelBuilder.Entity("Content.Server.Database.PirateCustomMarking", b =>
                 {
                     b.Property<int>("Id")

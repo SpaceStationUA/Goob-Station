@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Goobstation.Common.ServerCurrency;
 using Content.Goobstation.Shared.ServerCurrency;
 using Content.Goobstation.Shared.ServerCurrency.UI;
 using Content.Server.Administration.Notes;
@@ -13,7 +12,6 @@ namespace Content.Goobstation.Server.ServerCurrency.UI
 {
     public sealed partial class CurrencyEui : BaseEui
     {
-        [Dependency] private ICommonCurrencyManager _currencyMan = default!;
         [Dependency] private IAdminNotesManager _notesMan = default!;
         [Dependency] private IPrototypeManager _protoMan = default!;
         public CurrencyEui()
@@ -47,17 +45,11 @@ namespace Content.Goobstation.Server.ServerCurrency.UI
 
         private async void BuyToken(ProtoId<TokenListingPrototype> tokenId, ICommonSession playerName)
         {
-            var balance = _currencyMan.GetBalance(Player.UserId);
-
             if (!_protoMan.TryIndex<TokenListingPrototype>(tokenId, out var token))
                 return;
 
-            if (balance < token.Price)
-                return;
-
-            await _notesMan.AddAdminRemark(Player, Player.UserId, 0,
-                Loc.GetString(token.AdminNote), 0, false, null);
-            _currencyMan.RemoveCurrency(Player.UserId, token.Price);
+            // Pirate: commit the token note and the conditional debit in the same transaction.
+            await _notesMan.BuyCurrencyToken(playerName, Loc.GetString(token.AdminNote), token.Price);
         }
     }
 }

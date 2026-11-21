@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Database;
+using Content.Server._Pirate.ServerCurrency; // Pirate
 using Content.Server.EUI;
 using Content.Server.GameTicking;
 using Content.Shared.Administration;
@@ -71,7 +72,14 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
         await ui.UpdateNotes();
     }
 
-    public async Task AddAdminRemark(ICommonSession createdBy, Guid player, NoteType type, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime)
+    // Pirate: in-game token fulfillment is the admin note stored alongside the currency receipt.
+    public Task BuyCurrencyToken(ICommonSession buyer, string message, int price)
+        => AddAdminRemark(buyer, buyer.UserId, NoteType.Note, message, (NoteSeverity) 0, false, null, price);
+
+    public Task AddAdminRemark(ICommonSession createdBy, Guid player, NoteType type, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime)
+        => AddAdminRemark(createdBy, player, type, message, severity, secret, expiryTime, null);
+
+    private async Task AddAdminRemark(ICommonSession createdBy, Guid player, NoteType type, string message, NoteSeverity? severity, bool secret, DateTime? expiryTime, int? currencyTokenPrice)
     {
         message = message.Trim();
 
@@ -117,8 +125,6 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
             sb.Append($" which expires on {expiryTime.Value.ToUniversalTime(): yyyy-MM-dd HH:mm:ss} UTC");
         }
 
-        _sawmill.Info(sb.ToString());
-
         _systems.TryGetEntitySystem(out GameTicker? ticker);
         int? roundId = ticker == null || ticker.RoundId == 0 ? null : ticker.RoundId;
         var serverName = _config.GetCVar(CCVars.AdminLogsServerName); // This could probably be done another way, but this is fine. For displaying only.
@@ -132,7 +138,23 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
             case NoteType.Note:
                 if (severity is null)
                     throw new ArgumentException("Severity cannot be null for a note", nameof(severity));
-                noteId = await _db.AddAdminNote(roundId, player, playtime, message, severity.Value, secret, createdBy.UserId, createdAt, expiryTime);
+                if (currencyTokenPrice is {} price) // Pirate
+                {
+                    var currencyNote = new AdminNote
+                    {
+                        RoundId = roundId, PlayerUserId = player, CreatedById = createdBy.UserId,
+                        LastEditedById = createdBy.UserId, CreatedAt = createdAt, LastEditedAt = createdAt,
+                        PlaytimeAtNote = playtime, Message = message, Severity = severity.Value,
+                    };
+                    // Goob registers its currency manager after the base server IoC graph is built.
+                    var currency = IoCManager.Resolve<IPirateCurrencyOperations>();
+                    var result = currency.Apply(new(Guid.NewGuid(), player, null, price, "purchase"), currencyNote);
+                    if (result.NoteId is not {} id)
+                        return;
+                    noteId = id;
+                }
+                else
+                    noteId = await _db.AddAdminNote(roundId, player, playtime, message, severity.Value, secret, createdBy.UserId, createdAt, expiryTime);
                 break;
             case NoteType.Watchlist:
                 secret = true;
@@ -151,6 +173,7 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
                 throw new ArgumentOutOfRangeException(nameof(type), type, "Unknown note type");
         }
 
+        _sawmill.Info(sb.ToString());
         var note = new SharedAdminNote(
             noteId,
             [(NetUserId) player],

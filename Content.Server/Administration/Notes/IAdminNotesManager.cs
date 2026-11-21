@@ -11,6 +11,9 @@ namespace Content.Server.Administration.Notes;
 
 public interface IAdminNotesManager
 {
+    // Pirate: commit a token and its withdrawal together.
+    Task BuyCurrencyToken(ICommonSession buyer, string message, int price);
+
     event Action<SharedAdminNote>? NoteAdded;
     event Action<SharedAdminNote>? NoteModified;
     event Action<SharedAdminNote>? NoteDeleted;

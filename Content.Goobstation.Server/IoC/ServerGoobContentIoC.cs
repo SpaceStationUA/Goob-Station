@@ -8,6 +8,7 @@ using Content.Goobstation.Server.MisandryBox.JumpScare;
 using Content.Goobstation.Server.Polls;
 using Content.Goobstation.Server.Redial;
 using Content.Goobstation.Server.ServerCurrency;
+using Content.Server._Pirate.ServerCurrency; // Pirate
 using Content.Goobstation.Server.VoiceChat;
 using Content.Goobstation.Shared.MisandryBox.JumpScare;
 
@@ -27,5 +28,6 @@ internal static class ServerGoobContentIoC
         instance.Register<IJoinQueueManager, JoinQueueManager>();
         instance.Register<IFullScreenImageJumpscare, ServerFullScreenImageJumpscare>();
         instance.Register<ICommonCurrencyManager, ServerCurrencyManager>();
+        instance.Register<IPirateCurrencyOperations, ServerCurrencyManager>(); // Pirate
     }
 }

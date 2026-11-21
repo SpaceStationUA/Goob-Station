@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Common.ServerCurrency;
+using Content.Server._Pirate.ServerCurrency; // Pirate
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Shared.Administration;
@@ -43,6 +44,7 @@ namespace Content.Goobstation.Server.ServerCurrency.Commands
     [AnyCommand]
     public sealed partial class GiftServerCurrencyCommand : IConsoleCommand
     {
+        [Dependency] private IPirateCurrencyOperations _operations = default!; // Pirate
         [Dependency] private ICommonCurrencyManager _currencyMan = default!;
         [Dependency] private IChatManager _chatManager = default!;
 
@@ -80,17 +82,21 @@ namespace Content.Goobstation.Server.ServerCurrency.Commands
                 return;
             }
 
-            amount = Math.Abs(amount);
-
-            if (amount == 0)
-                amount = 1; // Trolled
-
-            if (!_currencyMan.CanAfford(shell.Player.UserId, amount, out int balance)){
-                shell.WriteError(Loc.GetString("server-currency-gift-command-error-2", ("balance", balance)));
+            // Pirate: the balance check and both writes belong to the same transaction.
+            if (amount <= 0)
+            {
+                shell.WriteError(Loc.GetString("pirate-currency-positive-amount"));
                 return;
             }
-
-            _currencyMan.TransferCurrency(shell.Player.UserId, targetPlayer, amount);
+            var result = _operations.Apply(new(Guid.NewGuid(), player.UserId, targetPlayer, amount, "transfer"));
+            if (result.State != "applied")
+            {
+                var error = result.State == "insufficient_funds"
+                    ? Loc.GetString("server-currency-gift-command-error-2", ("balance", result.Balance ?? 0))
+                    : Loc.GetString("pirate-currency-cannot-transfer");
+                shell.WriteError(error);
+                return;
+            }
 
             var giver = Loc.GetString("server-currency-gift-command-giver", ("player", args[0]), ("amount", _currencyMan.Stringify(amount)));
             var reciever = Loc.GetString("server-currency-gift-command-reciever", ("player", shell.Player.Name), ("amount", _currencyMan.Stringify(amount)));

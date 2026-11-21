@@ -18,6 +18,7 @@ namespace Content.Server._Pirate.ServerCurrency;
 public sealed class PirateGoobcoinRewardSystem : EntitySystem
 {
     [Dependency] private readonly ICommonCurrencyManager _currency = default!;
+    [Dependency] private readonly IPirateCurrencyOperations _currencyOperations = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _players = default!;
@@ -113,11 +114,9 @@ public sealed class PirateGoobcoinRewardSystem : EntitySystem
 
         var scaled = (int) Math.Round(_earlyCryoPenalty * (1d - elapsedMinutes / _earlyCryoWindowMinutes));
 
-        var amount = Math.Min(scaled, _currency.GetBalance(account));
+        var amount = _currencyOperations.RemoveUpTo(account, scaled);
         if (amount <= 0)
             return;
-
-        _currency.RemoveCurrency(account, amount);
 
         if (session == null)
             return;
