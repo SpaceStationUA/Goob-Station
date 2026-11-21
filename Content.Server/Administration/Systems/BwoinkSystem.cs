@@ -787,7 +787,7 @@ namespace Content.Server.Administration.Systems
             // Notify player
             if (_playerManager.TryGetSessionById(bwoinkParams.Message.UserId, out var session) && !bwoinkParams.Message.AdminOnly)
             {
-                if (!admins.Contains(session.Channel))
+                if (bwoinkParams.UserOnly || !admins.Contains(session.Channel)) // Pirate: a private reply also goes to an admin recipient.
                 {
                     // If _overrideClientName is set, we generate a new message with the override name. The admins name will still be the original name for the webhooks.
                     if (_overrideClientName != string.Empty)

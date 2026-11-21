@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server._Pirate.ServerCurrency; // Pirate
 using Content.Pirate.Common.AlternativeJobs; // Pirate - Alternative Jobs
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -752,27 +753,13 @@ namespace Content.Server.Database
 
         public async Task SetServerCurrency(NetUserId userId, int currency) // Goobstation
         {
-            await using var db = await GetDb();
-
-            var dbPlayer = await db.DbContext.Player.Where(dbPlayer => dbPlayer.UserId == userId).SingleOrDefaultAsync();
-            if (dbPlayer == null)
-                return;
-
-            dbPlayer.ServerCurrency = currency;
-            await db.DbContext.SaveChangesAsync();
+            await AdjustPirateCurrency(userId.UserId, currency, PirateCurrencyAdjustment.Set); // Pirate
         }
 
         public async Task<int> ModifyServerCurrency(NetUserId userId, int currencyDelta) // Goobstation
         {
-            await using var db = await GetDb();
-
-            var dbPlayer = await db.DbContext.Player.Where(dbPlayer => dbPlayer.UserId == userId).SingleOrDefaultAsync();
-            if (dbPlayer == null)
-                return currencyDelta;
-
-            dbPlayer.ServerCurrency += currencyDelta;
-            await db.DbContext.SaveChangesAsync();
-            return dbPlayer.ServerCurrency;
+            // Pirate: serialize awards and withdrawals with both sides of a concurrent transfer.
+            return (await AdjustPirateCurrency(userId.UserId, currencyDelta, PirateCurrencyAdjustment.Add)).New;
         }
 
         public async Task<TimeSpan> GetLastRolledAntag(NetUserId userId) // Goobstation
