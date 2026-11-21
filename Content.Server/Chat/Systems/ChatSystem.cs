@@ -286,7 +286,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         // Pirate: systems can route a message privately to a small set of entities.
         var targetedSpeech = new CheckTargetedSpeechEvent();
         RaiseLocalEvent(source, targetedSpeech);
-        if (targetedSpeech.Targets.Count > 0 && !targetedSpeech.ChatTypeIgnore.Contains(desiredType))
+        if (targetedSpeech.TargetsOnly ||
+            targetedSpeech.Targets.Count > 0 && !targetedSpeech.ChatTypeIgnore.Contains(desiredType))
         {
             SendEntityDirect(source,
                 message,
@@ -296,7 +297,8 @@ public sealed partial class ChatSystem : SharedChatSystem
                 language,
                 hideLog,
                 ignoreActionBlocker,
-                colorOverride);
+                colorOverride,
+                targetedSpeech.TargetsOnly);
             return;
         }
 
@@ -834,7 +836,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         LanguagePrototype language,
         bool hideLog = false,
         bool ignoreActionBlocker = false,
-        Color? colorOverride = null)
+        Color? colorOverride = null,
+        bool targetsOnly = false)
     {
         var message = FormattedMessage.RemoveMarkupOrThrow(originalMessage);
         message = FormattedMessage.EscapeText(message);
@@ -861,18 +864,23 @@ public sealed partial class ChatSystem : SharedChatSystem
                                 (CultureInfo.CurrentCulture.IsNeutralCulture &&
                                  CultureInfo.CurrentCulture.Name == "en"));
 
-        foreach (var (session, data) in GetRecipients(source, WhisperMuffledRange))
+        void SendToSession(ICommonSession session, EntityUid listener)
         {
-            if (session.AttachedEntity is not { Valid: true } listener)
-                continue;
+            var perceived = _language.CanUnderstand(listener, language.ID) ? message : obfuscated;
 
-            if (MessageRangeCheck(session, data, range) != MessageRangeCheckResult.Full ||
-                !recipients.Contains(listener) && !HasComp<GhostComponent>(listener))
+            if (targetsOnly)
             {
-                continue;
+                var publicMessage = WrapPublicMessage(source, name, perceived, language, colorOverride);
+                _chatManager.ChatMessageToOne(ChatChannel.Local,
+                    perceived,
+                    publicMessage,
+                    source,
+                    false,
+                    session.Channel,
+                    colorOverride: colorOverride);
+                return;
             }
 
-            var perceived = _language.CanUnderstand(listener, language.ID) ? message : obfuscated;
             var wrapped = WrapWhisperMessage(source,
                 "chat-manager-entity-whisper-wrap-message",
                 name,
@@ -886,6 +894,37 @@ public sealed partial class ChatSystem : SharedChatSystem
                 false,
                 session.Channel,
                 colorOverride: colorOverride);
+        }
+
+        if (targetsOnly)
+        {
+            // Private spirit speech uses the normal Local chat presentation, but only the
+            // speaker and selected target receive it. This gives them the usual chat line
+            // and speech bubble without exposing it to nearby players or observers.
+            foreach (var session in _playerManager.Sessions)
+            {
+                if (session.AttachedEntity is not { Valid: true } listener ||
+                    listener != source && !recipients.Contains(listener))
+                    continue;
+
+                SendToSession(session, listener);
+            }
+        }
+        else
+        {
+            foreach (var (session, data) in GetRecipients(source, WhisperMuffledRange))
+            {
+                if (session.AttachedEntity is not { Valid: true } listener)
+                    continue;
+
+                if (MessageRangeCheck(session, data, range) != MessageRangeCheckResult.Full ||
+                    !recipients.Contains(listener) && !HasComp<GhostComponent>(listener))
+                {
+                    continue;
+                }
+
+                SendToSession(session, listener);
+            }
         }
 
         if (hideLog)
@@ -1418,4 +1457,5 @@ public sealed class CheckTargetedSpeechEvent : EntityEventArgs
 {
     public List<EntityUid> Targets = new();
     public HashSet<InGameICChatType> ChatTypeIgnore = new();
+    public bool TargetsOnly;
 }

@@ -11,5 +11,7 @@ namespace Content.Pirate.Shared
 
     public sealed partial class GhostBlinkActionEvent : InstantActionEvent { }
 
+    public sealed partial class TakeControlGhostActionEvent : InstantActionEvent { }
+
 }
 

@@ -11,9 +11,13 @@ using Robust.Shared.Log;
 using Robust.Shared.GameObjects;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Server.Containers;
+using Robust.Shared.Player;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Containers;
+using Robust.Shared.Timing;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
@@ -23,8 +27,16 @@ using Content.Shared.Actions.Components;
 using Content.Shared._Shitmed.Body.Components;
 using Content.Shared._RMC14.GhostColor;
 using Content.Shared.Popups;
+using Content.Shared.Damage.Components;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Examine;
+using Content.Server.Chat.Systems;
+using Content.Server.Ghost.Roles;
+using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
 using Content.Server.Zombies;
@@ -43,6 +55,11 @@ namespace Content.Pirate.Server.Systems
 {
     public sealed class GhostTargetingSystem : EntitySystem
     {
+        [Dependency] private readonly SharedMindSystem _mind = default!;
+        [Dependency] private readonly GhostRoleSystem _ghostRoles = default!;
+        [Dependency] private readonly ContainerSystem _containers = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -50,8 +67,29 @@ namespace Content.Pirate.Server.Systems
             SubscribeLocalEvent<GhostTargetingComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<GhostTargetingComponent, ClearTargetGhostActionEvent>(OnClearTargetGhost);
             SubscribeLocalEvent<GhostTargetingComponent, SetTargetGhostActionEvent>(OnSetTargetGhost);
+            SubscribeLocalEvent<GhostTargetingComponent, CheckTargetedSpeechEvent>(OnTargetedSpeech);
             SubscribeLocalEvent<GhostTargetingComponent, ToggleGhostFormActionEvent>(OnToggleGhostForm);
             SubscribeLocalEvent<GhostTargetingComponent, GhostBlinkActionEvent>(OnGhostBlinkAction);
+            SubscribeLocalEvent<GhostTargetingComponent, TakeControlGhostActionEvent>(OnTakeControlGhost);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            foreach (var component in EntityManager.EntityQuery<GhostTargetingComponent>())
+            {
+                if (component.ControlledTarget is not { } target)
+                    continue;
+
+                var targetDeleted = TerminatingOrDeleted(target);
+                var targetDead = !targetDeleted &&
+                                 TryComp<MobStateComponent>(target, out var mobState) &&
+                                 mobState.CurrentState == MobState.Dead;
+
+                if (targetDeleted || targetDead || _timing.CurTime >= component.ControlTimeEnd)
+                    EndControl(component.Owner, component);
+            }
         }
 
         private void OnGhostBlinkAction(EntityUid uid, GhostTargetingComponent comp, GhostBlinkActionEvent args)
@@ -70,10 +108,23 @@ namespace Content.Pirate.Server.Systems
             var soundProto = new SoundPathSpecifier("/Audio/_Goobstation/Wizard/swap.ogg");
             var audioSys = entityManager.System<SharedAudioSystem>();
 
+            EntityUid? soundTarget = null;
+            if (comp.Target != NetEntity.Invalid)
+            {
+                var selectedTarget = entityManager.GetEntity(comp.Target);
+                if (entityManager.EntityExists(selectedTarget) &&
+                    entityManager.HasComponent<ActorComponent>(selectedTarget))
+                {
+                    soundTarget = selectedTarget;
+                }
+            }
+
             void SpawnSwapEffect(EntityCoordinates coords)
             {
-                audioSys.PlayPvs(soundProto, coords);
                 var effect = entityManager.SpawnEntity(effectProto, coords);
+
+                if (soundTarget is { } target)
+                    audioSys.PlayEntity(soundProto, target, effect);
 
                 // Ensure VisibilityComponent exists
                 var visComp = entityManager.EnsureComponent<VisibilityComponent>(effect);
@@ -128,6 +179,9 @@ namespace Content.Pirate.Server.Systems
 
         private void OnRemove(Entity<GhostTargetingComponent> ghost, ref ComponentRemove args)
         {
+            if (ghost.Comp.ControlledTarget is not null)
+                EndControl(ghost.Owner, ghost.Comp);
+
             // Відновлюємо стару форму, якщо entity був у ghost-формі
             if (ghost.Comp.SavedState?.VisibilityLayers.HasValue == true)
             {
@@ -229,6 +283,22 @@ namespace Content.Pirate.Server.Systems
             comp.Target = NetEntity.Invalid;
         }
 
+        private void OnTargetedSpeech(EntityUid uid, GhostTargetingComponent comp, CheckTargetedSpeechEvent args)
+        {
+            if (!comp.IsGhost)
+                return;
+
+            // While in spirit form, suppress local speech entirely unless a valid target
+            // was selected; the ChatSystem will deliver it only to that target.
+            args.TargetsOnly = true;
+            if (comp.Target == NetEntity.Invalid)
+                return;
+
+            var targetUid = EntityManager.GetEntity(comp.Target);
+            if (EntityManager.EntityExists(targetUid))
+                args.Targets.Add(targetUid);
+        }
+
         public void OnSetTargetGhost(EntityUid uid, GhostTargetingComponent comp, SetTargetGhostActionEvent args)
         {
             var ghostLayer = (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
@@ -327,6 +397,109 @@ namespace Content.Pirate.Server.Systems
             }
         }
 
+        private void OnTakeControlGhost(EntityUid uid, GhostTargetingComponent comp, TakeControlGhostActionEvent args)
+        {
+            var popupSys = EntityManager.System<SharedPopupSystem>();
+            if (!comp.IsGhost || comp.ControlledTarget is not null)
+                return;
+
+            if (_timing.CurTime < comp.ControlCooldownEnd)
+            {
+                var remaining = Math.Ceiling((comp.ControlCooldownEnd - _timing.CurTime).TotalSeconds);
+                popupSys.PopupEntity($"Здатність відновиться через {remaining:0} с.", uid, PopupType.Medium);
+                return;
+            }
+
+            if (comp.Target == NetEntity.Invalid)
+            {
+                popupSys.PopupEntity("Спершу оберіть тіло для контролю.", uid, PopupType.Medium);
+                return;
+            }
+
+            var target = EntityManager.GetEntity(comp.Target);
+            if (!EntityManager.EntityExists(target) || target == uid ||
+                !TryComp<MobStateComponent>(target, out var targetState) ||
+                targetState.CurrentState == MobState.Dead)
+            {
+                popupSys.PopupEntity("Обрана ціль не є живим тілом.", uid, PopupType.Medium);
+                return;
+            }
+
+            if (!_mind.TryGetMind(uid, out var ghostMind, out _))
+            {
+                popupSys.PopupEntity("Для контролю потрібна свідомість у вашому тілі.", uid, PopupType.Medium);
+                return;
+            }
+
+            var hasOriginalMind = _mind.TryGetMind(target, out var targetMind, out var targetMindComp);
+            if (!hasOriginalMind && HasComp<ActorComponent>(target))
+            {
+                popupSys.PopupEntity("Не вдалося безпечно відокремити свідомість цілі.", uid, PopupType.Medium);
+                return;
+            }
+
+            comp.ControlContainer ??= _containers.EnsureContainer<Container>(uid, "GhostControlContainer");
+            var mindHolder = Spawn(prototype: null, coordinates: MapCoordinates.Nullspace);
+            EnsureComp<MindContainerComponent>(mindHolder);
+
+            if (!_containers.Insert(mindHolder, comp.ControlContainer))
+            {
+                Del(mindHolder);
+                popupSys.PopupEntity("Не вдалося підготувати тіло для контролю.", uid, PopupType.Medium);
+                return;
+            }
+
+            comp.ControlledTarget = target;
+            comp.ControlledMind = ghostMind;
+            comp.OriginalTargetMind = hasOriginalMind ? targetMind : null;
+            comp.ControlMindHolder = mindHolder;
+
+            if (hasOriginalMind)
+                _mind.TransferTo(targetMind, mindHolder, mind: targetMindComp);
+
+            _mind.TransferTo(ghostMind, target);
+            comp.ControlTimeEnd = _timing.CurTime + comp.ControlDuration;
+            comp.ControlCooldownEnd = _timing.CurTime + comp.ControlCooldown;
+
+            if (TryComp<GhostRoleComponent>(uid, out var ghostRole))
+                _ghostRoles.UnregisterGhostRole((uid, ghostRole));
+
+            popupSys.PopupEntity("Ви тимчасово заволоділи тілом цілі.", target, target, PopupType.Medium);
+        }
+
+        private void EndControl(EntityUid uid, GhostTargetingComponent comp)
+        {
+            if (comp.ControlledTarget is not { } target)
+                return;
+
+            var sourceExists = !TerminatingOrDeleted(uid);
+            var targetExists = !TerminatingOrDeleted(target);
+
+            if (comp.ControlledMind is { } controlledMind && !TerminatingOrDeleted(controlledMind))
+            {
+                EntityUid? returnTo = sourceExists ? uid : null;
+                _mind.TransferTo(controlledMind, returnTo);
+            }
+
+            if (comp.OriginalTargetMind is { } originalMind && !TerminatingOrDeleted(originalMind))
+                _mind.TransferTo(originalMind, targetExists ? target : null);
+
+            if (sourceExists && TryComp<GhostRoleComponent>(uid, out var ghostRole))
+                _ghostRoles.RegisterGhostRole((uid, ghostRole));
+
+            if (comp.ControlContainer != null)
+                _containers.CleanContainer(comp.ControlContainer);
+
+            comp.ControlledTarget = null;
+            comp.ControlledMind = null;
+            comp.OriginalTargetMind = null;
+            comp.ControlMindHolder = null;
+            comp.ControlTimeEnd = TimeSpan.Zero;
+
+            if (sourceExists)
+                EntityManager.System<SharedPopupSystem>().PopupEntity("Контроль над тілом завершився.", uid, PopupType.Medium);
+        }
+
         //  Приватні методи для логіки
         private void SaveState(EntityUid uid, GhostTargetingComponent comp)
         {
@@ -386,6 +559,7 @@ namespace Content.Pirate.Server.Systems
             comp.SavedState.HadActiveListener = EntityManager.HasComponent<ActiveListenerComponent>(uid);
             comp.SavedState.HadWeakToHoly = EntityManager.HasComponent<WeakToHolyComponent>(uid);
             comp.SavedState.HadCrematoriumImmune = EntityManager.HasComponent<CrematoriumImmuneComponent>(uid);
+            comp.SavedState.HadGodmode = EntityManager.HasComponent<GodmodeComponent>(uid);
         }
 
         private void AddGhostComponents(EntityUid uid, GhostTargetingComponent comp)
@@ -427,6 +601,8 @@ namespace Content.Pirate.Server.Systems
                 EntityManager.EnsureComponent<WeakToHolyComponent>(uid).AlwaysTakeHoly = true;
             if (!comp.SavedState.HadCrematoriumImmune)
                 EntityManager.EnsureComponent<CrematoriumImmuneComponent>(uid);
+            if (!comp.SavedState.HadGodmode)
+                EntityManager.EnsureComponent<GodmodeComponent>(uid);
         }
 
         private void SetupEyeForGhost(EntityUid uid, GhostTargetingComponent comp, bool ghostMode)
@@ -602,6 +778,8 @@ namespace Content.Pirate.Server.Systems
                 EntityManager.RemoveComponent<WeakToHolyComponent>(uid);
             if (!comp.SavedState.HadCrematoriumImmune && EntityManager.HasComponent<CrematoriumImmuneComponent>(uid))
                 EntityManager.RemoveComponent<CrematoriumImmuneComponent>(uid);
+            if (!comp.SavedState.HadGodmode && EntityManager.HasComponent<GodmodeComponent>(uid))
+                EntityManager.RemoveComponent<GodmodeComponent>(uid);
         }
 
 
