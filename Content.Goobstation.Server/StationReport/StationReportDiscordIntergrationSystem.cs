@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Content.Goobstation.Common.CCVar;
 using Content.Goobstation.Common.StationReport;
+using Content.Server.Discord;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
@@ -70,7 +71,8 @@ public sealed partial class StationReportDiscordIntergrationSystem : EntitySyste
         if (string.IsNullOrWhiteSpace(message) || string.IsNullOrWhiteSpace(_webhookUrl))
             return;
 
-        var payload = new { content = message };
+        // Pirate: player-written paper must never notify Discord users or roles.
+        var payload = new { content = message, allowed_mentions = new WebhookMentions() };
         var json = System.Text.Json.JsonSerializer.Serialize(payload);
         var content = new StringContent(json, Encoding.UTF8, "application/json");
 
