@@ -1,5 +1,6 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Robust.Shared.GameStates;
 using Robust.Shared.Containers;
 using System.Collections.Generic;
 
@@ -31,14 +32,14 @@ namespace Content.Pirate.Shared.Components
         public bool HadSpeechDead;
         public string? OldSpeechVerb;
     }
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
     public sealed partial class GhostTargetingComponent : Component
     {
         [ViewVariables]
         public GhostStateSnapshot? SavedState { get; set; }
 
         // --- Основна інформація ---
-        [ViewVariables]
+        [ViewVariables, AutoNetworkedField]
         public bool IsGhost { get; set; } = false;
         [ViewVariables]
         public NetEntity Target { get; set; } = NetEntity.Invalid;
@@ -72,6 +73,8 @@ namespace Content.Pirate.Shared.Components
 
         [ViewVariables]
         public EntityUid? ControlMindHolder;
+
+        public bool WasVisitingGhost;
 
         [ViewVariables]
         public TimeSpan ControlTimeEnd;

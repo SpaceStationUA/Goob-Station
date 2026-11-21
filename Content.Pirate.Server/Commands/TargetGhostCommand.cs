@@ -133,7 +133,13 @@ namespace Content.Pirate.Server.Commands
                 shell.WriteLine($"Entity {secondUid} не має EyeComponent. Target ghost не встановлено.");
                 return;
             }
-            ghostComp.Target = entManager.GetNetEntity(secondUid);
+            var select = new SetTargetGhostActionEvent { Performer = firstUid, Target = secondUid };
+            entManager.EventBus.RaiseLocalEvent(firstUid, select);
+            if (!select.Handled)
+            {
+                shell.WriteLine("Не вдалося обрати цю ціль.");
+                return;
+            }
             shell.WriteLine($"Target ghost для entity {firstUid} встановлено на {secondUid}.");
         }
     }

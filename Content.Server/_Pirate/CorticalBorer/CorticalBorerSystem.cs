@@ -7,6 +7,7 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Pirate.Shared;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Chat.Managers;
@@ -74,6 +75,7 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         SubscribeLocalEvent<CorticalBorerComponent, CorticalBorerDispenserInjectMessage>(OnInjectReagentMessage);
         SubscribeLocalEvent<CorticalBorerComponent, CorticalBorerDispenserSetInjectAmountMessage>(OnSetInjectAmountMessage);
         SubscribeLocalEvent<InventoryComponent, InfestHostAttempt>(OnInfestHostAttempt);
+        SubscribeLocalEvent<CorticalBorerComponent, RelinquishBodyControlEvent>(OnRelinquishBody);
         SubscribeLocalEvent<CorticalBorerComponent, CheckTargetedSpeechEvent>(OnTargetedSpeech);
         SubscribeLocalEvent<CorticalBorerComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<CorticalBorerComponent, ModifyChangedTemperatureEvent>(OnTemperatureChange);
@@ -112,6 +114,12 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
             if (_timing.CurTime >= component.ControlTimeEnd)
                 EndControl(component.Borer);
         }
+    }
+
+    private void OnRelinquishBody(Entity<CorticalBorerComponent> ent, ref RelinquishBodyControlEvent args)
+    {
+        if (ent.Comp.ControlingHost)
+            EndControl(ent);
     }
 
     private void OnTargetedSpeech(Entity<CorticalBorerComponent> ent, ref CheckTargetedSpeechEvent args)
@@ -288,6 +296,9 @@ public sealed partial class CorticalBorerSystem : SharedCorticalBorerSystem
         {
             return;
         }
+
+        var relinquish = new RelinquishBodyControlEvent();
+        RaiseLocalEvent(host, ref relinquish);
 
         if (TryComp<MindContainerComponent>(host, out var mindContainer) && mindContainer.HasMind ||
             HasComp<GhostRoleComponent>(host))

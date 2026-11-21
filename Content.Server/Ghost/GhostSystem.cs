@@ -291,6 +291,10 @@ namespace Content.Server.Ghost
 
         private void DeleteEntity(EntityUid uid)
         {
+            // Pirate: an admin observer must survive detachment until its temporary possession ends.
+            if (TryComp<Content.Pirate.Shared.Components.GhostTargetingComponent>(uid, out var spirit) && spirit.ControlledTarget != null)
+                return;
+
             if (Deleted(uid) || Terminating(uid))
                 return;
 

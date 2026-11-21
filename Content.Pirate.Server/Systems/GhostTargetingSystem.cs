@@ -34,7 +34,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Examine;
-using Content.Server.Chat.Systems;
+using Content.Server.Mind;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Shared.Speech;
@@ -67,7 +67,10 @@ namespace Content.Pirate.Server.Systems
             SubscribeLocalEvent<GhostTargetingComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<GhostTargetingComponent, ClearTargetGhostActionEvent>(OnClearTargetGhost);
             SubscribeLocalEvent<GhostTargetingComponent, SetTargetGhostActionEvent>(OnSetTargetGhost);
-            SubscribeLocalEvent<GhostTargetingComponent, CheckTargetedSpeechEvent>(OnTargetedSpeech);
+            SubscribeLocalEvent<GhostTargetingComponent, RelinquishBodyControlEvent>(OnRelinquishSpirit);
+            SubscribeLocalEvent<GhostPossessedComponent, RelinquishBodyControlEvent>(OnRelinquishBody);
+            SubscribeLocalEvent<GhostPossessedComponent, EntityTerminatingEvent>(OnPossessedBodyTerminating, before: [typeof(MindSystem)]);
+            SubscribeLocalEvent<GhostTargetingComponent, EntityTerminatingEvent>(OnSpiritTerminating, before: [typeof(MindSystem)]);
             SubscribeLocalEvent<GhostTargetingComponent, ToggleGhostFormActionEvent>(OnToggleGhostForm);
             SubscribeLocalEvent<GhostTargetingComponent, GhostBlinkActionEvent>(OnGhostBlinkAction);
             SubscribeLocalEvent<GhostTargetingComponent, TakeControlGhostActionEvent>(OnTakeControlGhost);
@@ -164,17 +167,34 @@ namespace Content.Pirate.Server.Systems
                 }
             }
 
-            // EyeComponent: якщо вже є ціль, одразу оновити маску видимості
-            var ghostLayer = (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
-            if (ghost.Comp.Target != NetEntity.Invalid)
-            {
-                var targetUid = EntityManager.GetEntity(ghost.Comp.Target);
-                if (EntityManager.TryGetComponent<EyeComponent>(targetUid, out var targetEye) && targetEye != null)
-                {
-                    var eyeSys = EntityManager.System<EyeSystem>();
-                    eyeSys.SetVisibilityMask(targetUid, targetEye.VisibilityMask | ghostLayer, targetEye);
-                }
-            }
+            if (TryGetEntity(ghost.Comp.Target, out var target))
+                GrantTargetSight(ghost.Owner, target.Value);
+        }
+
+        private const int SpiritLayer = (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
+
+        private void GrantTargetSight(EntityUid spirit, EntityUid target)
+        {
+            if (!TryComp<EyeComponent>(target, out var eye))
+                return;
+
+            var viewer = EnsureComp<GhostTargetViewerComponent>(target);
+            if (!viewer.Spirits.Add(spirit) || viewer.Spirits.Count != 1)
+                return;
+
+            viewer.HadLayer = (eye.VisibilityMask & SpiritLayer) != 0;
+            EntityManager.System<EyeSystem>().SetVisibilityMask(target, eye.VisibilityMask | SpiritLayer, eye);
+        }
+
+        private void RevokeTargetSight(EntityUid spirit, GhostTargetingComponent form)
+        {
+            if (!TryGetEntity(form.Target, out var target) || !TryComp<GhostTargetViewerComponent>(target, out var viewer) ||
+                !viewer.Spirits.Remove(spirit) || viewer.Spirits.Count != 0)
+                return;
+
+            if (!viewer.HadLayer && TryComp<EyeComponent>(target, out var eye))
+                EntityManager.System<EyeSystem>().SetVisibilityMask(target.Value, eye.VisibilityMask & ~SpiritLayer, eye);
+            RemComp<GhostTargetViewerComponent>(target.Value);
         }
 
         private void OnRemove(Entity<GhostTargetingComponent> ghost, ref ComponentRemove args)
@@ -182,11 +202,16 @@ namespace Content.Pirate.Server.Systems
             if (ghost.Comp.ControlledTarget is not null)
                 EndControl(ghost.Owner, ghost.Comp);
 
+            RevokeTargetSight(ghost.Owner, ghost.Comp);
+            if (TerminatingOrDeleted(ghost.Owner))
+                return;
+
             // Відновлюємо стару форму, якщо entity був у ghost-формі
             if (ghost.Comp.SavedState?.VisibilityLayers.HasValue == true)
             {
                 var uid = ghost.Owner;
                 var visSys = EntityManager.System<VisibilitySystem>();
+                RemoveImmunities(uid, ghost.Comp);
 
                 // Eye
                 if (EntityManager.TryGetComponent<EyeComponent>(uid, out var eyeNormal) && eyeNormal != null)
@@ -212,24 +237,7 @@ namespace Content.Pirate.Server.Systems
                         physicsSys.SetBodyType(uid, ghost.Comp.SavedState.BodyType.Value, body: physics);
                 }
 
-                // Відновити старі шари видимості
-                if (EntityManager.TryGetComponent(uid, out VisibilityComponent? visComp2) && visComp2 != null)
-                {
-                    // Видаляємо TargetingGhost і Normal
-                    visSys.RemoveLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost, false);
-                    visSys.RemoveLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.Normal, false);
-
-                    // Додаємо всі біти зі старого Layer
-                    var layers = (ushort) ghost.Comp.SavedState.VisibilityLayers.Value;
-                    for (var i = 0; i < 16; i++)
-                    {
-                        var flag = (ushort) (1 << i);
-                        if ((layers & flag) != 0)
-                            visSys.AddLayer((uid, visComp2), flag, false);
-                    }
-
-                    visSys.RefreshVisibility(uid, visibilityComponent: visComp2);
-                }
+                visSys.SetLayer(uid, (ushort) ghost.Comp.SavedState.VisibilityLayers.Value);
 
                 // Видалити компоненти, якщо їх не було до перетворення
                 if (!ghost.Comp.SavedState.HadContentEye && EntityManager.HasComponent<ContentEyeComponent>(uid))
@@ -261,98 +269,31 @@ namespace Content.Pirate.Server.Systems
 
         public void OnClearTargetGhost(EntityUid uid, GhostTargetingComponent comp, ClearTargetGhostActionEvent args)
         {
-            var ghostLayer = (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
-            var popupSys = EntityManager.System<SharedPopupSystem>();
+            if (TryGetEntity(comp.Target, out var target))
+                EntityManager.System<SharedPopupSystem>().PopupEntity($"Ціль '{Name(target.Value)}' скинута!", uid, uid, PopupType.Medium);
 
-            // Якщо була ціль, видаляємо маску з її ока
-            if (comp.Target != NetEntity.Invalid)
-            {
-                var targetUid = EntityManager.GetEntity(comp.Target);
-                if (EntityManager.TryGetComponent<EyeComponent>(targetUid, out var eye))
-                {
-                    var eyeSys = EntityManager.System<EyeSystem>();
-                    eyeSys.SetVisibilityMask(targetUid, eye.VisibilityMask & ~ghostLayer, eye);
-                }
-
-                // Popup для користувача з ім'ям цілі
-                var name = EntityManager.GetComponent<MetaDataComponent>(targetUid).EntityName;
-                popupSys.PopupEntity($"Ціль '{name}' скинута!", uid, PopupType.Medium);
-            }
-
-            // Очищаємо ціль
+            RevokeTargetSight(uid, comp);
             comp.Target = NetEntity.Invalid;
-        }
-
-        private void OnTargetedSpeech(EntityUid uid, GhostTargetingComponent comp, CheckTargetedSpeechEvent args)
-        {
-            if (!comp.IsGhost)
-                return;
-
-            // While in spirit form, suppress local speech entirely unless a valid target
-            // was selected; the ChatSystem will deliver it only to that target.
-            args.TargetsOnly = true;
-            if (comp.Target == NetEntity.Invalid)
-                return;
-
-            var targetUid = EntityManager.GetEntity(comp.Target);
-            if (EntityManager.EntityExists(targetUid))
-                args.Targets.Add(targetUid);
+            args.Handled = true;
         }
 
         public void OnSetTargetGhost(EntityUid uid, GhostTargetingComponent comp, SetTargetGhostActionEvent args)
         {
-            var ghostLayer = (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
-            var popupSys = EntityManager.System<SharedPopupSystem>();
+            if (args.Target == uid || !EntityManager.EntityExists(args.Target))
+                return;
 
-            // Якщо була стара ціль, видаляємо маску з її ока
-            if (comp.Target != NetEntity.Invalid)
+            var popup = EntityManager.System<SharedPopupSystem>();
+            if (TryGetEntity(comp.Target, out var previous) && previous != args.Target)
             {
-                var oldTargetUid = EntityManager.GetEntity(comp.Target);
-                if (EntityManager.TryGetComponent<EyeComponent>(oldTargetUid, out var oldEye))
-                {
-                    var eyeSys = EntityManager.System<EyeSystem>();
-                    eyeSys.SetVisibilityMask(oldTargetUid, oldEye.VisibilityMask & ~ghostLayer, oldEye);
-                }
-
-                // Додатковий popup про очищення старої цілі
-                if (EntityManager.TryGetComponent<MetaDataComponent>(oldTargetUid, out var meta))
-                {
-                    var oldName = meta.EntityName;
-                    popupSys.PopupEntity($"Стара ціль '{oldName}' очищена!", uid, PopupType.Small);
-                }
+                RevokeTargetSight(uid, comp);
+                popup.PopupEntity($"Стара ціль '{Name(previous.Value)}' очищена!", uid, uid, PopupType.Small);
             }
 
-            // Встановлюємо нову ціль і даємо їй бачити привида
-            if (args.Target != EntityUid.Invalid)
-            {
-                // Перевірка чи ціль не є самою entity
-                if (args.Target == uid)
-                {
-                    popupSys.PopupEntity("Ви не можете встановити себе як ціль!", uid, PopupType.Medium);
-                    return;
-                }
-
-                // Перевірка чи ціль існує
-                if (!EntityManager.EntityExists(args.Target))
-                {
-                    popupSys.PopupEntity("Ціль не існує!", uid, PopupType.Medium);
-                    return;
-                }
-                comp.Target = EntityManager.GetNetEntity(args.Target);
-
-                // Додаємо маску новій цілі
-                if (EntityManager.TryGetComponent(args.Target, out EyeComponent? newEye))
-                {
-                    var eyeSys = EntityManager.System<EyeSystem>();
-                    eyeSys.SetVisibilityMask(args.Target, newEye.VisibilityMask | ghostLayer, newEye);
-                }
-
-                // Popup для користувача з ім'ям цілі
-                var name = EntityManager.GetComponent<MetaDataComponent>(args.Target).EntityName;
-                popupSys.PopupEntity($"Ціль встановлено: '{name}'!", uid, PopupType.Medium);
-            }
+            comp.Target = GetNetEntity(args.Target);
+            GrantTargetSight(uid, args.Target);
+            popup.PopupEntity($"Ціль встановлено: '{Name(args.Target)}'!", uid, uid, PopupType.Medium);
+            args.Handled = true;
         }
-
 
         public void OnToggleGhostForm(EntityUid uid, GhostTargetingComponent comp, ToggleGhostFormActionEvent args)
         {
@@ -366,6 +307,7 @@ namespace Content.Pirate.Server.Systems
                 AddImmunities(uid, comp);
                 SetupEyePhysicsVisibility(uid, comp, ghostMode: true);
                 comp.IsGhost = true;
+                Dirty(uid, comp);
 
                 if (EntityManager.TryGetComponent<ActionComponent>(actionEntity, out var actionComp))
                 {
@@ -375,7 +317,7 @@ namespace Content.Pirate.Server.Systems
                                 new ResPath("Interface/Actions/eyeclose.png")));
                 }
 
-                popupSys.PopupEntity("Ви перетворилися на привида!", uid, PopupType.Medium);
+                popupSys.PopupEntity("Ви перетворилися на привида!", uid, uid, PopupType.Medium);
             }
             else
             {
@@ -384,6 +326,7 @@ namespace Content.Pirate.Server.Systems
                 SetupEyePhysicsVisibility(uid, comp, ghostMode: false);
                 ClearSavedState(comp);
                 comp.IsGhost = false;
+                Dirty(uid, comp);
 
                 if (EntityManager.TryGetComponent<ActionComponent>(actionEntity, out var actionComp))
                 {
@@ -393,26 +336,26 @@ namespace Content.Pirate.Server.Systems
                                 new ResPath("Interface/Actions/eyeopen.png")));
                 }
 
-                popupSys.PopupEntity("Ви повернули свою стару форму!", uid, PopupType.Medium);
+                popupSys.PopupEntity("Ви повернули свою стару форму!", uid, uid, PopupType.Medium);
             }
         }
 
         private void OnTakeControlGhost(EntityUid uid, GhostTargetingComponent comp, TakeControlGhostActionEvent args)
         {
             var popupSys = EntityManager.System<SharedPopupSystem>();
-            if (!comp.IsGhost || comp.ControlledTarget is not null)
+            if (!comp.IsGhost || comp.ControlledTarget is not null || HasComp<GhostPossessedComponent>(uid))
                 return;
 
             if (_timing.CurTime < comp.ControlCooldownEnd)
             {
                 var remaining = Math.Ceiling((comp.ControlCooldownEnd - _timing.CurTime).TotalSeconds);
-                popupSys.PopupEntity($"Здатність відновиться через {remaining:0} с.", uid, PopupType.Medium);
+                popupSys.PopupEntity($"Здатність відновиться через {remaining:0} с.", uid, uid, PopupType.Medium);
                 return;
             }
 
             if (comp.Target == NetEntity.Invalid)
             {
-                popupSys.PopupEntity("Спершу оберіть тіло для контролю.", uid, PopupType.Medium);
+                popupSys.PopupEntity("Спершу оберіть тіло для контролю.", uid, uid, PopupType.Medium);
                 return;
             }
 
@@ -421,20 +364,24 @@ namespace Content.Pirate.Server.Systems
                 !TryComp<MobStateComponent>(target, out var targetState) ||
                 targetState.CurrentState == MobState.Dead)
             {
-                popupSys.PopupEntity("Обрана ціль не є живим тілом.", uid, PopupType.Medium);
+                popupSys.PopupEntity("Обрана ціль не є живим тілом.", uid, uid, PopupType.Medium);
                 return;
             }
 
-            if (!_mind.TryGetMind(uid, out var ghostMind, out _))
+            if (!_mind.TryGetMind(uid, out var ghostMind, out var ghostMindComp))
             {
-                popupSys.PopupEntity("Для контролю потрібна свідомість у вашому тілі.", uid, PopupType.Medium);
+                popupSys.PopupEntity("Для контролю потрібна свідомість у вашому тілі.", uid, uid, PopupType.Medium);
                 return;
             }
 
+            // Relinquish an earlier possession before taking a snapshot of the body's owner.
+            var relinquish = new RelinquishBodyControlEvent();
+            RaiseLocalEvent(target, ref relinquish);
             var hasOriginalMind = _mind.TryGetMind(target, out var targetMind, out var targetMindComp);
-            if (!hasOriginalMind && HasComp<ActorComponent>(target))
+            if (TryComp<VisitingMindComponent>(target, out var visitor) && visitor.MindId != null ||
+                !hasOriginalMind && HasComp<ActorComponent>(target))
             {
-                popupSys.PopupEntity("Не вдалося безпечно відокремити свідомість цілі.", uid, PopupType.Medium);
+                popupSys.PopupEntity("Не вдалося безпечно відокремити свідомість цілі.", uid, uid, PopupType.Medium);
                 return;
             }
 
@@ -445,7 +392,7 @@ namespace Content.Pirate.Server.Systems
             if (!_containers.Insert(mindHolder, comp.ControlContainer))
             {
                 Del(mindHolder);
-                popupSys.PopupEntity("Не вдалося підготувати тіло для контролю.", uid, PopupType.Medium);
+                popupSys.PopupEntity("Не вдалося підготувати тіло для контролю.", uid, uid, PopupType.Medium);
                 return;
             }
 
@@ -453,18 +400,73 @@ namespace Content.Pirate.Server.Systems
             comp.ControlledMind = ghostMind;
             comp.OriginalTargetMind = hasOriginalMind ? targetMind : null;
             comp.ControlMindHolder = mindHolder;
+            comp.WasVisitingGhost = ghostMindComp.VisitingEntity == uid;
+            var possession = EnsureComp<GhostPossessedComponent>(target);
+            possession.Spirit = uid;
+            if (TryComp<GhostRoleComponent>(target, out var targetRole))
+            {
+                possession.RoleWasTaken = targetRole.Taken;
+                possession.RoleWasListed = _ghostRoles.GhostRoles.Any(role => role.Owner == target);
+            }
 
             if (hasOriginalMind)
                 _mind.TransferTo(targetMind, mindHolder, mind: targetMindComp);
 
-            _mind.TransferTo(ghostMind, target);
+            if (comp.WasVisitingGhost)
+            {
+                // An aghost is a visit. Keep the admin's mind attached to their original body.
+                _mind.UnVisit(ghostMind, ghostMindComp);
+                EnsureComp<MindContainerComponent>(target);
+                Visit(ghostMind, target, ghostMindComp);
+            }
+            else
+                _mind.TransferTo(ghostMind, target);
+            // Visit does not fire MindAddedMessage. Reserve the role even for a visiting aghost.
+            if (targetRole != null)
+            {
+                _ghostRoles.SetTaken(targetRole, true);
+                _ghostRoles.UnregisterGhostRole((target, targetRole));
+            }
+
             comp.ControlTimeEnd = _timing.CurTime + comp.ControlDuration;
             comp.ControlCooldownEnd = _timing.CurTime + comp.ControlCooldown;
 
             if (TryComp<GhostRoleComponent>(uid, out var ghostRole))
                 _ghostRoles.UnregisterGhostRole((uid, ghostRole));
 
+            args.Handled = true;
             popupSys.PopupEntity("Ви тимчасово заволоділи тілом цілі.", target, target, PopupType.Medium);
+        }
+
+        private void OnRelinquishSpirit(Entity<GhostTargetingComponent> ghost, ref RelinquishBodyControlEvent args)
+        {
+            EndControl(ghost.Owner, ghost.Comp);
+        }
+
+        private void OnRelinquishBody(Entity<GhostPossessedComponent> body, ref RelinquishBodyControlEvent args)
+        {
+            if (TryComp<GhostTargetingComponent>(body.Comp.Spirit, out var ghost) && ghost.ControlledTarget == body.Owner)
+                EndControl(body.Comp.Spirit, ghost);
+        }
+
+        private void OnPossessedBodyTerminating(Entity<GhostPossessedComponent> body, ref EntityTerminatingEvent args)
+        {
+            if (TryComp<GhostTargetingComponent>(body.Comp.Spirit, out var ghost) && ghost.ControlledTarget == body.Owner)
+                EndControl(body.Comp.Spirit, ghost);
+        }
+
+        private void OnSpiritTerminating(Entity<GhostTargetingComponent> ghost, ref EntityTerminatingEvent args)
+        {
+            EndControl(ghost.Owner, ghost.Comp);
+        }
+
+        private void Visit(EntityUid mindId, EntityUid body, MindComponent mind)
+        {
+            // UnVisit defers removal. A second spirit may take the same body in this tick.
+            if (TryComp<VisitingMindComponent>(body, out var visit) && visit.MindId == null)
+                RemComp<VisitingMindComponent>(body);
+
+            _mind.Visit(mindId, body, mind);
         }
 
         private void EndControl(EntityUid uid, GhostTargetingComponent comp)
@@ -475,17 +477,46 @@ namespace Content.Pirate.Server.Systems
             var sourceExists = !TerminatingOrDeleted(uid);
             var targetExists = !TerminatingOrDeleted(target);
 
-            if (comp.ControlledMind is { } controlledMind && !TerminatingOrDeleted(controlledMind))
+            var possession = CompOrNull<GhostPossessedComponent>(target);
+            if (targetExists)
+                RemComp<GhostPossessedComponent>(target);
+
+            if (comp.ControlledMind is { } controlledMind && TryComp<MindComponent>(controlledMind, out var mind))
             {
-                EntityUid? returnTo = sourceExists ? uid : null;
-                _mind.TransferTo(controlledMind, returnTo);
+                // Deleting the admin's original body promotes the visited target to their owned body.
+                if (mind.OwnedEntity == target)
+                    _mind.TransferTo(controlledMind, sourceExists ? uid : null, ghostCheckOverride: true, mind: mind);
+                else if (comp.WasVisitingGhost)
+                {
+                    if (mind.VisitingEntity == target)
+                        _mind.UnVisit(controlledMind, mind);
+
+                    if (sourceExists && mind.VisitingEntity == null && !_mind.TryGetMind(uid, out _, out _))
+                        Visit(controlledMind, uid, mind);
+                }
+                else if (!targetExists && mind.OwnedEntity == null)
+                    _mind.TransferTo(controlledMind, sourceExists ? uid : null, mind: mind);
             }
 
-            if (comp.OriginalTargetMind is { } originalMind && !TerminatingOrDeleted(originalMind))
-                _mind.TransferTo(originalMind, targetExists ? target : null);
+            if (comp.OriginalTargetMind is { } originalMind && TryComp<MindComponent>(originalMind, out var owner) &&
+                owner.OwnedEntity == comp.ControlMindHolder)
+            {
+                var bodyAvailable = targetExists && !_mind.TryGetMind(target, out _, out _);
+                _mind.TransferTo(originalMind, bodyAvailable ? target : null, mind: owner);
+            }
 
-            if (sourceExists && TryComp<GhostRoleComponent>(uid, out var ghostRole))
-                _ghostRoles.RegisterGhostRole((uid, ghostRole));
+            if (targetExists && possession?.RoleWasTaken is { } wasTaken &&
+                TryComp<GhostRoleComponent>(target, out var role))
+            {
+                if (!_mind.TryGetMind(target, out _, out _))
+                {
+                    _ghostRoles.SetTaken(role, wasTaken);
+                    if (possession.RoleWasListed)
+                        _ghostRoles.RegisterGhostRole((target, role));
+                    else
+                        _ghostRoles.UnregisterGhostRole((target, role));
+                }
+            }
 
             if (comp.ControlContainer != null)
                 _containers.CleanContainer(comp.ControlContainer);
@@ -494,10 +525,11 @@ namespace Content.Pirate.Server.Systems
             comp.ControlledMind = null;
             comp.OriginalTargetMind = null;
             comp.ControlMindHolder = null;
+            comp.WasVisitingGhost = false;
             comp.ControlTimeEnd = TimeSpan.Zero;
 
             if (sourceExists)
-                EntityManager.System<SharedPopupSystem>().PopupEntity("Контроль над тілом завершився.", uid, PopupType.Medium);
+                EntityManager.System<SharedPopupSystem>().PopupEntity("Контроль над тілом завершився.", uid, uid, PopupType.Medium);
         }
 
         //  Приватні методи для логіки
@@ -619,8 +651,7 @@ namespace Content.Pirate.Server.Systems
                 }
                 else
                 {
-                    var mask = eyeComp.VisibilityMask | (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost;
-                    mask &= ~(int) Content.Shared.Eye.VisibilityFlags.Ghost;
+                    var mask = comp.SavedState?.VisibilityMask ?? eyeComp.VisibilityMask;
                     if (comp.SavedState?.DrawFov.HasValue == true)
                         eyeSys.SetDrawFov(uid, comp.SavedState.DrawFov.Value, eyeComp);
                     eyeSys.SetVisibilityMask(uid, mask, eyeComp);
@@ -654,32 +685,11 @@ namespace Content.Pirate.Server.Systems
 
         private void SetupVisibilityForGhost(EntityUid uid, GhostTargetingComponent comp, bool ghostMode)
         {
-            var visSys = EntityManager.System<VisibilitySystem>();
+            var visibility = EntityManager.System<VisibilitySystem>();
             if (ghostMode)
-            {
-                var visComp2 = EntityManager.EnsureComponent<VisibilityComponent>(uid);
-                visSys.RemoveLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.Normal, false);
-                visSys.AddLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost, false);
-                visSys.RefreshVisibility(uid, visibilityComponent: visComp2);
-            }
-            else
-            {
-                if (comp.SavedState?.VisibilityLayers.HasValue == true)
-                {
-                    var visComp2 = EntityManager.EnsureComponent<VisibilityComponent>(uid);
-                    visSys.RemoveLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.TargetingGhost, false);
-                    visSys.RemoveLayer((uid, visComp2), (int) Content.Shared.Eye.VisibilityFlags.Normal, false);
-                    var layers = (ushort) comp.SavedState.VisibilityLayers.Value;
-                    for (var i = 0; i < 16; i++)
-                    {
-                        var flag = (ushort) (1 << i);
-                        if ((layers & flag) != 0)
-                            visSys.AddLayer((uid, visComp2), flag, false);
-                    }
-
-                    visSys.RefreshVisibility(uid, visibilityComponent: visComp2);
-                }
-            }
+                visibility.SetLayer(uid, (ushort) Content.Shared.Eye.VisibilityFlags.TargetingGhost);
+            else if (comp.SavedState?.VisibilityLayers is { } original)
+                visibility.SetLayer(uid, (ushort) original);
         }
 
         private void SetupEyePhysicsVisibility(EntityUid uid, GhostTargetingComponent comp, bool ghostMode)

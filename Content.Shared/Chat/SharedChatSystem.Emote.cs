@@ -7,6 +7,7 @@ using Content.Shared.Chat.Prototypes;
 using Content.Shared.Speech;
 using Robust.Shared.Audio;
 using Robust.Shared.Random;
+using Robust.Shared.Player; // Pirate
 
 namespace Content.Shared.Chat;
 
@@ -171,6 +172,13 @@ public abstract partial class SharedChatSystem
         string emoteId,
         AudioParams? audioParams = null)
     {
+        return TryPlayEmoteSound(uid, proto, emoteId, audioParams, null);
+    }
+
+    // Pirate: private emotes use the same sound and volume as ordinary emotes.
+    protected bool TryPlayEmoteSound(EntityUid uid, EmoteSoundsPrototype? proto, string emoteId,
+        AudioParams? audioParams, Filter? audience)
+    {
         if (proto == null)
             return false;
 
@@ -187,7 +195,10 @@ public abstract partial class SharedChatSystem
         var param = audioParams ?? proto.GeneralParams ?? sound.Params;
 
 
-        _audio.PlayPvs(sound, uid, param);
+        if (audience == null)
+            _audio.PlayPvs(sound, uid, param);
+        else
+            _audio.PlayEntity(sound, audience, uid, false, param);
         return true;
     }
 
@@ -297,11 +308,17 @@ public abstract partial class SharedChatSystem
             return false;
         }
 
+        // Pirate: a private spirit emote must not trigger public sounds or world effects.
+        if (TryHandlePrivateEmote(uid, proto))
+            return true;
+
         var ev = new EmoteEvent(proto);
         RaiseLocalEvent(uid, ref ev);
 
         return true;
     }
+
+    protected virtual bool TryHandlePrivateEmote(EntityUid uid, EmotePrototype proto) => false; // Pirate
 
     private string TrimPunctuation(string textInput)
     {
