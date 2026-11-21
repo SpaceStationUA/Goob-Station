@@ -21,6 +21,8 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
+using Content.Pirate.Shared;
+
 namespace Content.Server._Pirate.CorticalBorer;
 
 public sealed class CorticalBorerInfestedSystem : EntitySystem
@@ -39,6 +41,7 @@ public sealed class CorticalBorerInfestedSystem : EntitySystem
         SubscribeLocalEvent<CorticalBorerInfestedComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<CorticalBorerInfestedComponent, BodyPartRemovedEvent>(OnBodyPartRemoved);
         SubscribeLocalEvent<CorticalBorerInfestedComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<CorticalBorerInfestedComponent, RelinquishBodyControlEvent>(OnRelinquishBody);
         SubscribeLocalEvent<CorticalBorerInfestedComponent, MindRemovedMessage>(OnMindRemoved);
         SubscribeLocalEvent<CorticalBorerInfestedComponent, HeadsetRadioReceiveRelayEvent>(OnRadioMessageHeard);
         SubscribeLocalEvent<CorticalBorerInfestedComponent, BeforePolymorphedEvent>(OnBeforePolymorphed);
@@ -79,6 +82,12 @@ public sealed class CorticalBorerInfestedSystem : EntitySystem
 
         _borer.EndControl(ent.Comp.Borer);
         _borer.TryEjectBorer(ent.Comp.Borer);
+    }
+
+    private void OnRelinquishBody(Entity<CorticalBorerInfestedComponent> ent, ref RelinquishBodyControlEvent args)
+    {
+        if (ent.Comp.Borer.Comp.ControlingHost)
+            _borer.EndControl(ent.Comp.Borer);
     }
 
     private void OnMindRemoved(Entity<CorticalBorerInfestedComponent> ent, ref MindRemovedMessage args)

@@ -204,7 +204,9 @@ public sealed partial class ChatSystem : SharedChatSystem
         bool forced = false // goobstation
         )
     {
-        if (HasComp<GhostComponent>(source))
+        // Pirate: a targeted spirit can use IC chat while visiting an admin observer.
+        var spiritAudience = GetSpiritAudience(source, range);
+        if (spiritAudience == null && HasComp<GhostComponent>(source))
         {
             // Ghosts can only send dead chat messages, so we'll forward it to InGame OOC.
             TrySendInGameOOCMessage(source, message, InGameOOCChatType.Dead, range == ChatTransmitRange.HideChat, shell, player);
@@ -265,7 +267,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         // Was there an emote in the message? If so, send it.
         if (player != null && emoteStr != message && emoteStr != null)
         {
-            SendEntityEmote(source, emoteStr, range, nameOverride, language, ignoreActionBlocker, forced: forced); // Einstein Engines - Language
+            SendEntityEmote(source, emoteStr, range, nameOverride, language, hideLog: hideLog, ignoreActionBlocker: ignoreActionBlocker, forced: forced); // Einstein Engines - Language
         }
 
         // This can happen if the entire string is sanitized out.
@@ -279,6 +281,13 @@ public sealed partial class ChatSystem : SharedChatSystem
             colorOverride = colorEv.Color.Value;
         // Goobstation end
 
+        // Pirate: keep emotes as actions, including when the speaker's language overrides speech.
+        if (spiritAudience != null && desiredType == InGameICChatType.Emote)
+        {
+            SendEntityEmote(source, message, range, nameOverride, language, hideLog: hideLog, ignoreActionBlocker: ignoreActionBlocker, forced: forced);
+            return;
+        }
+
         // This is really terrible. I hate myself for doing this. [-] Einstein Engines - Languages
         if (language.SpeechOverride.ChatTypeOverride is { } chatTypeOverride)
             desiredType = chatTypeOverride;
@@ -286,7 +295,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         // Pirate: systems can route a message privately to a small set of entities.
         var targetedSpeech = new CheckTargetedSpeechEvent();
         RaiseLocalEvent(source, targetedSpeech);
-        if (targetedSpeech.Targets.Count > 0 && !targetedSpeech.ChatTypeIgnore.Contains(desiredType))
+        if (spiritAudience != null ||
+            targetedSpeech.Targets.Count > 0 && !targetedSpeech.ChatTypeIgnore.Contains(desiredType))
         {
             SendEntityDirect(source,
                 message,
@@ -296,7 +306,8 @@ public sealed partial class ChatSystem : SharedChatSystem
                 language,
                 hideLog,
                 ignoreActionBlocker,
-                colorOverride);
+                colorOverride,
+                spiritAudience);
             return;
         }
 
@@ -834,9 +845,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         LanguagePrototype language,
         bool hideLog = false,
         bool ignoreActionBlocker = false,
-        Color? colorOverride = null)
+        Color? colorOverride = null,
+        Filter? spiritAudience = null)
     {
-        var message = FormattedMessage.RemoveMarkupOrThrow(originalMessage);
+        var message = FormattedMessage.RemoveMarkupPermissive(originalMessage);
         message = FormattedMessage.EscapeText(message);
         message = TransformSpeech(source, message, language);
         if (message.Length == 0)
@@ -861,18 +873,23 @@ public sealed partial class ChatSystem : SharedChatSystem
                                 (CultureInfo.CurrentCulture.IsNeutralCulture &&
                                  CultureInfo.CurrentCulture.Name == "en"));
 
-        foreach (var (session, data) in GetRecipients(source, WhisperMuffledRange))
+        void SendToSession(ICommonSession session, EntityUid listener)
         {
-            if (session.AttachedEntity is not { Valid: true } listener)
-                continue;
+            var perceived = _language.CanUnderstand(listener, language.ID) ? message : obfuscated;
 
-            if (MessageRangeCheck(session, data, range) != MessageRangeCheckResult.Full ||
-                !recipients.Contains(listener) && !HasComp<GhostComponent>(listener))
+            if (spiritAudience != null)
             {
-                continue;
+                var publicMessage = WrapPublicMessage(source, name, perceived, language, colorOverride);
+                _chatManager.ChatMessageToOne(ChatChannel.Local,
+                    perceived,
+                    publicMessage,
+                    source,
+                    range == ChatTransmitRange.HideChat,
+                    session.Channel,
+                    colorOverride: colorOverride);
+                return;
             }
 
-            var perceived = _language.CanUnderstand(listener, language.ID) ? message : obfuscated;
             var wrapped = WrapWhisperMessage(source,
                 "chat-manager-entity-whisper-wrap-message",
                 name,
@@ -886,6 +903,31 @@ public sealed partial class ChatSystem : SharedChatSystem
                 false,
                 session.Channel,
                 colorOverride: colorOverride);
+        }
+
+        if (spiritAudience != null)
+        {
+            foreach (var session in spiritAudience.Recipients)
+            {
+                if (session.AttachedEntity is { } listener)
+                    SendToSession(session, listener);
+            }
+        }
+        else
+        {
+            foreach (var (session, data) in GetRecipients(source, WhisperMuffledRange))
+            {
+                if (session.AttachedEntity is not { Valid: true } listener)
+                    continue;
+
+                if (MessageRangeCheck(session, data, range) != MessageRangeCheckResult.Full ||
+                    !recipients.Contains(listener) && !HasComp<GhostComponent>(listener))
+                {
+                    continue;
+                }
+
+                SendToSession(session, listener);
+            }
         }
 
         if (hideLog)
@@ -925,18 +967,28 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (checkEmote && !TryEmoteChatInput(source, action))
             return;
 
-        SendInVoiceRange(
-            ChatChannel.Emotes,
-            name,
-            action,
-            wrappedMessage,
-            obfuscated: "",
-            obfuscatedWrappedMessage: "",
-            source,
-            range,
-            author,
-            checkLOS: EmoteRespectsLOS // Floofstation - Some things don't go through walls, but they can go through windows.
-            ); // Einstein Engines - Language
+        // Pirate: all emote entry points, including the radial menu and smileys, meet here.
+        if (GetSpiritAudience(source, range) is { } audience)
+        {
+            foreach (var session in audience.Recipients)
+                _chatManager.ChatMessageToOne(ChatChannel.Emotes, action, wrappedMessage, source,
+                    range == ChatTransmitRange.HideChat, session.Channel, author: author);
+        }
+        else
+        {
+            SendInVoiceRange(
+                ChatChannel.Emotes,
+                name,
+                action,
+                wrappedMessage,
+                obfuscated: "",
+                obfuscatedWrappedMessage: "",
+                source,
+                range,
+                author,
+                checkLOS: EmoteRespectsLOS // Floofstation - Some things don't go through walls, but they can go through windows.
+                ); // Einstein Engines - Language
+        }
 
         if (!hideLog)
             if (name != Name(source))

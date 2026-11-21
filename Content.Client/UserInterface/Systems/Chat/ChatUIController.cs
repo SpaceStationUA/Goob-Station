@@ -47,6 +47,8 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 
+using Content.Pirate.Shared.Components; // Pirate
+
 namespace Content.Client.UserInterface.Systems.Chat;
 
 public sealed partial class ChatUIController : UIController
@@ -576,7 +578,7 @@ public sealed partial class ChatUIController : UIController
 
             // Can only send local / radio / emote when attached to a non-ghost entity.
             // TODO: this logic is iffy (checking if controlling something that's NOT a ghost), is there a better way to check this?
-            if (_ghost is not {IsGhost: true})
+            if (!UsesDeadChatForLocal)
             {
                 CanSendChannels |= ChatSelectChannel.Local;
                 CanSendChannels |= ChatSelectChannel.Whisper;
@@ -742,9 +744,13 @@ public sealed partial class ChatUIController : UIController
         }
     }
 
+    // Pirate: an observer in targeted spirit form speaks to the selected player through local chat.
+    private bool UsesDeadChatForLocal => _ghost is {IsGhost: true} &&
+        !(_ent.TryGetComponent<GhostTargetingComponent>(_player.LocalEntity, out var spirit) && spirit.LifeStage < ComponentLifeStage.Stopping && spirit.IsGhost);
+
     public ChatSelectChannel MapLocalIfGhost(ChatSelectChannel channel)
     {
-        if (channel == ChatSelectChannel.Local && _ghost is {IsGhost: true})
+        if (channel == ChatSelectChannel.Local && UsesDeadChatForLocal)
             return ChatSelectChannel.Dead;
 
         return channel;
@@ -815,7 +821,7 @@ public sealed partial class ChatUIController : UIController
 
         if (chatChannel == ChatSelectChannel.Local)
         {
-            if (_ghost?.IsGhost != true)
+            if (!UsesDeadChatForLocal)
                 return (chatChannel, text, null, null); // Goobstation - Starlight collective mind port
             else
                 chatChannel = ChatSelectChannel.Dead;

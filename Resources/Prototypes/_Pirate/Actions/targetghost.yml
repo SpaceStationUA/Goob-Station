@@ -64,3 +64,17 @@
       raiseOnUser: true
     - type: InstantAction
       event: !type:GhostBlinkActionEvent
+
+- type: entity
+  id: ActionJustDecorTakeControlGhost
+  name: "Тимчасово заволодіти тілом"
+  description: "На 12 секунд перенеси свідомість в обране тіло. Повторне використання — через 60 секунд."
+  categories: [ HideSpawnMenu ]
+  components:
+    - type: Action
+      icon: Interface/Actions/eyeclose.png
+      useDelay: 60
+      priority: 0
+      raiseOnUser: true
+    - type: InstantAction
+      event: !type:TakeControlGhostActionEvent
