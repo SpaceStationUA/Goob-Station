@@ -46,7 +46,7 @@ public sealed partial class ServerApi
             || request.Roles == null || request.Minutes < 0
             || request.Action is not ("ban" or "roleban" or "pacify")
             || (request.Action == "pacify" && (request.Minutes == 0 || request.Minutes % 1440 != 0))
-            || (request.Action == "roleban" ? request.Roles.Length is < 1 or > 25 : request.Roles.Length != 0))
+            || (request.Action == "roleban" ? request.Roles.Length is < 1 or > 512 : request.Roles.Length != 0))
         {
             await context.RespondJsonAsync(new ModerationResult("invalid"), HttpStatusCode.BadRequest);
             return;
@@ -92,6 +92,12 @@ public sealed partial class ServerApi
                 else if (role is { Length: > 6 and <= 70 } && role.StartsWith("Antag:", StringComparison.Ordinal)
                     && _prototypeManager.HasIndex<AntagPrototype>(role[6..]))
                     roleBan.AddAntag(new ProtoId<AntagPrototype>(role[6..]));
+                else if (role is { Length: > 11 and <= 75 } && role.StartsWith("Department:", StringComparison.Ordinal)
+                    && _prototypeManager.TryIndex<DepartmentPrototype>(role[11..], out var department) && department.Roles.Count > 0)
+                {
+                    foreach (var job in department.Roles)
+                        roleBan.AddJob(job);
+                }
                 else
                 {
                     await context.RespondJsonAsync(new ModerationResult("unknown_role"), HttpStatusCode.UnprocessableContent);
