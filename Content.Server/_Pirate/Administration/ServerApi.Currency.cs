@@ -10,8 +10,6 @@ namespace Content.Server.Administration;
 
 public sealed partial class ServerApi
 {
-    [Dependency] private readonly IPirateCurrencyOperations _pirateCurrency = default!;
-
     private async Task ActionPirateCurrency(IStatusHandlerContext context)
     {
         PirateCurrencyRequest request;
@@ -30,7 +28,8 @@ public sealed partial class ServerApi
             return;
         }
 
-        var result = await RunOnMainThread(() => _pirateCurrency.Apply(request));
+        // The gameplay module registers currency operations after this base server handler.
+        var result = await RunOnMainThread(() => IoCManager.Resolve<IPirateCurrencyOperations>().Apply(request));
         var status = result.State switch
         {
             "applied" => HttpStatusCode.OK,

@@ -22,7 +22,6 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
 {
     [Dependency] private readonly IAdminManager _admins = default!;
     [Dependency] private readonly IServerDbManager _db = default!;
-    [Dependency] private readonly IPirateCurrencyOperations _currencyOperations = default!; // Pirate
     [Dependency] private readonly ILogManager _logManager = default!;
     [Dependency] private readonly EuiManager _euis = default!;
     [Dependency] private readonly IEntitySystemManager _systems = default!;
@@ -147,7 +146,9 @@ public sealed class AdminNotesManager : IAdminNotesManager, IPostInjectInit
                         LastEditedById = createdBy.UserId, CreatedAt = createdAt, LastEditedAt = createdAt,
                         PlaytimeAtNote = playtime, Message = message, Severity = severity.Value,
                     };
-                    var result = _currencyOperations.Apply(new(Guid.NewGuid(), player, null, price, "purchase"), currencyNote);
+                    // Goob registers its currency manager after the base server IoC graph is built.
+                    var currency = IoCManager.Resolve<IPirateCurrencyOperations>();
+                    var result = currency.Apply(new(Guid.NewGuid(), player, null, price, "purchase"), currencyNote);
                     if (result.NoteId is not {} id)
                         return;
                     noteId = id;
