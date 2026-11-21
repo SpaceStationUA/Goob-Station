@@ -18,11 +18,20 @@ namespace Content.IntegrationTests.Tests.Minds;
 [TestFixture]
 public sealed class TargetedGhostTests
 {
-    [TestCase(false, false, false)]
-    [TestCase(true, false, false)]
-    [TestCase(true, true, false)]
-    [TestCase(true, false, true)]
-    public async Task SecondSpiritTakesOverAndReturnsTheOriginalOwner(bool visiting, bool deleteTarget, bool deleteAdminBody)
+    public enum ControlEnd
+    {
+        Timeout,
+        TargetDeleted,
+        AdminBodyDeleted,
+        AdminReassigned,
+    }
+
+    [TestCase(false, ControlEnd.Timeout)]
+    [TestCase(true, ControlEnd.Timeout)]
+    [TestCase(true, ControlEnd.TargetDeleted)]
+    [TestCase(true, ControlEnd.AdminBodyDeleted)]
+    [TestCase(true, ControlEnd.AdminReassigned)]
+    public async Task SecondSpiritTakesOverAndReturnsTheOriginalOwner(bool visiting, ControlEnd ending)
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
         var map = await pair.CreateTestMap();
@@ -75,10 +84,15 @@ public sealed class TargetedGhostTests
             Assert.That(entities.HasComponent<GodmodeComponent>(first.Spirit), Is.True);
             entities.RemoveComponent<GhostTargetingComponent>(first.Spirit);
             Assert.That(entities.HasComponent<GodmodeComponent>(first.Spirit), Is.False);
-            if (deleteAdminBody)
+            if (ending == ControlEnd.AdminBodyDeleted)
                 entities.DeleteEntity(adminBody);
+            if (ending == ControlEnd.AdminReassigned)
+            {
+                adminBody = entities.SpawnEntity("MobHuman", map.GridCoords);
+                minds.TransferTo(secondMind, adminBody, ghostCheckOverride: true);
+            }
 
-            if (deleteTarget)
+            if (ending == ControlEnd.TargetDeleted)
                 entities.DeleteEntity(target);
             else
                 entities.GetComponent<GhostTargetingComponent>(second).ControlTimeEnd = TimeSpan.Zero;
@@ -87,7 +101,7 @@ public sealed class TargetedGhostTests
         await pair.RunTicksSync(3);
         await server.WaitAssertion(() =>
         {
-            if (!deleteTarget)
+            if (ending != ControlEnd.TargetDeleted)
             {
                 Assert.That(server.System<SharedMindSystem>().TryGetMind(target, out var returned, out _), Is.True);
                 Assert.That(returned, Is.EqualTo(owner));
@@ -96,7 +110,7 @@ public sealed class TargetedGhostTests
             if (visiting)
             {
                 var adminMind = entities.GetComponent<MindComponent>(secondMind);
-                if (deleteAdminBody)
+                if (ending == ControlEnd.AdminBodyDeleted)
                 {
                     Assert.That(adminMind.OwnedEntity, Is.EqualTo(second));
                     Assert.That(adminMind.VisitingEntity, Is.Null);
@@ -104,14 +118,19 @@ public sealed class TargetedGhostTests
                 else
                 {
                     Assert.That(adminMind.OwnedEntity, Is.EqualTo(adminBody));
-                    Assert.That(adminMind.VisitingEntity, Is.EqualTo(second));
+                    EntityUid? expectedVisit = ending == ControlEnd.AdminReassigned ? null : second;
+                    Assert.That(adminMind.VisitingEntity, Is.EqualTo(expectedVisit));
                 }
             }
 
-            entities.RemoveComponent<GhostTargetingComponent>(second);
-            Assert.That(entities.HasComponent<GodmodeComponent>(second), Is.True);
             Assert.That(server.System<GhostRoleSystem>().GhostRoles.Any(role => role.Owner == target), Is.False);
-            Assert.That(entities.EntityExists(second), Is.True);
+            if (ending == ControlEnd.AdminReassigned)
+                Assert.That(entities.EntityExists(second), Is.False);
+            else
+            {
+                entities.RemoveComponent<GhostTargetingComponent>(second);
+                Assert.That(entities.HasComponent<GodmodeComponent>(second), Is.True);
+            }
         });
         await pair.CleanReturnAsync();
     }

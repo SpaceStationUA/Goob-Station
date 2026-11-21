@@ -486,12 +486,10 @@ namespace Content.Pirate.Server.Systems
                 // Deleting the admin's original body promotes the visited target to their owned body.
                 if (mind.OwnedEntity == target)
                     _mind.TransferTo(controlledMind, sourceExists ? uid : null, ghostCheckOverride: true, mind: mind);
-                else if (comp.WasVisitingGhost)
+                else if (comp.WasVisitingGhost && mind.VisitingEntity == target)
                 {
-                    if (mind.VisitingEntity == target)
-                        _mind.UnVisit(controlledMind, mind);
-
-                    if (sourceExists && mind.VisitingEntity == null && !_mind.TryGetMind(uid, out _, out _))
+                    _mind.UnVisit(controlledMind, mind);
+                    if (sourceExists && !_mind.TryGetMind(uid, out _, out _))
                         Visit(controlledMind, uid, mind);
                 }
                 else if (!targetExists && mind.OwnedEntity == null)
@@ -528,7 +526,13 @@ namespace Content.Pirate.Server.Systems
             comp.WasVisitingGhost = false;
             comp.ControlTimeEnd = TimeSpan.Zero;
 
-            if (sourceExists)
+            if (!sourceExists)
+                return;
+
+            // An external mind transfer can leave behind the observer kept alive during possession.
+            if (HasComp<GhostComponent>(uid) && !HasComp<ActorComponent>(uid) && !_mind.TryGetMind(uid, out _, out _))
+                QueueDel(uid);
+            else
                 EntityManager.System<SharedPopupSystem>().PopupEntity("Контроль над тілом завершився.", uid, uid, PopupType.Medium);
         }
 
