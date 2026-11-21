@@ -10,6 +10,7 @@ using Content.Shared.CombatMode.Pacification;
 using Content.Shared.Traits;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
@@ -39,6 +40,8 @@ public sealed class PacifiedNewbiesSystem : EntitySystem
         Subs.CVar(_configuration, NoviceProtectionCVars.PacificationEnabled, value => _enabled = value, true);
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
         SubscribeLocalEvent<PirateModerationPacifyEvent>(OnModerationPacify);
+        SubscribeLocalEvent<PiratePacificationReviewEvent>(ev => ev.Active = _pacifyManager.ReviewActive());
+        SubscribeLocalEvent<PiratePardonPacificationEvent>(OnPardonPacification);
         _tracking.SessionPlayTimeUpdated += OnPlaytimeUpdated;
     }
 
@@ -55,6 +58,14 @@ public sealed class PacifiedNewbiesSystem : EntitySystem
         if (_players.TryGetSessionById(ev.Target, out var session) && session.AttachedEntity is { } entity)
             Refresh(entity, session);
         ev.Handled = true;
+    }
+
+    private void OnPardonPacification(PiratePardonPacificationEvent ev)
+    {
+        ev.State = _pacifyManager.PardonAtVersion(ev.Target, ev.Version);
+        if (ev.State == "applied" && _players.TryGetSessionById(new NetUserId(ev.Target), out var session)
+            && session.AttachedEntity is { } entity)
+            Refresh(entity, session);
     }
 
     private void OnPlayerAttached(PlayerAttachedEvent ev)
