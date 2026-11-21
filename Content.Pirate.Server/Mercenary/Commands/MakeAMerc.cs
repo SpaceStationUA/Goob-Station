@@ -32,7 +32,7 @@ namespace Content.Pirate.Server.Mercenary.Commands
             var player = shell.Player;
             if (player != null)
             {
-                shell.WriteLine("You cannot use this command from the player.");
+                shell.WriteLine("Run makemerc from the server console. If you have sudo access, use 'sudo makemerc <uid>' in the client console.");
                 return;
             }
 
