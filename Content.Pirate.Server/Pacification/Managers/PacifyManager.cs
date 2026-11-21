@@ -1,14 +1,21 @@
-using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using Content.Server._Pirate.Administration;
 
 namespace Content.Pirate.Server.Pacification.Managers
 {
     public sealed class PacifyManager
     {
-        private static readonly Dictionary<string, (string UserName, DateTime ExpirationDate)> _pacifiedPlayers = new();
+        private readonly record struct Grant(string UserName, DateTime ExpirationDate, Guid? GrantId)
+        {
+            // Existing grants have no ID. Their original timestamp remains stable across restarts.
+            public string Version => GrantId?.ToString("N")
+                ?? "legacy-" + ExpirationDate.ToUniversalTime().Ticks.ToString(CultureInfo.InvariantCulture);
+        }
+
+        private static readonly Dictionary<string, Grant> _pacifiedPlayers = new();
         private static readonly string FilePath = Path.Combine("data", "pacify_list.json");
         private static bool _isDataLoaded = false;
 
@@ -30,7 +37,7 @@ namespace Content.Pirate.Server.Pacification.Managers
 
             var expirationDate = DateTime.Now.AddDays(days);
             var hadPrevious = _pacifiedPlayers.TryGetValue(userId, out var previous);
-            _pacifiedPlayers[userId] = (userName, expirationDate);
+            _pacifiedPlayers[userId] = new Grant(userName, expirationDate, Guid.NewGuid());
             try
             {
                 WriteToFile();
@@ -43,6 +50,38 @@ namespace Content.Pirate.Server.Pacification.Managers
                     _pacifiedPlayers.Remove(userId);
                 throw;
             }
+        }
+
+        public List<ManualPacification> ReviewActive()
+        {
+            var active = new List<ManualPacification>();
+            foreach (var entry in GetPacifyList())
+            {
+                if (Guid.TryParse(entry.UserId, out var target))
+                    active.Add(new ManualPacification(target, entry.UserName,
+                        new DateTimeOffset(entry.ExpirationDate).ToUnixTimeSeconds(), _pacifiedPlayers[entry.UserId].Version));
+            }
+            return active;
+        }
+
+        public string PardonAtVersion(Guid target, string version)
+        {
+            var id = target.ToString();
+            if (!_pacifiedPlayers.TryGetValue(id, out var entry) || entry.ExpirationDate <= DateTime.Now)
+                return "inactive";
+            if (entry.Version != version)
+                return "changed";
+            _pacifiedPlayers.Remove(id);
+            try
+            {
+                WriteToFile();
+            }
+            catch
+            {
+                _pacifiedPlayers[id] = entry;
+                throw;
+            }
+            return "applied";
         }
 
         public void RemoveFromPacify(string userId)
@@ -90,7 +129,7 @@ namespace Content.Pirate.Server.Pacification.Managers
         {
             Directory.CreateDirectory("data");
             var data = _pacifiedPlayers.ToDictionary(entry => entry.Key,
-                entry => new { entry.Value.UserName, entry.Value.ExpirationDate });
+                entry => new { entry.Value.UserName, entry.Value.ExpirationDate, entry.Value.GrantId });
             var temporary = FilePath + ".tmp";
             File.WriteAllText(temporary, JsonSerializer.Serialize(data));
             File.Move(temporary, FilePath, true);
@@ -121,7 +160,10 @@ namespace Content.Pirate.Server.Pacification.Managers
 
                                 if (expirationDate > DateTime.Now)
                                 {
-                                    _pacifiedPlayers[entry.Key] = (userName, expirationDate);
+                                    Guid? grantId = null;
+                                    if (entry.Value.TryGetValue("GrantId", out var value) && Guid.TryParse(value?.ToString(), out var parsed))
+                                        grantId = parsed;
+                                    _pacifiedPlayers[entry.Key] = new Grant(userName, expirationDate, grantId);
                                 }
                                 else
                                 {
