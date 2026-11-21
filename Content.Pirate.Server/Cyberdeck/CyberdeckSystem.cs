@@ -15,6 +15,7 @@ using Content.Server.Light.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.VendingMachines;
+using Content.Shared._Afterlight.Silicons.Synths.Battery;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Charges.Components;
 using Content.Shared.Chat;
@@ -38,6 +39,7 @@ public sealed class CyberdeckSystem : SharedCyberdeckSystem
     [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly PoweredLightSystem _light = default!;
+    [Dependency] private readonly SynthBatterySystem _synthBattery = default!;
     [Dependency] private readonly VendingMachineSystem _vending = default!;
     [Dependency] private readonly IChatManager _chat = default!;
 
@@ -50,6 +52,7 @@ public sealed class CyberdeckSystem : SharedCyberdeckSystem
         SubscribeLocalEvent<BatteryComponent, CyberdeckHackDeviceEvent>(OnBatteryHacked);
         SubscribeLocalEvent<PoweredLightComponent, CyberdeckHackDeviceEvent>(OnLightHacked);
         SubscribeLocalEvent<PowerNetworkBatteryComponent, CyberdeckHackDeviceEvent>(OnPowerNetworkHacked);
+        SubscribeLocalEvent<SynthBatteryComponent, CyberdeckHackDeviceEvent>(OnSynthHacked);
         SubscribeLocalEvent<VendingMachineComponent, CyberdeckHackDeviceEvent>(OnVendingHacked);
         SubscribeLocalEvent<CyberdeckUserComponent, CyberdeckInfoAlertEvent>(OnUserAlertClicked);
     }
@@ -64,9 +67,23 @@ public sealed class CyberdeckSystem : SharedCyberdeckSystem
     }
 
     private void OnBatteryHacked(Entity<BatteryComponent> ent, ref CyberdeckHackDeviceEvent args)
+        => HackBattery(ent.Owner, ent, args.User);
+
+    private void OnSynthHacked(Entity<SynthBatteryComponent> ent, ref CyberdeckHackDeviceEvent args)
+    {
+        if (!_synthBattery.TryGetBattery(ent.Owner, out var battery))
+        {
+            args.Refund = true;
+            return;
+        }
+
+        HackBattery(ent.Owner, battery.Value, args.User);
+    }
+
+    private void HackBattery(EntityUid target, Entity<BatteryComponent> ent, EntityUid user)
     {
         var mass = 60f;
-        if (TryComp(ent.Owner, out PhysicsComponent? physics))
+        if (TryComp(target, out PhysicsComponent? physics))
             mass = physics.FixturesMass;
 
         mass = Math.Min(mass, 1000f);
@@ -81,12 +98,12 @@ public sealed class CyberdeckSystem : SharedCyberdeckSystem
 
         var radius = percentage * MathF.Sqrt(mass) / 2f;
         var duration = TimeSpan.FromSeconds(percentage * 10f);
-        _emp.EmpPulse(Xform.GetMapCoordinates(ent.Owner), radius, currentCharge, duration);
+        _emp.EmpPulse(Xform.GetMapCoordinates(target), radius, currentCharge, duration);
 
         var message = Loc.GetString(
             "cyberdeck-battery-get-hacked",
-            ("target", Identity.Entity(ent.Owner, EntityManager, args.User)));
-        Popup.PopupEntity(message, ent.Owner, PopupType.Large);
+            ("target", Identity.Entity(target, EntityManager, user)));
+        Popup.PopupEntity(message, target, PopupType.Large);
     }
 
     private void OnAirAlarmHacked(Entity<AirAlarmComponent> ent, ref CyberdeckHackDeviceEvent args)

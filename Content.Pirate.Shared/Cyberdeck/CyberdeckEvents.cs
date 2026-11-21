@@ -28,7 +28,7 @@ public record struct CyberdeckHackDeviceEvent(EntityUid User, bool Refund = fals
 public record struct BeforeCyberdeckHackEvent(
     EntityUid OriginalTarget,
     EntityUid Target,
-    TimeSpan PenaltyTime,
+    TimeSpan MinimumHackingTime,
     bool Handled);
 
 [ByRefEvent]

@@ -18,7 +18,7 @@ public sealed partial class CyberdeckHackableComponent : Component
     public int Cost = 1;
 
     [DataField("delay"), AutoNetworkedField]
-    public TimeSpan HackingTime = TimeSpan.FromSeconds(2);
+    public TimeSpan HackingTime = TimeSpan.FromSeconds(1);
 
     [DataField]
     public EntProtoId? AfterHackingEffect = "CyberdeckAfterHackingEffect";
