@@ -893,7 +893,7 @@ public sealed class CrayonSymbolTest : InteractionTest
             {
                 Assert.That(CEntMan.Deleted(stamp), Is.True);
                 Assert.That(icon.Texture, Is.SameAs(texture.Object));
-                texture.Protected().Verify("Dispose", Times.Never(), true);
+                texture.Protected().Verify("Dispose", Times.Never(), args: [true]);
             });
         }
         finally
