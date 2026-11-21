@@ -15,6 +15,8 @@ using System.Globalization;
 using Content.Client._Pirate.Crayon;
 using Content.Client.Crayon.UI;
 using Moq;
+using Moq.Protected;
+using Robust.Client.Graphics;
 using Robust.Shared.Player;
 using Content.Server.Examine;
 using Content.IntegrationTests.Tests.Interaction;
@@ -855,18 +857,49 @@ public sealed class CrayonSymbolTest : InteractionTest
     {
         var crayon = ToServer(await PlaceInHands("CrayonWhite"));
         await Select(crayon, Symbol(CrayonSymbol.Small, White));
-        await Interact(null, TargetCoords);
-
-        await Server.WaitPost(() =>
+        // Headless Clyde ignores texture disposal. Track the handle used by the stamp instead.
+        var texture = new Mock<OwnedTexture>(new Vector2i(CrayonSymbol.Small, CrayonSymbol.Small));
+        var clyde = new Mock<IClyde>();
+        clyde.Setup(x => x.LoadTextureFromImage(It.IsAny<SixLabors.ImageSharp.Image<Rgba32>>(), null, null))
+            .Returns(texture.Object);
+        var clydeField = typeof(CrayonStampVisualSystem).GetField("_clyde", BindingFlags.Instance | BindingFlags.NonPublic)!;
+        var visuals = Client.System<CrayonStampVisualSystem>();
+        var original = Client.ResolveDependency<IClyde>();
+        try
         {
-            var tile = SEntMan.System<SharedMapSystem>()
-                .GetTileRef(MapData.Grid, MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)));
-            var cleaner = ProtoMan.Index<ReagentPrototype>("SpaceCleaner");
-            new CleanCrayonStampsReaction().TileReact(tile, cleaner, FixedPoint2.New(10), SEntMan, null);
-        });
-        await RunTicks(2);
+            await Client.WaitPost(() => clydeField.SetValue(visuals, clyde.Object));
+            await Interact(null, TargetCoords);
+            await RunTicks(5);
+            EntityUid stamp = default;
+            TextureRect icon = null;
+            await Client.WaitAssertion(() =>
+            {
+                stamp = CEntMan.AllEntities<CrayonStampComponent>().Single().Owner;
+                var sprite = CEntMan.GetComponent<Robust.Client.GameObjects.SpriteComponent>(stamp);
+                icon = new TextureRect { Texture = sprite.Icon!.Default };
+                Assert.That(icon.Texture, Is.SameAs(texture.Object));
+            });
 
-        await Server.WaitAssertion(() => Assert.That(Stamps(), Is.Empty));
+            await Server.WaitPost(() =>
+            {
+                var tile = SEntMan.System<SharedMapSystem>()
+                    .GetTileRef(MapData.Grid, MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)));
+                var cleaner = ProtoMan.Index<ReagentPrototype>("SpaceCleaner");
+                new CleanCrayonStampsReaction().TileReact(tile, cleaner, FixedPoint2.New(10), SEntMan, null);
+            });
+            await RunTicks(5);
+            await Server.WaitAssertion(() => Assert.That(Stamps(), Is.Empty));
+            await Client.WaitAssertion(() =>
+            {
+                Assert.That(CEntMan.Deleted(stamp), Is.True);
+                Assert.That(icon.Texture, Is.SameAs(texture.Object));
+                texture.Protected().Verify("Dispose", Times.Never(), true);
+            });
+        }
+        finally
+        {
+            await Client.WaitPost(() => clydeField.SetValue(visuals, original));
+        }
     }
 
     [Test]
