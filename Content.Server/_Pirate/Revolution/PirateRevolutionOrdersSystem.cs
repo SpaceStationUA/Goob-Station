@@ -4,12 +4,13 @@ using System.Linq;
 using Content.Server.Chat.Systems;
 using Content.Server.Fax;
 using Content.Server.GameTicking.Rules;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Shared.Cargo.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.GameTicking.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Paper;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 
@@ -106,33 +107,49 @@ public sealed partial class PirateRevolutionOrdersSystem : GameRuleSystem<Pirate
 
     // Orders state for the admin command when no orders rule runs, for example in other game modes.
     private PirateRevolutionOrdersComponent? _manualOrders;
+    internal int OrderRound { get; private set; }
 
     public override void Initialize()
     {
         base.Initialize();
         InitializeDirectives();
-        SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => _manualOrders = null);
+        SubscribeLocalEvent<RoundRestartCleanupEvent>(_ =>
+        {
+            _manualOrders = null;
+            _arrivals.Clear();
+            OrderRound++;
+            ResetActivity();
+        });
     }
 
     protected override void Started(EntityUid uid, PirateRevolutionOrdersComponent comp, GameRuleComponent rule, GameRuleStartedEvent args)
     {
         base.Started(uid, comp, rule, args);
         comp.NextEvent = Timing.CurTime + FirstEventDelay;
+        OrderActivityChanged?.Invoke();
+    }
+
+    protected override void Ended(EntityUid uid, PirateRevolutionOrdersComponent comp, GameRuleComponent rule, GameRuleEndedEvent args)
+    {
+        base.Ended(uid, comp, rule, args);
+        OrderActivityChanged?.Invoke();
     }
 
     protected override void ActiveTick(EntityUid uid, PirateRevolutionOrdersComponent comp, GameRuleComponent rule, float frameTime)
     {
-        if (comp.EventsSent >= 15 || Timing.CurTime < comp.NextEvent)
+        if (!_automaticOrders || comp.EventsSent >= 15 || Timing.CurTime < comp.NextEvent
+            || GetPrimaryStation() is not { } station)
             return;
 
+        var origin = OrderOrigin.Automatic;
         var sent = RobustRandom.Next(6) switch
         {
-            0 => SendOrder(comp),
-            1 => CutSalary(),
-            _ => TryIssueDirective(comp, RobustRandom.Pick(Enum.GetValues<PirateRevolutionDirectiveKind>())),
+            0 => SendOrder(comp, station, origin),
+            1 => CutSalary(station, origin),
+            _ => TryIssueDirective(comp, station, RobustRandom.Pick(Enum.GetValues<PirateRevolutionDirectiveKind>()), origin),
         };
 
-        if (sent || SendOrder(comp) || CutSalary())
+        if (sent || SendOrder(comp, station, origin) || CutSalary(station, origin))
             comp.EventsSent++;
 
         Schedule(comp);
@@ -143,19 +160,19 @@ public sealed partial class PirateRevolutionOrdersSystem : GameRuleSystem<Pirate
         comp.NextEvent = Timing.CurTime + TimeSpan.FromSeconds(RobustRandom.Next(300, 1801));
     }
 
-    public string? ForceEvent(PirateRevolutionEventKind kind, string? orderId = null)
+    public string? ForceEvent(PirateRevolutionEventKind kind, string? orderId = null, ICommonSession? admin = null)
     {
-        var rules = new List<PirateRevolutionOrdersComponent>();
-        var query = EntityQueryEnumerator<PirateRevolutionOrdersComponent, ActiveGameRuleComponent>();
-        while (query.MoveNext(out var rule, out _))
-            rules.Add(rule);
+        if (GetPrimaryStation() is not { } station)
+            return Loc.GetString("pirate-rev-ui-no-primary-station");
 
-        var comp = rules.Count > 0 ? rules[0] : _manualOrders ??= new PirateRevolutionOrdersComponent();
+        var origin = OrderOrigin.Manual(admin);
+        var rules = GetActiveOrderRules();
+        var comp = CurrentOrders(rules);
         var refusal = kind switch
         {
-            PirateRevolutionEventKind.Order when orderId != null => TrySendOrder(comp, orderId),
-            PirateRevolutionEventKind.Order => SendOrder(comp) ? null : "no order is left that the crew on the station can get",
-            PirateRevolutionEventKind.Salary => CutSalary() ? null : $"no department with crew on the station is under the {MaxSalaryCut}% cap",
+            PirateRevolutionEventKind.Order when orderId != null => TrySendOrder(comp, station, orderId, origin),
+            PirateRevolutionEventKind.Order => SendOrder(comp, station, origin) ? null : "no order is left that the crew on the station can get",
+            PirateRevolutionEventKind.Salary => CutSalary(station, origin) ? null : $"no department with crew on the station is under the {MaxSalaryCut}% cap",
             PirateRevolutionEventKind.Tax => Directive(PirateRevolutionDirectiveKind.Tax),
             PirateRevolutionEventKind.Termination => Directive(PirateRevolutionDirectiveKind.Termination),
             PirateRevolutionEventKind.Passport => Directive(PirateRevolutionDirectiveKind.Passport),
@@ -175,18 +192,42 @@ public sealed partial class PirateRevolutionOrdersSystem : GameRuleSystem<Pirate
 
         string? Directive(PirateRevolutionDirectiveKind directive)
         {
-            return TryIssueDirective(comp, directive) ? null : "nobody on the station fits this directive";
+            return TryIssueDirective(comp, station, directive, origin) ? null : "nobody on the station fits this directive";
         }
     }
 
-    public HashSet<string> GetPresentJobs()
+    private List<PirateRevolutionOrdersComponent> GetActiveOrderRules()
+    {
+        var rules = new List<PirateRevolutionOrdersComponent>();
+        var query = EntityQueryEnumerator<PirateRevolutionOrdersComponent, ActiveGameRuleComponent>();
+        while (query.MoveNext(out var rule, out _))
+            rules.Add(rule);
+
+        return rules;
+    }
+
+    private PirateRevolutionOrdersComponent CurrentOrders(List<PirateRevolutionOrdersComponent> rules)
+    {
+        return rules.Count > 0 ? rules[0] : _manualOrders ??= new PirateRevolutionOrdersComponent();
+    }
+
+    internal EntityUid? GetPrimaryStation()
+    {
+        return GameTicker.DefaultMap != MapId.Nullspace
+            && _stations.GetStationInMap(GameTicker.DefaultMap) is { } station
+            && HasComp<StationJobsComponent>(station) ? station : null;
+    }
+
+    public HashSet<string> GetPresentJobs() => GetPrimaryStation() is { } station ? GetPresentJobs(station) : new();
+
+    private HashSet<string> GetPresentJobs(EntityUid station)
     {
         var jobs = new HashSet<string>();
         var query = EntityQueryEnumerator<ActorComponent, MobStateComponent>();
         while (query.MoveNext(out var mob, out _, out var mobState))
         {
             if (_mobState.IsAlive(mob, mobState) && _mind.TryGetMind(mob, out var mindId, out _)
-                && _job.MindTryGetJobId(mindId, out var job) && job is { } jobId)
+                && _bankCards.GetSalaryStation(mindId, mob) == station && _job.MindTryGetJobId(mindId, out var job) && job is { } jobId)
             {
                 jobs.Add(jobId);
             }
@@ -200,9 +241,9 @@ public sealed partial class PirateRevolutionOrdersSystem : GameRuleSystem<Pirate
         return order.Jobs.Length == 0 || order.Jobs.Any(presentJobs.Contains);
     }
 
-    private bool SendOrder(PirateRevolutionOrdersComponent comp)
+    private bool SendOrder(PirateRevolutionOrdersComponent comp, EntityUid station, OrderOrigin origin)
     {
-        var jobs = GetPresentJobs();
+        var jobs = GetPresentJobs(station);
         var available = new List<PirateRevolutionOrder>();
         foreach (var order in Orders)
         {
@@ -213,71 +254,38 @@ public sealed partial class PirateRevolutionOrdersSystem : GameRuleSystem<Pirate
         if (available.Count == 0)
             return false;
 
-        DispatchOrder(comp, RobustRandom.Pick(available));
+        DispatchOrder(comp, station, RobustRandom.Pick(available), origin);
         return true;
     }
 
     // An admin may send an order again, but not to a station without its jobs.
-    private string? TrySendOrder(PirateRevolutionOrdersComponent comp, string id)
+    private string? TrySendOrder(PirateRevolutionOrdersComponent comp, EntityUid station, string id, OrderOrigin origin)
     {
         if (Array.Find(Orders, o => o.Id == id) is not { } order)
             return $"unknown order '{id}'";
 
-        if (!IsEligible(order, GetPresentJobs()))
+        if (!IsEligible(order, GetPresentJobs(station)))
             return $"order '{id}' needs one of these jobs on the station: {string.Join(", ", order.Jobs)}";
 
-        DispatchOrder(comp, order);
+        DispatchOrder(comp, station, order, origin);
         return null;
     }
 
-    private void DispatchOrder(PirateRevolutionOrdersComponent comp, PirateRevolutionOrder selected)
+    private void DispatchOrder(PirateRevolutionOrdersComponent comp, EntityUid station, PirateRevolutionOrder selected, OrderOrigin origin,
+        string? announcement = null)
     {
         comp.UsedOrders.Add(selected.Id);
         var order = Loc.GetString(selected.Key);
-        Announce(Loc.GetString("pirate-rev-order-announcement", ("order", order)), Loc.GetString("pirate-rev-order-sender"));
-        SendCommandFax(Loc.GetString("pirate-rev-order-fax-name"), Loc.GetString("pirate-rev-order-sender"),
-            Loc.GetString("pirate-rev-order-fax", ("order", order)),
+        Announce(station, announcement ?? Loc.GetString("pirate-rev-order-announcement", ("order", order)),
+            Loc.GetString("pirate-rev-order-sender"), origin, Loc.GetString(selected.DescriptionKey));
+        SendCommandFax(station, Loc.GetString("pirate-rev-order-fax-name"), Loc.GetString("pirate-rev-order-sender"),
+            announcement ?? Loc.GetString("pirate-rev-order-fax", ("order", order)),
             selected.Jobs.Length == 0 ? null : JobDepartments(selected.Jobs));
     }
 
-    private void Announce(string message, string sender)
+    private void Announce(EntityUid station, string message, string sender, OrderOrigin origin, string order)
     {
-        _chat.DispatchGlobalAnnouncement(message, sender: sender, colorOverride: Color.Gold);
-    }
-
-    private bool CutSalary()
-    {
-        var stations = new List<EntityUid>();
-        var query = EntityQueryEnumerator<StationBankAccountComponent>();
-        while (query.MoveNext(out var station, out _))
-            stations.Add(station);
-        if (stations.Count == 0)
-            return false;
-
-        var present = new HashSet<string>();
-        foreach (var job in GetPresentJobs())
-        {
-            if (_job.TryGetAllDepartments(job, out var departments))
-                present.UnionWith(departments.Select(department => department.ID));
-        }
-
-        var selected = RobustRandom.Pick(stations);
-        var cuts = EnsureComp<PirateRevolutionSalaryCutsComponent>(selected);
-        var available = Departments
-            .Where(department => present.Contains(department)
-                && cuts.Cuts.GetValueOrDefault(department) + SalaryCutPercent <= MaxSalaryCut)
-            .ToList();
-        if (available.Count == 0)
-            return false;
-
-        var department = RobustRandom.Pick(available);
-        var total = cuts.Cuts.GetValueOrDefault(department) + SalaryCutPercent;
-        cuts.Cuts[department] = total;
-        var sender = Loc.GetString("pirate-rev-order-sender");
-        var message = Loc.GetString("pirate-rev-salary-cut", ("department", Loc.GetString($"department-{department}")),
-            ("percent", SalaryCutPercent), ("total", total));
-        Announce(message, sender);
-        SendCommandFax(Loc.GetString("pirate-rev-order-fax-name"), sender, message, new[] { department });
-        return true;
+        _chat.DispatchStationAnnouncement(station, message, sender: sender, colorOverride: Color.Gold);
+        RecordOrder(origin, order, message);
     }
 }

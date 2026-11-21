@@ -82,8 +82,8 @@ pirate-rev-order-desc-chem-dispensers = Хіміки записують час �
 pirate-rev-order-desc-service-paid-food = Уся їжа та напої коштують щонайменше 50 спесо
 pirate-rev-order-desc-service-alcohol-log = Бармен записує покупців алкоголю; п'яним не продавати
 pirate-rev-order-desc-service-taste-test = Офіцер СБ куштує всю їжу перед подачею
-pirate-rev-order-desc-cargo-approval = Замовлення карго потребують штампу квартирмейстера й погодження СБ або голови персоналу
-pirate-rev-order-desc-cargo-sales-tax = Працівники карго (крім квартирмейстера) платять СБ 10% з кожного продажу
+pirate-rev-order-desc-cargo-approval = Замовлення карго зі штампом КМ і згодою СБ або голови персоналу
+pirate-rev-order-desc-cargo-sales-tax = Працівники карго, крім КМ, платять СБ 10% з кожного продажу
 
 pirate-rev-directive-target = { $name } ({ $job })
 

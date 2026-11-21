@@ -2,6 +2,7 @@
 
 using System.Linq;
 using Content.Server.Administration;
+using Content.Server.EUI;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 
@@ -11,6 +12,7 @@ namespace Content.Server._Pirate.Revolution;
 public sealed class PirateRevolutionOrderCommand : LocalizedEntityCommands
 {
     [Dependency] private readonly PirateRevolutionOrdersSystem _orders = default!;
+    [Dependency] private readonly EuiManager _eui = default!;
 
     private static readonly (string Name, string Description)[] Actions =
     {
@@ -26,21 +28,26 @@ public sealed class PirateRevolutionOrderCommand : LocalizedEntityCommands
     public override string Command => "revorder";
 
     public override string Description =>
-        "Send a revolution Central Command event now and restart the orders timer. " +
+        "Open the revolution orders window or send an event from the console. Sending an event restarts the orders timer. " +
         "Works in every game mode; without the revolution rule, there is no timer to restart.";
 
     public override string Help =>
-        "Usage: revorder <action> [order id]\n" +
+        "Usage: revorder [action] [order id]\n" +
+        "Run revorder with no arguments to open the window.\n" +
         string.Join("\n", Actions.Select(action => $"  {action.Name,-12} {action.Description}")) + "\n" +
         "Order id (only after 'order'): the name of the order, for example 'music' or 'service-taste-test'.\n" +
         "  An order is sent only when at least one of its jobs is on the station. Use 'revorder list' to see them.\n" +
-        "Directives name only living crew outside Command, Security and Silicon, one directive per person per round.";
+        "Directives name only living, connected crew outside Command, Security, Silicon and Central Command.\n" +
+        "Crew are eligible five minutes after arrival and can receive one directive per round.";
 
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         if (args.Length == 0)
         {
-            shell.WriteLine(Help);
+            if (shell.Player is { } player)
+                _eui.OpenEui(new PirateRevolutionOrderEui(), player);
+            else
+                shell.WriteLine(Help);
             return;
         }
 
@@ -54,19 +61,20 @@ public sealed class PirateRevolutionOrderCommand : LocalizedEntityCommands
             return;
         }
 
-        if (!Enum.TryParse<PirateRevolutionEventKind>(args[0], true, out var kind) || int.TryParse(args[0], out _))
+        if (!Enum.TryParse<PirateRevolutionEventKind>(args[0], true, out var kind)
+            || !Enum.IsDefined(kind) || args[0].Contains(',') || int.TryParse(args[0], out _))
         {
             shell.WriteError($"unknown action '{args[0]}'. {Help}");
             return;
         }
 
-        if (args.Length > 1 && kind != PirateRevolutionEventKind.Order)
+        if (args.Length > (kind == PirateRevolutionEventKind.Order ? 2 : 1))
         {
             shell.WriteError($"only 'order' takes an order id. {Help}");
             return;
         }
 
-        var refusal = _orders.ForceEvent(kind, args.Length > 1 ? args[1] : null);
+        var refusal = _orders.ForceEvent(kind, args.Length > 1 ? args[1] : null, shell.Player);
         if (refusal != null)
             shell.WriteError(refusal);
         else

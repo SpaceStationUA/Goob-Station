@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.CriminalRecords.Systems;
 using Content.Server.StationRecords.Systems;
+using Content.Shared._Pirate.Revolution;
 using Content.Shared._Pirate.Origin.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CriminalRecords;
@@ -41,6 +42,7 @@ public sealed partial class PirateRevolutionOrdersSystem
 
     // A new arrival gets time to settle in before an order can name them.
     private static readonly TimeSpan NewArrivalTime = TimeSpan.FromMinutes(5);
+    private const int MaxDirectivePercent = 5;
 
     private static readonly HashSet<string> ExemptDepartments = new() { "Command", "Security", "Silicon", "CentralCommand" };
     private const string Passenger = "Passenger";
@@ -56,79 +58,101 @@ public sealed partial class PirateRevolutionOrdersSystem
 
     private readonly Dictionary<EntityUid, TimeSpan> _arrivals = new();
 
-    private sealed class DirectiveTarget(EntityUid mob, EntityUid mind, StationRecordKey key, string job)
-    {
-        public readonly EntityUid Mob = mob;
-        public readonly EntityUid Mind = mind;
-        public readonly StationRecordKey Key = key;
-        public readonly string Job = job;
-        public string JobTitle = string.Empty;
-    }
+    private sealed record DirectiveTarget(EntityUid Mob, EntityUid Mind, StationRecordKey Key,
+        string Job, string Name, string JobTitle);
+
+    private sealed record DirectiveRoster(int CrewCount, List<DirectiveTarget> Eligible);
+
+    private sealed record DirectiveAction(DirectiveTarget Target, string Line, int Fine = 0, string? Charge = null);
 
     private void InitializeDirectives()
     {
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(ev => _arrivals[ev.Mob] = Timing.CurTime);
     }
 
-    private bool TryIssueDirective(PirateRevolutionOrdersComponent comp, PirateRevolutionDirectiveKind kind)
+    private DirectiveRoster GetDirectiveRoster(PirateRevolutionOrdersComponent comp, EntityUid station)
     {
         // Everyone counts for the percentage, but only some may be named.
-        var crew = new Dictionary<EntityUid, int>();
-        var candidates = new List<DirectiveTarget>();
+        var crewCount = 0;
+        var eligible = new List<DirectiveTarget>();
         var query = EntityQueryEnumerator<ActorComponent, HumanoidAppearanceComponent, MobStateComponent>();
         while (query.MoveNext(out var mob, out _, out _, out var mobState))
         {
             if (!_mind.TryGetMind(mob, out var mindId, out _) || !_job.MindTryGetJobId(mindId, out var jobId)
-                || jobId is not { } job || !TryGetRecordKey(mob, out var key))
+                || jobId is not { } job || _bankCards.GetSalaryStation(mindId, mob) != station
+                || !TryGetRecordKey(mob, station, out var key))
             {
                 continue;
             }
 
-            crew[key.Value.OriginStation] = crew.GetValueOrDefault(key.Value.OriginStation) + 1;
+            crewCount++;
             if (!_mobState.IsAlive(mob, mobState) || comp.Targeted.Contains(mindId) || IsExempt(job)
-                || _arrivals.TryGetValue(mob, out var arrived) && Timing.CurTime - arrived < NewArrivalTime)
+                || _arrivals.TryGetValue(mob, out var arrived) && Timing.CurTime - arrived < NewArrivalTime
+                || !_records.TryGetRecord<GeneralStationRecord>(key.Value, out var general))
             {
                 continue;
             }
 
-            var target = new DirectiveTarget(mob, mindId, key.Value, job);
-            if (CanTarget(kind, target))
-                candidates.Add(target);
+            eligible.Add(new DirectiveTarget(mob, mindId, key.Value, job, general.Name, general.JobTitle));
         }
 
+        return new DirectiveRoster(crewCount, eligible);
+    }
+
+    private List<DirectiveTarget> GetDirectiveTargets(PirateRevolutionDirectiveKind kind, DirectiveRoster roster)
+    {
+        return roster.Eligible
+            .Where(target => CanTarget(kind, target))
+            .DistinctBy(target => target.Key)
+            .ToList();
+    }
+
+    private static int DirectiveCount(int crew, int percent, int candidates)
+    {
+        return Math.Clamp((int) Math.Round(crew * percent / 100d), 1, candidates);
+    }
+
+    private bool TryIssueDirective(PirateRevolutionOrdersComponent comp, EntityUid station,
+        PirateRevolutionDirectiveKind kind, OrderOrigin origin)
+    {
+        var roster = GetDirectiveRoster(comp, station);
+        var candidates = GetDirectiveTargets(kind, roster);
         if (candidates.Count == 0)
             return false;
 
-        // One station per directive, so the order names people of the station that gets it.
-        var station = RobustRandom.Pick(candidates).Key.OriginStation;
-        candidates.RemoveAll(c => c.Key.OriginStation != station);
         RobustRandom.Shuffle(candidates);
-        var percent = RobustRandom.Next(1, 6);
-        var count = Math.Clamp((int) Math.Round(crew[station] * percent / 100d), 1, candidates.Count);
+        var percent = RobustRandom.Next(1, MaxDirectivePercent + 1);
+        var count = DirectiveCount(roster.CrewCount, percent, candidates.Count);
+        return DispatchDirective(comp, station, kind,
+            candidates.Take(count).Select(target => PrepareDirectiveAction(kind, target)).ToList(), origin);
+    }
 
+    private bool DispatchDirective(PirateRevolutionOrdersComponent comp, EntityUid station, PirateRevolutionDirectiveKind kind,
+        List<DirectiveAction> actions, OrderOrigin origin, string? announcement = null)
+    {
         var sender = Loc.GetString($"pirate-rev-directive-{KindId(kind)}-sender");
         var lines = new List<string>();
         var jobs = new List<string>();
-        foreach (var target in candidates.Take(count))
+        foreach (var action in actions)
         {
-            if (!TryApply(kind, target, sender, out var line))
+            if (!TryApplyDirectiveAction(kind, action, sender))
                 continue;
 
-            comp.Targeted.Add(target.Mind);
-            lines.Add(line);
-            jobs.Add(target.Job);
+            comp.Targeted.Add(action.Target.Mind);
+            lines.Add(action.Line);
+            jobs.Add(action.Target.Job);
         }
 
-        if (lines.Count == 0)
+        if (lines.Count == 0 || (announcement != null && lines.Count != actions.Count))
             return false;
 
-        var message = Loc.GetString($"pirate-rev-directive-{KindId(kind)}", ("names", string.Join(", ", lines)));
-        Announce(message, sender);
-        SendCommandFax(sender, sender, message, JobDepartments(jobs));
+        var message = announcement ?? Loc.GetString($"pirate-rev-directive-{KindId(kind)}", ("names", string.Join(", ", lines)));
+        Announce(station, message, sender, origin, Loc.GetString($"pirate-rev-ui-{KindId(kind)}"));
+        SendCommandFax(station, sender, sender, message, JobDepartments(jobs));
         return true;
     }
 
-    private bool TryGetRecordKey(EntityUid mob, [NotNullWhen(true)] out StationRecordKey? key)
+    private bool TryGetRecordKey(EntityUid mob, EntityUid station, [NotNullWhen(true)] out StationRecordKey? key)
     {
         key = null;
         var name = Name(mob);
@@ -140,16 +164,16 @@ public sealed partial class PirateRevolutionOrdersSystem
             && _records.TryGetRecord<GeneralStationRecord>(cardKey, out var general)
             && general.Name == name)
         {
+            if (cardKey.OriginStation != station)
+                return false;
+
             key = cardKey;
             return true;
         }
 
-        var query = EntityQueryEnumerator<StationRecordsComponent>();
-        while (query.MoveNext(out var station, out var records))
+        if (TryComp<StationRecordsComponent>(station, out var records)
+            && _records.GetRecordByName(station, name, records) is { } id)
         {
-            if (_records.GetRecordByName(station, name, records) is not { } id)
-                continue;
-
             key = new StationRecordKey(id, station);
             return true;
         }
@@ -171,7 +195,6 @@ public sealed partial class PirateRevolutionOrdersSystem
             return false;
         }
 
-        target.JobTitle = general.JobTitle;
         switch (kind)
         {
             case PirateRevolutionDirectiveKind.Tax:
@@ -197,44 +220,50 @@ public sealed partial class PirateRevolutionOrdersSystem
         }
     }
 
-    private bool TryApply(PirateRevolutionDirectiveKind kind, DirectiveTarget target, string sender,
-        [NotNullWhen(true)] out string? line)
+    private DirectiveAction PrepareDirectiveAction(PirateRevolutionDirectiveKind kind, DirectiveTarget target,
+        int configuredFine = 0)
     {
-        line = null;
-        var name = _records.RecordName(target.Key);
+        if (kind == PirateRevolutionDirectiveKind.Tax)
+        {
+            var fine = configuredFine != 0 ? configuredFine
+                : RobustRandom.Next(RevOrderTaxFine.RandomMin / RevOrderTaxFine.Step,
+                    RevOrderTaxFine.RandomMax / RevOrderTaxFine.Step + 1) * RevOrderTaxFine.Step;
+            var line = Loc.GetString("pirate-rev-directive-tax-target",
+                ("name", target.Name), ("job", target.JobTitle), ("fine", fine));
+            return new DirectiveAction(target, line, Fine: fine);
+        }
+
+        if (kind == PirateRevolutionDirectiveKind.Crime)
+        {
+            var charge = PickCharge();
+            var line = Loc.GetString("pirate-rev-directive-crime-target",
+                ("name", target.Name), ("job", target.JobTitle), ("charge", charge));
+            return new DirectiveAction(target, line, Charge: charge);
+        }
+
+        return new DirectiveAction(target,
+            Loc.GetString("pirate-rev-directive-target", ("name", target.Name), ("job", target.JobTitle)));
+    }
+
+    private bool TryApplyDirectiveAction(PirateRevolutionDirectiveKind kind, DirectiveAction action, string sender)
+    {
+        var key = action.Target.Key;
         switch (kind)
         {
             case PirateRevolutionDirectiveKind.Tax:
-                var fine = RobustRandom.Next(10, 21) * 50;
-                if (_recordsConsole.IssueCitation(target.Key, Loc.GetString("pirate-rev-directive-tax-reason"),
-                        Loc.GetString("pirate-rev-directive-tax-details"), fine, sender, true) == null)
-                {
-                    return false;
-                }
-
-                line = Loc.GetString("pirate-rev-directive-tax-target", ("name", name), ("job", target.JobTitle), ("fine", fine));
-                return true;
+                return _recordsConsole.IssueCitation(key, Loc.GetString("pirate-rev-directive-tax-reason"),
+                    Loc.GetString("pirate-rev-directive-tax-details"), action.Fine, sender, true) != null;
             case PirateRevolutionDirectiveKind.Termination:
-                if (!_criminalRecords.TryChangeStatus(target.Key, SecurityStatus.Demote,
-                        Loc.GetString("pirate-rev-directive-termination-reason"), sender))
-                {
-                    return false;
-                }
-                break;
+                return _criminalRecords.TryChangeStatus(key, SecurityStatus.Demote,
+                    Loc.GetString("pirate-rev-directive-termination-reason"), sender);
             case PirateRevolutionDirectiveKind.Crime:
-                var charge = PickCharge();
-                if (!_criminalRecords.TryChangeStatus(target.Key, SecurityStatus.Wanted,
-                        Loc.GetString("pirate-rev-directive-crime-reason", ("charge", charge)), sender))
-                {
-                    return false;
-                }
-
-                line = Loc.GetString("pirate-rev-directive-crime-target", ("name", name), ("job", target.JobTitle), ("charge", charge));
+                return _criminalRecords.TryChangeStatus(key, SecurityStatus.Wanted,
+                    Loc.GetString("pirate-rev-directive-crime-reason", ("charge", action.Charge!)), sender);
+            case PirateRevolutionDirectiveKind.Passport:
                 return true;
+            default:
+                return false;
         }
-
-        line = Loc.GetString("pirate-rev-directive-target", ("name", name), ("job", target.JobTitle));
-        return true;
     }
 
     private string PickCharge()
