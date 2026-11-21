@@ -126,11 +126,14 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     }
 
     #region Server Bans
-    public async void CreateServerBan(CreateServerBanInfo banInfo)
+    public async void CreateServerBan(CreateServerBanInfo banInfo) => await CreateServerBanAsync(banInfo);
+
+    // Pirate: confirmed moderation reports the native database ID.
+    public async Task<int> CreateServerBanAsync(CreateServerBanInfo banInfo)
     {
         var (banDef, expires) = await CreateBanDef(banInfo, BanType.Server, null);
 
-        await _db.AddBanAsync(banDef);
+        banDef = await _db.AddBanAsync(banDef);
 
         if (_cfg.GetCVar(CCVars.ServerBanResetLastReadRules))
         {
@@ -175,6 +178,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         _chat.SendAdminAlert(logMessage);
 
         KickMatchingConnectedPlayers(banDef, "newly placed ban");
+        return banDef.Id!.Value; // Pirate
     }
 
     private NoteSeverity GetSeverityForServerBan(CreateBanInfo banInfo, CVarDef<string> defaultCVar)
@@ -228,7 +232,10 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
     #region Role Bans
 
-    public async void CreateRoleBan(CreateRoleBanInfo banInfo)
+    public async void CreateRoleBan(CreateRoleBanInfo banInfo) => await CreateRoleBanAsync(banInfo);
+
+    // Pirate: confirmed moderation reports the native database ID.
+    public async Task<int> CreateRoleBanAsync(CreateRoleBanInfo banInfo)
     {
         ImmutableArray<BanRoleDef> roleDefs =
         [
@@ -241,7 +248,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
         var (banDef, expires) = await CreateBanDef(banInfo, BanType.Role, roleDefs);
 
-        await AddRoleBan(banDef);
+        var id = await AddRoleBan(banDef);
 
         var length = expires == null
             ? Loc.GetString("cmd-roleban-inf")
@@ -263,6 +270,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
             if (_playerManager.TryGetSessionById(userId, out var session))
                 SendRoleBans(session);
         }
+        return id; // Pirate
     }
 
     private async Task<(BanDef Ban, DateTimeOffset? Expires)> CreateBanDef(
@@ -350,7 +358,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         throw new ArgumentException($"Unknown prototype kind for role bans: {typeof(T)}");
     }
 
-    private async Task AddRoleBan(BanDef banDef)
+    private async Task<int> AddRoleBan(BanDef banDef)
     {
         banDef = await _db.AddBanAsync(banDef);
 
@@ -362,6 +370,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
                 cachedBans.Add(banDef);
             }
         }
+        return banDef.Id!.Value; // Pirate
     }
 
     public async Task<string> PardonRoleBan(int banId, NetUserId? unbanningAdmin, DateTimeOffset unbanTime)

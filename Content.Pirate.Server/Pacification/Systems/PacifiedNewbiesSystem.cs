@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Pirate.Server.Pacification.Managers;
+using Content.Server._Pirate.Administration;
 using Content.Server._Pirate.Newbies;
 using Content.Server.Players.PlayTimeTracking;
 using Content.Shared._Pirate.CCVars;
@@ -22,6 +23,7 @@ public sealed class PacifiedNewbiesSystem : EntitySystem
     [Dependency] private readonly NovicePlaytimeSystem _playtime = default!;
     [Dependency] private readonly PlayTimeTrackingManager _tracking = default!;
     [Dependency] private readonly PacifyManager _pacifyManager = default!;
+    [Dependency] private readonly ISharedPlayerManager _players = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IConfigurationManager _configuration = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
@@ -36,6 +38,7 @@ public sealed class PacifiedNewbiesSystem : EntitySystem
         base.Initialize();
         Subs.CVar(_configuration, NoviceProtectionCVars.PacificationEnabled, value => _enabled = value, true);
         SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
+        SubscribeLocalEvent<PirateModerationPacifyEvent>(OnModerationPacify);
         _tracking.SessionPlayTimeUpdated += OnPlaytimeUpdated;
     }
 
@@ -44,6 +47,14 @@ public sealed class PacifiedNewbiesSystem : EntitySystem
         _tracking.SessionPlayTimeUpdated -= OnPlaytimeUpdated;
         _pending.Clear();
         base.Shutdown();
+    }
+
+    private void OnModerationPacify(PirateModerationPacifyEvent ev)
+    {
+        _pacifyManager.AddToPacify(ev.Target.ToString(), ev.Username, ev.Days);
+        if (_players.TryGetSessionById(ev.Target, out var session) && session.AttachedEntity is { } entity)
+            Refresh(entity, session);
+        ev.Handled = true;
     }
 
     private void OnPlayerAttached(PlayerAttachedEvent ev)
@@ -85,7 +96,7 @@ public sealed class PacifiedNewbiesSystem : EntitySystem
     private void Refresh(EntityUid uid, ICommonSession session)
     {
         var restricted = _enabled && _playtime.IsRestricted(session, RequiredPlaytime);
-        restricted |= _pacifyManager.IsPacified(session.Name);
+        restricted |= _pacifyManager.IsPacified(session.UserId.ToString());
 
         if (restricted)
         {

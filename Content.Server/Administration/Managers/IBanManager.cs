@@ -22,6 +22,7 @@ public interface IBanManager
     /// Create a server ban in the database, blocking connection for matching players.
     /// </summary>
     void CreateServerBan(CreateServerBanInfo banInfo);
+    Task<int> CreateServerBanAsync(CreateServerBanInfo banInfo); // Pirate: confirm persisted Discord moderation.
 
     /// <summary>
     /// Bans the specified target, address range and / or HWID. One of them must be non-null
@@ -102,6 +103,7 @@ public interface IBanManager
     /// Creates a role ban, preventing matching players from playing said roles.
     /// </summary>
     public void CreateRoleBan(CreateRoleBanInfo banInfo);
+    Task<int> CreateRoleBanAsync(CreateRoleBanInfo banInfo); // Pirate
 
     /// <summary>
     /// Pardons a role ban by its ID.

@@ -87,6 +87,7 @@ public sealed partial class ServerApi : IPostInjectInit
         RegisterActorHandler(HttpMethod.Patch, "/admin/actions/panic_bunker", ActionPanicPunker);
 
         RegisterHandler(HttpMethod.Post, "/admin/actions/send_bwoink", ActionSendBwoink); // Frontier - Discord Ahelp Reply
+        RegisterActorHandler(HttpMethod.Post, "/admin/pirate/moderation", ModeratePiratePlayer); // Pirate
         RegisterHandler(HttpMethod.Post, "/admin/actions/send_mentorhelp", ActionSendMentorHelp); // Pirate: mentorhelp relay
     }
 

@@ -29,15 +29,19 @@ namespace Content.Pirate.Server.Pacification.Managers
             }
 
             var expirationDate = DateTime.Now.AddDays(days);
-            if (!_pacifiedPlayers.ContainsKey(userId))
+            var hadPrevious = _pacifiedPlayers.TryGetValue(userId, out var previous);
+            _pacifiedPlayers[userId] = (userName, expirationDate);
+            try
             {
-                _pacifiedPlayers[userId] = (userName, expirationDate);
-                SaveToFile();
+                WriteToFile();
             }
-            else
+            catch
             {
-                _pacifiedPlayers[userId] = (userName, expirationDate);
-                SaveToFile();
+                if (hadPrevious)
+                    _pacifiedPlayers[userId] = previous;
+                else
+                    _pacifiedPlayers.Remove(userId);
+                throw;
             }
         }
 
@@ -74,27 +78,22 @@ namespace Content.Pirate.Server.Pacification.Managers
         {
             try
             {
-                if (!Directory.Exists("data"))
-                {
-                    Directory.CreateDirectory("data");
-                }
-
-                var serializableData = _pacifiedPlayers.ToDictionary(
-                    entry => entry.Key,
-                    entry => new
-                    {
-                        UserName = entry.Value.UserName,
-                        ExpirationDate = entry.Value.ExpirationDate
-                    }
-                );
-
-                var json = JsonSerializer.Serialize(serializableData);
-                File.WriteAllText(FilePath, json);
+                WriteToFile();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to save pacify list: {ex.Message}");
             }
+        }
+
+        private static void WriteToFile()
+        {
+            Directory.CreateDirectory("data");
+            var data = _pacifiedPlayers.ToDictionary(entry => entry.Key,
+                entry => new { entry.Value.UserName, entry.Value.ExpirationDate });
+            var temporary = FilePath + ".tmp";
+            File.WriteAllText(temporary, JsonSerializer.Serialize(data));
+            File.Move(temporary, FilePath, true);
         }
 
         private static void LoadFromFile()
@@ -144,12 +143,10 @@ namespace Content.Pirate.Server.Pacification.Managers
             }
         }
 
-        public bool IsPacified(string playerName)
+        public bool IsPacified(string userId)
         {
             GetPacifyList();
-            return _pacifiedPlayers.Any(entry =>
-                string.Equals(entry.Value.UserName, playerName, StringComparison.OrdinalIgnoreCase) &&
-                entry.Value.ExpirationDate > DateTime.Now);
+            return _pacifiedPlayers.TryGetValue(userId, out var entry) && entry.ExpirationDate > DateTime.Now;
         }
     }
 }
