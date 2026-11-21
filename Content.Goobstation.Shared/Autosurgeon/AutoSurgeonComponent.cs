@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared.Body.Organ; // Pirate: IPC Sandevistan
 using Content.Shared.Body.Part;
 using Content.Shared.DoAfter;
 using Robust.Shared.Audio;
@@ -51,6 +52,11 @@ public sealed partial class AutoSurgeonComponent : Component
     /// </summary>
     [DataField]
     public string? NewPartProto;
+
+    #region Pirate: IPC Sandevistan
+    [DataField]
+    public Dictionary<string, EntProtoId<OrganComponent>> AlternateOrgans = new();
+    #endregion
 
     [DataField]
     public bool OneTimeUse = true;

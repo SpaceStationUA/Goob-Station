@@ -146,6 +146,8 @@
       types:
         Shock: 10
         Heat: 10
+  - type: CyberdeckSiliconTarget # Pirate: cyberdeck
+  - type: CyberdeckHackable # Pirate: cyberdeck
   - type: SynthShock
     batteryChargeMultiplier: 10.8
     cellularDamageMultiplier: 0.2

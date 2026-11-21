@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: BaseSandevistanImplant
+  parent: BaseSyndicateContraband
+  abstract: true
+  components:
+  - type: Cybernetics
+  - type: Sprite
+    sprite: _Goobstation/Objects/Misc/sandevistan.rsi
+    state: icon
+    scale: 0.5, 0.5
+  - type: OrganActions
+    actions:
+    - ActionToggleSandevistan
+  - type: Organ
+    onAdd:
+    - type: SandevistanUser
+      thresholds:
+        Warning: 15
+        Shaking: 30
+        Damage: 45
+        Disable: 60
+
+- type: entity
+  id: BaseStatvekaSandevistanImplant
+  parent: BaseSandevistanImplant
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+  - type: Organ
+    onAdd:
+    - type: SandevistanUser
+      movementSpeedModifier: 1
+      attackSpeedModifier: 1
+      doAfterModifier: 1
+      slowfieldEnabled: true
+      thresholds:
+        Warning: 6
+        Shaking: 10
+        Damage: 20
+        Disable: 24
+
+- type: entity
+  id: OrganIPCSandevistan
+  parent: [BaseSandevistanImplant, BaseIPCOrgan]
+  name: Sandevistan
+  description: Illegal cyberware that greatly increases an IPC's speed at the cost of endurance.
+  components:
+  - type: Organ
+    slotId: sandevistan
+  - type: Tag
+    tags:
+    - Organ
+
+- type: entity
+  id: OrganIPCStatvekaSandevistan
+  parent: [BaseStatvekaSandevistanImplant, BaseIPCOrgan]
+  name: mi13 statveka sandevistan
+  description: Illegal cyberware that greatly increases an IPC's speed and reflexes at the cost of endurance.
+  components:
+  - type: Organ
+    slotId: sandevistan
+  - type: Tag
+    tags:
+    - Organ

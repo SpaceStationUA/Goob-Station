@@ -28,11 +28,15 @@ public abstract partial class SharedStationSpawningSystem
         }
 
         var displaced = new List<(string Slot, EntityUid Item)>();
+        var equippedSlots = InventorySystem.GetSlotEnumerator(owner);
+        while (equippedSlots.NextItem(out var equipped, out var slotDefinition))
+            displaced.Add((slotDefinition.Name, equipped));
+
+        // Unequipping clothing can also drop items from dependent slots, such as pockets.
         foreach (var slot in slots)
-        {
-            if (InventorySystem.TryUnequip(owner, slot, out var item, silent: true, force: true))
-                displaced.Add((slot, item.Value));
-        }
+            InventorySystem.TryUnequip(owner, slot, silent: true, force: true);
+
+        displaced.RemoveAll(entry => InventorySystem.TryGetSlotEntity(owner, entry.Slot, out var item) && item == entry.Item);
 
         EquipRoleLoadout(owner, loadout, roleProto);
 
@@ -40,6 +44,9 @@ public abstract partial class SharedStationSpawningSystem
         InventorySystem.TryGetSlotEntity(owner, "back", out var backpack);
         foreach (var (slot, item) in displaced)
         {
+            if (TerminatingOrDeleted(item))
+                continue;
+
             if (!InventorySystem.TryGetSlotEntity(owner, slot, out var occupant))
             {
                 if (InventorySystem.TryEquip(owner, item, slot, silent: true, force: true))

@@ -50,6 +50,7 @@
     maxAmount: 360
   - type: CyberdeckHackable # Pirate - Cyberdeck
     cost: 2
+    delay: 0.5 # Pirate: cyberdeck
 
 - type: entity
   name: potato battery

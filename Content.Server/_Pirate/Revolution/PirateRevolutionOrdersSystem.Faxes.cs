@@ -3,7 +3,6 @@
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Content.Server.Station.Components;
 using Content.Shared._Pirate;
 using Content.Shared.Fax.Components;
 using Content.Shared.Paper;
@@ -62,16 +61,13 @@ public sealed partial class PirateRevolutionOrdersSystem
         return false;
     }
 
-    private void SendCommandFax(string subject, string sender, string body, IReadOnlyCollection<string>? departments)
+    private void SendCommandFax(EntityUid station, string subject, string sender, string body,
+        IReadOnlyCollection<string>? departments)
     {
-        // Crewed stations only, not CentCom or other station-like maps.
-        var grids = new HashSet<EntityUid>();
-        foreach (var station in _stations.GetStationsSet())
-        {
-            if (HasComp<StationJobsComponent>(station) && TryComp<StationDataComponent>(station, out var data))
-                grids.UnionWith(data.Grids);
-        }
+        if (!TryComp<StationDataComponent>(station, out var data))
+            return;
 
+        var grids = new HashSet<EntityUid>(data.Grids);
         var faxes = EntityQueryEnumerator<FaxMachineComponent, TransformComponent>();
         while (faxes.MoveNext(out var faxUid, out var fax, out var xform))
         {

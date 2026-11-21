@@ -29,7 +29,6 @@
     startingCharge: 1000
   - type: CyberdeckHackable # Pirate - Cyberdeck
     cost: 3
-    delay: 3
   - type: StaticPrice
     price: 500
   - type: Cautery # Shitmed

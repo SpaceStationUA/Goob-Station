@@ -121,6 +121,8 @@
     targetBodyPart: Chest
     targetOrgan: Skibidi
     newPartProto: OrganHeartSandevistan
+    alternateOrgans: # Pirate: IPC Sandevistan
+      sandevistan: OrganIPCSandevistan # Pirate: IPC Sandevistan
 
 - type: entity
   parent: BaseAutosurgeonSyndicateSingle
@@ -131,6 +133,8 @@
     targetBodyPart: Chest
     targetOrgan: Skibidi
     newPartProto: OrganHeartStatvekaSandevistan
+    alternateOrgans: # Pirate: IPC Sandevistan
+      sandevistan: OrganIPCStatvekaSandevistan # Pirate: IPC Sandevistan
 
 - type: entity
   parent: BaseAutosurgeonSyndicateMultiple

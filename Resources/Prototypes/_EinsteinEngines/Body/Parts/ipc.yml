@@ -37,6 +37,8 @@
         id: "posbrain"
       pump:
         id: "pump"
+      sandevistan: # Pirate: IPC Sandevistan
+        id: sandevistan # Pirate: IPC Sandevistan
 
 - type: entity
   parent: [ PartIPCBase, BaseGroinInorganic ]

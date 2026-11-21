@@ -15,7 +15,7 @@ namespace Content.Pirate.Common.Cyberdeck.Components;
 public sealed partial class CyberdeckSiliconTargetComponent : Component
 {
     [DataField]
-    public TimeSpan PenaltyTime = TimeSpan.FromSeconds(4);
+    public TimeSpan MinimumHackingTime;
 
     [DataField]
     public SoundSpecifier VictimHackedSound =

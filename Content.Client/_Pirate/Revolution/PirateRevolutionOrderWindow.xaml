@@ -1,0 +1,95 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                      xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                      Title="{Loc 'pirate-rev-ui-title'}"
+                      MinSize="680 490" SetSize="790 700">
+    <BoxContainer Orientation="Vertical" Margin="10" SeparationOverride="8">
+        <BoxContainer Orientation="Horizontal" SeparationOverride="8">
+            <CheckBox Name="AutomaticOrders" Text="{Loc 'pirate-rev-ui-automatic'}" Disabled="True" />
+            <Label Name="RevolutionStatus"
+                   StyleClasses="LabelSubText" VerticalAlignment="Center" Visible="False" />
+            <Control HorizontalExpand="True" />
+            <Button Name="HistoryButton" Text="{Loc 'pirate-rev-ui-history'}" />
+        </BoxContainer>
+        <PanelContainer StyleClasses="LowDivider" SetHeight="2" />
+        <BoxContainer Name="Configuration" Orientation="Vertical" VerticalExpand="True" SeparationOverride="8">
+            <BoxContainer Orientation="Horizontal" VerticalExpand="True" SeparationOverride="12">
+                <BoxContainer Orientation="Vertical" MinWidth="350" SetWidth="350" SeparationOverride="5">
+                    <Label Text="{Loc 'pirate-rev-ui-order'}" StyleClasses="LabelHeading" />
+                    <LineEdit Name="OrderSearch" PlaceHolder="{Loc 'pirate-rev-ui-search'}" />
+                    <Label Name="NoOrderMatches" Text="{Loc 'pirate-rev-ui-search-empty'}" Visible="False" StyleClasses="LabelSubText" />
+                    <ScrollContainer Name="OrderScroll" VerticalExpand="True" HScrollEnabled="False">
+                        <BoxContainer Name="OrderList" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="2" />
+                    </ScrollContainer>
+                </BoxContainer>
+                <PanelContainer StyleClasses="LowDivider" SetWidth="2" />
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True" SeparationOverride="6">
+                    <Label Name="OrderName" StyleClasses="LabelHeading" ClipText="True" />
+                    <RichTextLabel Name="FixedTarget" />
+                    <BoxContainer Name="Targets" Orientation="Vertical" VerticalExpand="True" SeparationOverride="6">
+                        <BoxContainer Name="DepartmentRow" Orientation="Vertical" SeparationOverride="4">
+                            <Label Text="{Loc 'pirate-rev-ui-department'}" />
+                            <OptionButton Name="TargetSelect" HorizontalExpand="True" />
+                        </BoxContainer>
+                        <CheckBox Name="PickCrew" Text="{Loc 'pirate-rev-ui-pick-crew'}" />
+                        <BoxContainer Name="AmountRow" Orientation="Horizontal" SeparationOverride="8">
+                            <Label Name="AmountLabel" />
+                            <SpinBox Name="Amount" MinWidth="95" />
+                            <Label Name="AmountRange" StyleClasses="LabelSubText" />
+                        </BoxContainer>
+                        <BoxContainer Name="FineRow" Orientation="Vertical" SeparationOverride="4">
+                            <Label Text="{Loc 'pirate-rev-ui-fine'}" />
+                            <BoxContainer Orientation="Horizontal" SeparationOverride="8">
+                                <SpinBox Name="Fine" MinWidth="115" />
+                                <Label Name="FineRange" StyleClasses="LabelSubText" />
+                            </BoxContainer>
+                        </BoxContainer>
+                        <Label Name="CrewCount" StyleClasses="LabelSubText" />
+                        <ScrollContainer Name="CrewScroll" VerticalExpand="True" HScrollEnabled="False">
+                            <BoxContainer Name="CrewList" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="2" />
+                        </ScrollContainer>
+                    </BoxContainer>
+                </BoxContainer>
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <Button Name="RefreshButton" Text="{Loc 'pirate-rev-ui-refresh'}" />
+                <Button Name="RandomButton" Text="{Loc 'pirate-rev-ui-randomize'}" />
+                <Control HorizontalExpand="True" />
+                <Button Name="ReviewButton" Text="{Loc 'pirate-rev-ui-review'}" />
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer Name="Review" Visible="False" Orientation="Vertical" VerticalExpand="True" SeparationOverride="6">
+            <Label Name="ReviewName" StyleClasses="LabelHeading" ClipText="True" />
+            <ScrollContainer MaxHeight="110" HScrollEnabled="False" ReturnMeasure="True">
+                <RichTextLabel Name="ReviewTarget" VerticalAlignment="Top" />
+            </ScrollContainer>
+            <Label Text="{Loc 'pirate-rev-ui-template'}" StyleClasses="LabelHeading" />
+            <BoxContainer Name="Tokens" Orientation="Horizontal" SeparationOverride="5" />
+            <TextEdit Name="Template" MinHeight="72" VerticalExpand="True" HorizontalExpand="True" />
+            <Label Text="{Loc 'pirate-rev-ui-preview'}" StyleClasses="LabelHeading" />
+            <PanelContainer StyleClasses="PanelDark" VerticalExpand="True" SizeFlagsStretchRatio="2">
+                <ScrollContainer Margin="8" MinHeight="72" HScrollEnabled="False">
+                    <RichTextLabel Name="Announcement" VerticalAlignment="Top" />
+                </ScrollContainer>
+            </PanelContainer>
+            <BoxContainer Orientation="Horizontal" SeparationOverride="6">
+                <Button Name="BackButton" Text="{Loc 'pirate-rev-ui-back'}" />
+                <RichTextLabel Name="TemplateError" HorizontalExpand="True" />
+                <BoxContainer Name="Confirmation" />
+            </BoxContainer>
+        </BoxContainer>
+        <BoxContainer Name="History" Visible="False" Orientation="Vertical" VerticalExpand="True" SeparationOverride="8">
+            <Label Text="{Loc 'pirate-rev-ui-history-title'}" StyleClasses="LabelHeading" />
+            <Label Name="HistoryEmpty" Text="{Loc 'pirate-rev-ui-history-empty'}" StyleClasses="LabelSubText" Visible="False" />
+            <ScrollContainer Name="HistoryScroll" VerticalExpand="True" HScrollEnabled="False">
+                <BoxContainer Name="HistoryEntries" Orientation="Vertical" HorizontalExpand="True" SeparationOverride="6" />
+            </ScrollContainer>
+            <BoxContainer Name="HistoryNavigation" Orientation="Horizontal" SeparationOverride="6" Visible="False">
+                <Button Name="HistoryNewer" Text="{Loc 'pirate-rev-ui-history-newer'}" />
+                <Label Name="HistoryPage" />
+                <Button Name="HistoryOlder" Text="{Loc 'pirate-rev-ui-history-older'}" />
+            </BoxContainer>
+        </BoxContainer>
+        <RichTextLabel Name="Status" Visible="False" />
+    </BoxContainer>
+</controls:FancyWindow>

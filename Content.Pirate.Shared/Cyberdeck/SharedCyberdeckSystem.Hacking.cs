@@ -87,10 +87,14 @@ public abstract partial class SharedCyberdeckSystem
         if (args.Target != hackTarget)
             RaiseLocalEvent(args.Target, ref before);
 
+        var hackingTime = hackable.HackingTime >= before.MinimumHackingTime
+            ? hackable.HackingTime
+            : before.MinimumHackingTime;
+
         var doAfter = new DoAfterArgs(
             EntityManager,
             uid,
-            hackable.HackingTime + before.PenaltyTime,
+            hackingTime,
             new CyberdeckHackDoAfterEvent(),
             hackTarget,
             args.Target,
@@ -168,7 +172,7 @@ public abstract partial class SharedCyberdeckSystem
         if (args.Handled)
             return;
 
-        args.PenaltyTime += ent.Comp.PenaltyTime;
+        args.MinimumHackingTime = ent.Comp.MinimumHackingTime;
         args.Handled = true;
     }
 

@@ -9,13 +9,18 @@ public sealed partial class BankCardSystem
 {
     private readonly Dictionary<EntityUid, EntityUid> _salaryStations = new();
 
+    internal EntityUid? GetSalaryStation(EntityUid mind, EntityUid mob)
+    {
+        return _salaryStations.TryGetValue(mind, out var station) ? station : _station.GetOwningStation(mob);
+    }
+
     // All departments count, so a Command cut also reaches the Captain, who has no primary department.
     private int ApplyRevolutionSalaryCut(EntityUid mind, int salary)
     {
         if (!TryComp<MindComponent>(mind, out var mindComp) || mindComp.CurrentEntity is not { } mob ||
             !_job.MindTryGetJob(mind, out var job) || !_job.TryGetAllDepartments(job.ID, out var departments) ||
             !TryComp<PirateRevolutionSalaryCutsComponent>(
-                _salaryStations.GetValueOrDefault(mind, _station.GetOwningStation(mob) ?? EntityUid.Invalid), out var cuts))
+                GetSalaryStation(mind, mob), out var cuts))
             return salary;
 
         var percent = 0;
