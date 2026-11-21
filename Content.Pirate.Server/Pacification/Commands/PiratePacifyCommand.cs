@@ -40,7 +40,15 @@ namespace Content.Pirate.Server.Pacification.Commands
 
             if (data != null)
             {
-                new PacifyManager().AddToPacify(data.UserId.ToString(), data.Username, days);
+                try
+                {
+                    new PacifyManager().AddToPacify(data.UserId.ToString(), data.Username, days);
+                }
+                catch (Exception ex) when (ex is System.IO.IOException or UnauthorizedAccessException or ArgumentOutOfRangeException)
+                {
+                    shell.WriteError("Не вдалося зберегти обмеження.");
+                    return;
+                }
                 shell.WriteLine($"Гравець {data.Username} був доданий до списку pacify на {days} днів.");
             }
             else
