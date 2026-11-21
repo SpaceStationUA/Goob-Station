@@ -8,6 +8,7 @@ using Content.Server.Chat.Systems;
 using Content.Server.Ghost.Roles;
 using Content.Shared.Chat;
 using Content.Shared.Damage.Components;
+using Content.Shared.Emoting;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Robust.Client.UserInterface;
@@ -84,6 +85,8 @@ public sealed class TargetedGhostTests
             Assert.That(entities.HasComponent<GodmodeComponent>(first.Spirit), Is.True);
             entities.RemoveComponent<GhostTargetingComponent>(first.Spirit);
             Assert.That(entities.HasComponent<GodmodeComponent>(first.Spirit), Is.False);
+            if (visiting)
+                Assert.That(entities.HasComponent<EmotingComponent>(first.Spirit), Is.False);
             if (ending == ControlEnd.AdminBodyDeleted)
                 entities.DeleteEntity(adminBody);
             if (ending == ControlEnd.AdminReassigned)
@@ -156,7 +159,10 @@ public sealed class TargetedGhostTests
             form.Target = entities.GetNetEntity(player);
             chat.TrySendInGameICMessage(spirit, "privatebracket [", InGameICChatType.Speak, ChatTransmitRange.Normal);
             chat.TrySendInGameICMessage(spirit, "privategesture", InGameICChatType.Emote, ChatTransmitRange.Normal);
+            Assert.That(chat.TryEmoteWithChat(spirit, "Clap", nameOverride: "privatewheel"), Is.True);
             chat.TrySendInGameICMessage(spirit, "hiddenline", InGameICChatType.Speak, ChatTransmitRange.HideChat);
+            entities.EventBus.RaiseLocalEvent(spirit, new ToggleGhostFormActionEvent { Performer = spirit });
+            Assert.That(entities.HasComponent<EmotingComponent>(spirit), Is.False);
         });
         await pair.RunTicksSync(15);
         await client.WaitAssertion(() =>
@@ -167,6 +173,7 @@ public sealed class TargetedGhostTests
             Assert.That(messages.Any(m => Contains(m.Message, "unselectedgesture")), Is.False);
             Assert.That(messages.Any(m => m.Channel == ChatChannel.Local && Contains(m.Message, "privatebracket")), Is.True);
             Assert.That(messages.Any(m => m.Channel == ChatChannel.Emotes && Contains(m.Message, "privategesture")), Is.True);
+            Assert.That(messages.Any(m => m.Channel == ChatChannel.Emotes && Contains(m.WrappedMessage, "privatewheel")), Is.True);
             Assert.That(messages.Any(m => Contains(m.Message, "hiddenline")), Is.False);
         });
         await pair.CleanReturnAsync();

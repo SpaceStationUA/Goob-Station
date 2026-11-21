@@ -22,6 +22,7 @@ using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Ghost;
+using Content.Shared.Emoting;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared._Shitmed.Body.Components;
@@ -238,17 +239,7 @@ namespace Content.Pirate.Server.Systems
                 }
 
                 visSys.SetLayer(uid, (ushort) ghost.Comp.SavedState.VisibilityLayers.Value);
-
-                // Видалити компоненти, якщо їх не було до перетворення
-                if (!ghost.Comp.SavedState.HadContentEye && EntityManager.HasComponent<ContentEyeComponent>(uid))
-                    EntityManager.RemoveComponent<ContentEyeComponent>(uid);
-                if (!ghost.Comp.SavedState.HadMovementIgnoreGravity &&
-                    EntityManager.HasComponent<MovementIgnoreGravityComponent>(uid))
-                    EntityManager.RemoveComponent<MovementIgnoreGravityComponent>(uid);
-                if (!ghost.Comp.SavedState.HadCanMoveInAir && EntityManager.HasComponent<CanMoveInAirComponent>(uid))
-                    EntityManager.RemoveComponent<CanMoveInAirComponent>(uid);
-                if (!ghost.Comp.SavedState.HadPhysics && EntityManager.HasComponent<PhysicsComponent>(uid))
-                    EntityManager.RemoveComponent<PhysicsComponent>(uid);
+                RemoveGhostComponents(uid, ghost.Comp);
             }
 
             // Видаляємо всі action entity, якщо вони були додані
@@ -545,6 +536,7 @@ namespace Content.Pirate.Server.Systems
             comp.SavedState.HadFTLSmashImmune = EntityManager.HasComponent<FTLSmashImmuneComponent>(uid);
             comp.SavedState.HadUniversalLanguageSpeaker = EntityManager.HasComponent<UniversalLanguageSpeakerComponent>(uid);
             comp.SavedState.HadExaminer = EntityManager.HasComponent<ExaminerComponent>(uid);
+            comp.SavedState.HadEmoting = HasComp<EmotingComponent>(uid);
             comp.SavedState.HadSpeechDead = false;
             if (EntityManager.TryGetComponent<SpeechComponent>(uid, out var speech) && speech != null)
             {
@@ -609,6 +601,8 @@ namespace Content.Pirate.Server.Systems
                 EntityManager.EnsureComponent<UniversalLanguageSpeakerComponent>(uid);
             if (!comp.SavedState.HadExaminer)
                 EntityManager.EnsureComponent<ExaminerComponent>(uid);
+            if (!comp.SavedState.HadEmoting)
+                EnsureComp<EmotingComponent>(uid);
             if (!comp.SavedState.HadSpeechDead)
             {
                 var speech = EntityManager.EnsureComponent<SpeechComponent>(uid);
@@ -735,6 +729,8 @@ namespace Content.Pirate.Server.Systems
                 EntityManager.RemoveComponent<UniversalLanguageSpeakerComponent>(uid);
             if (!comp.SavedState.HadExaminer && EntityManager.HasComponent<ExaminerComponent>(uid))
                 EntityManager.RemoveComponent<ExaminerComponent>(uid);
+            if (!comp.SavedState.HadEmoting)
+                RemComp<EmotingComponent>(uid);
             if (!comp.SavedState.HadSpeechDead && EntityManager.HasComponent<SpeechComponent>(uid))
             {
                 var speech = EntityManager.GetComponent<SpeechComponent>(uid);

@@ -29,6 +29,7 @@ namespace Content.Pirate.Shared.Components
         public bool HadFTLSmashImmune;
         public bool HadUniversalLanguageSpeaker;
         public bool HadExaminer;
+        public bool HadEmoting;
         public bool HadSpeechDead;
         public string? OldSpeechVerb;
     }
