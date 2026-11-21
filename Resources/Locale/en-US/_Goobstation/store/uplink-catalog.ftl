@@ -281,10 +281,12 @@ uplink-autosurgeon-left-mantis-blade-name = Left Mantis Blade Autosurgeon
 uplink-autosurgeon-mantis-blade-desc = Modifies the user's arm to include the Mantis Blade cyberware extending from it at will, works best when paired. Requires too much fine tuning for a human to provide, comes with a one-use autosurgeon for installation.
 
 uplink-autosurgeon-sandevistan-name = Sandevistan Autosurgeon
-uplink-autosurgeon-sandevistan-desc = Replaces the user's heart with Sandevistan, a synthetic organ that drastically increases the user's speed at the cost of their endurance. Requires too much fine tuning for a human to provide, comes with a one-use autosurgeon for installation.
+# Pirate: IPC Sandevistan
+uplink-autosurgeon-sandevistan-desc = A synthetic organ that greatly increases the user's speed at the cost of endurance. It replaces the heart or fits into a separate chest slot on an IPC. It requires precise tuning and comes with a single-use autosurgeon.
 
 uplink-autosurgeon-statveka-sandevistan-name = Statveka Sandevistan Autosurgeon
-uplink-autosurgeon-statveka-sandevistan-desc = Replaces the user's heart with a statveka Sandevistan, a synthetic organ that drastically increases the user's speed and reflex at the cost of their endurance. Unlike their normal counterpart, this one seemingly slows down time near the user. comes with a one-use autosurgeon for installation.
+# Pirate: IPC Sandevistan
+uplink-autosurgeon-statveka-sandevistan-desc = Installs a Statveka Sandevistan that greatly increases the user's speed and reflexes at the cost of endurance. It seems to slow time near the user. It replaces the heart or fits into a separate chest slot on an IPC. The autosurgeon works once.
 
 uplink-davids-jacket-name = Edgerunner Jacket
 uplink-davids-jacket-desc = A jacket for those particularly interested in improving their bodies, just like you.

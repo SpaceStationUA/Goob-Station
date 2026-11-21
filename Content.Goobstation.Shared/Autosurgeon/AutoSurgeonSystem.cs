@@ -100,7 +100,8 @@ public sealed partial class AutoSurgeonSystem : EntitySystem
                 return;
             }
 
-            var newPart = Spawn(ent.Comp.NewPartProto, Transform(args.Target.Value).Coordinates);
+            var newPartProto = isBodyPart ? ent.Comp.NewPartProto : GetReplacementOrgan(ent.Comp, parentComp); // Pirate: IPC Sandevistan
+            var newPart = Spawn(newPartProto, Transform(args.Target.Value).Coordinates); // Pirate: IPC Sandevistan
 
             if (isBodyPart)
             {
@@ -121,6 +122,17 @@ public sealed partial class AutoSurgeonSystem : EntitySystem
 
                 _body.AttachPart(parent, _body.GetSlotFromBodyPart(newPartComp), newPart);
             }
+            #region Pirate: IPC Sandevistan
+            else if (ent.Comp.AlternateOrgans.Count > 0)
+            {
+                if (!TryReplaceOrgan(parent, newPart))
+                {
+                    Del(newPart);
+                    _audio.Stop(ent.Comp.ActiveSound);
+                    return;
+                }
+            }
+            #endregion
             else
             {
                 if (!TryComp<OrganComponent>(newPart, out var newOrganComp)
