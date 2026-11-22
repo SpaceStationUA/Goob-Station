@@ -73,6 +73,16 @@ public sealed class PirateCurrencyTest
         Assert.That(await db.GetServerCurrency(sender), Is.EqualTo(5));
         Assert.That(await db.AdjustPirateCurrency(sender, 50, PirateCurrencyAdjustment.RemoveUpTo), Is.EqualTo((5, 0)));
 
+        var reward = new PirateCurrencyRequest(Guid.NewGuid(), sender, null, 50, PirateCurrencyRequest.ThanksReward);
+        var rewards = await Task.WhenAll(db.ApplyPirateCurrency(reward, null), db.ApplyPirateCurrency(reward, null));
+        Assert.That(rewards.Count(r => r.AppliedNow), Is.EqualTo(1));
+        Assert.That(rewards.All(r => r.State == "applied" && r.Balance == 50), Is.True);
+        Assert.That(await db.GetServerCurrency(sender), Is.EqualTo(50));
+        Assert.That((await db.ApplyPirateCurrency(reward with { Amount = 51 }, null)).State, Is.EqualTo("invalid_request"));
+        Assert.That((await db.ApplyPirateCurrency(reward with { Target = receiver }, null)).State, Is.EqualTo("invalid_request"));
+        Assert.That((await db.ApplyPirateCurrency(reward with { Source = receiver }, null)).State, Is.EqualTo("operation_conflict"));
+        Assert.That((await db.ApplyPirateCurrency(reward with { OperationId = Guid.NewGuid(), Source = receiver }, null)).State, Is.EqualTo("balance_overflow"));
+
         await pair.CleanReturnAsync();
     }
 }

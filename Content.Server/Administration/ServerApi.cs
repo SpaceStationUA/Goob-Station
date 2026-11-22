@@ -68,7 +68,8 @@ public sealed partial class ServerApi : IPostInjectInit
     {
         _sawmill = _logManager.GetSawmill("serverApi");
 
-        RegisterHandler(HttpMethod.Post, "/admin/actions/pirate_currency", ActionPirateCurrency); // Pirate
+        RegisterHandler(HttpMethod.Post, "/admin/actions/pirate_currency", context => ActionPirateCurrency(context, false)); // Pirate
+        RegisterHandler(HttpMethod.Post, "/admin/actions/pirate_thanks_reward", context => ActionPirateCurrency(context, true)); // Pirate
 
         // Get
         RegisterActorHandler(HttpMethod.Get, "/admin/info", InfoHandler);

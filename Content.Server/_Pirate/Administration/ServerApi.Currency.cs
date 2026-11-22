@@ -10,7 +10,7 @@ namespace Content.Server.Administration;
 
 public sealed partial class ServerApi
 {
-    private async Task ActionPirateCurrency(IStatusHandlerContext context)
+    private async Task ActionPirateCurrency(IStatusHandlerContext context, bool thanksReward)
     {
         PirateCurrencyRequest request;
         try
@@ -22,7 +22,7 @@ public sealed partial class ServerApi
             await context.RespondJsonAsync(new { State = "invalid_request", Balance = (int?) null }, HttpStatusCode.BadRequest);
             return;
         }
-        if (!request.Valid)
+        if (!request.Valid || (request.Kind == PirateCurrencyRequest.ThanksReward) != thanksReward)
         {
             await context.RespondJsonAsync(new { State = "invalid_request", Balance = (int?) null }, HttpStatusCode.BadRequest);
             return;
