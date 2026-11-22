@@ -127,6 +127,8 @@ public sealed partial class GameTicker
         metadata["map"] = new ValueDataNode(_gameMapManager.GetSelectedMap()?.MapName);
         metadata["gamemode"] = new ValueDataNode(CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty);
         metadata["roundEndPlayers"] = _serialman.WriteValue(_replayRoundPlayerInfo);
+        if (_replayRoundPlayerInfo != null) // Pirate: publish nominated photographs only with a completed round.
+            EntityManager.System<Content.Server._Pirate.Photo.PhotoSystem>().WriteDiscordPhotos(metadata);
         metadata["roundEndText"] = new ValueDataNode(_replayRoundText);
         metadata["server_id"] = new ValueDataNode(_cfg.GetCVar(CCVars.ServerId));
         metadata["server_name"] = new ValueDataNode(_cfg.GetCVar(CCVars.AdminLogsServerName));

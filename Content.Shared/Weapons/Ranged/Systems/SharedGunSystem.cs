@@ -570,7 +570,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             // Goob - unless you are aiming at yourself on purpose, IgnoredEntities is checked before GunCanAimShooter
             if (!TryComp<TargetedProjectileComponent>(uid, out var targeted) || targeted.Target != userUid)
             {
-                projectile.IgnoredEntities.Add(userUid);
+                projectile.IgnoredEntities.Add(GetNetEntity(userUid));
                 Dirty(uid, projectile);
             }
 

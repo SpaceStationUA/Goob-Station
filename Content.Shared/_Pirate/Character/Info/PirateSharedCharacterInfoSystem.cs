@@ -216,7 +216,9 @@ public abstract partial class PirateSharedCharacterInfoSystem : EntitySystem
 
     private void OnExamineCharacter(Entity<HumanoidAppearanceComponent> entity, ref GetVerbsEvent<ExamineVerb> args)
     {
-        if (Identity.Name(args.Target, EntityManager) != MetaData(args.Target).EntityName)
+        if (!TryComp<MetaDataComponent>(args.Target, out var targetMeta)
+            || !TryComp<MetaDataComponent>(Identity.Entity(args.Target, EntityManager), out var identityMeta)
+            || identityMeta.EntityName != targetMeta.EntityName)
             return;
 
         var user = args.User;

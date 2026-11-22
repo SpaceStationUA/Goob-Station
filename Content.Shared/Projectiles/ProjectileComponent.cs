@@ -116,7 +116,8 @@ public sealed partial class ProjectileComponent : Component
     public int NoPenetrateMask = 0;
 
     [AutoNetworkedField] // Trauma - networked for prediction
-    public List<EntityUid> IgnoredEntities = new();
+    // Pirate: keep hit history valid even when a target is deleted before the next PVS update.
+    public List<NetEntity> IgnoredEntities = new();
 
     [DataField]
     public Vector2 TargetCoordinates;

@@ -27,16 +27,6 @@ public sealed class ProjectileDeletedReferenceSystem : EntitySystem
                 dirty = true;
             }
 
-            var ignored = comp.IgnoredEntities;
-            for (var i = ignored.Count - 1; i >= 0; i--)
-            {
-                if (!TerminatingOrDeleted(ignored[i]))
-                    continue;
-
-                ignored.RemoveAt(i);
-                dirty = true;
-            }
-
             if (dirty)
                 Dirty(uid, comp);
         }

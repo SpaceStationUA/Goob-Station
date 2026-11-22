@@ -85,6 +85,7 @@ public sealed partial class PhotoSystem : SharedPhotoSystem
 
         SubscribeLocalEvent<PhotoCardComponent, AfterActivatableUIOpenEvent>(OnOpenCardInterface);
         SubscribeLocalEvent<PhotoCardComponent, InteractUsingEvent>(OnPhotoCardInteractUsing);
+        InitializeDiscordPhotos();
     }
 
     private void OnOpenCameraInterface(EntityUid uid, PhotoCameraComponent component, AfterActivatableUIOpenEvent args)
@@ -289,6 +290,11 @@ public sealed partial class PhotoSystem : SharedPhotoSystem
         var metadata = BuildPhotoMetadata(user, capturedEntities, component.ViewBox, zoom);
         photo.ImageData = imageData;
         photo.PreviewData = previewData;
+        if (TryComp<ActorComponent>(user, out var photographer))
+        {
+            photo.Photographer = photographer.PlayerSession.UserId;
+            photo.CaptureRound = _photoTicker.RoundId;
+        }
 
         if (metadata is { } captureMetadata)
         {

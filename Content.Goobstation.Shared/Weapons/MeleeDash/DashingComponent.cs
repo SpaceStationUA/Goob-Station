@@ -8,7 +8,8 @@ namespace Content.Goobstation.Shared.Weapons.MeleeDash;
 public sealed partial class DashingComponent : Component
 {
     [DataField, AutoNetworkedField]
-    public HashSet<EntityUid> HitEntities = new();
+    // Pirate: a hit may outlive its target during replication.
+    public HashSet<NetEntity> HitEntities = new();
 
     [DataField, AutoNetworkedField]
     public List<string> ChangedFixtures = new();
