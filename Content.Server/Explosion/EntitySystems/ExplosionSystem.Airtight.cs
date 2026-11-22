@@ -237,6 +237,8 @@ public sealed partial class ExplosionSystem
         // shouldn't be airtight structures anyways....
 
         var mod = _damageableSystem.UniversalAllDamageModifier * _damageableSystem.UniversalExplosionDamageModifier;
+        // Pirate: a blocker already past its break threshold must not schedule tiles into an earlier wave.
+        var remainingDamage = FixedPoint2.Max(FixedPoint2.Zero, totalDamageTarget - damageable.TotalDamage);
         foreach (var (id, index) in _explosionTypes)
         {
             // TODO EXPLOSION SYSTEM
@@ -263,7 +265,7 @@ public sealed partial class ExplosionSystem
             }
 
             var toleranceValue = damagePerIntensity > 0
-                ? (float) ((totalDamageTarget - damageable.TotalDamage) / damagePerIntensity)
+                ? (float) (remainingDamage / damagePerIntensity)
                 : ToleranceValues.Invulnerable;
 
             explosionTolerance[index] = toleranceValue;
