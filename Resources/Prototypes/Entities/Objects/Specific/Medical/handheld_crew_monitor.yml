@@ -1,12 +1,8 @@
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-- type: entity
-  name: handheld crew monitor
-#  categories: [ DoNotMap ] # Goobstation
-  parent: [ BaseHandheldComputer, BaseMedicalContraband ] # Goobstation
-  # CMO-only bud, don't add more. # Goobstation - no lmao
-  id: HandheldCrewMonitor
-  description: A hand-held crew monitor displaying the status of suit sensors.
+- type: entity # Pirate: shared display and suit sensor receiver for portable and integrated monitors.
+  id: BaseHandheldCrewMonitor
+  abstract: true
   components:
   - type: Item
     heldPrefix: scanner
@@ -38,6 +34,15 @@
   - type: WirelessNetworkConnection
     range: 500
   - type: StationLimitedNetwork
+
+- type: entity
+  name: handheld crew monitor
+#  categories: [ DoNotMap ] # Goobstation
+  parent: [ BaseHandheldCrewMonitor, BaseHandheldComputer, BaseMedicalContraband ] # Pirate
+  # CMO-only bud, don't add more. # Goobstation - no lmao
+  id: HandheldCrewMonitor
+  description: A hand-held crew monitor displaying the status of suit sensors.
+  components:
   - type: StaticPrice
     price: 500
   - type: Tag

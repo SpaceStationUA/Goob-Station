@@ -1,4 +1,10 @@
 - type: entity
+  id: BorgHandheldCrewMonitor
+  parent: [ BaseHandheldCrewMonitor, BaseItem ]
+  name: integrated crew monitor
+  description: A built-in receiver for crew suit sensors. It has no replaceable power cell.
+
+- type: entity
   id: BorgModuleAdvancedPlumbing
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
   name: advanced plumbing cyborg module

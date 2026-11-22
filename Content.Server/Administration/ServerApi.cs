@@ -70,6 +70,7 @@ public sealed partial class ServerApi : IPostInjectInit
 
         RegisterHandler(HttpMethod.Post, "/admin/actions/pirate_currency", context => ActionPirateCurrency(context, false)); // Pirate
         RegisterHandler(HttpMethod.Post, "/admin/actions/pirate_thanks_reward", context => ActionPirateCurrency(context, true)); // Pirate
+        RegisterHandler(HttpMethod.Post, "/admin/actions/pirate_thanks_message", ActionPirateThanksMessage); // Pirate
 
         // Get
         RegisterActorHandler(HttpMethod.Get, "/admin/info", InfoHandler);
