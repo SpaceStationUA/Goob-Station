@@ -502,22 +502,12 @@
     - CrayonBox
 
 - type: loadout
-  id: LoadoutItemCrayonArtistQuestion
-  showWhenUnavailable: true
-  effects:
-  - !type:UsernameLoadoutRequirementEffect
-    username: The_Question
-    failureReason: loadout-artist-requirement
-  storage:
-    back:
-    - CrayonArtist
-
-- type: loadout
   id: LoadoutItemCrayonArtist
   showWhenUnavailable: true
   effects:
   - !type:UsernameLoadoutRequirementEffect
     username: Jon_Brando
+    additionalAccounts: [3c1b7861-e313-41f6-987f-a84db803c88a] # The_Question
     failureReason: loadout-artist-requirement
   storage:
     back:

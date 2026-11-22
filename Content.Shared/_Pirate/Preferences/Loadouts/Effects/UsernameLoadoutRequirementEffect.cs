@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Diagnostics.CodeAnalysis;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -14,6 +15,9 @@ public sealed partial class UsernameLoadoutRequirementEffect : LoadoutEffect
     [DataField(required: true)]
     public string Username = string.Empty;
 
+    [DataField]
+    public HashSet<NetUserId> AdditionalAccounts = new();
+
     [DataField(required: true)]
     public LocId FailureReason;
 
@@ -24,7 +28,8 @@ public sealed partial class UsernameLoadoutRequirementEffect : LoadoutEffect
         IDependencyCollection collection,
         [NotNullWhen(false)] out FormattedMessage? reason)
     {
-        if (session != null && string.Equals(session.Name, Username, StringComparison.OrdinalIgnoreCase))
+        if (session != null && (string.Equals(session.Name, Username, StringComparison.OrdinalIgnoreCase)
+                                || AdditionalAccounts.Contains(session.UserId)))
         {
             reason = null;
             return true;
