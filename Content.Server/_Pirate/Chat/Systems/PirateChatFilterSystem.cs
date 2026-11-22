@@ -10,7 +10,9 @@ public sealed class PirateChatFilterSystem : EntitySystem
 {
     [Dependency] private readonly IChatManager _chat = default!;
 
-    public static bool ContainsBlockedCharacters(string message) => message.AsSpan().IndexOfAny("ъыэЪЫЭ") >= 0;
+    public static bool ContainsBlockedCharacters(string message) =>
+        message.AsSpan().IndexOfAny("ъыэёЪЫЭЁ") >= 0 ||
+        message.Contains("е\u0308", StringComparison.OrdinalIgnoreCase); // Decomposed ё.
 
     public bool Reject(ICommonSession? player, string message)
     {
