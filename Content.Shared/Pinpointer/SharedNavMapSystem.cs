@@ -181,7 +181,9 @@ public abstract class SharedNavMapSystem : EntitySystem
             chunks.Add(origin, chunk.TileData);
         }
 
-        args.State = new NavMapDeltaState(chunks, component.Beacons, component.RegionProperties, new(component.Chunks.Keys));
+        // Pirate: the list of surviving chunks is only needed to reconcile deletions since this client's baseline.
+        var allChunks = component.LastChunkRemoval >= args.FromTick ? new HashSet<Vector2i>(component.Chunks.Keys) : null;
+        args.State = new NavMapDeltaState(chunks, component.Beacons, component.RegionProperties, allChunks);
     }
 
     private void OnConfigurableExamined(Entity<ConfigurableNavMapBeaconComponent> ent, ref ExaminedEvent args)
@@ -216,20 +218,23 @@ public abstract class SharedNavMapSystem : EntitySystem
         Dictionary<Vector2i, int[]> modifiedChunks,
         Dictionary<NetEntity, NavMapBeacon> beacons,
         Dictionary<NetEntity, NavMapRegionProperties> regions,
-        HashSet<Vector2i> allChunks)
+        HashSet<Vector2i>? allChunks)
         : ComponentState, IComponentDeltaState<NavMapState>
     {
         public Dictionary<Vector2i, int[]> ModifiedChunks = modifiedChunks;
         public Dictionary<NetEntity, NavMapBeacon> Beacons = beacons;
         public Dictionary<NetEntity, NavMapRegionProperties> Regions = regions;
-        public HashSet<Vector2i> AllChunks = allChunks;
+        public HashSet<Vector2i>? AllChunks = allChunks;
 
         public void ApplyToFullState(NavMapState state)
         {
-            foreach (var key in state.Chunks.Keys)
+            if (AllChunks != null)
             {
-                if (!AllChunks!.Contains(key))
-                    state.Chunks.Remove(key);
+                foreach (var key in state.Chunks.Keys)
+                {
+                    if (!AllChunks.Contains(key))
+                        state.Chunks.Remove(key);
+                }
             }
 
             foreach (var (index, data) in ModifiedChunks)
@@ -257,18 +262,15 @@ public abstract class SharedNavMapSystem : EntitySystem
         {
             var chunks = new Dictionary<Vector2i, int[]>(state.Chunks.Count);
 
+            // Pirate: preserve the baseline for other deltas, including when this update introduces a chunk.
             foreach (var (index, data) in state.Chunks)
             {
-                if (!AllChunks!.Contains(index))
-                    continue;
-
-                var newData = chunks[index] = new int[ArraySize];
-
-                if (ModifiedChunks.TryGetValue(index, out var updatedData))
-                    Array.Copy(newData, updatedData, ArraySize);
-                else
-                    Array.Copy(newData, data, ArraySize);
+                if ((AllChunks == null || AllChunks.Contains(index)) && !ModifiedChunks.ContainsKey(index))
+                    chunks.Add(index, (int[]) data.Clone());
             }
+
+            foreach (var (index, data) in ModifiedChunks)
+                chunks.Add(index, (int[]) data.Clone());
 
             return new NavMapState(chunks, new(Beacons), new(Regions));
         }

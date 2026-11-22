@@ -22,6 +22,9 @@ public sealed partial class NavMapComponent : Component
     [ViewVariables]
     public Dictionary<Vector2i, NavMapChunk> Chunks = new();
 
+    // Pirate: clients acknowledging a later tick already know about all previous chunk removals.
+    public GameTick LastChunkRemoval;
+
     /// <summary>
     /// List of station beacons.
     /// </summary>

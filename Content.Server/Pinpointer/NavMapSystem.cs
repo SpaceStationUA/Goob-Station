@@ -244,6 +244,8 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
     private void RefreshGrid(EntityUid uid, NavMapComponent component, MapGridComponent mapGrid)
     {
         // Clear stale data
+        if (component.Chunks.Count != 0)
+            component.LastChunkRemoval = _gameTiming.CurTick; // Pirate: a rebuild can drop old chunks.
         component.Chunks.Clear();
         component.Beacons.Clear();
 
@@ -345,6 +347,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         }
 
         entity.Comp.Chunks.Remove(chunk.Origin);
+        entity.Comp.LastChunkRemoval = _gameTiming.CurTick; // Pirate
         Dirty(entity);
         return true;
     }
