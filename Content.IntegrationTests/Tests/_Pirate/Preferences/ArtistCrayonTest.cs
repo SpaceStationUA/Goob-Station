@@ -5,11 +5,13 @@ using System.Numerics;
 using Content.Shared.Charges.Components;
 using Content.Shared.Decals;
 using Content.Shared.Interaction;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Preferences;
 using Content.Shared.Preferences.Loadouts;
 using Moq;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 
 namespace Content.IntegrationTests.Tests._Pirate.Preferences;
@@ -43,6 +45,17 @@ public sealed class ArtistCrayonTest
                     if (!allowed)
                         Assert.That(reason!.ToString(), Is.EqualTo("Потрібно бути визнаним митцем."));
                 }
+
+                var artistId = new NetUserId(Guid.Parse("3c1b7861-e313-41f6-987f-a84db803c88a"));
+                session.SetupGet(s => s.Name).Returns("The_Question");
+                Assert.That(loadout.IsValid(profile, session.Object, "LoadoutItemCrayonArtist",
+                    IoCManager.Instance!, out _), Is.False);
+                session.SetupGet(s => s.UserId).Returns(artistId);
+                session.SetupGet(s => s.Name).Returns("RenamedArtist");
+                Assert.That(loadout.IsValid(profile, session.Object, "LoadoutItemCrayonArtist",
+                    IoCManager.Instance!, out _), Is.True);
+                Assert.That(loadout.IsValid(profile, session.Object, "LoadoutItemSuperSynthesizerNoLimit",
+                    IoCManager.Instance!, out _), Is.False);
 
                 Assert.That(loadout.IsValid(profile, null, "LoadoutItemCrayonArtist",
                     IoCManager.Instance!, out var missingSessionReason), Is.False);
@@ -85,6 +98,7 @@ public sealed class ArtistCrayonTest
                 Is.EqualTo(initialCount + strokes));
             Assert.That(entities.HasComponent<LimitedChargesComponent>(crayon), Is.False);
             Assert.That(entities.HasComponent<AutoRechargeComponent>(crayon), Is.False);
+            Assert.That(entities.HasComponent<EdibleComponent>(crayon), Is.False);
             entities.DeleteEntity(crayon);
             entities.DeleteEntity(user);
         });
