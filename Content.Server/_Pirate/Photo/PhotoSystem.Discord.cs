@@ -21,7 +21,29 @@ public sealed partial class PhotoSystem
     private void InitializeDiscordPhotos()
     {
         SubscribeLocalEvent<PhotoCardComponent, GetVerbsEvent<Verb>>(OnDiscordPhotoVerbs);
+        SubscribeLocalEvent<ActorComponent, GetVerbsEvent<Verb>>(OnPhotographerVerbs);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => _discordPhotos.Clear());
+    }
+
+    internal bool WithdrawDiscordPhoto(NetUserId owner)
+    {
+        return _photoTicker.RunLevel == GameRunLevel.InRound && _discordPhotos.Remove(owner);
+    }
+
+    private void OnPhotographerVerbs(Entity<ActorComponent> actor, ref GetVerbsEvent<Verb> args)
+    {
+        var owner = actor.Comp.PlayerSession.UserId;
+        if (args.User != actor.Owner || !_discordPhotos.ContainsKey(owner) || _photoTicker.RunLevel != GameRunLevel.InRound)
+            return;
+        args.Verbs.Add(new Verb
+        {
+            Text = Loc.GetString("pirate-shift-photo-withdraw"),
+            Act = () =>
+            {
+                if (actor.Comp.PlayerSession.AttachedEntity == actor.Owner && WithdrawDiscordPhoto(owner))
+                    _popup.PopupEntity(Loc.GetString("pirate-shift-photo-withdrawn"), actor.Owner, actor.Owner);
+            },
+        });
     }
 
     private void OnDiscordPhotoVerbs(Entity<PhotoCardComponent> photo, ref GetVerbsEvent<Verb> args)

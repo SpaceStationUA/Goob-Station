@@ -52,6 +52,7 @@ public sealed partial class ServerApi
             if (!_playerManager.TryGetSessionById(user, out var session) || !_careerTimes.TryGetTrackerTimes(session, out var times)
                 || !_careerPreferences.TryGetCachedPreferences(user, out var prefs))
                 return null;
+            _careerTimes.FlushTracker(session);
             return CareerResult(request.Job, times, prefs);
         });
         if (result == null)

@@ -31,6 +31,9 @@ public sealed partial class GameTicker
     /// </summary>
     private void ReplayStartRound()
     {
+        // Pirate: manual recordings must also start with the current round's metadata.
+        _replayRoundPlayerInfo = null;
+        _replayRoundText = null;
         try
         {
             if (!_cfg.GetCVar(CCVars.ReplayAutoRecord))
@@ -48,10 +51,6 @@ public sealed partial class GameTicker
             var recordPath = finalPath;
             var tempDir = _cfg.GetCVar(CCVars.ReplayAutoRecordTempDir);
             ResPath? moveToPath = null;
-
-            // Set the round end player and text back to null to prevent it from writing the previous round's data.
-            _replayRoundPlayerInfo = null;
-            _replayRoundText = null;
 
             if (!string.IsNullOrEmpty(tempDir))
             {

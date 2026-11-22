@@ -214,11 +214,16 @@ public abstract partial class PirateSharedCharacterInfoSystem : EntitySystem
         }
     }
 
+    private bool HasVisibleIdentity(EntityUid target)
+    {
+        return TryComp<MetaDataComponent>(target, out var targetMeta)
+            && TryComp<MetaDataComponent>(Identity.Entity(target, EntityManager), out var identityMeta)
+            && identityMeta.EntityName == targetMeta.EntityName;
+    }
+
     private void OnExamineCharacter(Entity<HumanoidAppearanceComponent> entity, ref GetVerbsEvent<ExamineVerb> args)
     {
-        if (!TryComp<MetaDataComponent>(args.Target, out var targetMeta)
-            || !TryComp<MetaDataComponent>(Identity.Entity(args.Target, EntityManager), out var identityMeta)
-            || identityMeta.EntityName != targetMeta.EntityName)
+        if (!HasVisibleIdentity(args.Target))
             return;
 
         var user = args.User;
@@ -262,7 +267,7 @@ public abstract partial class PirateSharedCharacterInfoSystem : EntitySystem
 
     private void OnExamineExploitableInfo(Entity<ExploitableInfoComponent> entity, ref GetVerbsEvent<ExamineVerb> args)
     {
-        if (Identity.Name(args.Target, EntityManager) != MetaData(args.Target).EntityName
+        if (!HasVisibleIdentity(args.Target)
             || !_exploitableSecretsEnabled
             || string.IsNullOrEmpty(entity.Comp.Info)
             || !CanAccessExploitableData(entity, args.User))
