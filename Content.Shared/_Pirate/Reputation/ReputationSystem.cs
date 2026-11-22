@@ -87,7 +87,8 @@ public sealed class ReputationSystem : EntitySystem
             contracts.Comp.OfferingSlots[i] = new OfferingSlot();
         }
 
-        foreach (var obj in contracts.Comp.Objectives)
+        // Failing a contract clears its slot and can change the remaining objectives.
+        foreach (var obj in contracts.Comp.Objectives.ToArray())
         {
             if (obj is {} objective)
                 TryFailContract(contracts, objective);

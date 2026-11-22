@@ -19,6 +19,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _hands = default!;
 
     private DoAfter[] _doAfters = Array.Empty<DoAfter>();
+    private readonly List<EntityUid> _activeUsers = new(); // Pirate
 
     public override void Update(float frameTime)
     {
@@ -28,10 +29,16 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         var xformQuery = GetEntityQuery<TransformComponent>();
         var handsQuery = GetEntityQuery<HandsComponent>();
 
+        // Pirate: completion handlers can start another entity's action during this update.
+        _activeUsers.Clear();
         var enumerator = EntityQueryEnumerator<ActiveDoAfterComponent, DoAfterComponent>();
-        while (enumerator.MoveNext(out var uid, out var active, out var comp))
+        while (enumerator.MoveNext(out var uid, out _, out _))
+            _activeUsers.Add(uid);
+
+        foreach (var uid in _activeUsers)
         {
-            Update(uid, active, comp, time, xformQuery, handsQuery);
+            if (TryComp<ActiveDoAfterComponent>(uid, out var active) && TryComp<DoAfterComponent>(uid, out var comp))
+                Update(uid, active, comp, time, xformQuery, handsQuery);
         }
     }
 

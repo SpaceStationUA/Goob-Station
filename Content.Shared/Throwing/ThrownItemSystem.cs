@@ -31,6 +31,7 @@ namespace Content.Shared.Throwing
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
         private const string ThrowingFixture = "throw-fixture";
+        private readonly List<EntityUid> _dueThrows = new(); // Pirate
 
         public override void Initialize()
         {
@@ -182,8 +183,20 @@ namespace Content.Shared.Throwing
 
             var query = EntityQueryEnumerator<ThrownItemComponent, PhysicsComponent>();
             var frozenQuery = GetEntityQuery<FrozenComponent>(); // Goobstation
-            while (query.MoveNext(out var uid, out var thrown, out var physics))
+            var now = _gameTiming.CurTime;
+            _dueThrows.Clear();
+            while (query.MoveNext(out var uid, out var thrown, out _))
             {
+                if ((thrown.LandTime ?? thrown.ThrownTime) <= now)
+                    _dueThrows.Add(uid);
+            }
+
+            // Pirate: landing can spawn another thrown item and invalidate the component enumerator.
+            foreach (var uid in _dueThrows)
+            {
+                if (!TryComp<ThrownItemComponent>(uid, out var thrown) || !TryComp<PhysicsComponent>(uid, out var physics))
+                    continue;
+
                 // If you remove this check verify slipping for other entities is networked properly.
                 if (_netMan.IsClient && !physics.Predict)
                     continue;
@@ -191,13 +204,13 @@ namespace Content.Shared.Throwing
                 if (frozenQuery.HasComp(uid)) // Goobstation
                     continue;
 
-                if (thrown.LandTime <= _gameTiming.CurTime)
+                if (thrown.LandTime <= now)
                 {
                     LandComponent(uid, thrown, physics, thrown.PlayLandSound);
                 }
 
                 var stopThrowTime = thrown.LandTime ?? thrown.ThrownTime;
-                if (stopThrowTime <= _gameTiming.CurTime)
+                if (stopThrowTime <= now && !thrown.Deleted)
                 {
                     StopThrow(uid, thrown);
                 }
