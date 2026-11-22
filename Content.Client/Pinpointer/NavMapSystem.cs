@@ -20,6 +20,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         Dictionary<Vector2i, int[]> modifiedChunks;
         Dictionary<NetEntity, NavMapBeacon> beacons;
         Dictionary<NetEntity, NavMapRegionProperties> regions;
+        var previousChunkCount = component.Chunks.Count;
 
         switch (args.Current)
         {
@@ -29,10 +30,14 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
                 beacons = delta.Beacons;
                 regions = delta.Regions;
 
-                foreach (var index in component.Chunks.Keys)
+                // Pirate: ordinary edits only carry the changed chunks.
+                if (delta.AllChunks != null)
                 {
-                    if (!delta.AllChunks!.Contains(index))
-                        component.Chunks.Remove(index);
+                    foreach (var index in component.Chunks.Keys)
+                    {
+                        if (!delta.AllChunks.Contains(index))
+                            component.Chunks.Remove(index);
+                    }
                 }
 
                 break;
@@ -103,7 +108,7 @@ public sealed partial class NavMapSystem : SharedNavMapSystem
         }
 
         // Invalidate geometry caches only when chunk data actually changed.
-        if (modifiedChunks.Count > 0)
+        if (modifiedChunks.Count > 0 || component.Chunks.Count != previousChunkCount)
             component.DataVersion++;
 
         // Refresh beacons
