@@ -580,18 +580,14 @@ public sealed partial class NPCSteeringSystem
         EntityUid uid,
         Angle offsetRot,
         Vector2 worldPos,
-        float agentRadius,
+        float detectionRadius,
         int layer,
         int mask,
         TransformComponent xform,
+        HashSet<EntityUid> neighbours,
         Span<float> danger)
     {
-        var objectRadius = 0.25f;
-        var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
-        var ents = _entSetPool.Get();
-        _lookup.GetEntitiesInRange(uid, detectionRadius, ents, LookupFlags.Dynamic | LookupFlags.Static | LookupFlags.Approximate);
-
-        foreach (var ent in ents)
+        foreach (var ent in neighbours)
         {
             // TODO: If we can access the door or smth.
             if (!_physicsQuery.TryGetComponent(ent, out var otherBody) ||
@@ -641,8 +637,6 @@ public sealed partial class NPCSteeringSystem
                 danger[i] = MathF.Max(dot * weight, danger[i]);
             }
         }
-
-        _entSetPool.Return(ents);
     }
 
     #endregion
@@ -656,24 +650,22 @@ public sealed partial class NPCSteeringSystem
         EntityUid uid,
         Angle offsetRot,
         Vector2 worldPos,
-        float agentRadius,
+        float detectionRadius,
         int layer,
         int mask,
         PhysicsComponent body,
         TransformComponent xform,
+        HashSet<EntityUid> neighbours,
         Span<float> danger)
     {
-        var objectRadius = 0.25f;
-        var detectionRadius = MathF.Max(0.35f, agentRadius + objectRadius);
         var ourVelocity = body.LinearVelocity;
         _factionQuery.TryGetComponent(uid, out var ourFaction);
-        var ents = _entSetPool.Get();
-        _lookup.GetEntitiesInRange(uid, detectionRadius, ents, LookupFlags.Dynamic | LookupFlags.Approximate);
 
-        foreach (var ent in ents)
+        foreach (var ent in neighbours)
         {
             // TODO: If we can access the door or smth.
             if (!_physicsQuery.TryGetComponent(ent, out var otherBody) ||
+                otherBody.BodyType == BodyType.Static || // Pirate: separation only considers dynamic-tree neighbours.
                 !otherBody.Hard ||
                 !otherBody.CanCollide ||
                 (mask & otherBody.CollisionLayer) == 0x0 &&
@@ -725,8 +717,6 @@ public sealed partial class NPCSteeringSystem
                 danger[i] = MathF.Max(dot * weight, danger[i]);
             }
         }
-
-        _entSetPool.Return(ents);
     }
 
     #endregion

@@ -392,11 +392,21 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
             return;
         }
 
-        // Avoid static objects like walls
-        CollisionAvoidance(uid, offsetRot, worldPos, agentRadius, layer, mask, xform, danger);
-        DebugTools.Assert(!float.IsNaN(danger[0]));
-
-        Separation(uid, offsetRot, worldPos, agentRadius, layer, mask, body, xform, danger);
+        // Pirate: both avoidance passes use the same broadphase radius.
+        var detectionRadius = MathF.Max(0.35f, agentRadius + 0.25f);
+        var neighbours = _entSetPool.Get();
+        try
+        {
+            _lookup.GetEntitiesInRange(uid, detectionRadius, neighbours, LookupFlags.Dynamic | LookupFlags.Static | LookupFlags.Approximate);
+            CollisionAvoidance(uid, offsetRot, worldPos, detectionRadius, layer, mask, xform, neighbours, danger);
+            DebugTools.Assert(!float.IsNaN(danger[0]));
+            if (body.LinearVelocity != Vector2.Zero)
+                Separation(uid, offsetRot, worldPos, detectionRadius, layer, mask, body, xform, neighbours, danger);
+        }
+        finally
+        {
+            _entSetPool.Return(neighbours);
+        }
 
         // Blend last and current tick
         Blend(steering, frameTime, interest, danger);
