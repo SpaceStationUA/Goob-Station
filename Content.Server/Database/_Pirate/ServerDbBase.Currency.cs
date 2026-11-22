@@ -35,13 +35,13 @@ public abstract partial class ServerDbBase
 
         if (source == null || request.Target != null && target == null)
             receipt.State = "account_not_found";
-        else if (source.ServerCurrency < request.Amount)
+        else if (request.SourceDelta < 0 && source.ServerCurrency < request.Amount)
             receipt.State = "insufficient_funds";
-        else if (target != null && target.ServerCurrency > int.MaxValue - request.Amount)
+        else if ((request.SourceDelta > 0 ? source : target) is {} credited && credited.ServerCurrency > int.MaxValue - request.Amount)
             receipt.State = "balance_overflow";
         else
         {
-            source.ServerCurrency -= request.Amount;
+            source.ServerCurrency += request.SourceDelta;
             if (target != null)
                 target.ServerCurrency += request.Amount;
             if (purchasedNote != null)

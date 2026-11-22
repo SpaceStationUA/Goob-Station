@@ -14,3 +14,7 @@ pirate-goobcoin-early-cryo-penalty = З вас стягнуто {$amount} за �
 
 pirate-currency-positive-amount = Вкажіть цілу кількість Войдкоїнів більшу за нуль.
 pirate-currency-cannot-transfer = Переказ не виконано. Перевірте одержувача та доступний баланс.
+
+pirate-discord-round-thanks = Подяка за зміну №{$round} від {$author}: «{$text}»
+pirate-discord-thanks-reward = Виграш у розіграші за подяку: +{$amount} войдкоїнів на твій рахунок.
+pirate-discord-currency-gift = Тобі переказали войдкоїни через Discord: +{$amount} на твій рахунок.

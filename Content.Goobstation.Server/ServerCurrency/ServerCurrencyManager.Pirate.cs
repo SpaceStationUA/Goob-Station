@@ -21,8 +21,8 @@ public sealed partial class ServerCurrencyManager : IPirateCurrencyOperations
 
         var source = result.Balance!.Value;
         var destination = request.Target is {} recipient ? $" to {recipient}" : "";
-        _sawmill.Info($"Currency {request.Kind} {request.OperationId}: {request.Amount} from {request.Source}{destination}. Remaining: {source}");
-        NotifyPirateBalance(new NetUserId(request.Source), source + request.Amount, source);
+        _sawmill.Info($"Currency {request.Kind} {request.OperationId}: {request.SourceDelta:+#;-#;0} on {request.Source}{destination}. Balance: {source}");
+        NotifyPirateBalance(new NetUserId(request.Source), source - request.SourceDelta, source);
         if (request.Target is {} target && result.TargetBalance is {} balance)
             NotifyPirateBalance(new NetUserId(target), balance - request.Amount, balance);
         return result;
