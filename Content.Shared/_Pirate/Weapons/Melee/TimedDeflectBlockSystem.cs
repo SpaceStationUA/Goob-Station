@@ -405,7 +405,7 @@ public sealed class TimedDeflectBlockSystem : EntitySystem
         projectile.Weapon = weapon;
         projectile.ProjectileSpent = false;
         projectile.IgnoredEntities.Clear(); // allow the redirected bullet to hit its original shooter
-        projectile.IgnoredEntities.Add(defender); // prevent the deflected bullet from immediately re-hitting the defender
+        projectile.IgnoredEntities.Add(GetNetEntity(defender)); // prevent the deflected bullet from immediately re-hitting the defender
 
         if (TryGetMapPosition(attacker, out var attackerPosition))
             projectile.TargetCoordinates = attackerPosition.Position;

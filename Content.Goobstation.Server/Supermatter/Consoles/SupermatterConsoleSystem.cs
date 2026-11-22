@@ -157,22 +157,21 @@ public sealed partial class SupermatterConsoleSystem : SharedSupermatterConsoleS
 
     private SupermatterFocusData? GetFocusSupermatterData(EntityUid uid, EntityUid? focusSupermatter, EntityUid gridUid)
     {
-        if (focusSupermatter == null)
+        // Pirate: an unselected or removed crystal has no transform.
+        if (focusSupermatter is not {} focus || !TryComp<TransformComponent>(focus, out var focusSupermatterXform))
             return null;
-
-        var focusSupermatterXform = Transform(focusSupermatter.Value);
 
         if (!focusSupermatterXform.Anchored
             || focusSupermatterXform.GridUid != gridUid
-            || !TryComp<SupermatterComponent>(focusSupermatter.Value, out var sm)
-            || !TryComp<RadiationSourceComponent>(focusSupermatter.Value, out var radiationComp))
+            || !TryComp<SupermatterComponent>(focus, out var sm)
+            || !TryComp<RadiationSourceComponent>(focus, out var radiationComp))
             return null;
 
         var gases = sm.GasStorage;
         var tempThreshold = Atmospherics.T0C + sm.HeatPenaltyThreshold;
 
         return new SupermatterFocusData(
-            GetNetEntity(focusSupermatter.Value),
+            GetNetEntity(focus),
             GetIntegrity(sm),
             sm.Power,
             radiationComp.Intensity,

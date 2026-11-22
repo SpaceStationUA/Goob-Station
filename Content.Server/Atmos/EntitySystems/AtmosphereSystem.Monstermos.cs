@@ -620,13 +620,14 @@ namespace Content.Server.Atmos.EntitySystems
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
                 var amount = tile.MonstermosInfo[i];
-                if (amount == 0) continue;
                 transferDirections[i] = amount;
+                if (amount == 0) continue;
                 tile.MonstermosInfo[i] = 0; // Set them to 0 to prevent infinite recursion.
                 hasTransferDirs = true;
             }
 
-            if (!hasTransferDirs) return;
+            // Pirate: tile topology can change between planning and finalizing transfers.
+            if (!hasTransferDirs || tile.Air is not {} air) return;
 
             for(var i = 0; i < Atmospherics.Directions; i++)
             {
@@ -638,12 +639,11 @@ namespace Content.Server.Atmos.EntitySystems
                 DebugTools.Assert(otherTile.AdjacentBits.IsFlagSet(direction.GetOpposite()));
                 if (amount <= 0) continue;
 
-                // Everything that calls this method already ensures that Air will not be null.
-                if (tile.Air!.TotalMoles < amount)
+                if (air.TotalMoles < amount)
                     FinalizeEqNeighbors(ent, tile, transferDirections);
 
                 otherTile.MonstermosInfo[i.ToOppositeDir()] = 0;
-                Merge(otherTile.Air, tile.Air.Remove(amount));
+                Merge(otherTile.Air, air.Remove(amount));
                 InvalidateVisuals(ent, tile);
                 InvalidateVisuals(ent, otherTile);
                 ConsiderPressureDifference(ent, tile, direction, amount);
@@ -658,9 +658,8 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var direction = (AtmosDirection) (1 << i);
                 var amount = transferDirs[i];
-                // Since AdjacentBits is set, AdjacentTiles[i] wouldn't be null, and neither would its air.
-                if(amount < 0 && tile.AdjacentBits.IsFlagSet(direction))
-                    FinalizeEq(ent, tile.AdjacentTiles[i]!);  // A bit of recursion if needed.
+                if (amount < 0 && tile.AdjacentBits.IsFlagSet(direction) && tile.AdjacentTiles[i] is {} neighbor)
+                    FinalizeEq(ent, neighbor);
             }
         }
 

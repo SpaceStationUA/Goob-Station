@@ -10,6 +10,10 @@ namespace Content.Server._Pirate.Photo;
 [RegisterComponent]
 public sealed partial class PhotoCardComponent : Component
 {
+    // Assigned by the server at capture time. Copies in persistent albums cannot grant publication consent.
+    public Robust.Shared.Network.NetUserId? Photographer;
+    public int CaptureRound;
+
     [DataField]
     public byte[]? ImageData;
 

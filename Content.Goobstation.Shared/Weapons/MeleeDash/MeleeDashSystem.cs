@@ -57,7 +57,8 @@ public sealed partial class MeleeDashSystem : EntitySystem
         if (!TryComp(comp.Weapon, out MeleeWeaponComponent? melee))
             return;
 
-        if (comp.HitEntities.Contains(args.OtherEntity))
+        var hit = GetNetEntity(args.OtherEntity); // Pirate
+        if (comp.HitEntities.Contains(hit))
             return;
 
         if (!HasComp<MobStateComponent>(args.OtherEntity))
@@ -66,10 +67,10 @@ public sealed partial class MeleeDashSystem : EntitySystem
         if (!_hands.IsHolding(ent.Owner, ent.Comp.Weapon))
             return;
 
-        comp.HitEntities.Add(args.OtherEntity);
+        comp.HitEntities.Add(hit);
         Dirty(ent);
 
-        var ev = new LightAttackEvent(GetNetEntity(args.OtherEntity),
+        var ev = new LightAttackEvent(hit,
             GetNetEntity(comp.Weapon.Value),
             GetNetCoordinates(Transform(args.OtherEntity).Coordinates));
         _melee.DoLightAttack(uid, ev, comp.Weapon.Value, melee, actor.PlayerSession);

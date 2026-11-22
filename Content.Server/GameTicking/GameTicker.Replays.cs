@@ -31,6 +31,9 @@ public sealed partial class GameTicker
     /// </summary>
     private void ReplayStartRound()
     {
+        // Pirate: manual recordings must also start with the current round's metadata.
+        _replayRoundPlayerInfo = null;
+        _replayRoundText = null;
         try
         {
             if (!_cfg.GetCVar(CCVars.ReplayAutoRecord))
@@ -48,10 +51,6 @@ public sealed partial class GameTicker
             var recordPath = finalPath;
             var tempDir = _cfg.GetCVar(CCVars.ReplayAutoRecordTempDir);
             ResPath? moveToPath = null;
-
-            // Set the round end player and text back to null to prevent it from writing the previous round's data.
-            _replayRoundPlayerInfo = null;
-            _replayRoundText = null;
 
             if (!string.IsNullOrEmpty(tempDir))
             {
@@ -127,6 +126,8 @@ public sealed partial class GameTicker
         metadata["map"] = new ValueDataNode(_gameMapManager.GetSelectedMap()?.MapName);
         metadata["gamemode"] = new ValueDataNode(CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty);
         metadata["roundEndPlayers"] = _serialman.WriteValue(_replayRoundPlayerInfo);
+        if (_replayRoundPlayerInfo != null) // Pirate: publish nominated photographs only with a completed round.
+            EntityManager.System<Content.Server._Pirate.Photo.PhotoSystem>().WriteDiscordPhotos(metadata);
         metadata["roundEndText"] = new ValueDataNode(_replayRoundText);
         metadata["server_id"] = new ValueDataNode(_cfg.GetCVar(CCVars.ServerId));
         metadata["server_name"] = new ValueDataNode(_cfg.GetCVar(CCVars.AdminLogsServerName));
