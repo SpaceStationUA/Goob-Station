@@ -1,0 +1,19 @@
+ent-VehicleHoverbikeNfsd = патрульний ховербайк
+    .desc = Ховербайк служби безпеки з червоним проблисковим маячком і кріпленням для електродубинки.
+ent-VehicleHoverbikeMailcarrier = поштовий ховербайк
+    .desc = Блакитний ховербайк листоноші з багажними відсіками та кріпленням для пускового пристрою.
+ent-VehicleHoverbikeNfsdKey = { ent-VehicleHoverbikeNfsd }
+    .desc = { ent-VehicleHoverbikeNfsd.desc }
+    .suffix = З ключем
+ent-VehicleHoverbikeMailcarrierKey = { ent-VehicleHoverbikeMailcarrier }
+    .desc = { ent-VehicleHoverbikeMailcarrier.desc }
+    .suffix = З ключем
+ent-VehicleKeyHoverbikeNF = ключі від ховербайка
+    .desc = Ключі запалювання для ховербайка.
+ent-HoverbikeNfsdFlatpack = флетпак патрульного ховербайка
+    .desc = Комплект для складання патрульного ховербайка. Ключ уже в замку запалювання.
+ent-HoverbikeMailcarrierFlatpack = флетпак поштового ховербайка
+    .desc = Комплект для складання поштового ховербайка. Ключ уже в замку запалювання.
+
+hoverbike-slot-stunbaton = кріплення для електродубинки
+hoverbike-slot-launcher = кріплення для пускового пристрою

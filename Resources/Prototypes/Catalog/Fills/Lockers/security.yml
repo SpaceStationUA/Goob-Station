@@ -28,6 +28,7 @@
   id: FillLockerWarden
   table: !type:AllSelector
     children:
+    - id: HoverbikeNfsdFlatpack # Pirate
     - id: FlashlightSeclite
     #- id: WeaponDisabler # Goobstation (Disablers in belts)
     - id: ClothingBeltSecurityFilled
@@ -80,6 +81,7 @@
   id: FillLockerSecurity
   table: !type:AllSelector
     children:
+    - id: HoverbikeNfsdFlatpack # Pirate
     - id: FlashlightSeclite
       prob: 0.8
     #- id: WeaponDisabler # Goobstation (Disablers in belts)
@@ -126,6 +128,7 @@
   id: FillLockerBrigmedic
   table: !type:AllSelector
     children:
+    - id: HoverbikeNfsdFlatpack # Pirate
     - id: ClothingEyesGlassesSecurity
     - id: WeaponDisabler
     - id: TrackingImplanter
@@ -179,6 +182,7 @@
   id: FillLockerDetective
   table: !type:AllSelector
     children:
+    - id: HoverbikeNfsdFlatpack # Pirate
     - id: ClothingEyesGlassesNoir
     - id: ClothingHeadHatDetGadget
     - id: ClothingNeckTieDet

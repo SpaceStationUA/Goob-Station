@@ -1,0 +1,202 @@
+# Department hoverbikes from SpaceStationUA/station, originally from New Frontier.
+- type: entity
+  id: BaseDepartmentHoverbike
+  parent: BaseVehicle
+  abstract: true
+  components:
+  - type: Vehicle
+    renderOver: East, SouthEast, South, SouthWest, West
+  - type: Strap
+    buckleOffset: "0.1, -0.05"
+  - type: MovementIgnoreGravity
+  - type: MovementAlwaysTouching
+  - type: CanMoveInAir
+  - type: AmbientSound
+    sound: /Audio/Effects/shuttle_thruster.ogg
+    range: 8
+    volume: 5
+    enabled: false
+  - type: Sprite
+    sprite: _Pirate/Objects/Vehicles/hoverbike.rsi
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.4
+        density: 360
+        mask:
+        - MobMask
+        layer:
+        - TableLayer
+  - type: Storage
+    grid:
+    - 0,0,1,3
+    - 3,0,6,3
+    - 8,0,9,3
+    maxItemSize: Large
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: UnpoweredFlashlight
+  - type: PointLight
+    enabled: false
+    lightMask: ConeSingle
+    radius: 6
+    softness: 2
+    autoRot: true
+  - type: StaticPrice
+    price: 750
+
+- type: entity
+  id: VehicleHoverbikeNfsd
+  parent: BaseDepartmentHoverbike
+  name: security patrol hoverbike
+  description: A patrol hoverbike with a red beacon and a mount for a stun baton.
+  components:
+  - type: Vehicle
+    hornSound:
+      path: /Audio/Effects/Vehicle/policesiren.ogg
+  - type: MovementSpeedModifier
+    baseAcceleration: 1.9
+    baseFriction: 1.4
+    baseWalkSpeed: 4.3
+    baseSprintSpeed: 6.8
+  - type: Sprite
+    layers:
+    - state: hull
+      color: "#49633d"
+    - state: engine
+    - state: nfsdstar
+    - state: lights
+      shader: unshaded
+  - type: ItemSlots
+    slots:
+      key_slot:
+        name: vehicle-slot-component-slot-name-keys
+        whitelist:
+          requireAll: true
+          tags: [ VehicleKey, HoverbikeKeys ]
+        priority: 1
+        insertSound:
+          path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+          params:
+            volume: -5
+      nfsdbaton:
+        name: hoverbike-slot-stunbaton
+        whitelist:
+          components: [ Stunbaton ]
+        priority: 2
+  - type: ItemMapper
+    containerWhitelist: [ nfsdbaton ]
+    mapLayers:
+      nfsdbaton:
+        whitelist:
+          components: [ Stunbaton ]
+  - type: RotatingLight
+    speed: 190
+  - type: PointLight
+    lightMask: ConeDouble
+    color: "#FF4020"
+    energy: 2
+
+- type: entity
+  id: VehicleHoverbikeMailcarrier
+  parent: BaseDepartmentHoverbike
+  name: mail carrier hoverbike
+  description: A light blue postal hoverbike with saddlebags and a launcher mount.
+  components:
+  - type: MovementSpeedModifier
+    baseAcceleration: 2
+    baseFriction: 1.5
+    baseWalkSpeed: 4.5
+    baseSprintSpeed: 7
+  - type: Sprite
+    layers:
+    - state: hull
+      color: "#8fd3ff"
+    - state: engine
+    - state: mailtrim
+    - state: lights
+      shader: unshaded
+  - type: ItemSlots
+    slots:
+      key_slot:
+        name: vehicle-slot-component-slot-name-keys
+        whitelist:
+          requireAll: true
+          tags: [ VehicleKey, HoverbikeKeys ]
+        priority: 1
+        insertSound:
+          path: /Audio/Effects/Vehicle/vehiclestartup.ogg
+          params:
+            volume: -5
+      mailgun:
+        name: hoverbike-slot-launcher
+        whitelist:
+          components: [ Gun ]
+        priority: 2
+  - type: ItemMapper
+    containerWhitelist: [ mailgun ]
+    mapLayers:
+      mailgun:
+        whitelist:
+          components: [ Gun ]
+  - type: PointLight
+    energy: 3
+
+- type: entity
+  id: VehicleKeyHoverbikeNF
+  parent: BaseKey
+  name: hoverbike keys
+  description: A set of keys for a hoverbike.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Vehicles/hoverbike.rsi
+    state: keys
+  - type: Tag
+    tags: [ VehicleKey, HoverbikeKeys ]
+
+- type: entity
+  id: VehicleHoverbikeNfsdKey
+  parent: VehicleHoverbikeNfsd
+  suffix: With key
+  components:
+  - type: ContainerFill
+    containers:
+      key_slot: [ VehicleKeyHoverbikeNF ]
+
+- type: entity
+  id: VehicleHoverbikeMailcarrierKey
+  parent: VehicleHoverbikeMailcarrier
+  suffix: With key
+  components:
+  - type: ContainerFill
+    containers:
+      key_slot: [ VehicleKeyHoverbikeNF ]
+
+- type: entity
+  id: HoverbikeNfsdFlatpack
+  parent: BaseFlatpack
+  name: security patrol hoverbike flatpack
+  description: A flatpack containing a patrol hoverbike with the keys in the ignition.
+  components:
+  - type: Flatpack
+    entity: VehicleHoverbikeNfsdKey
+  - type: StaticPrice
+    price: 750
+
+- type: entity
+  id: HoverbikeMailcarrierFlatpack
+  parent: BaseFlatpack
+  name: mail carrier hoverbike flatpack
+  description: A flatpack containing a postal hoverbike with the keys in the ignition.
+  components:
+  - type: Flatpack
+    entity: VehicleHoverbikeMailcarrierKey
+  - type: StaticPrice
+    price: 75
