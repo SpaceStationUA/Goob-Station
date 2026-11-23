@@ -343,7 +343,7 @@ public sealed partial class MentorHelpSystem
                     Color = GetResponders().Any(p => !_afk.IsAfk(p)) ? 0x41F097 : 0xFF0000,
                     Footer = new WebhookEmbedFooter
                     {
-                        Text = $"{serverName} ({round}) · mentorhelp",
+                        Text = $"{serverName} ({round}) · mentorhelp · SS14 UserId: {userId.UserId:D}",
                         IconUrl = string.IsNullOrWhiteSpace(_footerIconUrl) ? null : _footerIconUrl,
                     },
                 },
