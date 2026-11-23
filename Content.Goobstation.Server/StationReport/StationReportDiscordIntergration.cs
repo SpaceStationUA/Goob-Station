@@ -16,7 +16,7 @@ public sealed partial class StationReportDiscordIntergration : EntitySystem
     //thank you Timfa for writing this code
     private static readonly HttpClient client = new();
     [Dependency] private IConfigurationManager _cfg = default!;
-    [Dependency] private readonly GameTicker _ticker = default!;
+    [Dependency] private GameTicker _ticker = default!;
 
     private string? _webhookUrl;
     private int? _lastReportRound;
@@ -62,14 +62,21 @@ public sealed partial class StationReportDiscordIntergration : EntitySystem
             string.IsNullOrWhiteSpace(report) || string.IsNullOrWhiteSpace(_webhookUrl))
             return;
 
+        if (!Uri.TryCreate(_webhookUrl, UriKind.Absolute, out var url) ||
+            (url.Scheme != Uri.UriSchemeHttps && url.Scheme != Uri.UriSchemeHttp))
+        {
+            Log.Warning("Invalid Discord webhook URL for station reports.");
+            return;
+        }
+
         foreach (var replacement in _replacements)
             report = Regex.Replace(report, replacement.Tag, replacement.Replacement);
 
         _lastReportRound = _ticker.RoundId;
-        _ = SendMessageAsync(_webhookUrl, report, _ticker.RoundId);
+        _ = SendMessageAsync(url, report, _ticker.RoundId);
     }
 
-    private async Task SendMessageAsync(string url, string message, int roundId)
+    private async Task SendMessageAsync(Uri url, string message, int roundId)
     {
         try
         {
