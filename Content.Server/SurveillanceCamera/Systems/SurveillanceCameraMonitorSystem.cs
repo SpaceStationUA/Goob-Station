@@ -103,7 +103,12 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
                 continue;
             } Goobstation remove */
             monitor.LastHeartbeatSent += frameTime;
-            SendHeartbeat(uid, monitor.ActiveCameraAddress, monitor); // Goobstation
+            // Pirate: the reply timer and the send interval are independent.
+            if (monitor.LastHeartbeatSent >= HeartbeatDelay)
+            {
+                monitor.LastHeartbeatSent = 0f;
+                SendHeartbeat(uid, monitor.ActiveCameraAddress, monitor);
+            }
             monitor.LastHeartbeat += frameTime;
 
             if (monitor.LastHeartbeat > MaxHeartbeatTime) // Goobstation
@@ -137,26 +142,32 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
             if (monitor.KnownMobileCameras.Count > 0)
             {
                 // Collect expired cameras and cache their entity references
-                var expiredCameras = new Dictionary<string, EntityUid>();
+                Dictionary<string, EntityUid>? expiredCameras = null;
 
                 foreach (var (key, cameraData) in monitor.KnownMobileCameras)
                 {
                     ref var lastSent = ref CollectionsMarshal.GetValueRefOrAddDefault(
-                        monitor.KnownMobileCamerasLastHeartbeatSent, key, out bool sentExists);
+                        monitor.KnownMobileCamerasLastHeartbeatSent, key, out _);
                     ref var lastHeartbeat = ref CollectionsMarshal.GetValueRefOrAddDefault(
-                        monitor.KnownMobileCamerasLastHeartbeat, key, out bool hbExists);
-
-                    if (!sentExists) lastSent = 0f;
-                    if (!hbExists) lastHeartbeat = 0f;
+                        monitor.KnownMobileCamerasLastHeartbeat, key, out _);
 
                     lastSent += frameTime;
                     lastHeartbeat += frameTime;
 
-                    SendHeartbeat(uid, key, monitor);
+                    // Pirate: each mobile camera has its own timer. The active camera already has a heartbeat.
+                    if (lastSent >= HeartbeatDelay)
+                    {
+                        lastSent = 0f;
+                        if (monitor.ActiveCamera == null || key != monitor.ActiveCameraAddress)
+                            SendHeartbeat(uid, key, monitor);
+                    }
 
                     if (lastHeartbeat > MaxHeartbeatTime)
-                        expiredCameras[key] = _entityManager.GetEntity(cameraData.Item2.Item2.NetEntity);
+                        (expiredCameras ??= new())[key] = _entityManager.GetEntity(cameraData.Item2.Item2.NetEntity);
                 }
+
+                if (expiredCameras == null)
+                    continue;
 
                 // Remove PVS overrides for all viewers in a single pass
                 foreach (var player in monitor.Viewers)
@@ -181,8 +192,7 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
                     RemComp<HasMobileCamerasSurveillanceCameraMonitorComponent>(uid);
 
                 // Refresh subnets as clearly something went wrong with the networking
-                if (expiredCameras.Count > 0)
-                    RefreshCameras(uid, monitor); // Goobstation
+                RefreshCameras(uid, monitor); // Goobstation
             }
         }
         // Goobstation end
@@ -365,21 +375,15 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
     #endregion
 
-    private void SendHeartbeat(EntityUid uid, string cameraAdress, SurveillanceCameraMonitorComponent? monitor = null) // Goobstation
+    private void SendHeartbeat(EntityUid uid, string cameraAddress, SurveillanceCameraMonitorComponent monitor)
     {
-        if (!Resolve(uid, ref monitor)
-            || monitor.LastHeartbeatSent < HeartbeatDelay) // Goobstation
-        {
-            return;
-        }
-
         // Goobstation start
         foreach (var subnetAddress in monitor.KnownSubnets.Values)
         {
             var payload = new NetworkPayload()
             {
                 { DeviceNetworkConstants.Command, SurveillanceCameraSystem.CameraHeartbeatMessage },
-                { SurveillanceCameraSystem.CameraAddressData, cameraAdress } // Goobstation
+                { SurveillanceCameraSystem.CameraAddressData, cameraAddress } // Goobstation
             };
 
             _deviceNetworkSystem.QueuePacket(uid, subnetAddress, payload);

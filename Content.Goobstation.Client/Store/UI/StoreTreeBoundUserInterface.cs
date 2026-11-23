@@ -1,3 +1,4 @@
+using Content.Client._Pirate.Store; // Pirate: viewer-only catalogues.
 using Content.Shared.Store;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
@@ -6,10 +7,12 @@ using Robust.Shared.Prototypes;
 namespace Content.Goobstation.Client.Store.UI;
 
 [UsedImplicitly]
-public sealed class StoreTreeBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed class StoreTreeBoundUserInterface(EntityUid owner, Enum uiKey) : StoreCatalogBoundUserInterface(owner, uiKey)
 {
     [ViewVariables]
     private StoreTreeMenu? _menu;
+
+    private StoreTreeUpdateState? _lastState; // Pirate: reused when prototypes reload.
 
     protected override void Open()
     {
@@ -23,8 +26,11 @@ public sealed class StoreTreeBoundUserInterface(EntityUid owner, Enum uiKey) : B
     {
         base.UpdateState(state);
 
-        if (state is StoreTreeUpdateState treeState)
-            _menu?.UpdateState(treeState);
+        if (state is not StoreTreeUpdateState treeState)
+            return;
+
+        _lastState = treeState;
+        _menu?.UpdateState(treeState);
     }
 
     public override void OnProtoReload(PrototypesReloadedEventArgs args)
@@ -32,7 +38,7 @@ public sealed class StoreTreeBoundUserInterface(EntityUid owner, Enum uiKey) : B
         base.OnProtoReload(args);
 
         if ((args.WasModified<StoreTreePrototype>() || args.WasModified<ListingPrototype>())
-            && State is StoreTreeUpdateState treeState)
+            && _lastState is { } treeState)
             _menu?.UpdateState(treeState, true);
     }
 }

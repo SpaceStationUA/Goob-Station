@@ -23,7 +23,7 @@ using Content.Shared.Mind;
 using Content.Shared.PDA.Ringer;
 using Content.Shared.Store;
 using Content.Shared.Store.Components;
-using Content.Shared.UserInterface;
+using Content.Shared._Pirate.Store; // Pirate
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Player;
@@ -92,10 +92,7 @@ public sealed partial class StoreSystem
 
         EnsureTreeInterface((storeEnt, component)); // Goob
 
-        if (!_ui.TryToggleUi(storeEnt, StoreUiKey.Key, actor.PlayerSession))
-            return;
-
-        UpdateUserInterface(user, storeEnt, component);
+        _ui.TryToggleUi(storeEnt, StoreUiKey.Key, actor.PlayerSession); // Pirate: the client requests its catalogue on open.
     }
 
     /// <summary>
@@ -112,7 +109,7 @@ public sealed partial class StoreSystem
     /// <summary>
     /// Updates the user interface for a store and refreshes the listings
     /// </summary>
-    /// <param name="user">The person who if opening the store ui. Listings are filtered based on this.</param>
+    /// <param name="user">The actor that triggered the refresh, if any.</param>
     /// <param name="store">The store entity itself</param>
     /// <param name="component">The store component being refreshed.</param>
     public void UpdateUserInterface(EntityUid? user, EntityUid store, StoreComponent? component = null)
@@ -120,43 +117,31 @@ public sealed partial class StoreSystem
         if (!Resolve(store, ref component))
             return;
 
-        //this is the person who will be passed into logic for all listing filtering.
-        if (user != null) //if we have no "buyer" for this update, then don't update the listings
-        {
-            component.LastAvailableListings = GetAvailableListings(component.AccountOwner ?? user.Value, store, component).ToHashSet();
-        }
+        // Pirate: shop state can be large. Only build and send a catalogue for players browsing this store.
+        foreach (var viewer in _ui.GetActors(store, StoreUiKey.Key))
+            SendCatalog(viewer, (store, component));
+    }
 
-        //dictionary for all currencies, including 0 values for currencies on the whitelist
-        Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> allCurrency = new();
-        foreach (var supported in component.CurrencyWhitelist)
-        {
-            allCurrency.Add(supported, FixedPoint2.Zero);
+    private void SendCatalog(EntityUid viewer, Entity<StoreComponent> store)
+    {
+        var (uid, component) = store;
+        component.LastAvailableListings = GetAvailableListings(component.AccountOwner ?? viewer, uid, component).ToHashSet();
 
-            if (component.Balance.TryGetValue(supported, out var value))
-                allCurrency[supported] = value;
-        }
+        var balance = new Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2>(component.CurrencyWhitelist.Count);
+        foreach (var currency in component.CurrencyWhitelist)
+            balance.Add(currency, component.Balance.GetValueOrDefault(currency));
 
-        // TODO: if multiple users are supposed to be able to interact with a single BUI & see different
-        // stores/listings, this needs to use session specific BUI states.
+        BoundUserInterfaceState? state = GetTreeUiState(store, balance);
+        state ??= new StoreUpdateState(component.LastAvailableListings, balance,
+            HasComp<RingerUplinkComponent>(uid), component.RefundAllowed);
 
-        if (TrySetTreeUiState((store, component), allCurrency)) // Goob
-            return;
-
-        // only tell operatives to lock their uplink if it can be locked
-        var showFooter = HasComp<RingerUplinkComponent>(store);
-
-        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter, component.RefundAllowed);
-        _ui.SetUiState(store, StoreUiKey.Key, state);
+        _ui.ServerSendUiMessage(uid, StoreUiKey.Key, new StoreCatalogMessage(state), viewer);
     }
 
     private void OnRequestUpdate(EntityUid uid, StoreComponent component, StoreRequestUpdateInterfaceMessage args)
     {
-        UpdateUserInterface(args.Actor, GetEntity(args.Entity), component);
-    }
-
-    private void BeforeActivatableUiOpen(EntityUid uid, StoreComponent component, BeforeActivatableUIOpenEvent args)
-    {
-        UpdateUserInterface(args.User, uid, component);
+        if (Equals(args.UiKey, StoreUiKey.Key))
+            SendCatalog(args.Actor, (uid, component));
     }
 
     /// <summary>

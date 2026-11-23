@@ -12,6 +12,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork;
 public sealed class DeviceNetworkTestSystem : EntitySystem
 {
     public NetworkPayload LastPayload = default;
+    public event Action<EntityUid, DeviceNetworkPacketEvent>? PacketReceived; // Pirate: observe delivery to a specific test device.
 
     public override void Initialize()
     {
@@ -28,5 +29,6 @@ public sealed class DeviceNetworkTestSystem : EntitySystem
     private void OnPacketReceived(EntityUid uid, DeviceNetworkComponent component, DeviceNetworkPacketEvent args)
     {
         LastPayload = args.Data;
+        PacketReceived?.Invoke(uid, args);
     }
 }

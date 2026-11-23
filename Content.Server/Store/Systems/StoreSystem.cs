@@ -31,7 +31,6 @@ public sealed partial class StoreSystem : EntitySystem
 
         SubscribeLocalEvent<StoreComponent, ActivatableUIOpenAttemptEvent>(OnStoreOpenAttempt);
         SubscribeLocalEvent<CurrencyComponent, AfterInteractEvent>(OnAfterInteract);
-        SubscribeLocalEvent<StoreComponent, BeforeActivatableUIOpenEvent>(BeforeActivatableUiOpen);
 
         SubscribeLocalEvent<StoreComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StoreComponent, ComponentStartup>(OnStartup);

@@ -32,6 +32,7 @@ public sealed partial class HolopadWindow : FancyWindow
     private HolopadUiKey _currentUiKey;
     private TelephoneState _currentState;
     private TelephoneState _previousState;
+    private (string?, string?, string?)? _displayedCallerId; // Pirate: caller ID changes independently of the directory.
     private TimeSpan _buttonUnlockTime;
     private float _updateTimer = 0.25f;
 
@@ -168,16 +169,8 @@ public sealed partial class HolopadWindow : FancyWindow
 
     public void UpdateState(Dictionary<NetEntity, string> holopads)
     {
-        if (_owner == null || !_entManager.TryGetComponent<TelephoneComponent>(_owner.Value, out var telephone))
+        if (_owner == null || !_entManager.HasComponent<TelephoneComponent>(_owner.Value))
             return;
-
-        // Caller ID text
-        var callerId = _telephoneSystem.GetFormattedCallerIdForEntity(telephone.LastCallerId.Item1, telephone.LastCallerId.Item2, Color.LightGray, "Default", 11);
-        var holoapdId = _telephoneSystem.GetFormattedDeviceIdForEntity(telephone.LastCallerId.Item3, Color.LightGray, "Default", 11);
-
-        CallerIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(callerId));
-        HolopadIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(holoapdId));
-        LockOutIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(callerId));
 
         // Sort holopads alphabetically
         var holopadArray = holopads.ToArray();
@@ -220,6 +213,17 @@ public sealed partial class HolopadWindow : FancyWindow
 
         if (_owner == null || !_entManager.TryGetComponent<HolopadComponent>(_owner.Value, out var holopad))
             return;
+
+        if (_displayedCallerId is not { } last || last != telephone.LastCallerId)
+        {
+            _displayedCallerId = telephone.LastCallerId;
+            var callerId = _telephoneSystem.GetFormattedCallerIdForEntity(telephone.LastCallerId.Item1, telephone.LastCallerId.Item2, Color.LightGray, "Default", 11);
+            var holopadId = _telephoneSystem.GetFormattedDeviceIdForEntity(telephone.LastCallerId.Item3, Color.LightGray, "Default", 11);
+
+            CallerIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(callerId));
+            HolopadIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(holopadId));
+            LockOutIdText.SetMessage(FormattedMessage.FromMarkupOrThrow(callerId));
+        }
 
         var hasBroadcastAccess = !_holopadSystem.IsHolopadBroadcastOnCoolDown((_owner.Value, holopad));
         var localPlayer = _playerManager.LocalSession?.AttachedEntity;

@@ -17,6 +17,9 @@ namespace Content.Shared.Holopad;
 [Access(typeof(SharedHolopadSystem))]
 public sealed partial class HolopadComponent : Component
 {
+    // Pirate: immutable server-side directory last sent to the open windows.
+    public Dictionary<NetEntity, string>? CachedDirectory;
+
     /// <summary>
     /// The entity being projected by the holopad
     /// </summary>

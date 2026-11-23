@@ -1,3 +1,4 @@
+using Content.Client._Pirate.Store; // Pirate: viewer-only catalogues.
 using Content.Shared.Store;
 using JetBrains.Annotations;
 using System.Linq;
@@ -8,7 +9,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Store.Ui;
 
 [UsedImplicitly]
-public sealed class StoreBoundUserInterface : BoundUserInterface
+public sealed class StoreBoundUserInterface : StoreCatalogBoundUserInterface
 {
     private IPrototypeManager _prototypeManager = default!;
 

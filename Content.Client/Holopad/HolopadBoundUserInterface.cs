@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.Holopad;
+using Content.Shared._Pirate.Holopad; // Pirate
 using Content.Shared.Silicons.StationAi;
 using Robust.Client.UserInterface;
 using Robust.Shared.Player;
@@ -41,6 +42,9 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
 
         _window.SetState(Owner, uiKey);
         _window.UpdateState(new Dictionary<NetEntity, string>());
+        // Pirate: the incoming-call dialog has no contact directory.
+        if (UiKey is HolopadUiKey.InteractionWindow or HolopadUiKey.AiActionWindow)
+            SendMessage(new HolopadDirectoryRequestMessage());
 
         // Set message actions
         _window.SendHolopadStartNewCallMessageAction += SendHolopadStartNewCallMessage;
@@ -59,13 +63,18 @@ public sealed class HolopadBoundUserInterface : BoundUserInterface
             _window.OpenCenteredAt(new Vector2(0.3333f, 0.50f));
     }
 
+    protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+    {
+        base.ReceiveMessage(message);
+        if (message is HolopadDirectoryMessage directory)
+            _window?.UpdateState(directory.Holopads);
+    }
+
     protected override void UpdateState(BoundUserInterfaceState state)
     {
         base.UpdateState(state);
 
         var castState = (HolopadBoundInterfaceState)state;
-        EntMan.TryGetComponent<TransformComponent>(Owner, out var xform);
-
         _window?.UpdateState(castState.Holopads);
     }
 
