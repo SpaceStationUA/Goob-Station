@@ -669,14 +669,12 @@ namespace Content.Server.GameTicking
                     ("seconds", duration.Seconds));
                 var payload = new WebhookPayload { Content = content };
 
-                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
-
-                if (DiscordRoundEndRole == null)
-                    return;
-
-                content = Loc.GetString("discord-round-notifications-end-ping", ("roleId", DiscordRoundEndRole));
-                payload = new WebhookPayload { Content = content };
-                payload.AllowedMentions.AllowRoleMentions();
+                // Pirate: include the configured role in the round announcement itself.
+                if (DiscordRoundEndRole != null)
+                {
+                    payload.Content += "\n" + Loc.GetString("discord-round-notifications-end-ping", ("roleId", DiscordRoundEndRole));
+                    payload.AllowedMentions.AllowRoleMentions();
+                }
 
                 await _discord.CreateMessage(_webhookIdentifier.Value, payload);
             }

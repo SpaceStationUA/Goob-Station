@@ -3,6 +3,7 @@ using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Client.Silicons.StationAi;
 using Content.Goobstation.Common.CCVar;
+using Content.Goobstation.Shared.FloorGoblin;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Flash.Components;
 using Content.Shared.Humanoid;
@@ -121,6 +122,10 @@ public sealed class ESNamePeekOverlay : Overlay
         foreach (var ent in _nearbyEntities)
         {
             if (ent.Owner == playerEnt)
+                continue;
+
+            // Pirate: crawling goblins hide their name even on exposed plating.
+            if (_entityManager.TryGetComponent<CrawlUnderFloorComponent>(ent, out var crawl) && crawl.Enabled)
                 continue;
 
             if (!_entityManager.TryGetComponent<TransformComponent>(ent, out var xform)

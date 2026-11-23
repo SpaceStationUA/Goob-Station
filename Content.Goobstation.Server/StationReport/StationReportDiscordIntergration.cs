@@ -1,14 +1,13 @@
-using System;
 using System.Text.RegularExpressions;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using Content.Goobstation.Common.CCVar;
 using Content.Goobstation.Common.StationReport;
 using Content.Server.Discord;
-using Robust.Shared.GameObjects;
+using Content.Server.GameTicking;
 using Robust.Shared.Configuration;
-using Robust.Shared.IoC;
 
 namespace Content.Goobstation.Server.StationReportDiscordIntergrationSystem;
 
@@ -17,8 +16,10 @@ public sealed partial class StationReportDiscordIntergration : EntitySystem
     //thank you Timfa for writing this code
     private static readonly HttpClient client = new();
     [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private GameTicker _ticker = default!;
 
     private string? _webhookUrl;
+    private int? _lastReportRound;
 
     public override void Initialize()
     {
@@ -56,35 +57,59 @@ public sealed partial class StationReportDiscordIntergration : EntitySystem
     {
         report = ev.StationReportText;
 
-        if (string.IsNullOrWhiteSpace(report))
+        // Pirate: an admin can reopen the scoreboard and raise this event again.
+        if (_ticker.RunLevel != GameRunLevel.PostRound || _lastReportRound == _ticker.RoundId ||
+            string.IsNullOrWhiteSpace(report) || string.IsNullOrWhiteSpace(_webhookUrl))
             return;
+
+        if (!Uri.TryCreate(_webhookUrl, UriKind.Absolute, out var url) ||
+            (url.Scheme != Uri.UriSchemeHttps && url.Scheme != Uri.UriSchemeHttp))
+        {
+            Log.Warning("Invalid Discord webhook URL for station reports.");
+            return;
+        }
 
         foreach (var replacement in _replacements)
             report = Regex.Replace(report, replacement.Tag, replacement.Replacement);
 
-        // Run async without blocking
-        _ = SendMessageAsync(report);
+        _lastReportRound = _ticker.RoundId;
+        _ = SendMessageAsync(url, report, _ticker.RoundId);
     }
 
-    private async Task SendMessageAsync(string message)
+    private async Task SendMessageAsync(Uri url, string message, int roundId)
     {
-        if (string.IsNullOrWhiteSpace(message) || string.IsNullOrWhiteSpace(_webhookUrl))
-            return;
-
-        // Pirate: player-written paper must never notify Discord users or roles.
-        var payload = new { content = message, allowed_mentions = new WebhookMentions() };
-        var json = System.Text.Json.JsonSerializer.Serialize(payload);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-
         try
         {
-            var response = await client.PostAsync(_webhookUrl, content);
-            response.EnsureSuccessStatusCode();
+            using var content = ReportContent(message, roundId);
+            using var response = await client.PostAsync(url, content);
+            if (!response.IsSuccessStatusCode)
+            {
+                if ((int) response.StatusCode is >= 400 and < 500 && _lastReportRound == roundId)
+                    _lastReportRound = null;
+                Log.Error($"Discord rejected station report for round {roundId}: {response.StatusCode}");
+            }
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Logger.Error($"Error sending station report to discord: {ex}");
+            // Delivery is unknown on a transport error. A repeated scoreboard must not resend it.
+            Log.Error($"Could not confirm Discord delivery of station report for round {roundId}: {e.GetType().Name}");
         }
+    }
+
+    // Pirate: keep the whole paper in one Discord message and disable mentions in every format.
+    private static HttpContent ReportContent(string message, int roundId)
+    {
+        var mentions = new WebhookMentions();
+        if (message.Length <= 2000)
+            return JsonContent.Create(new { content = message, allowed_mentions = mentions });
+
+        if (message.Length <= 4096)
+            return JsonContent.Create(new { embeds = new[] { new { description = message } }, allowed_mentions = mentions });
+
+        var form = new MultipartFormDataContent();
+        form.Add(JsonContent.Create(new { allowed_mentions = mentions }), "payload_json");
+        form.Add(new StringContent(message, Encoding.UTF8, "text/plain"), "files[0]", $"station-report-{roundId}.txt");
+        return form;
     }
 
     public struct TagReplacement
