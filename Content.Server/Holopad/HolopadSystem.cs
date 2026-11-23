@@ -18,7 +18,7 @@ using Content.Shared.Silicons.StationAi;
 using Content.Shared.Speech;
 using Content.Shared.Speech.Components;
 using Content.Shared.Telephone;
-using Content.Shared.UserInterface;
+using Content.Shared._Pirate.Holopad; // Pirate
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.GameStates;
@@ -46,13 +46,16 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     private float _updateTimer = 1.0f;
     private const float UpdateTime = 1.0f;
+    private readonly Dictionary<NetEntity, string> _directoryScratch = new(); // Pirate: snapshots sent to viewers have their own copy.
 
     public override void Initialize()
     {
         base.Initialize();
 
         // Holopad UI and bound user interface messages
-        SubscribeLocalEvent<HolopadComponent, BeforeActivatableUIOpenEvent>(OnUIOpen);
+        // Pirate: the directory is private to open holopad windows.
+        SubscribeLocalEvent<HolopadComponent, HolopadDirectoryRequestMessage>(OnDirectoryRequest);
+        SubscribeLocalEvent<HolopadComponent, BoundUIClosedEvent>(OnDirectoryClosed);
         SubscribeLocalEvent<HolopadComponent, HolopadStartNewCallMessage>(OnHolopadStartNewCall);
         SubscribeLocalEvent<HolopadComponent, HolopadAnswerCallMessage>(OnHolopadAnswerCall);
         SubscribeLocalEvent<HolopadComponent, HolopadEndCallMessage>(OnHolopadEndCall);
@@ -88,9 +91,26 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     #region: Holopad UI bound user interface messages
 
-    private void OnUIOpen(Entity<HolopadComponent> entity, ref BeforeActivatableUIOpenEvent args)
+    private HolopadUiKey GetDirectoryKey(EntityUid uid) =>
+        HasComp<StationAiCoreComponent>(uid) ? HolopadUiKey.AiActionWindow : HolopadUiKey.InteractionWindow;
+
+    private void OnDirectoryRequest(Entity<HolopadComponent> entity, ref HolopadDirectoryRequestMessage args)
     {
-        UpdateUIState(entity);
+        var key = GetDirectoryKey(entity);
+        if (!Equals(args.UiKey, key))
+            return;
+
+        if (entity.Comp.CachedDirectory is { } directory)
+            _userInterfaceSystem.ServerSendUiMessage(entity.Owner, key, new HolopadDirectoryMessage(directory), args.Actor);
+        else
+            UpdateUIState(entity);
+    }
+
+    private void OnDirectoryClosed(Entity<HolopadComponent> entity, ref BoundUIClosedEvent args)
+    {
+        var key = GetDirectoryKey(entity);
+        if (Equals(args.UiKey, key) && !_userInterfaceSystem.IsUiOpen(entity.Owner, key))
+            entity.Comp.CachedDirectory = null;
     }
 
     private void OnHolopadStartNewCall(Entity<HolopadComponent> source, ref HolopadStartNewCallMessage args)
@@ -498,11 +518,12 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
     public void UpdateUIState(Entity<HolopadComponent> entity, TelephoneComponent? telephone = null)
     {
-        if (!Resolve(entity.Owner, ref telephone, false))
+        var key = GetDirectoryKey(entity);
+        if (!_userInterfaceSystem.IsUiOpen(entity.Owner, key) || !Resolve(entity.Owner, ref telephone, false))
             return;
 
         var source = new Entity<TelephoneComponent>(entity, telephone);
-        var holopads = new Dictionary<NetEntity, string>();
+        _directoryScratch.Clear();
 
         var query = AllEntityQuery<HolopadComponent, TelephoneComponent>();
         while (query.MoveNext(out var receiverUid, out var _, out var receiverTelephone))
@@ -523,11 +544,15 @@ public sealed class HolopadSystem : SharedHolopadSystem
             if (TryComp<LabelComponent>(receiverUid, out var label) && !string.IsNullOrEmpty(label.CurrentLabel))
                 name = label.CurrentLabel;
 
-            holopads.Add(GetNetEntity(receiverUid), name);
+            _directoryScratch.Add(GetNetEntity(receiverUid), name);
         }
 
-        var uiKey = HasComp<StationAiCoreComponent>(entity) ? HolopadUiKey.AiActionWindow : HolopadUiKey.InteractionWindow;
-        _userInterfaceSystem.SetUiState(entity.Owner, uiKey, new HolopadBoundInterfaceState(holopads));
+        if (entity.Comp.CachedDirectory is { } previous && previous.DictionaryEquals(_directoryScratch))
+            return;
+
+        var snapshot = new Dictionary<NetEntity, string>(_directoryScratch);
+        entity.Comp.CachedDirectory = snapshot;
+        _userInterfaceSystem.ServerSendUiMessage(entity.Owner, key, new HolopadDirectoryMessage(snapshot));
     }
 
     private void GenerateHologram(Entity<HolopadComponent> entity)
