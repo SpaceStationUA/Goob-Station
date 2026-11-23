@@ -71,7 +71,6 @@
     locked: true
     showLockVerbs: false
     unlockOnClick: false
-    popupMessage: false
     showExamine: false
   - type: LockedStorage
   - type: SolutionContainerManager
