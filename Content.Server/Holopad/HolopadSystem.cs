@@ -103,7 +103,7 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (entity.Comp.CachedDirectory is { } directory)
             _userInterfaceSystem.ServerSendUiMessage(entity.Owner, key, new HolopadDirectoryMessage(directory), args.Actor);
         else
-            UpdateUIState(entity);
+            UpdateUIState(entity.AsNullable());
     }
 
     private void OnDirectoryClosed(Entity<HolopadComponent> entity, ref BoundUIClosedEvent args)
@@ -516,10 +516,11 @@ public sealed class HolopadSystem : SharedHolopadSystem
         // </Goobstation>
     }
 
-    public void UpdateUIState(Entity<HolopadComponent> entity, TelephoneComponent? telephone = null)
+    public void UpdateUIState(Entity<HolopadComponent?> entity, TelephoneComponent? telephone = null)
     {
         var key = GetDirectoryKey(entity);
-        if (!_userInterfaceSystem.IsUiOpen(entity.Owner, key) || !Resolve(entity.Owner, ref telephone, false))
+        if (!_userInterfaceSystem.IsUiOpen(entity.Owner, key) ||
+            !Resolve(entity.Owner, ref entity.Comp, ref telephone, false))
             return;
 
         var source = new Entity<TelephoneComponent>(entity, telephone);
