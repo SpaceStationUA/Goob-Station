@@ -30,7 +30,6 @@ public sealed partial class GangLockerStoreSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<GangLockerComponent, InteractHandEvent>(OnInteractHand);
-        SubscribeLocalEvent<GangLockerComponent, BoundUIOpenedEvent>(OnStoreOpened);
         SubscribeLocalEvent<GangLockerComponent, BoundUIClosedEvent>(OnStoreClosed);
         SubscribeLocalEvent<GangLockerComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<GangLockerComponent, ListingPurchasedEvent>(OnPurchase);
@@ -78,16 +77,6 @@ public sealed partial class GangLockerStoreSystem : EntitySystem
         }
 
         args.PushMarkup(Loc.GetString("gang-locker-examine-update-timer", ("seconds", updateIn)));
-    }
-
-    private void OnStoreOpened(Entity<GangLockerComponent> locker, ref BoundUIOpenedEvent args)
-    {
-        var msg = new StoreRequestUpdateInterfaceMessage
-        {
-            Actor = args.Actor,
-            Entity = GetNetEntity(locker.Owner),
-        };
-        RaiseLocalEvent(locker.Owner, msg);
     }
 
     private void OnInteractHand(Entity<GangLockerComponent> locker, ref InteractHandEvent args)

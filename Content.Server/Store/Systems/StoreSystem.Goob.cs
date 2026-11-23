@@ -58,10 +58,10 @@ public sealed partial class StoreSystem
         _ui.SetUi(ent.Owner, StoreUiKey.Key, new InterfaceData(TreeInterface, data.InteractionRange, data.RequireInputValidation));
     }
 
-    private bool TrySetTreeUiState(Entity<StoreComponent> ent, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance)
+    private StoreTreeUpdateState? GetTreeUiState(Entity<StoreComponent> ent, Dictionary<ProtoId<CurrencyPrototype>, FixedPoint2> balance)
     {
         if (ent.Comp.Tree is not { } treeId || !_proto.TryIndex(treeId, out var tree))
-            return false;
+            return null;
 
         var listings = new HashSet<ListingDataWithCostModifiers>();
         foreach (var listing in ent.Comp.LastAvailableListings)
@@ -77,7 +77,6 @@ public sealed partial class StoreSystem
                 purchased.Add(listing.ID);
         }
 
-        _ui.SetUiState(ent.Owner, StoreUiKey.Key, new StoreTreeUpdateState(treeId, listings, purchased, balance));
-        return true;
+        return new StoreTreeUpdateState(treeId, listings, purchased, balance); // Pirate: send only to the viewer.
     }
 }

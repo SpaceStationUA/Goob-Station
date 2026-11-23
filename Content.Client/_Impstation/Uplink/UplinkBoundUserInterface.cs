@@ -1,3 +1,4 @@
+using Content.Client._Pirate.Store; // Pirate: viewer-only catalogues.
 using System.Linq;
 using Content.Shared._Pirate.Reputation;
 using Content.Shared.PDA;
@@ -9,7 +10,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client._Impstation.Uplink;
 
 [UsedImplicitly]
-public sealed class UplinkBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
+public sealed class UplinkBoundUserInterface(EntityUid owner, Enum uiKey) : StoreCatalogBoundUserInterface(owner, uiKey)
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
