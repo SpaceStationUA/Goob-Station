@@ -70,7 +70,7 @@ public sealed partial class ServerApi
             var ev = new PirateShopEvent(request);
             _entityManager.EventBus.RaiseEvent(EventSource.Local, ev);
             return ev.Result;
-        });
+        }).Unwrap();
         await context.RespondJsonAsync(new { result.State, result.Balance });
     }
 

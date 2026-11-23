@@ -2,6 +2,7 @@
 
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Content.Server._Pirate.ServerCurrency;
 
@@ -26,5 +27,5 @@ public sealed record PirateShopRequest(Guid OperationId, Guid Source, string Ite
 public sealed class PirateShopEvent(PirateShopRequest request) : EntityEventArgs
 {
     public PirateShopRequest Request { get; } = request;
-    public PirateCurrencyResult Result = new("unavailable", null);
+    public Task<PirateCurrencyResult> Result = Task.FromResult(new PirateCurrencyResult("unavailable", null));
 }

@@ -121,8 +121,33 @@ namespace Content.Pirate.Server.Mercenary
 
             var uid = SpawnMercBody(entity, session, spawn, out var mercProfile);
             RemComp<GhostRoleComponent>(uid);
+            if (!session.Channel.IsConnected || session.AttachedEntity != entity)
+            {
+                QueueDel(uid);
+                return null;
+            }
             mindSystem.TransferTo(mind, uid, true);
+            if (!mindSystem.TryGetMind(session.UserId, out _, out var current) || current.CurrentEntity != uid)
+            {
+                QueueDel(uid);
+                return null;
+            }
 
+            // The buyer already owns the new body even if an optional arrival effect fails.
+            try
+            {
+                FinishArrival(uid, session, mercProfile, spawn, mercMapUid.Value, shuttle);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Failed to finish mercenary arrival for {uid}: {e}");
+            }
+            return uid;
+        }
+
+        private void FinishArrival(EntityUid uid, ICommonSession session, HumanoidCharacterProfile? mercProfile,
+            EntityCoordinates spawn, EntityUid mercMap, EntityUid shuttle)
+        {
             // Apply profile data without the normal spawn side effects.
             if (mercProfile != null)
                 _profileSpawn.ApplyProfileDetails(uid, mercProfile, session);
@@ -131,11 +156,10 @@ namespace Content.Pirate.Server.Mercenary
 
             var disk = EntityManager.SpawnEntity(Disk, spawn);
             var cd = _entManager.EnsureComponent<ShuttleDestinationCoordinatesComponent>(disk);
-            cd.Destination = mercMapUid.Value;
+            cd.Destination = mercMap;
             _entManager.Dirty(disk, cd);
 
             AnnounceArrival(shuttle);
-            return uid;
         }
 
         private EntityUid SpawnMercBody(EntityUid source, ICommonSession session, EntityCoordinates coordinates,

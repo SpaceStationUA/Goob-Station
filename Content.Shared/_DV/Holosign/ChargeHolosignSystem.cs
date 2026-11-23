@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Shared._Pirate.Holosign;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Coordinates.Helpers;
@@ -38,6 +39,7 @@ public sealed class ChargeHolosignSystem : EntitySystem
         SubscribeLocalEvent<ChargeHolosignProjectorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChargeHolosignProjectorComponent, BeforeRangedInteractEvent>(OnBeforeInteract);
         SubscribeLocalEvent<ChargeHolosignProjectorComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<ProjectedHolosignComponent, EntityTerminatingEvent>(OnSignTerminating); // Pirate
     }
 
     private void OnInit(Entity<ChargeHolosignProjectorComponent> ent, ref ComponentInit args)
@@ -55,7 +57,6 @@ public sealed class ChargeHolosignSystem : EntitySystem
         if (!TryComp<LimitedChargesComponent>(ent, out var charges))
             return;
 
-        var containers = Comp<ContainerManagerComponent>(ent);
         for (var i = 0; i < charges.MaxCharges; i++)
         {
             if (!TrySpawnInContainer(ent.Comp.SignProto, ent, ent.Comp.ContainerId, out var signUid))
@@ -64,7 +65,7 @@ public sealed class ChargeHolosignSystem : EntitySystem
                 return;
             }
 
-            ent.Comp.Signs.Add(signUid.Value);
+            TrackSign(ent, signUid.Value);
         }
 
         Dirty(ent, ent.Comp); // Pirate: engine update (tests fix)
@@ -138,10 +139,26 @@ public sealed class ChargeHolosignSystem : EntitySystem
             }
 
             _charges.AddCharges((ent, charges), 1);
-            ent.Comp.Signs.Add(signUid.Value);
+            TrackSign(ent, signUid.Value);
         }
 
         Dirty(ent, ent.Comp); // Pirate: audio muffle
+    }
+
+    // Pirate: forget expired signs before the next projector state is sent to clients.
+    private void TrackSign(Entity<ChargeHolosignProjectorComponent> projector, EntityUid sign)
+    {
+        projector.Comp.Signs.Add(sign);
+        if (_net.IsServer)
+            EnsureComp<ProjectedHolosignComponent>(sign).Projector = projector.Owner;
+    }
+
+    private void OnSignTerminating(Entity<ProjectedHolosignComponent> sign, ref EntityTerminatingEvent args)
+    {
+        var owner = sign.Comp.Projector;
+        if (!TerminatingOrDeleted(owner) && TryComp<ChargeHolosignProjectorComponent>(owner, out var projector)
+            && projector.Signs.Remove(sign.Owner))
+            Dirty(owner, projector);
     }
 
     public bool TryPlaceSign(Entity<ChargeHolosignProjectorComponent?, LimitedChargesComponent?> ent, EntityCoordinates coords, EntityUid user)

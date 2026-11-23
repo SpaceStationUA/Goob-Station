@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Threading;
 using System.Threading.Tasks;
 using Content.Goobstation.Common.ServerCurrency;
 using Content.Pirate.Server.Mercenary;
@@ -40,6 +41,7 @@ public sealed class PirateShopSystem : EntitySystem
 
     // Keep the delivery outcome only while the database has not acknowledged settlement.
     private readonly Dictionary<Guid, string> _unsettled = new();
+    private readonly SemaphoreSlim _purchaseGate = new(1, 1);
 
     public override void Initialize()
     {
@@ -48,14 +50,32 @@ public sealed class PirateShopSystem : EntitySystem
 
     private void OnPurchase(PirateShopEvent ev)
     {
-        var request = ev.Request;
+        ev.Result = PurchaseAsync(ev.Request);
+    }
+
+    private async Task<PirateCurrencyResult> PurchaseAsync(PirateShopRequest request)
+    {
+        // A retry must not settle a hold that another request is still delivering.
+        await _purchaseGate.WaitAsync();
+        try
+        {
+            return await ProcessPurchase(request);
+        }
+        finally
+        {
+            _purchaseGate.Release();
+        }
+    }
+
+    private async Task<PirateCurrencyResult> ProcessPurchase(PirateShopRequest request)
+    {
         var rejection = request.InspectOnly ? null : Eligible(request, out _, out _);
-        var hold = Task.Run(() => _db.ReservePirateShop(request, rejection)).GetAwaiter().GetResult();
+        var hold = await _db.ReservePirateShop(request, rejection);
         if (hold.State != "shop_held")
         {
-            _unsettled.Remove(request.OperationId);
-            ev.Result = hold;
-            return;
+            if (hold.State is not ("operation_conflict" or "invalid_request" or "not_started"))
+                _unsettled.Remove(request.OperationId);
+            return hold;
         }
 
         if (!_unsettled.TryGetValue(request.OperationId, out var outcome))
@@ -81,12 +101,12 @@ public sealed class PirateShopSystem : EntitySystem
             _unsettled.Add(request.OperationId, outcome);
         }
 
-        var settled = Task.Run(() => _db.SettlePirateShop(request, outcome)).GetAwaiter().GetResult();
+        var settled = await _db.SettlePirateShop(request, outcome);
         _unsettled.Remove(request.OperationId);
-        ev.Result = settled;
         if (settled.AppliedNow && settled.Balance is {} balance &&
             _players.TryGetSessionById(new NetUserId(request.Source), out var current) && current.Channel.IsConnected)
             RaiseNetworkEvent(new PlayerBalanceUpdateEvent(balance, balance), current);
+        return settled;
     }
 
     private string? Eligible(PirateShopRequest request, out ICommonSession? session, out EntityUid body)
@@ -165,6 +185,9 @@ public sealed class PirateShopSystem : EntitySystem
                 if (!session.Channel.IsConnected || session.AttachedEntity != source)
                     return false;
                 var mage = SpawnAtPosition(spawner.Prototype, transform.Coordinates);
+                if (!session.Channel.IsConnected || session.AttachedEntity != source)
+                    return false; // The finally block removes the unclaimed body with the map.
+
                 // Consume only the marker on this purchase's map before another player can claim it.
                 RemComp<GhostRoleComponent>(marker);
                 QueueDel(marker);
