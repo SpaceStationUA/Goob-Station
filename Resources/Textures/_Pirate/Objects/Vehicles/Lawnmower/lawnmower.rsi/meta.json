@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "From HippieStation (Nexendia), via Surf Shack 13 at https://github.com/cocothegogo/SurfShack13/blob/f35854aac17c44d5b997fba678e326b409aa5b09/icons/obj/vehicles/lawnmower.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "lawnmower",
+      "directions": 4
+    },
+    {
+      "name": "lawnmoweremag",
+      "directions": 4
+    }
+  ]
+}

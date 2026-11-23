@@ -37,6 +37,10 @@ public sealed partial class VehicleComponent : Component
     [DataField]
     public bool EngineRunning;
 
+    /// <summary>Whether a separate ignition control starts and stops this vehicle.</summary>
+    [DataField] // Pirate: fuel-powered vehicles.
+    public bool ManualIgnition;
+
     /// <summary>
     /// What sound to play when the driver presses the horn action (plays once)
     /// </summary>

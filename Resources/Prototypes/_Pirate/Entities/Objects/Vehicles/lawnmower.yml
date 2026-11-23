@@ -1,0 +1,120 @@
+- type: entity
+  parent: BaseStructure
+  id: KsLawnmower
+  name: lawn mower
+  description: Equipped with reliable safeties to prevent accidents in the workplace.
+  components:
+  - type: Transform
+    anchored: false
+  - type: Sprite
+    sprite: _Pirate/Objects/Vehicles/Lawnmower/lawnmower.rsi
+    drawdepth: Mobs
+    layers:
+    - state: lawnmower
+      map: [ "mower" ]
+    - sprite: _Pirate/Objects/Vehicles/Lawnmower/smoke_small.rsi
+      state: smoke_1
+      offset: 0,0.2
+      map: [ "smoke" ]
+      visible: false
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.KsLawnmowerVisuals.SafetyDisabled:
+        mower:
+          True: { state: lawnmoweremag }
+      enum.KsLawnmowerVisuals.Damaged:
+        smoke:
+          True: { visible: true }
+          False: { visible: false }
+  - type: Physics
+    bodyType: KinematicController
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 35
+        mask:
+        - MobMask
+        layer:
+        - MidImpassable
+        - BulletImpassable
+      blades:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.4
+        hard: false
+        mask:
+        - MobLayer
+  - type: Damageable
+    damageModifierSet: Metallic
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 250
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Repairable
+    doAfterDelay: 3
+  - type: InputMover
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.5
+    baseSprintSpeed: 4.5
+    baseWeightlessModifier: 0
+  - type: Strap
+    position: Stand
+    blockMovement: false
+    size: 100
+    buckleOffset: 0,0.15
+    whitelist:
+      components:
+      - HumanoidAppearance
+  - type: KsLawnmower
+  - type: KsLawnmowerBlades
+    mowableTiles:
+    - FloorAstroGrass
+    - FloorDarkAstroGrass
+    - FloorJungleAstroGrass
+    - FloorLightAstroGrass
+    driveSound:
+      collection: KsLawnmowerDrive
+      params:
+        volume: -5
+    bumpSound:
+      path: /Audio/Effects/hit_kick.ogg
+    bladeSound:
+      path: /Audio/_Pirate/Vehicles/Lawnmower/chainsawhit.ogg
+    crushSound:
+      path: /Audio/_Pirate/Vehicles/Lawnmower/mowermovesquish.ogg
+    bumpDamage:
+      types:
+        Blunt: 25
+    crushDamage: 1000
+
+- type: entity
+  parent: [ KsLawnmower, BaseSyndicateContraband ]
+  id: KsLawnmowerEmagged
+  name: Blood Red Lawnmower
+  description: A viciously modified lawn mower, painted blood red and stripped of every sensible safety feature. The blades look hungry.
+  components:
+  - type: Emagged
+    emagType: Interaction
+
+- type: soundCollection
+  id: KsLawnmowerDrive
+  files:
+  - /Audio/_Pirate/Vehicles/Lawnmower/mowermove1.ogg
+  - /Audio/_Pirate/Vehicles/Lawnmower/mowermove2.ogg
+
+- type: decal
+  id: KsLawnmowerBloodTracks
+  showMenu: false
+  defaultCleanable: true
+  sprite:
+    sprite: _Pirate/Objects/Vehicles/Lawnmower/tracks.rsi
+    state: parallel

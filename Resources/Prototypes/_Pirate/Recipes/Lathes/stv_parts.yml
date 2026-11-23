@@ -1,0 +1,87 @@
+- type: latheCategory
+  id: LatheVehicleParts
+  name: stv-lathe-category
+
+- type: latheRecipe
+  abstract: true
+  id: BaseVehiclePartsRecipe
+  completetime: 6
+  categories: [ LatheVehicleParts ]
+
+- type: latheRecipePack
+  id: StvParts
+  recipes:
+  - BasicHeadlight
+  - HeadlightLED
+  - BasicTires
+  - BasicEngine
+  - AdvancedEngine
+  - BasicArmorKit
+
+- type: latheRecipe
+  parent: BaseVehiclePartsRecipe
+  id: BasicHeadlight
+  result: BasicHeadlight
+  materials:
+    Glass: 100
+    Steel: 50
+    Plastic: 25
+
+- type: latheRecipe
+  parent: BaseVehiclePartsRecipe
+  id: HeadlightLED
+  result: HeadlightLED
+  materials:
+    Glass: 100
+    Steel: 100
+    Plastic: 50
+
+- type: latheRecipe
+  parent: BaseVehiclePartsRecipe
+  id: BasicTires
+  result: BasicTires
+  materials:
+    Steel: 100
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseVehiclePartsRecipe
+  id: BasicEngine
+  result: BasicEngine
+  materials:
+    Steel: 300
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseVehiclePartsRecipe
+  id: AdvancedEngine
+  result: AdvancedEngine
+  materials:
+    Steel: 400
+    Plastic: 200
+
+- type: latheRecipe
+  parent: BaseVehiclePartsRecipe
+  id: BasicArmorKit
+  result: BasicArmorKit
+  materials:
+    Steel: 50
+    Plastic: 100
+
+- type: latheRecipe
+  parent: BaseVehiclePartsRecipe
+  id: LightArmorKit
+  result: LightArmorKit
+  materials:
+    ReinforcedGlass: 1000
+    Steel: 500
+    Plastic: 500
+
+- type: latheRecipe
+  parent: BaseVehiclePartsRecipe
+  id: SecSiren
+  result: SecSiren
+  materials:
+    Glass: 500
+    Steel: 250
+    Plastic: 1000

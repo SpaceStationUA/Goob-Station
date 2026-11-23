@@ -4,6 +4,8 @@
 - type: latheRecipePack
   id: SecurityEquipmentStatic
   recipes:
+  - LightArmorKit # Pirate
+  - SecSiren # Pirate
   - ClothingEyesHudSecurity
   - ForensicPad
   - Handcuffs

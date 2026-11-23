@@ -1,0 +1,9 @@
+- files: ["mowermove1.ogg", "mowermove2.ogg", "mowermovesquish.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "From HippieStation via Surf Shack 13"
+  source: "https://github.com/cocothegogo/SurfShack13/tree/f35854aac17c44d5b997fba678e326b409aa5b09/sound/vehicles"
+
+- files: ["chainsawhit.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "From Surf Shack 13"
+  source: "https://github.com/cocothegogo/SurfShack13/blob/f35854aac17c44d5b997fba678e326b409aa5b09/sound/chainsawhit.ogg"

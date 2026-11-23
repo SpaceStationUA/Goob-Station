@@ -27,6 +27,7 @@
   id: NecropolisChestLoot
   table: !type:GroupSelector
     children:
+    - id: ADTVehicleLavabike # Pirate port from Ganimed.
     - id: LavalandCursedHeart
     - id: ClothingOuterArmorCult
     - id: LavalandVampirismCrystal

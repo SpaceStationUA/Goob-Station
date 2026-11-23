@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "Taken from TerraGov-Marine-Corps at https://github.com/tgstation/TerraGov-Marine-Corps/blob/c3c072e3644f4526d0099a79f361bde3aee9b4c7/icons/effects/particles/smoke.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "smoke_1"
+    },
+    {
+      "name": "smoke_2"
+    },
+    {
+      "name": "smoke_3"
+    }
+  ]
+}

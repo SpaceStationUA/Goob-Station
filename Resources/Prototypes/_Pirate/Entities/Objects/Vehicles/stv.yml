@@ -1,0 +1,222 @@
+# NT security ATV from Far Horizons. Modules use Pirate's item-slot interactions.
+- type: entity
+  id: VehicleATVNTSec
+  parent: [ BaseVehicle, BaseSecurityContraband ]
+  name: STV
+  description: A patrol quad with a lockable cargo compartment and mounts for five interchangeable parts.
+  components:
+  - type: Stv
+  - type: Vehicle
+    manualIgnition: true
+    renderOver: North, South
+    hornSound:
+      path: /Audio/Effects/Vehicle/carhorn.ogg
+      params:
+        volume: -3
+  - type: Sprite
+    sprite: _Pirate/Objects/Vehicles/sectv.rsi
+    layers:
+    - state: vehicle
+      map: [ "body" ]
+    noRot: true
+  - type: Icon
+    sprite: _Pirate/Objects/Vehicles/sectv.rsi
+    state: icon
+  - type: Strap
+    buckleOffset: 0,-0.12
+    selfUnBuckleDelay: 2
+    whitelist:
+      tags: [ CanPilot ]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.4
+        density: 360
+        mask: [ MobMask ]
+        layer: [ MobLayer ]
+  - type: Repairable
+    doAfterDelay: 20
+    qualityNeeded: Anchoring
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: MetalBreak
+      - !type:DoActsBehavior
+        acts: [ Breakage ]
+      - !type:EmptyContainersBehaviour
+        containers: [ storagebase ]
+  - type: GenericVisualizer
+    visuals:
+      enum.StvVisuals.Broken:
+        body:
+          True: { state: vehicle_broken }
+          False: { state: vehicle }
+  - type: Storage
+    grid: [ '0,0,10,9' ]
+    maxItemSize: Huge
+    clickInsert: false
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+  - type: UserInterface
+    interfaces:
+      enum.StorageUiKey.Key:
+        type: StorageBoundUserInterface
+  - type: Lock
+    locked: true
+    showLockVerbs: false
+    unlockOnClick: false
+    showExamine: false
+  - type: LockedStorage
+  - type: SolutionContainerManager
+    solutions:
+      fueltank:
+        maxVol: 150
+  - type: RefillableSolution
+    solution: fueltank
+  - type: ExaminableSolution
+    solution: fueltank
+    exactVolume: true
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/_Pirate/Vehicles/STV/atvwalk.ogg
+      params:
+        volume: -11
+        pitch: 1.15
+        variation: 0.10
+  - type: ItemSlots
+    slots:
+      key_slot:
+        name: vehicle-slot-component-slot-name-keys
+        whitelist:
+          requireAll: true
+          tags: [ VehicleKey, STVKeys ]
+      tires:
+        name: stv-slot-tires
+        whitelist:
+          tags: [ StvTires ]
+      engine:
+        name: stv-slot-engine
+        whitelist:
+          components: [ StvEngine ]
+      armor:
+        name: stv-slot-armor
+        whitelist:
+          tags: [ StvArmor ]
+      headlight:
+        name: stv-slot-headlight
+        occludesLight: false
+        whitelist:
+          tags: [ StvHeadlight ]
+      lightbar:
+        name: stv-slot-lightbar
+        occludesLight: false
+        whitelist:
+          tags: [ StvLightbar ]
+
+- type: entity
+  id: VehicleATVNTSecFueled
+  parent: VehicleATVNTSec
+  suffix: Fueled
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      fueltank:
+        maxVol: 150
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 150
+  - type: ContainerFill
+    containers:
+      tires: [ BasicTires ]
+      engine: [ BasicEngine ]
+      armor: [ BasicArmorKit ]
+      headlight: [ BasicHeadlight ]
+      lightbar: [ SecSiren ]
+
+- type: entity
+  id: VehicleATVNTSecFilled
+  parent: VehicleATVNTSecFueled
+  suffix: Fueled, keys
+  components:
+  - type: ContainerFill
+    containers:
+      key_slot: [ VehicleKeySTV ]
+      tires: [ BasicTires ]
+      engine: [ BasicEngine ]
+      armor: [ BasicArmorKit ]
+      headlight: [ BasicHeadlight ]
+      lightbar: [ SecSiren ]
+
+- type: entity
+  id: VehicleKeySTV
+  parent: [ BaseKey, BaseSecurityContraband ]
+  name: STV key
+  description: A universal ignition key for NanoTrasen patrol quads.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Vehicles/sectv.rsi
+    state: keys
+  - type: Tag
+    tags: [ VehicleKey, STVKeys ]
+
+- type: entity
+  id: CrateSecuritySTV
+  parent: CrateSecgear
+  name: patrol quad crate
+  description: Contains a fully equipped and fueled STV with its ignition key.
+  components:
+  - type: StorageFill
+    contents:
+    - id: VehicleATVNTSecFilled
+
+- type: entity
+  id: ActionVehicleIgnition
+  parent: BaseAction
+  name: Switch ignition
+  description: Start or stop the engine.
+  components:
+  - type: Action
+    useDelay: 0.5
+    icon: { sprite: _Pirate/Objects/Vehicles/sectv.rsi, state: keys }
+  - type: InstantAction
+    event: !type:StvControlActionEvent
+      control: Ignition
+
+- type: entity
+  id: ActionStvHeadlight
+  parent: ActionToggleLight
+  name: Toggle headlights
+  components:
+  - type: InstantAction
+    event: !type:StvControlActionEvent
+      control: Headlight
+
+- type: entity
+  id: ActionVehicleToggleSecuritySiren
+  parent: BaseAction
+  name: Toggle security siren
+  description: Turn the siren and rotating beacon on or off.
+  components:
+  - type: Action
+    useDelay: 0.5
+    icon: { sprite: _Pirate/Objects/Vehicles/vehiclemods.rsi, state: siren }
+  - type: InstantAction
+    event: !type:StvControlActionEvent
+      control: Siren
+
+- type: Tag
+  id: STVKeys
+- type: Tag
+  id: StvTires
+- type: Tag
+  id: StvArmor
+- type: Tag
+  id: StvHeadlight
+- type: Tag
+  id: StvLightbar

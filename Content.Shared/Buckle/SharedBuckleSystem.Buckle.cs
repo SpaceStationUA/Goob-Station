@@ -199,8 +199,17 @@ public abstract partial class SharedBuckleSystem
         }
 
         var delta = (xform.LocalPosition - strapComp.BuckleOffset).LengthSquared();
-        if (delta > 1e-5)
-            Unbuckle(buckle, (strapUid, strapComp), null);
+        if (delta <= 1e-5f)
+            return;
+
+        // Pirate: a forklift brushing an obstacle can shift its rider slightly in the seat.
+        if (delta <= strapComp.BucklePositionTolerance * strapComp.BucklePositionTolerance)
+        {
+            _transform.SetLocalPosition(buckle.Owner, strapComp.BuckleOffset, xform);
+            return;
+        }
+
+        Unbuckle(buckle, (strapUid, strapComp), null);
     }
 
     #endregion

@@ -1,0 +1,16 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: KsClothingUniformGrillingShorts
+  name: grilling shorts
+  description: For when all you want in life is to grill.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Vehicles/Lawnmower/grilling_shorts.rsi
+  - type: Clothing
+    sprite: _Pirate/Objects/Vehicles/Lawnmower/grilling_shorts.rsi
+  - type: KsGrillingShorts
+
+- type: loadout
+  id: KsGrillingShorts
+  equipment:
+    jumpsuit: KsClothingUniformGrillingShorts

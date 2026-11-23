@@ -362,6 +362,8 @@
       collection: BikeHorn
       params:
         variation: 0.125
+  - type: Strap # Pirate: keep the driver seated through small bumps.
+    bucklePositionTolerance: 0.25
   - type: MovementSpeedModifier
     baseAcceleration: 8
     baseFriction: 0.2 # wheels dont stop instantly

@@ -4,6 +4,7 @@
   id: LockerFillQuarterMaster
   table: !type:AllSelector
     children:
+    - id: HoverbikeMailcarrierFlatpack # Pirate
     # Pirate: skill chips
     - id: BoxSkillChipsCargo
     - id: BoxEncryptionKeyCargo
@@ -394,6 +395,7 @@
   id: LockerFillHeadOfSecurityNoHardsuit
   table: !type:AllSelector
     children:
+    - id: HoverbikeNfsdFlatpack # Pirate
     - id: BoxSkillChipsSec # Pirate: security combat chips
    # - id: WeaponEnergyMagnum # Goobstation - Remove Energy Magnum
     - id: BookSpaceLaw

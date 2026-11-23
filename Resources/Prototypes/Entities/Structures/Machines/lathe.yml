@@ -153,6 +153,7 @@
     unlitRunningState: unlit-building
     staticPacks:
     - ToolsStatic
+    - StvParts # Pirate
     - PartsStatic
     - AtmosStatic
     - CablesStatic
