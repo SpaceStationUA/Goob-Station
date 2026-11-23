@@ -382,11 +382,9 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (!Resolve(entity, ref comp, false))
             return;
 
+        // Pirate: immediate actions are never queued, and completion handlers may already have removed one.
         if (!comp.DoAfters.TryGetValue(id, out var doAfter))
-        {
-            Log.Error($"Attempted to cancel do after with an invalid id ({id}) on entity {ToPrettyString(entity)}");
             return;
-        }
 
         InternalCancel(doAfter, comp, force: force);
         Dirty(entity, comp);

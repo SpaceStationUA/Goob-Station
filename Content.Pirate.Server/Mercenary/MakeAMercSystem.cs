@@ -82,24 +82,26 @@ namespace Content.Pirate.Server.Mercenary
             _radio.SendRadioMessage(grid, Loc.GetString(announcer.Message), announcer.Channel, grid);
         }
 
-        public void MakeAnMerc(EntityUid entity)
+        public void MakeAnMerc(EntityUid entity) => TryMakeMercenary(entity);
+
+        public EntityUid? TryMakeMercenary(EntityUid entity)
         {
             _playerManager.TryGetSessionByEntity(entity, out var session);
 
             if (session is null)
-                return;
+                return null;
 
             var playerCData = session.ContentData();
             if (playerCData == null)
-                return;
+                return null;
 
             if (!TryGetMercBaseGrid(out var shuttle))
-                return;
+                return null;
 
             // Ensure the base remains a disk-locked FTL destination.
             var mercMapUid = Transform(shuttle).MapUid;
             if (mercMapUid == null)
-                return;
+                return null;
 
             var mindSystem = _entManager.System<SharedMindSystem>();
             var metadata = _entManager.GetComponent<MetaDataComponent>(entity);
@@ -113,6 +115,9 @@ namespace Content.Pirate.Server.Mercenary
             var spawn = TryGetMercSpawnPoint(mercMapUid.Value, out var markerCoords)
                 ? markerCoords
                 : Transform(shuttle).Coordinates;
+
+            if (!session.Channel.IsConnected || session.AttachedEntity != entity)
+                return null;
 
             var uid = SpawnMercBody(entity, session, spawn, out var mercProfile);
             RemComp<GhostRoleComponent>(uid);
@@ -130,6 +135,7 @@ namespace Content.Pirate.Server.Mercenary
             _entManager.Dirty(disk, cd);
 
             AnnounceArrival(shuttle);
+            return uid;
         }
 
         private EntityUid SpawnMercBody(EntityUid source, ICommonSession session, EntityCoordinates coordinates,

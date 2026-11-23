@@ -100,19 +100,27 @@ public sealed partial class PhotoSystem
         return false;
     }
 
-    internal void WriteDiscordPhotos(MappingDataNode metadata)
+    internal IEnumerable<(string Author, string Caption, byte[] Png)> GetDiscordPhotos()
     {
-        var photos = new SequenceDataNode();
         foreach (var (owner, submission) in _discordPhotos)
         {
             if (!TryComp<PhotoCardComponent>(submission.Card, out var card) || card.ImageData == null
                 || card.Photographer != owner || card.CaptureRound != _photoTicker.RoundId || InPrivateAlbum(submission.Card))
                 continue;
+            yield return (submission.Author, submission.Caption, card.ImageData);
+        }
+    }
+
+    internal void WriteDiscordPhotos(MappingDataNode metadata)
+    {
+        var photos = new SequenceDataNode();
+        foreach (var (author, caption, png) in GetDiscordPhotos())
+        {
             photos.Add(new MappingDataNode
             {
-                ["author"] = new ValueDataNode(submission.Author),
-                ["caption"] = new ValueDataNode(submission.Caption),
-                ["png"] = new ValueDataNode(Convert.ToBase64String(card.ImageData)),
+                ["author"] = new ValueDataNode(author),
+                ["caption"] = new ValueDataNode(caption),
+                ["png"] = new ValueDataNode(Convert.ToBase64String(png)),
             });
         }
         if (photos.Count > 0)

@@ -647,6 +647,7 @@ namespace Content.Server.GameTicking
                 listOfPlayerInfoFinal,
                 sound
             );
+            WritePirateRoundReport(roundEndMessageEvent); // Pirate: persist the final scoreboard for Discord.
             RaiseNetworkEvent(roundEndMessageEvent);
             RaiseLocalEvent(roundEndMessageEvent);
 

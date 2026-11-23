@@ -132,6 +132,9 @@ public sealed partial class GameTicker
         metadata["server_id"] = new ValueDataNode(_cfg.GetCVar(CCVars.ServerId));
         metadata["server_name"] = new ValueDataNode(_cfg.GetCVar(CCVars.AdminLogsServerName));
         metadata["roundId"] = new ValueDataNode(RoundId.ToString());
+        // Pirate: an early recording is never final. A complete legacy report can cover a failed export.
+        if (RunLevel != GameRunLevel.PostRound || _lastExportedPirateRound == RoundId)
+            metadata["pirateRoundReportVersion"] = new ValueDataNode("1");
     }
 
     private ResPath GetAutoReplayPath()

@@ -80,6 +80,7 @@ public abstract partial class SharedActionsSystem
             return;
 
         // Cancel this doafter if we can't validate the action
+        args.Repeat = false; // Pirate: a failed action must not schedule another iteration.
         _doAfter.Cancel(args.DoAfter.Id, force: true);
     }
 }

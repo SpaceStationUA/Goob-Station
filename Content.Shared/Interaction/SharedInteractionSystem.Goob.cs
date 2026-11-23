@@ -47,13 +47,15 @@ public abstract partial class SharedInteractionSystem
         if (metaA.CreationTick == _gameTiming.CurTick || metaB.CreationTick == _gameTiming.CurTick)
             return;
 
+        // Pirate: the interaction may consume the used item before its particle is sent.
+        var usedNet = used is {} item && TryGetNetEntity(item, out var netItem) ? netItem : (NetEntity?) null;
         if (_net.IsServer)
         {
-            RaiseNetworkEvent(new StellarInteractionParticleEvent(GetNetEntity(uidA), GetNetEntity(used), GetNetEntity(target), false, interactionParticleType), Filter.Pvs(uidA, entityManager: EntityManager));
+            RaiseNetworkEvent(new StellarInteractionParticleEvent(GetNetEntity(uidA), usedNet, GetNetEntity(target), false, interactionParticleType), Filter.Pvs(uidA, entityManager: EntityManager));
         }
         else if (predicted && _gameTiming.IsFirstTimePredicted)
         {
-            RaiseLocalEvent(new StellarInteractionParticleEvent(GetNetEntity(uidA), GetNetEntity(used), GetNetEntity(target), true, interactionParticleType));
+            RaiseLocalEvent(new StellarInteractionParticleEvent(GetNetEntity(uidA), usedNet, GetNetEntity(target), true, interactionParticleType));
         }
     }
 }

@@ -175,7 +175,7 @@
 # Thrall
 
 - type: entity
-  parent: BaseObjective
+  parent: BaseFreeObjective
   id: VampireThrallObeyMasterObjective
   name: Obey your master
   description: You are enthralled. Follow your master's commands.
