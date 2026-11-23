@@ -1,0 +1,19 @@
+- type: cargoProduct
+  id: KsHydroponicsLawnmower
+  icon:
+    sprite: _Pirate/Objects/Vehicles/Lawnmower/lawnmower.rsi
+    state: lawnmower
+  product: KsLawnmower
+  cost: 5000
+  category: cargoproduct-category-name-hydroponics
+  group: market
+
+- type: cargoProduct
+  id: SecuritySTV
+  icon:
+    sprite: _Pirate/Objects/Vehicles/sectv.rsi
+    state: icon
+  product: CrateSecuritySTV
+  cost: 5500
+  category: cargoproduct-category-name-security
+  group: market

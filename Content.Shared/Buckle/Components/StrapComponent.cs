@@ -45,6 +45,10 @@ public sealed partial class StrapComponent : Component
     [DataField, AutoNetworkedField]
     public Vector2 BuckleOffset = Vector2.Zero;
 
+    /// <summary>Pirate: snap a rider back to their seat after a small physics displacement.</summary>
+    [DataField]
+    public float BucklePositionTolerance;
+
     /// <summary>
     /// The angle to rotate the player by when they get strapped
     /// </summary>

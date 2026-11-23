@@ -1,0 +1,166 @@
+- type: entity
+  id: StvPartBase
+  abstract: true
+  parent: BaseItem
+  components:
+  - type: Item
+    size: Normal
+    shape: [ '0,0,1,1' ]
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: VehicleLightArmor
+  - type: Appearance
+
+- type: entity
+  id: StvPartLarge
+  abstract: true
+  parent: StvPartBase
+  components:
+  - type: Item
+    size: Large
+    shape: [ '0,0,2,2' ]
+  - type: MultiHandedItem
+  - type: HeldSpeedModifier
+    sprintModifier: 0.7
+    walkModifier: 0.7
+
+- type: entity
+  id: BasicTires
+  parent: StvPartLarge
+  name: basic tires
+  description: Standard tires for a patrol quad.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Vehicles/vehiclemods.rsi
+    state: tires
+  - type: MovementSpeedModifier
+    baseAcceleration: 2
+    baseFriction: 4.5
+  - type: Tag
+    tags: [ StvTires ]
+
+- type: entity
+  id: BasicEngine
+  parent: StvPartLarge
+  name: basic engine
+  description: A standard combustion engine for a patrol quad.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Vehicles/vehiclemods.rsi
+    state: gas_engine
+    scale: 0.7,0.7
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 10
+    baseSprintSpeed: 7.5
+  - type: StvEngine
+    fuelPerSecond: 0.25
+
+- type: entity
+  id: AdvancedEngine
+  parent: BasicEngine
+  name: advanced engine
+  description: A more powerful engine with higher fuel consumption.
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 15
+    baseSprintSpeed: 10
+  - type: StvEngine
+    fuelPerSecond: 0.375
+
+- type: entity
+  id: BasicArmorKit
+  parent: StvPartLarge
+  name: basic vehicle armor
+  description: A set of armor plates for a patrol quad.
+  components:
+  - type: Item
+    size: Normal
+  - type: Sprite
+    sprite: _Pirate/Objects/Vehicles/secway_armor.rsi
+    state: light
+  - type: Damageable
+    damageModifierSet: VehicleBasicArmor
+  - type: Tag
+    tags: [ StvArmor ]
+
+- type: entity
+  id: LightArmorKit
+  parent: BasicArmorKit
+  name: reinforced vehicle armor
+  description: A second-tier set of armor plates for a patrol quad.
+  components:
+  - type: Damageable
+    damageModifierSet: VehicleLightArmor
+
+- type: entity
+  id: BasicHeadlight
+  parent: StvPartBase
+  name: basic headlights
+  description: Standard directional headlights for a patrol quad.
+  components:
+  - type: Sprite
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
+  - type: UnpoweredFlashlight
+  - type: PointLight
+    enabled: false
+    radius: 5
+    softness: 2
+    lightMask: ConeSingle
+    autoRot: true
+  - type: Tag
+    tags: [ StvHeadlight ]
+
+- type: entity
+  id: HeadlightLED
+  parent: BasicHeadlight
+  name: LED headlights
+  description: An upgraded set of long-range headlights.
+  components:
+  - type: PointLight
+    radius: 8
+
+- type: entity
+  id: SecSiren
+  parent: StvPartBase
+  name: security siren
+  description: A police siren with a rotating red beacon.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Objects/Vehicles/vehiclemods.rsi
+    state: siren
+  - type: ItemToggle
+    onUse: false
+    soundActivate: /Audio/Items/flashlight_on.ogg
+    soundDeactivate: /Audio/Items/flashlight_off.ogg
+  - type: ItemTogglePointLight
+  - type: PointLight
+    enabled: false
+    radius: 5
+    color: red
+    lightMask: ConeDouble
+  - type: RotatingLight
+    speed: 360
+  - type: ItemToggleActiveSound
+    activeSound:
+      path: /Audio/Effects/Vehicle/policesiren.ogg
+      params:
+        volume: -4
+  - type: Tag
+    tags: [ StvLightbar ]
+
+- type: damageModifierSet
+  id: VehicleBasicArmor
+  coefficients:
+    Blunt: 0.85
+    Slash: 0.85
+    Piercing: 0.85
+    Heat: 0.90
+
+- type: damageModifierSet
+  id: VehicleLightArmor
+  coefficients:
+    Blunt: 0.70
+    Slash: 0.70
+    Piercing: 0.70
+    Heat: 0.80

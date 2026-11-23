@@ -438,6 +438,7 @@
   loadouts:
   - ChefJumpsuit
   - ChefJumpskirt
+  - KsGrillingShorts # Pirate
   - ServiceMJ # goob
 
 - type: loadoutGroup

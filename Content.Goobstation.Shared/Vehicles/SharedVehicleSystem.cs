@@ -93,7 +93,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
     private void OnInsert(EntityUid uid, VehicleComponent component, ref EntInsertedIntoContainerMessage args)
     {
-        if (HasComp<InstantActionComponent>(args.Entity)
+        if (component.ManualIgnition || HasComp<InstantActionComponent>(args.Entity)
             || args.Container.ID != component.KeySlot
             || component.IsBroken)
             return;
@@ -111,7 +111,7 @@ public abstract partial class SharedVehicleSystem : EntitySystem
 
     private void OnEject(EntityUid uid, VehicleComponent component, ref EntRemovedFromContainerMessage args)
     {
-        if (args.Container.ID != component.KeySlot)
+        if (component.ManualIgnition || args.Container.ID != component.KeySlot)
             return;
         component.EngineRunning = false;
         _appearance.SetData(uid, VehicleState.Animated, false);
@@ -121,6 +121,28 @@ public abstract partial class SharedVehicleSystem : EntitySystem
             return;
 
         Dismount(component.Driver.Value, uid);
+    }
+
+    // Pirate: a fuel-powered vehicle can stop without making its driver let go of the controls.
+    public void SetIgnition(Entity<VehicleComponent> vehicle, bool running)
+    {
+        if (vehicle.Comp.EngineRunning == running)
+            return;
+
+        vehicle.Comp.EngineRunning = running;
+        _appearance.SetData(vehicle, VehicleState.Animated, running);
+        _ambientSound.SetAmbience(vehicle, running);
+
+        if (vehicle.Comp.Driver is not { } driver)
+            return;
+
+        if (running)
+            Mount(driver, vehicle);
+        else if (TryComp<RelayInputMoverComponent>(driver, out var relay) && relay.RelayEntity == vehicle.Owner)
+        {
+            RemComp(driver, relay);
+            _actionBlocker.UpdateCanMove(driver);
+        }
     }
 
     private void OnHorn(EntityUid uid, VehicleComponent component, InstantActionEvent args)

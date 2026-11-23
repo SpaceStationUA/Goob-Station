@@ -29,6 +29,8 @@
   table: !type:AllSelector
     children:
     - id: HoverbikeNfsdFlatpack # Pirate
+    - id: VehicleKeySTV # Pirate: spare patrol quad keys.
+      amount: 2
     - id: FlashlightSeclite
     #- id: WeaponDisabler # Goobstation (Disablers in belts)
     - id: ClothingBeltSecurityFilled
