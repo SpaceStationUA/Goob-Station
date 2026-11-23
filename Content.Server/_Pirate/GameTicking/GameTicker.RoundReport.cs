@@ -40,14 +40,22 @@ public sealed partial class GameTicker
                     map = _gameMapManager.GetSelectedMap()?.MapName,
                     gamemode = scoreboard.GamemodeTitle,
                     roundEndText = scoreboard.RoundEndText,
+                    playerCount = scoreboard.PlayerCount,
                     roundEndPlayers = scoreboard.AllPlayersEndInfo.Select(player => new
                     {
                         playerGuid = player.PlayerGuid?.UserId,
                         playerOOCName = player.PlayerOOCName,
                         playerICName = player.PlayerICName,
+                        playerNetEntity = player.PlayerNetEntity?.Id,
+                        role = player.Role,
+                        antag = player.Antag,
                         observer = player.Observer,
+                        connected = player.Connected,
                         jobPrototypes = player.JobPrototypes,
                         antagPrototypes = player.AntagPrototypes,
+                        lastWords = player.LastWords,
+                        entMobState = player.EntMobState.ToString(),
+                        damagePerGroup = player.DamagePerGroup.ToDictionary(group => group.Key, group => (decimal) group.Value),
                     }),
                     pirateShiftPhotos = EntityManager.System<PhotoSystem>().GetDiscordPhotos()
                         .Select(photo => new { author = photo.Author, caption = photo.Caption, png = photo.Png }),
