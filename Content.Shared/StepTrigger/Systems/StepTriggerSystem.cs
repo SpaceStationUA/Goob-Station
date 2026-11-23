@@ -133,6 +133,10 @@ public sealed class StepTriggerSystem : EntitySystem
             RaiseLocalEvent(uid, ref evStep);
         }
 
+        // Pirate: trigger handlers can consume the entity or end the collision synchronously.
+        if (TerminatingOrDeleted(uid) || TerminatingOrDeleted(otherUid) || !component.Colliding.Contains(otherUid))
+            return;
+
         component.CurrentlySteppedOn.Add(otherUid);
         Dirty(uid, component);
     }
@@ -171,7 +175,7 @@ public sealed class StepTriggerSystem : EntitySystem
         if (!args.OtherFixture.Hard)
             return;
 
-        if (!CanTrigger(uid, otherUid, component))
+        if (!CanTrigger(uid, otherUid, component) || TerminatingOrDeleted(uid) || TerminatingOrDeleted(otherUid))
             return;
 
         EnsureComp<StepTriggerActiveComponent>(uid);

@@ -1,5 +1,4 @@
 using Content.Pirate.Common.AlternativeJobs;
-using Content.Server.Access.Components;
 using Content.Server.CrewManifest;
 using Content.Server.Chat.Managers;
 using Content.Shared._Shitcode._Pirate.AlternativeJobs;
@@ -40,7 +39,6 @@ public sealed class AlternativeJobSystem : EntitySystem, IAlternativeJobSystem
 
         // Get alternative job proto based on player preferences and job
         if (!TryGetAlternativeJob(args.JobId, args.Profile, out var alternativeJobPrototype)) return;
-        if (TryComp<PresetIdCardComponent>(idCard, out var presetIdCardComp)) { presetIdCardComp.JobName = alternativeJobPrototype.LocalizedJobName; }
         var newIcon = _prototypeManager.Index<JobIconPrototype>(alternativeJobPrototype.JobIconProtoId ?? idCardComp.JobIcon);
         idCardSystem.TryChangeJobTitle(idCard, alternativeJobPrototype.LocalizedJobName, idCardComp);
         idCardComp.JobIcon = newIcon.ID;

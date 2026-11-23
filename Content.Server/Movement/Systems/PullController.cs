@@ -139,6 +139,10 @@ public sealed class PullController : VirtualController
 
         // Cap the distance
         var range = 2f;
+        // Pirate: a click can reach the server after its grid or the player has changed maps.
+        if (!coords.IsValid(EntityManager) || _transformSystem.GetMapId(coords) != Transform(player).MapID)
+            return false;
+
         var fromUserCoords = _transformSystem.WithEntityId(coords, player);
         var userCoords = new EntityCoordinates(player, Vector2.Zero);
 

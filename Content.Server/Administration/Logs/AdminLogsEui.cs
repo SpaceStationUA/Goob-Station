@@ -159,8 +159,23 @@ public sealed class AdminLogsEui : BaseEui
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
-        var logs = await Task.Run(async () => await _adminLogs.All(filter, _adminLogListPool.Get),
-            filter.CancellationToken);
+        // Pirate: changing filters or closing the EUI cancels the pending database read.
+        List<SharedAdminLog> logs;
+        try
+        {
+            logs = await Task.Run(async () => await _adminLogs.All(filter, _adminLogListPool.Get),
+                filter.CancellationToken);
+        }
+        catch (OperationCanceledException) when (filter.CancellationToken.IsCancellationRequested)
+        {
+            return;
+        }
+
+        if (filter.CancellationToken.IsCancellationRequested)
+        {
+            _adminLogListPool.Return(logs);
+            return;
+        }
 
         if (logs.Count > 0)
         {
@@ -177,9 +192,6 @@ public sealed class AdminLogsEui : BaseEui
         }
 
         var message = new NewLogs(logs, replace, logs.Count >= filter.Limit);
-
-        if (filter.CancellationToken.IsCancellationRequested)
-            return;
 
         SendMessage(message);
 

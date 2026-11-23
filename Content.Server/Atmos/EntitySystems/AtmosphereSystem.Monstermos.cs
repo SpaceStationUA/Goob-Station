@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Server.Atmos.Components;
 using Content.Server.Doors.Systems;
@@ -44,7 +43,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var direction = (AtmosDirection) (1 << i);
                 if (!tile.AdjacentBits.IsFlagSet(direction)) continue;
-                var other = tile.AdjacentTiles[i];
+                var other = EqualizationNeighbor(tile, i);
                 if (other?.Air == null) continue;
                 var comparisonMoles = other.Air.TotalMoles;
                 if (!(MathF.Abs(comparisonMoles - startingMoles) > Atmospherics.MinimumMolesDeltaToMove)) continue;
@@ -81,7 +80,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var direction = (AtmosDirection) (1 << j);
                     if (!exploring.AdjacentBits.IsFlagSet(direction)) continue;
-                    var adj = exploring.AdjacentTiles[j];
+                    var adj = EqualizationNeighbor(exploring, j);
                     if (adj?.Air == null) continue;
                     if(adj.MonstermosInfo.LastQueueCycle == queueCycle) continue;
                     adj.MonstermosInfo = new MonstermosInfo {LastQueueCycle = queueCycle};
@@ -153,8 +152,8 @@ namespace Content.Server.Atmos.EntitySystems
                     {
                         var direction = (AtmosDirection) (1 << j);
                         if (!otherTile.AdjacentBits.IsFlagSet(direction)) continue;
-                        var tile2 = otherTile.AdjacentTiles[j]!;
-                        DebugTools.Assert(tile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
+                        var tile2 = EqualizationNeighbor(otherTile, j);
+                        if (tile2 == null) continue;
 
                         // skip anything that isn't part of our current processing block.
                         if (tile2.MonstermosInfo.FastDone || tile2.MonstermosInfo.LastQueueCycle != queueCycle)
@@ -173,9 +172,10 @@ namespace Content.Server.Atmos.EntitySystems
                         var direction = (AtmosDirection) (1 << j);
                         if (!eligibleDirections.IsFlagSet(direction)) continue;
 
-                        AdjustEqMovement(otherTile, direction, molesToMove);
+                        var adjacent = otherTile.AdjacentTiles[j]!;
+                        AdjustEqMovement(otherTile, adjacent, direction, molesToMove);
                         otherTile.MonstermosInfo.MoleDelta -= molesToMove;
-                        otherTile.AdjacentTiles[j]!.MonstermosInfo.MoleDelta += molesToMove;
+                        adjacent.MonstermosInfo.MoleDelta += molesToMove;
                     }
                 }
 
@@ -224,9 +224,8 @@ namespace Content.Server.Atmos.EntitySystems
                             if (giver.MonstermosInfo.MoleDelta <= 0)
                                 break; // We're done here now. Let's not do more work than needed.
 
-                            var otherTile2 = otherTile.AdjacentTiles[k];
+                            var otherTile2 = EqualizationNeighbor(otherTile, k);
                             if (otherTile2 == null || otherTile2.MonstermosInfo.LastQueueCycle != queueCycle) continue;
-                            DebugTools.Assert(otherTile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
                             if (otherTile2.MonstermosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
                             _equalizeQueue[queueLength++] = otherTile2;
                             otherTile2.MonstermosInfo.LastSlowQueueCycle = queueCycleSlow;
@@ -255,16 +254,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                     // Putting this loop here helps make it O(n^2) over O(n^3)
                     for (var i = queueLength - 1; i >= 0; i--)
-                    {
-                        var otherTile = _equalizeQueue[i];
-                        if (otherTile.MonstermosInfo.CurrentTransferAmount != 0 && otherTile.MonstermosInfo.CurrentTransferDirection != AtmosDirection.Invalid)
-                        {
-                            AdjustEqMovement(otherTile, otherTile.MonstermosInfo.CurrentTransferDirection, otherTile.MonstermosInfo.CurrentTransferAmount);
-                            otherTile.AdjacentTiles[otherTile.MonstermosInfo.CurrentTransferDirection.ToIndex()]!
-                                .MonstermosInfo.CurrentTransferAmount += otherTile.MonstermosInfo.CurrentTransferAmount;
-                            otherTile.MonstermosInfo.CurrentTransferAmount = 0;
-                        }
-                    }
+                        PropagateEqMovement(_equalizeQueue[i]);
                 }
             }
             else
@@ -288,11 +278,10 @@ namespace Content.Server.Atmos.EntitySystems
                         {
                             var direction = (AtmosDirection) (1 << k);
                             if (!otherTile.AdjacentBits.IsFlagSet(direction)) continue;
-                            var otherTile2 = otherTile.AdjacentTiles[k];
+                            var otherTile2 = EqualizationNeighbor(otherTile, k);
 
                             if (taker.MonstermosInfo.MoleDelta >= 0) break; // We're done here now. Let's not do more work than needed.
                             if (otherTile2 == null || otherTile2.AdjacentBits == 0 || otherTile2.MonstermosInfo.LastQueueCycle != queueCycle) continue;
-                            DebugTools.Assert(otherTile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
                             if (otherTile2.MonstermosInfo.LastSlowQueueCycle == queueCycleSlow) continue;
                             _equalizeQueue[queueLength++] = otherTile2;
                             otherTile2.MonstermosInfo.LastSlowQueueCycle = queueCycleSlow;
@@ -321,17 +310,7 @@ namespace Content.Server.Atmos.EntitySystems
                     }
 
                     for (var i = queueLength - 1; i >= 0; i--)
-                    {
-                        var otherTile = _equalizeQueue[i];
-                        if (otherTile.MonstermosInfo.CurrentTransferAmount == 0 || otherTile.MonstermosInfo.CurrentTransferDirection == AtmosDirection.Invalid)
-                            continue;
-
-                        AdjustEqMovement(otherTile, otherTile.MonstermosInfo.CurrentTransferDirection, otherTile.MonstermosInfo.CurrentTransferAmount);
-
-                        otherTile.AdjacentTiles[otherTile.MonstermosInfo.CurrentTransferDirection.ToIndex()]!
-                            .MonstermosInfo.CurrentTransferAmount += otherTile.MonstermosInfo.CurrentTransferAmount;
-                        otherTile.MonstermosInfo.CurrentTransferAmount = 0;
-                    }
+                        PropagateEqMovement(_equalizeQueue[i]);
                 }
             }
 
@@ -350,8 +329,8 @@ namespace Content.Server.Atmos.EntitySystems
                     if (!otherTile.AdjacentBits.IsFlagSet(direction))
                         continue;
 
-                    var otherTile2 = otherTile.AdjacentTiles[j]!;
-                    if (otherTile2.AdjacentBits == 0)
+                    var otherTile2 = EqualizationNeighbor(otherTile, j);
+                    if (otherTile2 == null)
                         continue;
 
                     DebugTools.Assert(otherTile2.AdjacentBits.IsFlagSet(direction.GetOpposite()));
@@ -663,31 +642,36 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
-        private void AdjustEqMovement(TileAtmosphere tile, AtmosDirection direction, float amount)
+        // Pirate: grid splits can leave one side of a connection stale until adjacency is rebuilt.
+        private static TileAtmosphere? EqualizationNeighbor(TileAtmosphere tile, int index)
         {
-            DebugTools.AssertNotNull(tile);
-            DebugTools.Assert(tile.AdjacentBits.IsFlagSet(direction));
-            DebugTools.Assert(tile.AdjacentTiles[direction.ToIndex()] != null);
-            // Every call to this method already ensures that the adjacent tile won't be null.
+            var direction = (AtmosDirection) (1 << index);
+            var opposite = index.ToOppositeDir();
+            var adjacent = tile.AdjacentTiles[index];
+            return tile.AdjacentBits.IsFlagSet(direction) && adjacent != null
+                && adjacent.AdjacentBits.IsFlagSet(opposite) && adjacent.AdjacentTiles[opposite.ToIndex()] == tile
+                ? adjacent : null;
+        }
 
-            // Turns out: no they don't. Temporary debug checks to figure out which caller is causing problems:
-            if (tile == null)
-            {
-                Log.Error($"Encountered null-tile in {nameof(AdjustEqMovement)}. Trace: {Environment.StackTrace}");
-                return;
-            }
-
-            var idx = direction.ToIndex();
-            var adj = tile.AdjacentTiles[idx];
-            if (adj == null)
-            {
-                var nonNull = tile.AdjacentTiles.Where(x => x != null).Count();
-                Log.Error($"Encountered null adjacent tile in {nameof(AdjustEqMovement)}. Dir: {direction}, Tile: ({tile.GridIndex}, {tile.GridIndices}), non-null adj count: {nonNull}, Trace: {Environment.StackTrace}");
-                return;
-            }
-
+        private static void AdjustEqMovement(TileAtmosphere tile, TileAtmosphere adjacent, AtmosDirection direction, float amount)
+        {
             tile.MonstermosInfo[direction] += amount;
-            adj.MonstermosInfo[idx.ToOppositeDir()] -= amount;
+            adjacent.MonstermosInfo[direction.GetOpposite()] -= amount;
+        }
+
+        private static void PropagateEqMovement(TileAtmosphere tile)
+        {
+            var direction = tile.MonstermosInfo.CurrentTransferDirection;
+            var amount = tile.MonstermosInfo.CurrentTransferAmount;
+            if (direction == AtmosDirection.Invalid || amount == 0)
+                return;
+
+            if (EqualizationNeighbor(tile, direction.ToIndex()) is {} adjacent)
+            {
+                AdjustEqMovement(tile, adjacent, direction, amount);
+                adjacent.MonstermosInfo.CurrentTransferAmount += amount;
+            }
+            tile.MonstermosInfo.CurrentTransferAmount = 0;
         }
 
         private void HandleDecompressionFloorRip(Entity<MapGridComponent> mapGrid, TileAtmosphere tile, float sum)

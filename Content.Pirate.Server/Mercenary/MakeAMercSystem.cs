@@ -82,24 +82,26 @@ namespace Content.Pirate.Server.Mercenary
             _radio.SendRadioMessage(grid, Loc.GetString(announcer.Message), announcer.Channel, grid);
         }
 
-        public void MakeAnMerc(EntityUid entity)
+        public void MakeAnMerc(EntityUid entity) => TryMakeMercenary(entity);
+
+        public EntityUid? TryMakeMercenary(EntityUid entity)
         {
             _playerManager.TryGetSessionByEntity(entity, out var session);
 
             if (session is null)
-                return;
+                return null;
 
             var playerCData = session.ContentData();
             if (playerCData == null)
-                return;
+                return null;
 
             if (!TryGetMercBaseGrid(out var shuttle))
-                return;
+                return null;
 
             // Ensure the base remains a disk-locked FTL destination.
             var mercMapUid = Transform(shuttle).MapUid;
             if (mercMapUid == null)
-                return;
+                return null;
 
             var mindSystem = _entManager.System<SharedMindSystem>();
             var metadata = _entManager.GetComponent<MetaDataComponent>(entity);
@@ -114,10 +116,38 @@ namespace Content.Pirate.Server.Mercenary
                 ? markerCoords
                 : Transform(shuttle).Coordinates;
 
+            if (!session.Channel.IsConnected || session.AttachedEntity != entity)
+                return null;
+
             var uid = SpawnMercBody(entity, session, spawn, out var mercProfile);
             RemComp<GhostRoleComponent>(uid);
+            if (!session.Channel.IsConnected || session.AttachedEntity != entity)
+            {
+                QueueDel(uid);
+                return null;
+            }
             mindSystem.TransferTo(mind, uid, true);
+            if (!mindSystem.TryGetMind(session.UserId, out _, out var current) || current.CurrentEntity != uid)
+            {
+                QueueDel(uid);
+                return null;
+            }
 
+            // The buyer already owns the new body even if an optional arrival effect fails.
+            try
+            {
+                FinishArrival(uid, session, mercProfile, spawn, mercMapUid.Value, shuttle);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Failed to finish mercenary arrival for {uid}: {e}");
+            }
+            return uid;
+        }
+
+        private void FinishArrival(EntityUid uid, ICommonSession session, HumanoidCharacterProfile? mercProfile,
+            EntityCoordinates spawn, EntityUid mercMap, EntityUid shuttle)
+        {
             // Apply profile data without the normal spawn side effects.
             if (mercProfile != null)
                 _profileSpawn.ApplyProfileDetails(uid, mercProfile, session);
@@ -126,7 +156,7 @@ namespace Content.Pirate.Server.Mercenary
 
             var disk = EntityManager.SpawnEntity(Disk, spawn);
             var cd = _entManager.EnsureComponent<ShuttleDestinationCoordinatesComponent>(disk);
-            cd.Destination = mercMapUid.Value;
+            cd.Destination = mercMap;
             _entManager.Dirty(disk, cd);
 
             AnnounceArrival(shuttle);

@@ -84,7 +84,8 @@ namespace Content.Server.EUI
             var msg = new MsgEuiCtl();
             msg.Id = eui.Id;
             msg.Type = MsgEuiCtl.CtlType.Close;
-            _net.ServerSendMessage(msg, eui.Player.Channel);
+            if (eui.Player.Channel.IsConnected) // Pirate: disconnect also closes all open EUIs.
+                _net.ServerSendMessage(msg, eui.Player.Channel);
         }
 
         private void RxMsgMessage(MsgEuiMessage message)

@@ -215,9 +215,19 @@ public sealed class JukeboxSystem : SharedJukeboxSystem
                 }
             }
 
-            // Pirate: Replay feature. Please pitch in if you have better ideas. This is a pretty bad implementation.
-            if (comp.PlaybackMode != JukeboxPlaybackMode.Single && comp.AudioStream != null &&
-                GetAudioState(comp.AudioStream) == AudioState.Stopped)
+            // Pirate: naturally finished streams are deleted by the audio system.
+            if (comp.AudioStream is not { } stream)
+                continue;
+
+            var finished = TerminatingOrDeleted(stream);
+            if (finished)
+            {
+                comp.AudioStream = null;
+                Dirty(uid, comp);
+            }
+
+            if (comp.PlaybackMode != JukeboxPlaybackMode.Single &&
+                (finished || GetAudioState(stream) == AudioState.Stopped))
             {
                 var msg = new JukeboxPlayingMessage();
                 OnJukeboxPlay(uid, comp, ref msg);

@@ -83,6 +83,26 @@ public sealed class PirateCurrencyTest
         Assert.That((await db.ApplyPirateCurrency(reward with { Source = receiver }, null)).State, Is.EqualTo("operation_conflict"));
         Assert.That((await db.ApplyPirateCurrency(reward with { OperationId = Guid.NewGuid(), Source = receiver }, null)).State, Is.EqualTo("balance_overflow"));
 
+        // A shopper disconnecting while the hold is open gets precisely the original coins back.
+        await db.SetServerCurrency(sender, 100);
+        var shop = new PirateShopRequest(Guid.NewGuid(), sender, "magespawn", 25, 17, 2000000000);
+        var offline = shop with { OperationId = Guid.NewGuid() };
+        Assert.That((await db.ReservePirateShop(offline, "offline")).State, Is.EqualTo("offline"));
+        Assert.That(await db.GetServerCurrency(sender), Is.EqualTo(100));
+        Assert.That((await db.ReservePirateShop(shop with { InspectOnly = true }, null)).State, Is.EqualTo("not_started"));
+        Assert.That((await db.ReservePirateShop(shop, null)).AppliedNow, Is.True);
+        Assert.That((await db.ReservePirateShop(shop, null)).AppliedNow, Is.False);
+        Assert.That(await db.GetServerCurrency(sender), Is.EqualTo(75));
+        Assert.That((await db.SettlePirateShop(shop with { Amount = 50 }, "unfulfilled")).State, Is.EqualTo("operation_conflict"));
+        Assert.That((await db.SettlePirateShop(shop, "offline")).Balance, Is.EqualTo(100));
+        Assert.That((await db.SettlePirateShop(shop, "offline")).AppliedNow, Is.False);
+        Assert.That(await db.GetServerCurrency(sender), Is.EqualTo(100));
+        var delivered = shop with { OperationId = Guid.NewGuid() };
+        await db.ReservePirateShop(delivered, null);
+        Assert.That((await db.SettlePirateShop(delivered, "delivered")).Balance, Is.EqualTo(75));
+        Assert.That((await db.SettlePirateShop(delivered, "unfulfilled")).State, Is.EqualTo("delivered"));
+        Assert.That(await db.GetServerCurrency(sender), Is.EqualTo(75));
+
         await pair.CleanReturnAsync();
     }
 }

@@ -54,6 +54,26 @@ public sealed partial class ServerApi
         await context.RespondJsonAsync(new { result.State, result.Balance }, status);
     }
 
+    private async Task ActionPirateShop(IStatusHandlerContext context)
+    {
+        var request = await ReadJson<PirateShopRequest>(context);
+        if (request == null)
+            return;
+        if (!request.Valid)
+        {
+            await context.RespondJsonAsync(new { State = "invalid_request" }, HttpStatusCode.BadRequest);
+            return;
+        }
+
+        var result = await RunOnMainThread(() =>
+        {
+            var ev = new PirateShopEvent(request);
+            _entityManager.EventBus.RaiseEvent(EventSource.Local, ev);
+            return ev.Result;
+        }).Unwrap();
+        await context.RespondJsonAsync(new { result.State, result.Balance });
+    }
+
     private sealed record PirateThanksMessage(Guid Recipient, int Round, string Author, string Text);
 
     private async Task ActionPirateThanksMessage(IStatusHandlerContext context)

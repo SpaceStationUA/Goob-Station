@@ -33,13 +33,13 @@ public sealed partial class CursedActionSystem : EntitySystem
 
     private void OnApplyCurseAction(ApplyCurseActionEvent args)
     {
-        if (args.Curse == null)
+        if (args.Curse == null || TerminatingOrDeleted(args.Target)) // Pirate: an action can outlive its target.
             return;
 
         var attemptEv = new AttemptCurseEvent(args.Performer);
         RaiseLocalEvent(args.Target, ref attemptEv);
 
-        if (attemptEv.Cancelled)
+        if (attemptEv.Cancelled || TerminatingOrDeleted(args.Target))
             return;
 
         // Add the curseHolder component and the new curse on the target

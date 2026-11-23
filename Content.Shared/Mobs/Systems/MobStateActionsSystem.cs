@@ -38,12 +38,13 @@ public sealed class MobStateActionsSystem : EntitySystem
     /// </summary>
     private void ComposeActions(EntityUid uid, MobStateActionsComponent component, MobState newMobState)
     {
-        if (!TryComp<ActionsComponent>(uid, out var action))
+        if (TerminatingOrDeleted(uid) || !TryComp<ActionsComponent>(uid, out var action))
             return;
 
         foreach (var act in component.GrantedActions)
         {
-            Del(act);
+            if (!TerminatingOrDeleted(act)) // Pirate: actions can be removed during mob shutdown.
+                Del(act);
         }
         component.GrantedActions.Clear();
 

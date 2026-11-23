@@ -11,6 +11,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
+using Robust.Shared.Map; // Pirate
 using Robust.Shared.Physics.Events;
 
 namespace Content.Goobstation.Shared.Wraith.SpiritCandle;
@@ -119,10 +120,13 @@ public sealed partial class SharedSpiritCandleSystem : EntitySystem
         if (ent.Comp.AreaUid is {} areaUid)
             QueueDel(areaUid);
 
-        var spawn = SpawnAttachedTo(ent.Comp.SpiritArea, Transform(args.Entity).Coordinates);
-        _transform.SetParent(spawn, args.Entity);
-        ent.Comp.AreaUid = spawn;
+        ent.Comp.AreaUid = null;
         ent.Comp.Holder = null;
+        if (TerminatingOrDeleted(ent.Owner))
+            return;
+
+        // Pirate: container removal can temporarily leave the candle in nullspace.
+        ent.Comp.AreaUid = SpawnAttachedTo(ent.Comp.SpiritArea, new EntityCoordinates(ent.Owner, 0, 0));
     }
 
     private void OnUseInHand(Entity<SpiritCandleComponent> ent, ref UseInHandEvent args)
