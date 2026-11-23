@@ -25,9 +25,14 @@ public sealed class PirateChatFilterTest
     [TestCase("ъ", true)]
     [TestCase("ы", true)]
     [TestCase("э", true)]
+    [TestCase("ё", true)]
     [TestCase("Ъ", true)]
     [TestCase("Ы", true)]
     [TestCase("Э", true)]
+    [TestCase("Ё", true)]
+    [TestCase("е\u0308", true)]
+    [TestCase("Е\u0308", true)]
+    [TestCase("Їжак, і\u0308жак, Noël", false)]
     [TestCase("[bold]теъст[/bold]", true)]
     [TestCase("Привіт! Ґанок, їжак, єнот, ігри, м'яч.", false)]
     [TestCase("English 123 :)", false)]
@@ -58,7 +63,7 @@ public sealed class PirateChatFilterTest
         await pair.RunTicksSync(10);
         await client.WaitAssertion(() => client.ResolveDependency<IUserInterfaceManager>().GetUIController<ChatUIController>().History.Clear());
 
-        const string rejected = "забороненийтекстъЫэ";
+        const string rejected = "забороненийтекстё";
         const string accepted = "Дозволенийукраїнськийтекст";
         await server.WaitAssertion(() =>
         {
