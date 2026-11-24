@@ -23,10 +23,8 @@ public sealed class UplinkBoundUserInterface(EntityUid owner, Enum uiKey) : Stor
     [ViewVariables]
     private HashSet<ListingDataWithCostModifiers> _listings = new(); // Pirate: store state now carries modified prices.
 
-    protected override void Open()
+    protected override void OpenStoreWindow() // Pirate: apply the viewer's catalogue after the window exists.
     {
-        base.Open();
-
         _menu = this.CreateWindow<UplinkMenu>();
         _menu.Owner = Owner; // Pirate: reputation checks use the actual store entity.
 

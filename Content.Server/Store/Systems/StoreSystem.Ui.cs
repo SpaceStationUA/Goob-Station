@@ -47,7 +47,10 @@ public sealed partial class StoreSystem
 
     private void InitializeUi()
     {
-        SubscribeLocalEvent<StoreComponent, StoreRequestUpdateInterfaceMessage>(OnRequestUpdate);
+        SubscribeLocalEvent<StoreComponent, BoundUIOpenedEvent>(OnStoreOpened); // Pirate
+        SubscribeLocalEvent<StoreComponent, BoundUIClosedEvent>(OnStoreClosed); // Pirate
+        SubscribeLocalEvent<UserInterfaceUserComponent, PlayerAttachedEvent>(OnViewerAttached); // Pirate
+        SubscribeLocalEvent<UserInterfaceUserComponent, PlayerDetachedEvent>(OnViewerDetached); // Pirate
         SubscribeLocalEvent<StoreComponent, StoreBuyListingMessage>(OnBuyRequest);
         SubscribeLocalEvent<StoreComponent, StoreRequestWithdrawMessage>(OnRequestWithdraw);
         SubscribeLocalEvent<StoreComponent, StoreRequestRefundMessage>(OnRequestRefund);
@@ -92,7 +95,7 @@ public sealed partial class StoreSystem
 
         EnsureTreeInterface((storeEnt, component)); // Goob
 
-        _ui.TryToggleUi(storeEnt, StoreUiKey.Key, actor.PlayerSession); // Pirate: the client requests its catalogue on open.
+        _ui.TryToggleUi(storeEnt, StoreUiKey.Key, actor.PlayerSession);
     }
 
     /// <summary>
@@ -119,11 +122,48 @@ public sealed partial class StoreSystem
 
         // Pirate: shop state can be large. Only build and send a catalogue for players browsing this store.
         foreach (var viewer in _ui.GetActors(store, StoreUiKey.Key))
-            SendCatalog(viewer, (store, component));
+            UpdateCatalog(viewer, (store, component));
     }
 
-    private void SendCatalog(EntityUid viewer, Entity<StoreComponent> store)
+    private void OnStoreOpened(Entity<StoreComponent> store, ref BoundUIOpenedEvent args)
     {
+        if (args.UiKey is StoreUiKey.Key)
+            UpdateCatalog(args.Actor, store);
+    }
+
+    private void OnStoreClosed(Entity<StoreComponent> store, ref BoundUIClosedEvent args)
+    {
+        if (args.UiKey is StoreUiKey.Key &&
+            TryGetNetEntity(args.Actor, out var viewer) &&
+            TryGetNetEntity(store.Owner, out var netStore))
+            RaiseNetworkEvent(new StoreCatalogMessage(viewer.Value, netStore.Value, null), args.Actor);
+    }
+
+    private void OnViewerAttached(Entity<UserInterfaceUserComponent> viewer, ref PlayerAttachedEvent args)
+    {
+        foreach (var (store, key) in _ui.GetActorUis(viewer.Owner))
+        {
+            if (key is StoreUiKey.Key && TryComp<StoreComponent>(store, out var component))
+                UpdateCatalog(viewer.Owner, (store, component));
+        }
+    }
+
+    private void OnViewerDetached(Entity<UserInterfaceUserComponent> viewer, ref PlayerDetachedEvent args)
+    {
+        if (!args.Player.Channel.IsConnected ||
+            !TryGetNetEntity(viewer.Owner, out var netViewer) ||
+            !_ui.GetActorUis(viewer.Owner).Any(ui => ui.Key is StoreUiKey.Key))
+            return;
+
+        // A held store may already be deleted while its viewer is being detached.
+        RaiseNetworkEvent(new StoreCatalogsClosedMessage(netViewer.Value), args.Player);
+    }
+
+    private void UpdateCatalog(EntityUid viewer, Entity<StoreComponent> store)
+    {
+        if (!TryComp<ActorComponent>(viewer, out var actor))
+            return;
+
         var (uid, component) = store;
         component.LastAvailableListings = GetAvailableListings(component.AccountOwner ?? viewer, uid, component).ToHashSet();
 
@@ -135,13 +175,7 @@ public sealed partial class StoreSystem
         state ??= new StoreUpdateState(component.LastAvailableListings, balance,
             HasComp<RingerUplinkComponent>(uid), component.RefundAllowed);
 
-        _ui.ServerSendUiMessage(uid, StoreUiKey.Key, new StoreCatalogMessage(state), viewer);
-    }
-
-    private void OnRequestUpdate(EntityUid uid, StoreComponent component, StoreRequestUpdateInterfaceMessage args)
-    {
-        if (Equals(args.UiKey, StoreUiKey.Key))
-            SendCatalog(args.Actor, (uid, component));
+        RaiseNetworkEvent(new StoreCatalogMessage(GetNetEntity(viewer), GetNetEntity(uid), state), actor.PlayerSession);
     }
 
     /// <summary>

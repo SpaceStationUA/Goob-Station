@@ -5,10 +5,18 @@ using Robust.Shared.Serialization;
 namespace Content.Shared._Pirate.Store;
 
 /// <summary>
-/// Sends a store's current catalogue to the actor browsing it.
+/// Snapshot of one open store for its viewer. A null state closes that subscription.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class StoreCatalogMessage(BoundUserInterfaceState state) : BoundUserInterfaceMessage
+public sealed class StoreCatalogMessage(NetEntity viewer, NetEntity store, BoundUserInterfaceState? state) : EntityEventArgs
 {
-    public readonly BoundUserInterfaceState State = state;
+    public readonly NetEntity Viewer = viewer;
+    public readonly NetEntity Store = store;
+    public readonly BoundUserInterfaceState? State = state;
+}
+
+[Serializable, NetSerializable]
+public sealed class StoreCatalogsClosedMessage(NetEntity viewer) : EntityEventArgs
+{
+    public readonly NetEntity Viewer = viewer;
 }
