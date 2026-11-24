@@ -14,3 +14,9 @@ public sealed class StoreCatalogMessage(NetEntity viewer, NetEntity store, Bound
     public readonly NetEntity Store = store;
     public readonly BoundUserInterfaceState? State = state;
 }
+
+[Serializable, NetSerializable]
+public sealed class StoreCatalogsClosedMessage(NetEntity viewer) : EntityEventArgs
+{
+    public readonly NetEntity Viewer = viewer;
+}

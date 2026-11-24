@@ -133,8 +133,10 @@ public sealed partial class StoreSystem
 
     private void OnStoreClosed(Entity<StoreComponent> store, ref BoundUIClosedEvent args)
     {
-        if (args.UiKey is StoreUiKey.Key)
-            RaiseNetworkEvent(new StoreCatalogMessage(GetNetEntity(args.Actor), GetNetEntity(store.Owner), null), args.Actor);
+        if (args.UiKey is StoreUiKey.Key &&
+            TryGetNetEntity(args.Actor, out var viewer) &&
+            TryGetNetEntity(store.Owner, out var netStore))
+            RaiseNetworkEvent(new StoreCatalogMessage(viewer.Value, netStore.Value, null), args.Actor);
     }
 
     private void OnViewerAttached(Entity<UserInterfaceUserComponent> viewer, ref PlayerAttachedEvent args)
@@ -148,15 +150,13 @@ public sealed partial class StoreSystem
 
     private void OnViewerDetached(Entity<UserInterfaceUserComponent> viewer, ref PlayerDetachedEvent args)
     {
-        if (!args.Player.Channel.IsConnected)
+        if (!args.Player.Channel.IsConnected ||
+            !TryGetNetEntity(viewer.Owner, out var netViewer) ||
+            !_ui.GetActorUis(viewer.Owner).Any(ui => ui.Key is StoreUiKey.Key))
             return;
 
-        // Discard packets for the old body even if its last catalogue was still in flight.
-        foreach (var (store, key) in _ui.GetActorUis(viewer.Owner))
-        {
-            if (key is StoreUiKey.Key)
-                RaiseNetworkEvent(new StoreCatalogMessage(GetNetEntity(viewer.Owner), GetNetEntity(store), null), args.Player);
-        }
+        // A held store may already be deleted while its viewer is being detached.
+        RaiseNetworkEvent(new StoreCatalogsClosedMessage(netViewer.Value), args.Player);
     }
 
     private void UpdateCatalog(EntityUid viewer, Entity<StoreComponent> store)

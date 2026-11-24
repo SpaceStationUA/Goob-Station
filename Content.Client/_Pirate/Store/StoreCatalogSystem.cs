@@ -20,6 +20,7 @@ public sealed class StoreCatalogSystem : EntitySystem
     {
         base.Initialize();
         SubscribeNetworkEvent<StoreCatalogMessage>(OnCatalog);
+        SubscribeNetworkEvent<StoreCatalogsClosedMessage>(msg => _catalogs.Remove(msg.Viewer));
         SubscribeLocalEvent<LocalPlayerDetachedEvent>(OnDetached);
     }
 
@@ -50,6 +51,7 @@ public sealed class StoreCatalogSystem : EntitySystem
 
     private void OnDetached(LocalPlayerDetachedEvent ev)
     {
-        _catalogs.Remove(GetNetEntity(ev.Entity));
+        if (TryGetNetEntity(ev.Entity, out var viewer))
+            _catalogs.Remove(viewer.Value);
     }
 }
