@@ -26,10 +26,8 @@ public sealed class StoreBoundUserInterface : StoreCatalogBoundUserInterface
     {
     }
 
-    protected override void Open()
+    protected override void OpenStoreWindow() // Pirate: apply the viewer's catalogue after the window exists.
     {
-        base.Open();
-
         _menu = this.CreateWindow<StoreMenu>();
         _menu.Owner = Owner; // Pirate: reputation checks use the actual store entity.
         if (EntMan.TryGetComponent<StoreComponent>(Owner, out var store))

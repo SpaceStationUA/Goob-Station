@@ -47,7 +47,8 @@ public sealed partial class StoreSystem
 
     private void InitializeUi()
     {
-        SubscribeLocalEvent<StoreComponent, StoreRequestUpdateInterfaceMessage>(OnRequestUpdate);
+        SubscribeLocalEvent<StoreComponent, BoundUIOpenedEvent>(OnStoreOpened); // Pirate
+        SubscribeLocalEvent<StoreComponent, BoundUIClosedEvent>(OnStoreClosed); // Pirate
         SubscribeLocalEvent<StoreComponent, StoreBuyListingMessage>(OnBuyRequest);
         SubscribeLocalEvent<StoreComponent, StoreRequestWithdrawMessage>(OnRequestWithdraw);
         SubscribeLocalEvent<StoreComponent, StoreRequestRefundMessage>(OnRequestRefund);
@@ -92,7 +93,7 @@ public sealed partial class StoreSystem
 
         EnsureTreeInterface((storeEnt, component)); // Goob
 
-        _ui.TryToggleUi(storeEnt, StoreUiKey.Key, actor.PlayerSession); // Pirate: the client requests its catalogue on open.
+        _ui.TryToggleUi(storeEnt, StoreUiKey.Key, actor.PlayerSession);
     }
 
     /// <summary>
@@ -119,10 +120,29 @@ public sealed partial class StoreSystem
 
         // Pirate: shop state can be large. Only build and send a catalogue for players browsing this store.
         foreach (var viewer in _ui.GetActors(store, StoreUiKey.Key))
-            SendCatalog(viewer, (store, component));
+            UpdateCatalog(viewer, (store, component));
     }
 
-    private void SendCatalog(EntityUid viewer, Entity<StoreComponent> store)
+    private void OnStoreOpened(Entity<StoreComponent> store, ref BoundUIOpenedEvent args)
+    {
+        if (args.UiKey is StoreUiKey.Key)
+            UpdateCatalog(args.Actor, store);
+    }
+
+    private void OnStoreClosed(Entity<StoreComponent> store, ref BoundUIClosedEvent args)
+    {
+        if (args.UiKey is not StoreUiKey.Key ||
+            !TryComp<StoreCatalogViewerComponent>(args.Actor, out var viewer) ||
+            !viewer.Catalogs.Remove(GetNetEntity(store.Owner)))
+            return;
+
+        if (viewer.Catalogs.Count == 0)
+            RemCompDeferred<StoreCatalogViewerComponent>(args.Actor);
+        else
+            Dirty(args.Actor, viewer);
+    }
+
+    private void UpdateCatalog(EntityUid viewer, Entity<StoreComponent> store)
     {
         var (uid, component) = store;
         component.LastAvailableListings = GetAvailableListings(component.AccountOwner ?? viewer, uid, component).ToHashSet();
@@ -135,13 +155,9 @@ public sealed partial class StoreSystem
         state ??= new StoreUpdateState(component.LastAvailableListings, balance,
             HasComp<RingerUplinkComponent>(uid), component.RefundAllowed);
 
-        _ui.ServerSendUiMessage(uid, StoreUiKey.Key, new StoreCatalogMessage(state), viewer);
-    }
-
-    private void OnRequestUpdate(EntityUid uid, StoreComponent component, StoreRequestUpdateInterfaceMessage args)
-    {
-        if (Equals(args.UiKey, StoreUiKey.Key))
-            SendCatalog(args.Actor, (uid, component));
+        var catalogs = EnsureComp<StoreCatalogViewerComponent>(viewer);
+        catalogs.Catalogs[GetNetEntity(uid)] = state;
+        Dirty(viewer, catalogs);
     }
 
     /// <summary>

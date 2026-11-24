@@ -14,10 +14,8 @@ public sealed class StoreTreeBoundUserInterface(EntityUid owner, Enum uiKey) : S
 
     private StoreTreeUpdateState? _lastState; // Pirate: reused when prototypes reload.
 
-    protected override void Open()
+    protected override void OpenStoreWindow() // Pirate: apply the viewer's catalogue after the window exists.
     {
-        base.Open();
-
         _menu = this.CreateWindow<StoreTreeMenu>();
         _menu.OnBuy += id => SendMessage(new StoreBuyListingMessage(id));
     }
