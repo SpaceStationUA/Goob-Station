@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server._Pirate.Administration.GameSnapshot; // Pirate
 using Content.Server._Goobstation.Antag;
 using Content.Server._RMC14.LinkAccount; // RMC - Patreon
 using Content.Server.Administration;
@@ -54,6 +55,7 @@ internal static class ServerContentIoC
         deps.Register<IAdminManager, AdminManager>();
         deps.Register<ISharedAdminManager, AdminManager>();
         deps.Register<EuiManager, EuiManager>();
+        deps.Register<GameSnapshotManager>(); // Pirate
         deps.Register<IVoteManager, VoteManager>();
         deps.Register<IPlayerLocator, PlayerLocator>();
         deps.Register<IAfkManager, AfkManager>();

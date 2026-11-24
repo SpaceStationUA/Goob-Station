@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server._Pirate.Administration.GameSnapshot; // Pirate
 using Content.Server._Goobstation.Antag;
 using Content.Server.Acz;
 using Content.Server.Administration;
@@ -49,6 +50,7 @@ namespace Content.Server.Entry
         [Dependency] private readonly DiscordChatLink _discordChatLink = default!;
         [Dependency] private readonly DiscordLink _discordLink = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
+        [Dependency] private readonly GameSnapshotManager _gameSnapshotManager = default!; // Pirate
         [Dependency] private readonly GhostKickManager _ghostKick = default!;
         [Dependency] private readonly IAdminManager _admin = default!;
         [Dependency] private readonly IAdminLogManager _adminLog = default!;
@@ -165,6 +167,7 @@ namespace Content.Server.Entry
             _discordLink.Initialize();
             _discordChatLink.Initialize();
             _euiManager.Initialize();
+            _gameSnapshotManager.Initialize(); // Pirate
             _gameMap.Initialize();
             _entSys.GetEntitySystem<GameTicker>().PostInitialize();
             _ban.Initialize();

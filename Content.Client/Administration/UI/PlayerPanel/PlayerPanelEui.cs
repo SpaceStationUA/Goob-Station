@@ -28,6 +28,7 @@ public sealed class PlayerPanelEui : BaseEui
         // Kick command does not support GUIDs
         PlayerPanel.OnKick += username => _console.ExecuteCommand($"kick \"{username}\"");
         PlayerPanel.OnCamera += username => _console.ExecuteCommand($"camera \"{username}\"");
+        PlayerPanel.OnGameSnapshot += username => _console.ExecuteCommand($"spy \"{username}\""); // Pirate
         PlayerPanel.OnOpenBanPanel += id => _console.ExecuteCommand($"banpanel \"{id}\"");
         PlayerPanel.OnOpenBans += id => _console.ExecuteCommand($"banlist \"{id}\"");
         PlayerPanel.OnAhelp += id => _console.ExecuteCommand($"openahelp \"{id}\"");
