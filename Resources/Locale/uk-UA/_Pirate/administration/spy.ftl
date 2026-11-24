@@ -1,0 +1,14 @@
+cmd-spy-desc = Запитує знімок гри підключеного гравця.
+cmd-spy-help = spy <нік гравця>
+cmd-spy-hint = Нік гравця
+cmd-spy-offline = Гравець зараз не в грі.
+admin-spy-title = Знімок гри — { $player }
+admin-spy-player-panel = Знімок гри
+admin-spy-zoom = 1:1
+admin-spy-refresh = Оновити
+admin-spy-waiting = Очікуємо на кадр від гравця…
+admin-spy-receiving = Отримуємо кадр… { $percent }%
+admin-spy-received = Кадр отримано о { $time }.
+admin-spy-busy = Спробуйте повторити запит за кілька секунд.
+admin-spy-timeout = Час очікування минув. Можна запросити новий кадр.
+admin-spy-unavailable = Кадр недоступний.

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Client._Pirate.Administration.GameSnapshot; // Pirate
 using Content.Client.Administration.Managers;
 using Content.Client.Changelog;
 using Content.Client.Chat.Managers;
@@ -65,6 +66,7 @@ namespace Content.Client.Entry
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IClientPreferencesManager _clientPreferencesManager = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
+        [Dependency] private readonly GameSnapshotCapture _gameSnapshotCapture = default!; // Pirate
         [Dependency] private readonly IVoteManager _voteManager = default!;
         [Dependency] private readonly DocumentParsingManager _documentParsingManager = default!;
         [Dependency] private readonly GhostKickManager _ghostKick = default!;
@@ -182,6 +184,7 @@ namespace Content.Client.Entry
             _chatManager.Initialize();
             _clientPreferencesManager.Initialize();
             _euiManager.Initialize();
+            _gameSnapshotCapture.Initialize(); // Pirate
             _voteManager.Initialize();
             _userInterfaceManager.SetDefaultTheme("SS14DefaultTheme");
             _userInterfaceManager.SetActiveTheme(_configManager.GetCVar(CVars.InterfaceTheme));

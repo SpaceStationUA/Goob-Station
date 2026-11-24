@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Client._Pirate.Administration.GameSnapshot; // Pirate
 using Content.Client._RMC14.LinkAccount;
 using Content.Client.Administration.Managers;
 using Content.Client.Audio.Midi;
@@ -51,6 +52,7 @@ namespace Content.Client.IoC
             collection.Register<IClientAdminManager, ClientAdminManager>();
             collection.Register<ISharedAdminManager, ClientAdminManager>();
             collection.Register<EuiManager, EuiManager>();
+            collection.Register<GameSnapshotCapture>(); // Pirate
             collection.Register<IVoteManager, VoteManager>();
             collection.Register<ChangelogManager, ChangelogManager>();
             collection.Register<ViewportManager, ViewportManager>();

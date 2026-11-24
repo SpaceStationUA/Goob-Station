@@ -21,6 +21,7 @@ public sealed partial class PlayerPanel : FancyWindow
     public event Action<NetUserId?>? OnAhelp;
     public event Action<string?>? OnKick;
     public event Action<string?>? OnCamera;
+    public event Action<string?>? OnGameSnapshot; // Pirate
     public event Action<NetUserId?>? OnOpenBanPanel;
     public event Action<NetUserId?, bool>? OnWhitelistToggle;
     public event Action? OnFollow;
@@ -43,6 +44,7 @@ public sealed partial class PlayerPanel : FancyWindow
         BanButton.OnPressed += _ => OnOpenBanPanel?.Invoke(TargetPlayer);
         KickButton.OnPressed += _ => OnKick?.Invoke(TargetUsername);
         CameraButton.OnPressed += _ => OnCamera?.Invoke(TargetUsername);
+        GameSnapshotButton.OnPressed += _ => OnGameSnapshot?.Invoke(TargetUsername); // Pirate
         NotesButton.OnPressed += _ => OnOpenNotes?.Invoke(TargetPlayer);
         ShowBansButton.OnPressed += _ => OnOpenBans?.Invoke(TargetPlayer);
         AhelpButton.OnPressed += _ => OnAhelp?.Invoke(TargetPlayer);
@@ -131,6 +133,7 @@ public sealed partial class PlayerPanel : FancyWindow
         BanButton.Disabled = !_adminManager.CanCommand("banpanel");
         KickButton.Disabled = !_adminManager.CanCommand("kick");
         CameraButton.Disabled = !_adminManager.CanCommand("camera");
+        GameSnapshotButton.Disabled = !_adminManager.CanCommand("spy"); // Pirate
         NotesButton.Disabled = !_adminManager.CanCommand("adminnotes");
         ShowBansButton.Disabled = !_adminManager.CanCommand("banlist");
         WhitelistToggle.Disabled =
