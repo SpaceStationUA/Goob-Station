@@ -13,6 +13,28 @@ namespace Content.Tests.Client._Pirate.Administration;
 [TestFixture]
 public sealed class GameSnapshotPixelsTest
 {
+    [Test]
+    public void OnlyAnEntirelyBlackRgbReadNeedsAnotherCapture()
+    {
+        using var rgb = new Image<Rgb24>(37, 19);
+        Assert.That(GameSnapshotPixels.EncodeScreenshot(rgb), Is.Null);
+        rgb[36, 18] = new Rgb24(0, 1, 0);
+        Assert.That(GameSnapshotPixels.EncodeScreenshot(rgb), Is.Not.Null);
+    }
+
+    [Test]
+    public void RgbaRetryPreservesVisibleColorWithZeroAlphaAndAcceptsARealBlackFrame()
+    {
+        using var rgba = new Image<Rgba32>(1600, 900, new Rgba32(255, 0, 255, 0));
+        using var result = GameSnapshotPixels.Decode(GameSnapshotPixels.EncodeRgba(rgba));
+        Assert.That((result.Width, result.Height), Is.EqualTo((1280, 720)));
+        Assert.That(result[1279, 719], Is.EqualTo(new Rgba32(255, 0, 255)));
+
+        using var black = new Image<Rgba32>(13, 9);
+        using var dark = GameSnapshotPixels.Decode(GameSnapshotPixels.EncodeRgba(black));
+        Assert.That(dark[12, 8], Is.EqualTo(new Rgba32(0, 0, 0)));
+    }
+
     [TestCase(1920, 1080, 1280, 720)]
     [TestCase(3440, 1440, 1280, 536)]
     [TestCase(900, 1600, 405, 720)]

@@ -12,6 +12,19 @@ namespace Content.Client._Pirate.Administration.GameSnapshot;
 
 internal static class GameSnapshotPixels
 {
+    public static GameSnapshotFrame? EncodeScreenshot(Image<Rgb24> source)
+    {
+        // Some OpenGL ES drivers return all zeroes for RGB framebuffer reads.
+        return source.GetPixelSpan().ContainsAnyExcept(default(Rgb24)) ? Encode(source) : null;
+    }
+
+    public static GameSnapshotFrame EncodeRgba(Image<Rgba32> source)
+    {
+        // Window alpha can be zero even when its RGB channels are visible. Drop it before resizing.
+        using var rgb = source.CloneAs<Rgb24>(Configuration.Default);
+        return Encode(rgb);
+    }
+
     public static GameSnapshotFrame Encode(Image<Rgb24> source)
     {
         var scale = Math.Min((double) GameSnapshotFrame.MaxWidth / source.Width,

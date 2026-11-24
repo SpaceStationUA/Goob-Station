@@ -3,6 +3,7 @@
 using System.Threading.Tasks;
 using Content.Shared._Pirate.Administration.GameSnapshot;
 using Robust.Client.Graphics;
+using Robust.Client.UserInterface;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
@@ -15,6 +16,7 @@ public sealed class GameSnapshotCapture
     [Dependency] private readonly IClyde _clyde = default!;
     [Dependency] private readonly IClientNetManager _net = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IUserInterfaceManager _ui = default!;
 
     private Capture? _active;
     private TimeSpan _nextCapture;
@@ -24,6 +26,7 @@ public sealed class GameSnapshotCapture
         _net.RegisterNetMessage<MsgRequestGameSnapshot>(OnRequest, NetMessageAccept.Client);
         _net.RegisterNetMessage<MsgGameSnapshotReply>(accept: NetMessageAccept.Server);
         _net.Disconnect += (_, _) => _active = null;
+        _ui.OnPostDrawUIRoot += OnPostDraw;
     }
 
     private void OnRequest(MsgRequestGameSnapshot request)
@@ -54,19 +57,48 @@ public sealed class GameSnapshotCapture
         });
 
         // The same final game framebuffer as F2, after the main window's UI is drawn.
-        _clyde.Screenshot(ScreenshotType.Final, image => Encode(capture, image));
+        _clyde.Screenshot(ScreenshotType.Final, image => Encode(capture, image, GameSnapshotPixels.EncodeScreenshot));
     }
 
-    private async void Encode(Capture capture, Image<Rgb24> image)
+    private void OnPostDraw(PostDrawUIRootEventArgs args)
+    {
+        if (_active is not { RetryRgba: true } capture || args.Root.Window != _clyde.MainWindow)
+            return;
+
+        capture.RetryRgba = false;
+        if (!IsCurrent(capture))
+            return;
+
+        try
+        {
+            var target = _clyde.MainWindow.RenderTarget;
+            // Flush the queued UI draws before reading the back buffer, while the main window is still bound.
+            args.DrawingHandle.RenderInRenderTarget(target, static () => { }, null);
+            target.CopyPixelsToMemory<Rgba32>(image => Encode(capture, image, GameSnapshotPixels.EncodeRgba));
+        }
+        catch (Exception e)
+        {
+            Logger.GetSawmill("admin.spy").Warning($"Could not read the RGBA game frame: {e.Message}");
+            SendChunk(capture);
+        }
+    }
+
+    private async void Encode<T>(Capture capture, Image<T> image, Func<Image<T>, GameSnapshotFrame?> encode)
+        where T : unmanaged, IPixel<T>
     {
         using (image)
         {
-            if (_active != capture || _timing.RealTime >= capture.Deadline)
+            if (!IsCurrent(capture))
                 return;
 
             try
             {
-                capture.Frame = await Task.Run(() => GameSnapshotPixels.Encode(image));
+                capture.Frame = await Task.Run(() => encode(image));
+                if (capture.Frame == null)
+                {
+                    capture.RetryRgba = true;
+                    return;
+                }
             }
             catch (Exception e)
             {
@@ -74,9 +106,12 @@ public sealed class GameSnapshotCapture
             }
         }
 
-        if (_active == capture && _net.ServerChannel == capture.Channel && _timing.RealTime < capture.Deadline)
+        if (IsCurrent(capture))
             SendChunk(capture);
     }
+
+    private bool IsCurrent(Capture capture) =>
+        _active == capture && _net.ServerChannel == capture.Channel && _timing.RealTime < capture.Deadline;
 
     private void SendChunk(Capture capture)
     {
@@ -102,6 +137,7 @@ public sealed class GameSnapshotCapture
         public readonly uint Id = id;
         public readonly INetChannel Channel = channel;
         public readonly TimeSpan Deadline = deadline;
+        public bool RetryRgba;
         public GameSnapshotFrame? Frame;
         public int NextOffset;
     }
