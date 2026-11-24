@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+#nullable enable
 using System.Linq;
+using Content.Client._Pirate.Store;
 using Content.Client.Store.Ui;
 using Content.IntegrationTests.Tests.Interaction;
-using Content.Shared._Pirate.Store;
 using Content.Shared.FixedPoint;
 using Content.Shared.Input;
 using Content.Shared.Store;
@@ -23,19 +24,25 @@ public sealed class SecLinkCatalogTest : InteractionTest
         await Pickup(held);
         await PressKey(ContentKeyFunctions.UseItemInHand);
         await RunTicks(10);
-        await Client.WaitAssertion(() => AssertRadioMenu(held));
+        var catalogs = Client.System<StoreCatalogSystem>();
+        BoundUserInterfaceState? heldCatalog = null;
+        await Client.WaitAssertion(() =>
+        {
+            AssertRadioMenu(held);
+            heldCatalog = catalogs.GetCatalog(ToClient(held));
+            Assert.That(heldCatalog, Is.Not.Null);
+        });
 
         var floor = await SpawnTarget("BaseSeclinkRadio", PlayerCoords);
         await PressKey(ContentKeyFunctions.ActivateItemInWorld, coordinates: PlayerCoords);
         await RunTicks(10);
+        BoundUserInterfaceState? floorCatalog = null;
         await Client.WaitAssertion(() =>
         {
-            AssertRadioMenu(held);
             AssertRadioMenu(floor);
-        });
-
-        await Client.WaitAssertion(() =>
-        {
+            Assert.That(catalogs.GetCatalog(ToClient(held)), Is.SameAs(heldCatalog));
+            floorCatalog = catalogs.GetCatalog(ToClient(floor));
+            Assert.That(floorCatalog, Is.Not.Null);
             var clientUi = Client.System<SharedUserInterfaceSystem>();
             Assert.That(clientUi.TryGetOpenUi(ToClient(held), StoreUiKey.Key, out var heldUi), Is.True);
             heldUi!.SendMessage(new StoreBuyListingMessage("SeclinkBaton"));
@@ -45,6 +52,7 @@ public sealed class SecLinkCatalogTest : InteractionTest
         {
             AssertRadioMenu(held, batonTokens: 0);
             AssertRadioMenu(floor);
+            Assert.That(catalogs.GetCatalog(ToClient(floor)), Is.SameAs(floorCatalog));
         });
 
         var ui = Server.System<SharedUserInterfaceSystem>();
@@ -52,14 +60,13 @@ public sealed class SecLinkCatalogTest : InteractionTest
         await RunTicks(5);
         await Client.WaitAssertion(() =>
         {
-            var viewer = CEntMan.GetComponent<StoreCatalogViewerComponent>(CPlayer);
-            Assert.That(viewer.Catalogs.Keys, Is.EquivalentTo(new[] { floor }));
-            AssertRadioMenu(floor);
+            Assert.That(catalogs.GetCatalog(ToClient(held)), Is.Null);
+            Assert.That(catalogs.GetCatalog(ToClient(floor)), Is.SameAs(floorCatalog));
         });
 
         await Server.WaitPost(() => ui.CloseUi(ToServer(floor), StoreUiKey.Key, SPlayer));
         await RunTicks(5);
-        await Client.WaitAssertion(() => Assert.That(CEntMan.HasComponent<StoreCatalogViewerComponent>(CPlayer), Is.False));
+        await Client.WaitAssertion(() => Assert.That(catalogs.GetCatalog(ToClient(floor)), Is.Null));
     }
 
     private void AssertRadioMenu(NetEntity radio, int batonTokens = 1)

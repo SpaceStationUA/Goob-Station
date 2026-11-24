@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Shared._Pirate.Store;
-
 namespace Content.Client._Pirate.Store;
 
 public abstract class StoreCatalogBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
@@ -19,8 +17,7 @@ public abstract class StoreCatalogBoundUserInterface(EntityUid owner, Enum uiKey
     {
         base.Update();
 
-        if (EntMan.TryGetComponent<StoreCatalogViewerComponent>(PlayerManager.LocalEntity, out var viewer) &&
-            viewer.Catalogs.TryGetValue(EntMan.GetNetEntity(Owner), out var catalog))
+        if (EntMan.System<StoreCatalogSystem>().GetCatalog(Owner) is { } catalog)
             UpdateState(catalog);
     }
 }

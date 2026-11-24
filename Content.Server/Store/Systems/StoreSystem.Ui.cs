@@ -49,6 +49,8 @@ public sealed partial class StoreSystem
     {
         SubscribeLocalEvent<StoreComponent, BoundUIOpenedEvent>(OnStoreOpened); // Pirate
         SubscribeLocalEvent<StoreComponent, BoundUIClosedEvent>(OnStoreClosed); // Pirate
+        SubscribeLocalEvent<UserInterfaceUserComponent, PlayerAttachedEvent>(OnViewerAttached); // Pirate
+        SubscribeLocalEvent<UserInterfaceUserComponent, PlayerDetachedEvent>(OnViewerDetached); // Pirate
         SubscribeLocalEvent<StoreComponent, StoreBuyListingMessage>(OnBuyRequest);
         SubscribeLocalEvent<StoreComponent, StoreRequestWithdrawMessage>(OnRequestWithdraw);
         SubscribeLocalEvent<StoreComponent, StoreRequestRefundMessage>(OnRequestRefund);
@@ -131,19 +133,37 @@ public sealed partial class StoreSystem
 
     private void OnStoreClosed(Entity<StoreComponent> store, ref BoundUIClosedEvent args)
     {
-        if (args.UiKey is not StoreUiKey.Key ||
-            !TryComp<StoreCatalogViewerComponent>(args.Actor, out var viewer) ||
-            !viewer.Catalogs.Remove(GetNetEntity(store.Owner)))
+        if (args.UiKey is StoreUiKey.Key)
+            RaiseNetworkEvent(new StoreCatalogMessage(GetNetEntity(args.Actor), GetNetEntity(store.Owner), null), args.Actor);
+    }
+
+    private void OnViewerAttached(Entity<UserInterfaceUserComponent> viewer, ref PlayerAttachedEvent args)
+    {
+        foreach (var (store, key) in _ui.GetActorUis(viewer.Owner))
+        {
+            if (key is StoreUiKey.Key && TryComp<StoreComponent>(store, out var component))
+                UpdateCatalog(viewer.Owner, (store, component));
+        }
+    }
+
+    private void OnViewerDetached(Entity<UserInterfaceUserComponent> viewer, ref PlayerDetachedEvent args)
+    {
+        if (!args.Player.Channel.IsConnected)
             return;
 
-        if (viewer.Catalogs.Count == 0)
-            RemCompDeferred<StoreCatalogViewerComponent>(args.Actor);
-        else
-            Dirty(args.Actor, viewer);
+        // Discard packets for the old body even if its last catalogue was still in flight.
+        foreach (var (store, key) in _ui.GetActorUis(viewer.Owner))
+        {
+            if (key is StoreUiKey.Key)
+                RaiseNetworkEvent(new StoreCatalogMessage(GetNetEntity(viewer.Owner), GetNetEntity(store), null), args.Player);
+        }
     }
 
     private void UpdateCatalog(EntityUid viewer, Entity<StoreComponent> store)
     {
+        if (!TryComp<ActorComponent>(viewer, out var actor))
+            return;
+
         var (uid, component) = store;
         component.LastAvailableListings = GetAvailableListings(component.AccountOwner ?? viewer, uid, component).ToHashSet();
 
@@ -155,9 +175,7 @@ public sealed partial class StoreSystem
         state ??= new StoreUpdateState(component.LastAvailableListings, balance,
             HasComp<RingerUplinkComponent>(uid), component.RefundAllowed);
 
-        var catalogs = EnsureComp<StoreCatalogViewerComponent>(viewer);
-        catalogs.Catalogs[GetNetEntity(uid)] = state;
-        Dirty(viewer, catalogs);
+        RaiseNetworkEvent(new StoreCatalogMessage(GetNetEntity(viewer), GetNetEntity(uid), state), actor.PlayerSession);
     }
 
     /// <summary>
