@@ -1,0 +1,16 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSecCamo
+  name: 'уніформа "Аквамаринка"'
+  description: Застаріла форма у камуфляжі для аванпостів океанічних планет. Через залишки комплектів на складах, розподіляється у обмежених кількостях до дільниць СБ.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/Securitycamo.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/Securitycamo.rsi
+  - type: Foldable
+    canFoldInsideContainer: true
+    unfoldVerbText: unfold-verb
+    foldVerbText: fold-verb
+  - type: FoldableClothing
+    foldedEquippedPrefix: folded

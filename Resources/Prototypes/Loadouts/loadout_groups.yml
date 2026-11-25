@@ -1495,6 +1495,7 @@
   #- SecurityMJ # Goob # Pirate disable
   #- SecurityMJSenior # Goob # Pirate disable
   - SecurityOfficerBlueSkirt # Pirate
+  - SecurityOfficerCamoJumpsuit # Pirate
 
 - type: loadoutGroup
   id: SecurityBackpack
