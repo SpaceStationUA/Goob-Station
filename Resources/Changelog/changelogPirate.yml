@@ -8147,3 +8147,9 @@ Entries:
       message: Виправлено чорні знімки `/spy` на частині графічних драйверів.
   id: 726
   time: '2026-11-24T20:17:29.0000000+00:00'
+- author: fluttersoppenshy, Hamster_Masterr
+  changes:
+    - type: Add
+      message: Нова уніформа для охорони
+  id: 727
+  time: '2026-11-26T16:22:58.0000000+00:00'
