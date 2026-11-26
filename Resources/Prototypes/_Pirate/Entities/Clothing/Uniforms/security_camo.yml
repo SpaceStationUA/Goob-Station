@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSecCamo
-  name: 'уніформа "Аквамаринка"'
+  name: 'Уніформа флоту'
   description: Застаріла форма у камуфляжі для аванпостів океанічних планет. Через залишки комплектів на складах, розподіляється у обмежених кількостях до дільниць СБ.
   components:
   - type: Sprite
