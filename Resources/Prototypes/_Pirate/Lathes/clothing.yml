@@ -4,3 +4,8 @@
     - Coats
   id: PirateStraightjacketLatheRecipe
   result: ClothingOuterStraightjacket
+
+- type: latheRecipe
+  parent: BaseJumpsuitRecipe
+  id: ClothingUniformJumpsuitSecCamo
+  result: ClothingUniformJumpsuitSecCamo

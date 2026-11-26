@@ -118,6 +118,7 @@
   - ClothingHeadHatWarden
   - ClothingUniformJumpsuitWarden
   - ClothingUniformJumpskirtWarden
+  - ClothingUniformJumpsuitSecCamo # Pirate
 
 - type: latheRecipePack
   id: ClothingService
