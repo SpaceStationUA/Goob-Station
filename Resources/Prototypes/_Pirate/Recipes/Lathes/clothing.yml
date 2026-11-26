@@ -37,3 +37,20 @@
   parent: BaseJumpsuitRecipe
   id: ClothingUniformSkirtMantis
   result: ClothingUniformSkirtMantis
+
+# HoS sheriff hat and uniform, printed like the stock HoS cap and jumpsuit
+- type: latheRecipe
+  parent: BaseCommandHatRecipe
+  id: ClothingHeadHatHoSSheriff
+  result: ClothingHeadHatHoSSheriff
+
+- type: latheRecipe
+  parent: BaseCommandJumpsuitRecipe
+  id: ClothingUniformJumpsuitHoSSheriff
+  result: ClothingUniformJumpsuitHoSSheriff
+
+- type: latheRecipePack
+  id: ClothingSecurityHoSSheriff
+  recipes:
+  - ClothingHeadHatHoSSheriff
+  - ClothingUniformJumpsuitHoSSheriff

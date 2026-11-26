@@ -1439,6 +1439,7 @@
   - JackBoots
   - SecurityWinterBoots
   - AdvancedJackBoots
+  - HeadOfSecuritySheriffBoots # Pirate: sheriff outfit
 
 - type: loadoutGroup
   id: HeadofSecurityEnvirohelm

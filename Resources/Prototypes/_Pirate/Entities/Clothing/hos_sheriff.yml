@@ -1,0 +1,64 @@
+# Head of Security sheriff outfit. Stats copy the matching stock HoS items:
+# hat = ClothingHeadHatHoshat, jumpsuit = ClothingUniformJumpsuitHoS,
+# coat = ClothingOuterCoatHoSTrench, boots = ClothingShoesBootsJack.
+
+- type: entity
+  parent: [ClothingHeadHatArmored, ClothingHeadBase, BaseCommandContraband]
+  id: ClothingHeadHatHoSSheriff
+  name: sheriff hat
+  description: A wide-brimmed maroon hat with a gold star pinned to the crown.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Head/Hats/hos_sheriff_hat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Head/Hats/hos_sheriff_hat.rsi
+  - type: Tag
+    tags:
+    - ClothMade
+    - Recyclable
+    - WhitelistChameleon
+
+- type: entity
+  parent: [ClothingUniformBase, BaseCommandContraband]
+  id: ClothingUniformJumpsuitHoSSheriff
+  name: sheriff uniform
+  description: A black work shirt over maroon trousers, held up by a broad belt with a brass buckle.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/hos_sheriff.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Uniforms/Jumpsuit/Security/hos_sheriff.rsi
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#1D1714"
+        sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/color/color.rsi
+      - state: overlay-inhand-left
+      right:
+      - state: inhand-right
+        color: "#1D1714"
+        sprite: _Goobstation/Clothing/Uniforms/Jumpsuit/color/color.rsi
+      - state: overlay-inhand-right
+
+- type: entity
+  parent: [ClothingOuterArmorHoS, ClothingOuterStorageFoldableBase, BaseSecurityCommandContraband]
+  id: ClothingOuterCoatHoSSheriff
+  name: sheriff coat
+  description: A heavy dark-brown coat with a fur collar and a gold badge on the chest. Armored plates are sewn into the lining.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/OuterClothing/Coats/hos_sheriff_coat.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/OuterClothing/Coats/hos_sheriff_coat.rsi
+
+- type: entity
+  parent: [ClothingShoesMilitaryBase, BaseSecurityCargoContraband]
+  id: ClothingShoesBootsHoSSheriff
+  name: sheriff boots
+  description: Tall black leather boots with laced fronts and thick soles.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Clothing/Shoes/Boots/hos_sheriff_boots.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Shoes/Boots/hos_sheriff_boots.rsi
