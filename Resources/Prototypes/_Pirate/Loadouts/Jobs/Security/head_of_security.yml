@@ -9,3 +9,25 @@
   id: HeadOfSecurityBunnyears
   equipment:
     head: ClothingHeadHatBunnyearsHOS
+
+# Sheriff outfit - шерифський комплект
+- type: loadout
+  id: HeadOfSecuritySheriffHat
+  equipment:
+    head: ClothingHeadHatHoSSheriff
+
+- type: loadout
+  id: HeadOfSecuritySheriffJumpsuit
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoSSheriff
+  groupBy: "jumpsuit"
+
+- type: loadout
+  id: HeadOfSecuritySheriffCoat
+  equipment:
+    outerClothing: ClothingOuterCoatHoSSheriff
+
+- type: loadout
+  id: HeadOfSecuritySheriffBoots
+  equipment:
+    shoes: ClothingShoesBootsHoSSheriff

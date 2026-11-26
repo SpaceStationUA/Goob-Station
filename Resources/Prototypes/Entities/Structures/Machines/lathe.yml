@@ -717,6 +717,7 @@
     # Goobstation Packs
     - ClothingCasualJumpsuits
     - ClothingCommandSummer
+    - ClothingSecurityHoSSheriff # Pirate: sheriff outfit
   - type: EmagLatheRecipes
     emagStaticPacks:
     - ClothingCentComm
