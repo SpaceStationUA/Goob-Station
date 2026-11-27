@@ -346,15 +346,17 @@ public abstract partial class SharedMoverController : VirtualController
         }
         else
         {
-            if (MapGridQuery.TryComp(xform.GridUid, out var gridComp)
-                && _mapSystem.TryGetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates, out var tile)
-                && physicsComponent.BodyStatus == BodyStatus.OnGround)
-                tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
-
             var walkSpeed = moveSpeedComponent?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
             var sprintSpeed = moveSpeedComponent?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
             wishDir = AssertValidWish(mover, walkSpeed, sprintSpeed);
+
+            // Pirate: coasting movers still need tile friction, even with no movement input.
+            if ((wishDir != Vector2.Zero || velocity != Vector2.Zero)
+                && physicsComponent.BodyStatus == BodyStatus.OnGround
+                && MapGridQuery.TryComp(xform.GridUid, out var gridComp)
+                && _mapSystem.TryGetTileRef(xform.GridUid.Value, gridComp, xform.Coordinates, out var tile))
+                tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
 
             if (wishDir != Vector2.Zero)
             {
@@ -743,8 +745,8 @@ public abstract partial class SharedMoverController : VirtualController
 
         var total = walkDir * walkSpeed + sprintDir * sprintSpeed;
 
-        var parentRotation = GetParentGridAngle(mover);
-        var wishDir = _relativeMovement ? parentRotation.RotateVec(total) : total;
+        // Pirate: rotating a zero input vector leaves it at zero.
+        var wishDir = _relativeMovement && total != Vector2.Zero ? GetParentGridAngle(mover).RotateVec(total) : total;
 
         DebugTools.Assert(MathHelper.CloseToPercent(total.Length(), wishDir.Length()));
 
