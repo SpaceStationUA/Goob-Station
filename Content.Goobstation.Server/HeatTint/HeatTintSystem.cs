@@ -1,5 +1,5 @@
+using System.Numerics;
 using Content.Goobstation.Shared.HeatTint;
-using Content.Server.Temperature.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Temperature;
 using Content.Shared.Temperature.Components;
@@ -22,16 +22,33 @@ public sealed partial class HeatTintSystem : SharedHeatTintSystem
     private void OnMapInit(Entity<HeatTintComponent> ent, ref MapInitEvent args)
     {
         if (TryComp<TemperatureComponent>(ent, out var temp))
-            _appearance.SetData(ent, HeatTintVisuals.Temperature, temp.CurrentTemperature);
+            SetTintTemperature(ent, temp.CurrentTemperature);
     }
 
     private void OnTemperatureChange(Entity<HeatTintComponent> ent, ref OnTemperatureChangeEvent args)
     {
-        _appearance.SetData(ent, HeatTintVisuals.Temperature, args.CurrentTemperature);
+        SetTintTemperature(ent, args.CurrentTemperature);
     }
 
     private void OnSolutionChanged(Entity<HeatTintComponent> ent, ref SolutionContainerChangedEvent args)
     {
-        _appearance.SetData(ent, HeatTintVisuals.Temperature, args.Solution.Temperature);
+        SetTintTemperature(ent, args.Solution.Temperature);
+    }
+
+    private void SetTintTemperature(Entity<HeatTintComponent> ent, float temperature)
+    {
+        if (ent.Comp.FilterTintUpdates &&
+            _appearance.TryGetData<float>(ent, HeatTintVisuals.Temperature, out var lastTemperature) &&
+            (lastTemperature == temperature || TintBucket(ent.Comp, lastTemperature) == TintBucket(ent.Comp, temperature)))
+            return;
+
+        _appearance.SetData(ent, HeatTintVisuals.Temperature, temperature);
+    }
+
+    private static Vector4 TintBucket(HeatTintComponent heat, float temperature)
+    {
+        // Pirate: keep 64 subdivisions per 8-bit channel step for tinting textured, lit sprites.
+        var scaled = GetHeatColor(heat.ColorGradient, temperature).RGBA * (255 * 64);
+        return Vector4.Round(scaled, MidpointRounding.ToNegativeInfinity);
     }
 }
