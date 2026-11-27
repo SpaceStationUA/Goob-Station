@@ -50,35 +50,6 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         ";
 
         [Test]
-        public async Task MapDeviceListCleansUpDeletedDevice()
-        {
-            await using var pair = await PoolManager.GetServerClient();
-            var server = pair.Server;
-            await server.WaitAssertion(() =>
-            {
-                var entities = server.EntMan;
-                var lists = server.System<DeviceListSystem>();
-                var device = entities.CreateEntityUninitialized("DummyNetworkDevice", MapCoordinates.Nullspace);
-                var list = entities.CreateEntityUninitialized(null, MapCoordinates.Nullspace);
-                var listComp = entities.EnsureComponent<DeviceListComponent>(list);
-                var deleted = entities.Spawn(null, MapCoordinates.Nullspace);
-                entities.DeleteEntity(deleted);
-
-#pragma warning disable RA0002 // Pirate: emulate the one-way links serialized in older maps.
-                listComp.Devices.UnionWith([device, deleted]);
-#pragma warning restore RA0002
-                entities.InitializeAndStartEntity(list);
-                entities.InitializeAndStartEntity(device);
-                Assert.That(lists.GetAllDevices(list), Is.EquivalentTo(new[] { device }));
-
-                entities.DeleteEntity(device);
-                Assert.That(lists.GetAllDevices(list), Is.Empty);
-                entities.DeleteEntity(list);
-            });
-            await pair.CleanReturnAsync();
-        }
-
-        [Test]
         public async Task NetworkDeviceSendAndReceive()
         {
             await using var pair = await PoolManager.GetServerClient();

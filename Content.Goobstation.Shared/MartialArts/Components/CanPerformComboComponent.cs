@@ -3,22 +3,21 @@
 using Content.Goobstation.Common.MartialArts;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization; // Pirate
 
 namespace Content.Goobstation.Shared.MartialArts.Components;
-[RegisterComponent, NetworkedComponent] // Pirate: a deleted combo target is sent as null.
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class CanPerformComboComponent : Component
 {
-    [DataField]
+    [DataField, AutoNetworkedField]
     public EntityUid? CurrentTarget;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public ProtoId<ComboPrototype> BeingPerformed;
 
     [DataField]
     public int LastAttacksLimit = 4;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public List<ComboAttackType> LastAttacks = new();
 
     [DataField]
@@ -33,16 +32,6 @@ public sealed partial class CanPerformComboComponent : Component
     [DataField]
     public TimeSpan ResetTime = TimeSpan.Zero;
 
-    [DataField]
+    [DataField, AutoNetworkedField]
     public int ConsecutiveGnashes;
-
-    // Pirate: keep the generated state's wire name and fields for existing replays.
-    [Serializable, NetSerializable]
-    public sealed class CanPerformComboComponent_AutoState : IComponentState
-    {
-        public NetEntity? CurrentTarget;
-        public ProtoId<ComboPrototype> BeingPerformed;
-        public List<ComboAttackType> LastAttacks = default!;
-        public int ConsecutiveGnashes;
-    }
 }

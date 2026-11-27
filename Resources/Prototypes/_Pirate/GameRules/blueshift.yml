@@ -255,6 +255,7 @@
       - AntagImmune
   - type: AntagObjectives
     objectives:
+    - ParadoxCloneFriendObjective
     - ParadoxCloneLivingObjective
   - type: AntagRandomSpawn
   - type: AntagSelection

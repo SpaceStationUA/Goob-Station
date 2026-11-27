@@ -410,7 +410,7 @@
 
   - type: AntagObjectives
     objectives:
-    # Pirate: the clone rule assigns the protect objective with its original mind as the target.
+    - ParadoxCloneFriendObjective
     - ParadoxCloneLivingObjective
   - type: AntagRandomSpawn # TODO: improve spawning so they only start in maints
   - type: AntagSelection

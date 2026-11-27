@@ -186,9 +186,11 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         if (!TryStartDoAfter(doAfter, out var id, component))
             return DoAfterStatus.Cancelled;
 
-        // Pirate: instant actions (including the InstantDoAfters tag) finish inside TryStartDoAfter.
-        if (!component.DoAfters.ContainsKey(id.Value.Index))
+        if (doAfter.Delay <= TimeSpan.Zero)
+        {
+            Log.Warning("Awaited instant DoAfters are not supported fully supported");
             return DoAfterStatus.Finished;
+        }
 
         var tcs = new TaskCompletionSource<DoAfterStatus>();
         component.AwaitedDoAfters.Add(id.Value.Index, tcs);
