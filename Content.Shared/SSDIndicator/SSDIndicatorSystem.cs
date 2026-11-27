@@ -49,7 +49,7 @@ public sealed class SSDIndicatorSystem : EntitySystem
 
     private void ClearSSDState(EntityUid uid, SSDIndicatorComponent component)
     {
-        var stateChanged = component.IsSSD || component.HadPlayer || component.FallAsleepTime != TimeSpan.Zero;
+        var stateChanged = component.IsSSD || !component.HadPlayer || component.FallAsleepTime != TimeSpan.Zero; // Pirate
 
         component.IsSSD = false;
         component.HadPlayer = true; // Goobstation
