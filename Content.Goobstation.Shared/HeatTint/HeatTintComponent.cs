@@ -18,6 +18,12 @@ public sealed partial class HeatTintComponent : Component
     [DataField]
     public List<string>? AffectedLayers;
 
+    /// <summary>
+    /// Pirate: skip appearance updates for temperature changes that give nearly identical tints.
+    /// </summary>
+    [DataField]
+    public bool FilterTintUpdates;
+
     public Dictionary<int, Color> BaseColors = new();
 
     public Dictionary<int, Color> LastAppliedColors = new();

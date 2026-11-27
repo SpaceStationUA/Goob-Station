@@ -26,6 +26,7 @@
   - type: SpaceGarbage
   - type: Appearance
   - type: HeatTint # Goob - Heat tint
+    filterTintUpdates: true # Pirate
     colorGradient:
     - temperature: 200
       color: "#6699FF"
