@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Shared.SSDIndicator;
 using Content.Shared.StatusEffectNew;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests._Pirate.SSDIndicator;
 
@@ -42,6 +43,7 @@ public sealed class SSDIndicatorTests
 
         await pair.RunTicksSync(2);
 
+        var lastChange = GameTick.Zero;
         await server.WaitAssertion(() =>
         {
             var ssd = entMan.GetComponent<SSDIndicatorComponent>(player);
@@ -52,7 +54,23 @@ public sealed class SSDIndicatorTests
             Assert.That(statusEffects.HasStatusEffect(
                 player,
                 SSDIndicatorSystem.StatusEffectSSDSleeping), Is.False);
+
+            lastChange = ssd.LastModifiedTick;
+            ssd.HadPlayer = false;
         });
+
+        await pair.RunTicksSync(2);
+        await server.WaitAssertion(() =>
+        {
+            var ssd = entMan.GetComponent<SSDIndicatorComponent>(player);
+            Assert.That(ssd.HadPlayer, Is.True);
+            Assert.That(ssd.LastModifiedTick > lastChange, Is.True);
+            lastChange = ssd.LastModifiedTick;
+        });
+
+        await pair.RunTicksSync(2);
+        await server.WaitAssertion(() =>
+            Assert.That(entMan.GetComponent<SSDIndicatorComponent>(player).LastModifiedTick, Is.EqualTo(lastChange)));
 
         await pair.CleanReturnAsync();
     }
