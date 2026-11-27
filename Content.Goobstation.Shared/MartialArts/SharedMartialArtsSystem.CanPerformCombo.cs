@@ -4,6 +4,8 @@ using System.Linq;
 using Content.Goobstation.Common.MartialArts;
 using Content.Goobstation.Shared.MartialArts.Components;
 using Content.Shared.Mobs.Components;
+using Robust.Shared.GameStates; // Pirate
+using ComboState = Content.Goobstation.Shared.MartialArts.Components.CanPerformComboComponent.CanPerformComboComponent_AutoState;
 
 namespace Content.Goobstation.Shared.MartialArts;
 
@@ -14,12 +16,38 @@ public partial class SharedMartialArtsSystem
 {
     private void InitializeCanPerformCombo()
     {
+        SubscribeLocalEvent<CanPerformComboComponent, ComponentGetState>(OnComboGetState); // Pirate
+        SubscribeLocalEvent<CanPerformComboComponent, ComponentHandleState>(OnComboHandleState); // Pirate
         SubscribeLocalEvent<CanPerformComboComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<CanPerformComboComponent, ComboAttackPerformedEvent>(OnAttackPerformed);
         SubscribeLocalEvent<CanPerformComboComponent, ComboBeingPerformedEvent>(OnComboBeingPerformed);
         SubscribeLocalEvent<CanPerformComboComponent, SaveLastAttacksEvent>(OnSave);
         SubscribeLocalEvent<CanPerformComboComponent, ResetLastAttacksEvent>(OnReset);
         SubscribeLocalEvent<CanPerformComboComponent, LoadLastAttacksEvent>(OnLoad);
+    }
+
+    // Pirate: entities may be deleted between the combo update and state collection.
+    private void OnComboGetState(Entity<CanPerformComboComponent> ent, ref ComponentGetState args)
+    {
+        args.State = new ComboState
+        {
+            CurrentTarget = TryGetNetEntity(ent.Comp.CurrentTarget, out var target) ? target : null,
+            BeingPerformed = ent.Comp.BeingPerformed,
+            LastAttacks = _netManager.IsClient ? new(ent.Comp.LastAttacks) : ent.Comp.LastAttacks,
+            ConsecutiveGnashes = ent.Comp.ConsecutiveGnashes,
+        };
+    }
+
+    private void OnComboHandleState(Entity<CanPerformComboComponent> ent, ref ComponentHandleState args)
+    {
+        if (args.Current is not ComboState state)
+            return;
+
+        ent.Comp.CurrentTarget = EnsureEntity<CanPerformComboComponent>(state.CurrentTarget, ent.Owner);
+        ent.Comp.BeingPerformed = state.BeingPerformed;
+        ent.Comp.LastAttacks.Clear();
+        ent.Comp.LastAttacks.AddRange(state.LastAttacks);
+        ent.Comp.ConsecutiveGnashes = state.ConsecutiveGnashes;
     }
 
     private void OnLoad(Entity<CanPerformComboComponent> ent, ref LoadLastAttacksEvent args)

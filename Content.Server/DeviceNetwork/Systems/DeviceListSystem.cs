@@ -19,10 +19,24 @@ public sealed class DeviceListSystem : SharedDeviceListSystem
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<DeviceListComponent, ComponentInit>(OnInit); // Pirate
         SubscribeLocalEvent<DeviceListComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<DeviceListComponent, BeforeBroadcastAttemptEvent>(OnBeforeBroadcast);
         SubscribeLocalEvent<DeviceListComponent, BeforePacketSentEvent>(OnBeforePacketSent);
         SubscribeLocalEvent<BeforeSerializationEvent>(OnMapSave);
+    }
+
+    // Pirate: older maps save devices on the list without recording the list on each device.
+    private void OnInit(EntityUid uid, DeviceListComponent component, ComponentInit args)
+    {
+        var networks = GetEntityQuery<DeviceNetworkComponent>();
+        foreach (var device in component.Devices.ToArray())
+        {
+            if (networks.TryGetComponent(device, out var network))
+                network.DeviceLists.Add(uid);
+            else
+                component.Devices.Remove(device);
+        }
     }
 
     // Goobstation - Fix desync of configurator lists

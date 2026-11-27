@@ -139,7 +139,10 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         while (query.MoveNext(out var ent, out var comp))
         {
             if (comp.CurrentTarget != null && TerminatingOrDeleted(comp.CurrentTarget.Value))
+            {
                 comp.CurrentTarget = null;
+                Dirty(ent, comp); // Pirate: clear the target on clients that already received it.
+            }
 
             if (_timing.CurTime < comp.ResetTime
                 || comp.LastAttacks.Count == 0

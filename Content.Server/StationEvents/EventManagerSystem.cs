@@ -95,7 +95,7 @@ public sealed class EventManagerSystem : EntitySystem
 
         if (!TryBuildLimitedEvents(limitedEventsTable, availableEvents, out var limitedEvents))
         {
-            Log.Warning("Provided event table could not build dict!");
+            Log.Debug("No eligible station events in the scheduler's table."); // Pirate
             return;
         }
 
@@ -127,17 +127,10 @@ public sealed class EventManagerSystem : EntitySystem
         limitedEvents = new Dictionary<EntityPrototype, StationEventComponent>();
 
         if (availableEvents.Count == 0)
-        {
-            Log.Warning("No events were available to run!");
-            return false;
-        }
-
-        var selectedEvents = _entityTable.GetSpawns(limitedEventsTable);
-
-        if (selectedEvents.Any() != true) // This is here so if you fuck up the table it wont die.
             return false;
 
-        foreach (var eventid in selectedEvents)
+        // Pirate: table selection is lazy and can roll a different result on each enumeration.
+        foreach (var eventid in _entityTable.GetSpawns(limitedEventsTable))
         {
             if (!_prototype.Resolve(eventid, out var eventproto))
             {
@@ -160,10 +153,7 @@ public sealed class EventManagerSystem : EntitySystem
             limitedEvents.Add(eventproto, stationEvent);
         }
 
-        if (!limitedEvents.Any())
-            return false;
-
-        return true;
+        return limitedEvents.Count > 0;
     }
 
     /// <summary>

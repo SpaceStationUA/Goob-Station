@@ -23,6 +23,15 @@ namespace Content.IntegrationTests.Tests.DoAfter
   id: DoAfterDummy
   components:
   - type: DoAfter
+
+# Pirate: exercise the same instant-action tag used by admin ghosts.
+- type: entity
+  parent: DoAfterDummy
+  id: TaggedInstantDoAfterDummy
+  components:
+  - type: Tag
+    tags:
+    - InstantDoAfters
 ";
 
         [Serializable, NetSerializable]
@@ -33,6 +42,28 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 return this;
             }
         };
+
+        [TestCase("DoAfterDummy", 0)]
+        [TestCase("TaggedInstantDoAfterDummy", 5)]
+        public async Task AwaitingAnInstantActionFinishesImmediately(string prototype, int delaySeconds)
+        {
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            Task<DoAfterStatus> completion = null!;
+            await server.WaitAssertion(() =>
+            {
+                var entities = server.EntMan;
+                var user = entities.Spawn(prototype, MapCoordinates.Nullspace);
+#pragma warning disable CS0618 // Initial construction still uses the awaited API.
+                var args = new DoAfterArgs(entities, user, TimeSpan.FromSeconds(delaySeconds), new AwaitedDoAfterEvent(), null);
+                completion = entities.System<SharedDoAfterSystem>().WaitDoAfter(args);
+#pragma warning restore CS0618
+                Assert.That(completion.IsCompletedSuccessfully, Is.True);
+            });
+
+            Assert.That(await completion, Is.EqualTo(DoAfterStatus.Finished));
+            await pair.CleanReturnAsync();
+        }
 
         [Test]
         public async Task TestSerializable()
