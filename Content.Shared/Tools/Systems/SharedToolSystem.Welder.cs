@@ -221,11 +221,12 @@ public abstract partial class SharedToolSystem
                 continue;
 
             welder.NextUpdate += welder.WelderUpdateTimer;
-            Dirty(uid, welder);
 
+            // Pirate: keep the fuel schedule while unlit. TurnOn syncs the timer on ignition.
             if (!welder.Enabled)
                 continue;
 
+            Dirty(uid, welder);
             if (!SolutionContainerSystem.TryGetSolution((uid, solutionContainer), welder.FuelSolutionName, out var solutionComp, out var solution))
                 continue;
 
