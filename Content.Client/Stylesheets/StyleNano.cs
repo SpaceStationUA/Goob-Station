@@ -59,6 +59,7 @@ namespace Content.Client.Stylesheets
                 new[]
                 {
                     path,
+                    "/Fonts/NotoSans/NotoSans-Regular.ttf", // Pirate: Ukrainian letters missing from decorative fonts.
                     $"/Fonts/NotoSans/NotoSansSymbols-Regular.ttf",
                     "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf",
                     "/Fonts/NotoSans/NotoSansSC-Regular.ttf",
