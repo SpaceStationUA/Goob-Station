@@ -142,7 +142,8 @@ public sealed class DiaryCoverSystem : EntitySystem
             return false;
 
         var leaf = leaves[index];
-        return !string.IsNullOrWhiteSpace(leaf.Content) || leaf.Signatures.Count > 0;
+        // Pirate: diary drawings - a leaf holding only a doodle still counts as written.
+        return !string.IsNullOrWhiteSpace(leaf.Content) || leaf.Signatures.Count > 0 || leaf.Drawing.Length > 0;
     }
 
     private void PopupClosed(Entity<DiaryCoverComponent> ent, EntityUid user)

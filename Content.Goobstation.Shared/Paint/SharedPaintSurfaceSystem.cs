@@ -123,7 +123,8 @@ public abstract partial class SharedPaintSurfaceSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, PaintSurfaceComponent component, InteractUsingEvent args)
     {
-        if (args.Handled || !HasComp<PaintToolComponent>(args.Used) || !_ui.HasUi(uid, PaintUiKey.Key))
+        // Pirate: paper drawing - paper opens its own surface (see PaperDrawingSystem).
+        if (args.Handled || !component.OpenOnInteract || !HasComp<PaintToolComponent>(args.Used) || !_ui.HasUi(uid, PaintUiKey.Key))
             return;
 
         _ui.OpenUi(uid, PaintUiKey.Key, args.User);

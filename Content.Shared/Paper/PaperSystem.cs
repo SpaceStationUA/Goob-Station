@@ -2,6 +2,7 @@
 
 using System.Linq;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Crayon; // Pirate: chalk drawing on paper
 using Content.Shared._Pirate.Knowledge; // Pirate: literacy training
 using Content.Shared.UserInterface;
 using Content.Shared.Database;
@@ -32,6 +33,9 @@ using Content.Shared._Pirate.PersistentText;
 using Content.Shared.Nutrition;
 using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.Audio;
+using Content.Shared.Sound.Components; // Pirate: persistent diary pages - no doubled tear sound
+using Content.Shared.Verbs; // Pirate: tearing a leaf out from the context menu
+using Robust.Shared.Utility; // Pirate: tearing a leaf out from the context menu
 #endregion
 #region Pirate: paperwork tags
 using System.Globalization;
@@ -98,6 +102,10 @@ public sealed partial class PaperSystem : EntitySystem // Goob
         SubscribeLocalEvent<PaperComponent, PaperMacroMenuUsedMessage>(OnMacroMenuUsedMessage); // Pirate: paperwork tags
         SubscribeLocalEvent<PaperComponent, PaperSignatureRequestMessage>(OnSignatureRequest); // Starlight-edit
         SubscribeLocalEvent<PaperComponent, PaperPageActionMessage>(OnPageActionMessage); // Pirate: persistent diary pages
+        // Pirate: persistent diary pages - the verb hangs off PaperPagesComponent because
+        // Robust allows a single alternative-verb subscription per component, and
+        // PaperComponent's is already taken by the pen signature verb.
+        SubscribeLocalEvent<PaperPagesComponent, GetVerbsEvent<AlternativeVerb>>(OnGetPaperVerbs);
         SubscribeLocalEvent<PaperPagesComponent, IngestibleEvent>(OnPagesIngestible); // Pirate: persistent diary pages
 
 
@@ -185,6 +193,18 @@ public sealed partial class PaperSystem : EntitySystem // Goob
             TryInsertSheet(entity, insertedPages, args.Used, args.User);
             args.Handled = true;
             return;
+        }
+
+        // Pirate: chalk drawing on paper - a crayon in hand paints the sheet instead of writing on it.
+        if (HasComp<CrayonComponent>(args.Used))
+        {
+            var drawAttempt = new PaperDrawingAttemptEvent(args.Used, args.User);
+            RaiseLocalEvent(entity, ref drawAttempt);
+            if (drawAttempt.Handled)
+            {
+                args.Handled = true;
+                return;
+            }
         }
 
         // only allow editing if there are no stamps or when using a cyberpen
@@ -444,6 +464,23 @@ public sealed partial class PaperSystem : EntitySystem // Goob
     }
 
     /// <summary>
+    /// Pirate: diary ownership - predicted clients and the context menu only know the bound
+    /// character name, never the account behind it, so they decide by the name; the server
+    /// always verifies the account as well.
+    /// </summary>
+    public bool CanWritePredicted(EntityUid uid, PersistentTextComponent component, EntityUid actor)
+    {
+        if (_net.IsServer)
+            return CanWrite(uid, component, actor);
+
+        if (component.OwnerCharacterName == null
+            || !string.Equals(component.OwnerKind, PersistentTextOwnerKinds.Profile, StringComparison.Ordinal))
+            return true;
+
+        return string.Equals(Name(actor), component.OwnerCharacterName, StringComparison.Ordinal);
+    }
+
+    /// <summary>
     /// Binds the persistent text entity to the first writer's character and renames it after them.
     /// </summary>
     private void BindPersistentTextOwner(EntityUid uid, PersistentTextComponent component, EntityUid actor)
@@ -538,7 +575,10 @@ public sealed partial class PaperSystem : EntitySystem // Goob
                 if (args.Text != null && !TryWriteText(entity, args.Actor, args.Text, args.TextPage))
                     return;
 
+                // Pirate: diary drawings - save the chalk layer of the leaf being left.
+                RaisePageChanging(entity, pages);
                 SetCurrentPage(entity, pages, args.Page);
+                RaisePageChanged(entity, pages);
                 return;
 
             case PaperPageAction.Add:
@@ -564,7 +604,9 @@ public sealed partial class PaperSystem : EntitySystem // Goob
 
                 if (_net.IsServer) // Pirate: persistent diary pages - a predicted client must never queue-delete networked entities
                     QueueDel(material);
+                RaisePageChanging(entity, pages); // Pirate: diary drawings
                 AddPage(entity, pages);
+                RaisePageChanged(entity, pages); // Pirate: diary drawings
                 _audio.PlayPvs(LeafInsertSound, entity); // Pirate: server-only BUI handler - PlayPredicted would exclude the actor and nothing predicts this locally
 
                 _adminLogger.Add(LogType.Chat, LogImpact.Low,
@@ -577,19 +619,7 @@ public sealed partial class PaperSystem : EntitySystem // Goob
 
                 // Pirate: persistent diary pages - tearing a leaf out hands you the sheet
                 // itself, with the very same text and signatures, instead of destroying it.
-                var torn = RemovePage(entity, pages);
-                if (torn == null)
-                    return;
-
-                TornOutSheet(args.Actor, torn);
-                _audio.PlayPvs(LeafRemoveSound, entity); // Pirate: server-only BUI handler - PlayPredicted would exclude the actor entirely
-                _popupSystem.PopupClient(
-                    Loc.GetString("paper-page-torn-out", ("target", entity.Owner)),
-                    args.Actor,
-                    args.Actor);
-
-                _adminLogger.Add(LogType.Chat, LogImpact.Medium,
-                    $"{ToPrettyString(args.Actor):player} tore a page out of {ToPrettyString(entity):entity}");
+                TryRemovePage(entity, pages, args.Actor);
                 return;
         }
     }
@@ -608,6 +638,90 @@ public sealed partial class PaperSystem : EntitySystem // Goob
 
         _popupSystem.PopupClient(Loc.GetString("persistent-text-cant-write"), entity.Owner, actor);
         return false;
+    }
+
+    #region Pirate: tearing a leaf out from the context menu
+
+    /// <summary>
+    /// Pirate: persistent diary pages - right-clicking a paginated document offers to tear the
+    /// leaf on screen out. The text deliberately carries no page number: the client merges the
+    /// server's verb list into the local one, and a number read from the shared leaf index makes
+    /// two snapshots of the same verb compare as different, so the menu showed the entry twice
+    /// (once per page state). Only a document with more than one leaf is offered: a book always
+    /// keeps its last leaf.
+    /// </summary>
+    private void OnGetPaperVerbs(Entity<PaperPagesComponent> entity, ref GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract
+            || !TryComp<PaperComponent>(entity, out var paper)
+            || entity.Comp.Pages.Count <= 1)
+            return;
+
+        var pages = entity.Comp;
+        var paperEntity = (entity.Owner, paper);
+
+        // A closed diary cannot be written in, so it cannot lose a leaf either.
+        if (TryComp<DiaryCoverComponent>(entity, out var cover) && !cover.Open)
+            return;
+
+        // Pirate: tearing out is writing, so only the bound owner may do it.
+        if (TryComp<PersistentTextComponent>(entity, out var persistentText)
+            && !CanWritePredicted(entity.Owner, persistentText, args.User))
+            return;
+
+        var user = args.User;
+        args.Verbs.Add(new AlternativeVerb
+        {
+            Text = Loc.GetString("paper-verb-tear-out-page"),
+            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Interface/VerbIcons/eject.svg.192dpi.png")),
+            Act = () => TryRemovePage(paperEntity, pages, user),
+            Priority = 2,
+        });
+    }
+
+    /// <summary>
+    /// Pirate: persistent diary pages - tears the leaf on screen out of the book and hands it
+    /// to the actor as a sheet, with its text and signatures. The last leaf always stays.
+    /// </summary>
+    private bool TryRemovePage(Entity<PaperComponent> entity, PaperPagesComponent pages, EntityUid actor)
+    {
+        if (pages.Pages.Count <= 1)
+            return false;
+
+        RaisePageChanging(entity, pages); // Pirate: diary drawings - before the leaf disappears
+        var torn = RemovePage(entity, pages);
+        RaisePageChanged(entity, pages); // Pirate: diary drawings
+        if (torn == null)
+            return false;
+
+        // Pirate: persistent diary pages - the freshly torn sheet plays its own handling sound,
+        // so no second copy is played here: two overlapping takes of the same clip sounded like
+        // one long, too-loud noise.
+        TornOutSheet(actor, torn);
+        _popupSystem.PopupClient(
+            Loc.GetString("paper-page-torn-out", ("target", entity.Owner)),
+            actor,
+            actor);
+
+        _adminLogger.Add(LogType.Chat, LogImpact.Medium,
+            $"{ToPrettyString(actor):player} tore a page out of {ToPrettyString(entity):entity}");
+        return true;
+    }
+
+    #endregion
+
+    // Pirate: diary drawings - every leaf owns its chalk layer, so the paint layer is told
+    // which leaf is being left (so it can be saved into that leaf) and which one is opened.
+    private void RaisePageChanging(Entity<PaperComponent> entity, PaperPagesComponent pages)
+    {
+        var ev = new PaperPageChangingEvent(CurrentPageIndex(pages));
+        RaiseLocalEvent(entity.Owner, ref ev);
+    }
+
+    private void RaisePageChanged(Entity<PaperComponent> entity, PaperPagesComponent pages)
+    {
+        var ev = new PaperPageChangedEvent(CurrentPageIndex(pages));
+        RaiseLocalEvent(entity.Owner, ref ev);
     }
 
     private void SetCurrentPage(Entity<PaperComponent> entity, PaperPagesComponent pages, int page)
@@ -682,7 +796,20 @@ public sealed partial class PaperSystem : EntitySystem // Goob
     /// </summary>
     private void TornOutSheet(EntityUid actor, PaperPage leaf)
     {
-        var sheet = Spawn(SheetPrototype, Transform(actor).Coordinates);
+        // Pirate: persistent diary pages - only the server may hand out the sheet. A predicted
+        // client running this spawns a client-only paper that no deletion ever reaches, which
+        // leaves a ghost sheet stuck in the player's hands.
+        if (!_net.IsServer)
+            return;
+
+        // Pirate: persistent diary pages - with a free hand the sheet appears where the tear
+        // happened; with both hands full it lands beside the player instead of inside their sprite.
+        EntityUid sheet;
+        if (_hands.TryGetEmptyHand(actor, out _) || !TrySpawnNextTo(SheetPrototype, actor, out var beside) || beside == null)
+            sheet = Spawn(SheetPrototype, Transform(actor).Coordinates);
+        else
+            sheet = beside.Value;
+
         if (!TryComp<PaperComponent>(sheet, out var paper))
             return;
 
@@ -697,8 +824,18 @@ public sealed partial class PaperSystem : EntitySystem // Goob
 
         SetContent((sheet, paper), PaperPageFormat.Sanitize(leaf.Content));
 
-        // Hands full? The sheet just stays where it was dropped.
-        _hands.TryPickupAnyHand(actor, sheet);
+        // Pirate: diary drawings - the loose sheet keeps the doodle that was on the leaf, so
+        // tearing a page out never loses its drawing.
+        var detached = new PaperDrawingDetachedEvent(leaf.Drawing);
+        RaiseLocalEvent(sheet, ref detached);
+
+        // Pirate: persistent diary pages - a sheet spawned at the tear starts out overlapping
+        // whatever is there, and its collision sound would stack with its own pickup sound.
+        RemComp<EmitSoundOnCollideComponent>(sheet);
+
+        // Hands full? The sheet just stays where it was dropped, so the tear is announced here.
+        if (!_hands.TryPickupAnyHand(actor, sheet))
+            _audio.PlayPvs(LeafRemoveSound, sheet);
     }
 
     /// <summary>
@@ -714,13 +851,22 @@ public sealed partial class PaperSystem : EntitySystem // Goob
             return false;
 
         var index = CurrentPageIndex(pages);
+        RaisePageChanging(entity, pages); // Pirate: diary drawings
+
+        // Pirate: diary drawings - a doodle on the sheet becomes the new leaf's drawing, so
+        // tucking a drawn sheet in does not throw its chalk layer away with the sheet.
+        var attaching = new PaperDrawingAttachingEvent { Drawing = string.Empty };
+        RaiseLocalEvent(sheet, ref attaching);
+
         pages.Pages.Insert(index + 1, new PaperPage
         {
             Content = PaperPageFormat.Sanitize(sheetPaper.Content),
             Signatures = new List<StampDisplayInfo>(sheetPaper.StampedBy),
+            Drawing = attaching.Drawing,
         });
         pages.CurrentPage = index + 1;
         SyncPages(entity, pages);
+        RaisePageChanged(entity, pages); // Pirate: diary drawings
 
         var sheetName = ToPrettyString(sheet);
         if (_net.IsServer) // Pirate: persistent diary pages - predicting a networked deletion logs errors on the client
@@ -789,7 +935,7 @@ public sealed partial class PaperSystem : EntitySystem // Goob
     /// Pirate: persistent diary pages - keeps PaperComponent.Content, the flat string that
     /// everything else reads and that gets persisted between rounds, in sync with the leaves.
     /// </summary>
-    private void SyncPages(Entity<PaperComponent> entity, PaperPagesComponent pages)
+    public void SyncPages(Entity<PaperComponent> entity, PaperPagesComponent pages)
     {
         pages.CurrentPage = CurrentPageIndex(pages);
         SetPaperContent(entity, PaperPageFormat.Encode(pages.Pages));

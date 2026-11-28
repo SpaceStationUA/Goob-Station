@@ -6,6 +6,7 @@ paper-ui-page-next = ▶
 paper-ui-page-label = Page {$current}/{$total}
 paper-ui-page-add = + Page
 paper-ui-page-remove = Tear out
+paper-verb-tear-out-page = Tear out page
 
 # Pirate: persistent diary pages - leaf material
 paper-page-add-need-paper = You need a sheet of paper to add a new page.

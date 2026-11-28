@@ -14,6 +14,8 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
 using Robust.Client.UserInterface.RichText;
 using Content.Client.UserInterface.RichText;
+using Content.Goobstation.Shared.Paint; // Pirate: drawings on paper
+using SixLabors.ImageSharp.PixelFormats; // Pirate: drawings on paper
 using Robust.Shared.Input;
 using Robust.Client.UserInterface; // Pirate: paperwork tags
 using Robust.Shared.Maths; // Pirate: paperwork tags
@@ -29,6 +31,8 @@ namespace Content.Client.Paper.UI
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IResourceCache _resCache = default!;
         [Dependency] private readonly IGameTiming _timing = default!; // Pirate: persistent diary pages
+        [Dependency] private readonly IClyde _clyde = default!; // Pirate: drawings on paper
+        [Dependency] private readonly IEntityManager _entityManager = default!; // Pirate: drawings on paper
 
         private static Color DefaultTextColor = new(25, 25, 25);
 
@@ -50,6 +54,20 @@ namespace Content.Client.Paper.UI
 
         // Store original margin to restore when switching modes // Starlight-edit
         private Thickness _originalContentMargin; // Starlight-edit
+
+        #region Pirate: drawings on paper
+        private EntityUid? _paperEntity;
+        private OwnedTexture? _drawingTexture;
+        private Rgba32[] _drawingBuffer = Array.Empty<Rgba32>();
+        private bool _hasDrawing;
+        private PaintImage? _drawingImage;
+        private TimeSpan _nextDrawingProbe;
+
+        /// <summary>
+        /// Pirate: drawings on paper - small margin kept around the doodle so the sheet border stays visible.
+        /// </summary>
+        private const float DrawingPageMargin = 0.96f;
+        #endregion
 
         #region Pirate: paperwork tags
         private readonly (string Label, string Token)[] _macroOptions = new[]
@@ -74,11 +92,6 @@ namespace Content.Client.Paper.UI
         public event Action<PaperComponent.PaperPageAction, int, string?, int>? OnPageAction;
         private int _currentPage;
         private int _pageCount;
-        private bool _canAddPage = true;
-        private TimeSpan _nextSheetProbe;
-
-        /// <summary>Probed live so picking paper up or dropping it updates the add button.</summary>
-        public Func<bool>? SheetAvailableProbe { get; set; }
 
         /// <summary>Leaf on screen, so saves and flips can name the page they edit.</summary>
         public int CurrentPage => _currentPage;
@@ -101,6 +114,8 @@ namespace Content.Client.Paper.UI
         {
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
+
+            ScrollingContents.OnResized += UpdateDrawingLayout; // Pirate: drawings on paper
 
             #region Pirate: paperwork tags
             _macroPopupList = new BoxContainer
@@ -128,7 +143,12 @@ namespace Content.Client.Paper.UI
 
             // Hook up the close button:
             CloseButton.OnPressed += _ => Close();
-            OnClose += () => _macroPopup.Close(); // Pirate: paperwork tags
+            OnClose += () =>
+            {
+                _macroPopup.Close(); // Pirate: paperwork tags
+                _drawingTexture?.Dispose(); // Pirate: drawings on paper
+                _drawingTexture = null;
+            };
 
             Input.OnKeyBindDown += args => // Solution while TextEdit don't have events
             {
@@ -167,15 +187,9 @@ namespace Content.Client.Paper.UI
             #region Pirate: persistent diary pages
             PrevPageButton.Text = Loc.GetString("paper-ui-page-prev");
             NextPageButton.Text = Loc.GetString("paper-ui-page-next");
-            AddPageButton.Text = Loc.GetString("paper-ui-page-add");
-            RemovePageButton.Text = Loc.GetString("paper-ui-page-remove");
 
             PrevPageButton.OnPressed += _ => RequestPageTurn(_currentPage - 1);
             NextPageButton.OnPressed += _ => RequestPageTurn(_currentPage + 1);
-            AddPageButton.OnPressed += _ =>
-                OnPageAction?.Invoke(PaperComponent.PaperPageAction.Add, 0, TakePendingText(), _currentPage);
-            RemovePageButton.OnPressed += _ =>
-                OnPageAction?.Invoke(PaperComponent.PaperPageAction.Remove, 0, null, _currentPage);
             #endregion
         }
 
@@ -202,7 +216,7 @@ namespace Content.Client.Paper.UI
 
         private void UpdatePageBar(PaperComponent.PaperBoundUserInterfaceState state)
         {
-            // Plain paper has no leaves, so it gets no bar.
+            // Plain paper has no leaves, so it gets no page controls.
             PageBar.Visible = state.PageCount > 0;
             if (state.PageCount <= 0)
                 return;
@@ -212,21 +226,6 @@ namespace Content.Client.Paper.UI
                 ("total", state.PageCount));
             PrevPageButton.Disabled = state.CurrentPage <= 0;
             NextPageButton.Disabled = state.CurrentPage >= state.PageCount - 1;
-            RemovePageButton.Disabled = state.PageCount <= 1; // the last leaf stays in the book
-        }
-
-        /// <summary>
-        /// Pirate: enables "+ Листок" only while the player actually carries a sheet that
-        /// could become a leaf; a disabled button explains itself with the need-paper message.
-        /// </summary>
-        public void SetCanAddPage(bool available)
-        {
-            if (_canAddPage == available)
-                return;
-
-            _canAddPage = available;
-            AddPageButton.Disabled = !available;
-            AddPageButton.ToolTip = available ? null : Loc.GetString("paper-page-add-need-paper");
         }
         #endregion
 
@@ -283,6 +282,9 @@ namespace Content.Client.Paper.UI
             // Randomize the placement of any stamps based on the entity UID
             // so that there's some variety in different papers.
             StampDisplay.PlacementSeed = (int)entity;
+
+            _paperEntity = entity; // Pirate: drawings on paper
+            UpdateDrawingPreview(); // Pirate: drawings on paper
 
             // Initialize the background:
             PaperBackground.ModulateSelfOverride = visuals.BackgroundModulate;
@@ -395,12 +397,18 @@ namespace Content.Client.Paper.UI
         /// </summary>
         protected override void Draw(DrawingHandleScreen handle)
         {
-            // Pirate: persistent diary pages - keep the add button in sync with the paper
-            // the player carries while the window stays open.
-            if (PageBar.Visible && SheetAvailableProbe != null && _timing.CurTime >= _nextSheetProbe)
+            // Pirate: diary drawings - each leaf has its own drawing, swapped by the server;
+            // the surface's state can land before or after the paper state, so poll it so the
+            // preview never keeps the previous leaf's doodle.
+            if (_paperEntity is { } drawnPaper && _timing.CurTime >= _nextDrawingProbe)
             {
-                _nextSheetProbe = _timing.CurTime + TimeSpan.FromMilliseconds(250);
-                SetCanAddPage(SheetAvailableProbe());
+                _nextDrawingProbe = _timing.CurTime + TimeSpan.FromMilliseconds(250);
+                var current = _entityManager.TryGetComponent<PaintSurfaceComponent>(drawnPaper, out var drawnSurface)
+                    ? drawnSurface.Image
+                    : null;
+
+                if (!ReferenceEquals(current, _drawingImage))
+                    UpdateDrawingPreview();
             }
 
             // Now do the deferred setup of the written area. At the point
@@ -455,6 +463,11 @@ namespace Content.Client.Paper.UI
             WrittenTextContainer.Visible = false;
             BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;
             // End
+
+            // Pirate: drawings on paper - render the chalk layer and hide the blank hint for a doodle
+            UpdateDrawingPreview();
+            if (_hasDrawing)
+                BlankPaperIndicator.Visible = false;
 
             // Pirate: persistent diary pages - the leaf on screen changed, so the editor
             // must follow it even when it still holds text.
@@ -511,6 +524,70 @@ namespace Content.Client.Paper.UI
                 StampDisplay.AddStamp(new StampWidget{ StampInfo = stamper });
             }
         }
+
+        #region Pirate: drawings on paper
+        /// <summary>
+        /// Renders the chalk drawing stored on the sheet behind the text. Palette entry 0
+        /// is the untouched surface, so it stays transparent and the paper shows through.
+        /// </summary>
+        private void UpdateDrawingPreview()
+        {
+            if (_paperEntity is not { } paper
+                || !_entityManager.TryGetComponent<PaintSurfaceComponent>(paper, out var surface)
+                || surface.Image is not { } image)
+            {
+                _drawingImage = null;
+                _hasDrawing = false;
+                DrawingPreview.Visible = false;
+                return;
+            }
+
+            _drawingImage = image;
+
+            if (_drawingTexture == null || _drawingTexture.Size != image.Size)
+            {
+                _drawingTexture?.Dispose();
+                _drawingTexture = _clyde.CreateBlankTexture<Rgba32>(image.Size, "paper-drawing");
+                _drawingBuffer = new Rgba32[image.Width * image.Height];
+            }
+
+            _hasDrawing = false;
+            for (var i = 0; i < _drawingBuffer.Length; i++)
+            {
+                if (image.Pixels[i] == 0)
+                {
+                    _drawingBuffer[i] = new Rgba32(0, 0, 0, 0);
+                    continue;
+                }
+
+                var color = image.GetPixel(i);
+                _drawingBuffer[i] = new Rgba32(color.RByte, color.GByte, color.BByte, (byte) 255);
+                _hasDrawing = true;
+            }
+
+            _drawingTexture.SetSubImage(Vector2i.Zero, image.Size, new ReadOnlySpan<Rgba32>(_drawingBuffer));
+            DrawingPreview.Texture = _drawingTexture;
+            UpdateDrawingLayout();
+            DrawingPreview.Visible = _hasDrawing;
+        }
+
+        /// <summary>
+        /// Pirate: drawings on paper - fits the doodle into the visible leaf with the canvas aspect ratio
+        /// kept, so it is equally readable on a small sheet and on a wide document.
+        /// </summary>
+        private void UpdateDrawingLayout()
+        {
+            if (!_hasDrawing || _drawingImage is not { } image)
+                return;
+
+            var page = ScrollingContents.PixelSize;
+            if (page.X <= 0f || page.Y <= 0f)
+                return;
+
+            var scale = MathF.Min(page.X / image.Width, page.Y / image.Height) * DrawingPageMargin;
+            DrawingPreview.SetSize = new Vector2(image.Width, image.Height) * scale;
+        }
+        #endregion
 
         /// <summary>
         ///     BaseWindow interface. Allow users to drag UI around by grabbing

@@ -6,6 +6,7 @@ paper-ui-page-next = ▶
 paper-ui-page-label = Лист {$current}/{$total}
 paper-ui-page-add = + Листок
 paper-ui-page-remove = Вирвати
+paper-verb-tear-out-page = Вирвати сторінку
 
 # Pirate: persistent diary pages - leaf material
 paper-page-add-need-paper = Щоб додати сторінку, потрібен аркуш паперу.

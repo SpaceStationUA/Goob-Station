@@ -51,6 +51,47 @@ public sealed partial class PaperPage
     /// </summary>
     [DataField]
     public List<StampDisplayInfo> Signatures = new();
+
+    /// <summary>
+    /// Pirate: diary drawings - the chalk layer of this leaf only, as an opaque base64
+    /// blob produced by the paint codec. The paper code never looks inside it; it is
+    /// written and read back verbatim so a drawing travels with its leaf when leaves are
+    /// added, torn out or persisted.
+    /// </summary>
+    [DataField]
+    public string Drawing = string.Empty;
+}
+
+/// <summary>
+/// Pirate: diary drawings - raised right before the leaf on screen is left or removed, so
+/// the chalk layer of that leaf can be saved into it first.
+/// </summary>
+[ByRefEvent]
+public readonly record struct PaperPageChangingEvent(int Page);
+
+/// <summary>
+/// Pirate: diary drawings - raised after the leaf on screen changed, so the chalk layer of
+/// the new leaf can be loaded into the live paint surface.
+/// </summary>
+[ByRefEvent]
+public readonly record struct PaperPageChangedEvent(int Page);
+
+/// <summary>
+/// Pirate: diary drawings - raised on the freshly spawned sheet right after a leaf was torn
+/// out, carrying that leaf's chalk layer so the loose sheet shows the very same doodle.
+/// </summary>
+[ByRefEvent]
+public readonly record struct PaperDrawingDetachedEvent(string Drawing);
+
+/// <summary>
+/// Pirate: diary drawings - raised on a sheet before it is tucked in as a leaf, so a doodle
+/// on the sheet travels into the leaf instead of disappearing with the consumed sheet.
+/// </summary>
+[ByRefEvent]
+public struct PaperDrawingAttachingEvent
+{
+    /// <summary>The sheet's chalk layer, filled by whoever owns the paint surface.</summary>
+    public string Drawing;
 }
 
 /// <summary>
@@ -67,6 +108,9 @@ public static class PaperPageFormat
 
     /// <summary>Record separator; separates individual signatures of one leaf.</summary>
     public const char SignatureSeparator = '\u001E';
+
+    /// <summary>Pirate: diary drawings - end of medium; precedes the leaf's chalk layer.</summary>
+    public const char DrawingMarker = '\u0019';
 
     // Stamp frame: \u0017#RRGGBBAA\u0017name.
     public const char StampMarker = '\u0017';
@@ -89,21 +133,25 @@ public static class PaperPageFormat
             var page = pages[i];
             builder.Append(page.Content);
 
-            if (page.Signatures.Count == 0)
-                continue;
-
-            builder.Append(SignaturesMarker);
-            for (var j = 0; j < page.Signatures.Count; j++)
+            if (page.Signatures.Count > 0)
             {
-                if (j > 0)
-                    builder.Append(SignatureSeparator);
+                builder.Append(SignaturesMarker);
+                for (var j = 0; j < page.Signatures.Count; j++)
+                {
+                    if (j > 0)
+                        builder.Append(SignatureSeparator);
 
-                var signature = page.Signatures[j];
-                if (IsStamp(signature))
-                    builder.Append(StampMarker).Append(signature.StampedColor.ToHex()).Append(StampMarker);
+                    var signature = page.Signatures[j];
+                    if (IsStamp(signature))
+                        builder.Append(StampMarker).Append(signature.StampedColor.ToHex()).Append(StampMarker);
 
-                builder.Append(signature.StampedName);
+                    builder.Append(signature.StampedName);
+                }
             }
+
+            // Pirate: diary drawings - the leaf's chalk layer rides along with the leaf.
+            if (page.Drawing.Length > 0)
+                builder.Append(DrawingMarker).Append(page.Drawing);
         }
 
         return builder.ToString();
@@ -122,8 +170,9 @@ public static class PaperPageFormat
         var builder = new StringBuilder(text.Length);
         foreach (var c in text)
         {
-            // Reserve document separators, legacy cover delimiters (U+001C/U+001F), and the stamp marker.
-            if (c == LeafSeparator || c is '\u001C' or '\u001D' or '\u001E' or '\u001F' or StampMarker)
+            // Reserve document separators, legacy cover delimiters (U+001C/U+001F), the stamp
+            // marker, and the drawing marker.
+            if (c == LeafSeparator || c is '\u001C' or '\u001D' or '\u001E' or '\u001F' or StampMarker or DrawingMarker)
                 continue;
 
             builder.Append(c);
@@ -162,9 +211,19 @@ public static class PaperPageFormat
     {
         var pages = new List<PaperPage>();
 
-        foreach (var leaf in content.Split(LeafSeparator))
+        foreach (var rawLeaf in content.Split(LeafSeparator))
         {
             var page = new PaperPage();
+            var leaf = rawLeaf;
+
+            // Pirate: diary drawings - the chalk layer sits after the signatures.
+            var drawingMarker = leaf.LastIndexOf(DrawingMarker);
+            if (drawingMarker >= 0)
+            {
+                page.Drawing = leaf[(drawingMarker + 1)..];
+                leaf = leaf[..drawingMarker];
+            }
+
             var marker = leaf.IndexOf(SignaturesMarker);
 
             page.Content = marker < 0 ? leaf : leaf[..marker];

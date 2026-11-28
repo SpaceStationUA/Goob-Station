@@ -37,6 +37,7 @@
     colorMode: Crayon
     maxBrushSize: 3
     pixelsPerCharge: 256
+    canErase: true # Pirate: an eraser in the chalk drawing mode
 
 - type: entity
   abstract: true

@@ -29,11 +29,14 @@
                 <Label Text="{Loc 'paint-window-color'}" StyleClasses="LabelSubText" />
                 <PanelContainer Name="ColorSwatch" MinHeight="24" />
                 <ColorSelectorSliders Name="ColorPicker" Visible="False" />
-                <Label Text="{Loc 'paint-window-finish'}" StyleClasses="LabelSubText" Margin="0 6 0 0" />
-                <LineEdit Name="TitleEdit" PlaceHolder="{Loc 'paint-window-title-placeholder'}" />
-                <controls:ConfirmButton Name="FinishButton"
-                                        Text="{Loc 'paint-window-finish-button'}"
-                                        ConfirmationText="{Loc 'paint-window-finish-confirm'}" />
+                <!-- Pirate: paper drawing - only standalone canvases can be finished/renamed -->
+                <BoxContainer Name="FinishPanel" Orientation="Vertical" SeparationOverride="6">
+                    <Label Text="{Loc 'paint-window-finish'}" StyleClasses="LabelSubText" Margin="0 6 0 0" />
+                    <LineEdit Name="TitleEdit" PlaceHolder="{Loc 'paint-window-title-placeholder'}" />
+                    <controls:ConfirmButton Name="FinishButton"
+                                            Text="{Loc 'paint-window-finish-button'}"
+                                            ConfirmationText="{Loc 'paint-window-finish-confirm'}" />
+                </BoxContainer>
             </BoxContainer>
             <RichTextLabel Name="FinishedLabel" Visible="False" />
             <Control VerticalExpand="True" />

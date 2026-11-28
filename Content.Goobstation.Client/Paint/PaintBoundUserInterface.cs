@@ -148,6 +148,7 @@ public sealed partial class PaintBoundUserInterface(EntityUid owner, Enum uiKey)
             return;
 
         _window.SetFinished(surface.Finished, surface.Title, surface.Artist);
+        _window.SetCanFinish(surface.AllowFinish); // Pirate: paper drawings never finish
         _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
     }
 
