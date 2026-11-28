@@ -1,0 +1,50 @@
+// SPDX-FileCopyrightText: 2017-2026 Space Wizards Federation
+// SPDX-FileCopyrightText: 2024-2026 Starlight
+// SPDX-License-Identifier: MIT
+
+light_mode unshaded;
+blend_mode none;
+uniform sampler2D SCREEN_TEXTURE;
+uniform sampler2D HEAT_TEXTURE;
+uniform sampler2D FOV_TEXTURE;
+uniform highp float fovEnabled;
+uniform highp vec2 worldOrigin;
+uniform highp vec2 worldAxisX;
+uniform highp vec2 worldAxisY;
+uniform highp vec2 eyePosition;
+const highp float SPRITE_PIXELS = 32.0;
+const highp float PI = 3.1415926535897932384626433;
+
+// How much of a point is visible from the eye, from 0 to 1. Same test as the engine's own field of view on lighting.
+highp float fovVisibility(highp vec2 diff)
+{
+    highp float angle = atan(diff.y, -diff.x) / PI;
+    highp vec2 moments = zClydeShadowDepthUnpack(texture2D(FOV_TEXTURE, vec2((angle + 1.0) / 2.0, 0.25)));
+    highp float dist = length(diff);
+    highp float lit = float(dist <= moments.x);
+    highp float variance = max(moments.y - moments.x * moments.x, 0.0);
+    highp float d = dist - moments.x;
+    return max(lit, variance / (variance + d * d));
+}
+
+void fragment()
+{
+    highp vec2 world = worldOrigin + worldAxisX * Pos.x + worldAxisY * Pos.y;
+    highp float visible = fovEnabled > 0.5 ? fovVisibility(world - eyePosition) : 1.0;
+    // Wraps once an hour, a single jump is not noticeable.
+    highp float time = mod(TIME, 3600.0);
+
+    // Hot air bends the picture in ripples tied to the world, so they stay put when the camera moves.
+    highp vec2 samplePos = Pos;
+    highp float heat = texture2D(HEAT_TEXTURE, Pos).r * 0.7 * visible;
+    if (heat > 0.001)
+    {
+        highp vec2 wave = vec2(
+            sin(world.y * 9.0 + time * 5.0) + 0.5 * sin(world.x * 13.0 - time * 3.7),
+            cos(world.x * 8.0 + time * 4.3) + 0.5 * cos(world.y * 11.0 + time * 6.1));
+        highp vec2 tiles = wave * heat / SPRITE_PIXELS;
+        samplePos += tiles / vec2(length(worldAxisX), length(worldAxisY));
+    }
+
+    COLOR = zTextureSpec(SCREEN_TEXTURE, samplePos);
+}

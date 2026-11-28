@@ -1,0 +1,13 @@
+// SPDX-FileCopyrightText: 2017-2026 Space Wizards Federation
+// SPDX-FileCopyrightText: 2024-2026 Starlight
+// SPDX-License-Identifier: MIT
+
+light_mode unshaded;
+blend_mode add;
+
+// A soft round spot of heat for the heat haze mask. UV spans the square around the spot, the draw colour sets how hot it is.
+void fragment()
+{
+    highp float edge = 1.0 - smoothstep(0.0, 1.0, length(UV * 2.0 - 1.0));
+    COLOR = vec4(vec3(edge * edge), 1.0);
+}

@@ -1,0 +1,218 @@
+- type: entity
+  id: LavalandPuzzlePieceFloor1
+  name: puzzle piece
+  description: A piece of a larger picture.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Sprite
+    sprite: _Pirate/Misc/puzzle.rsi
+    state: puzzle_1
+    drawdepth: LowFloors
+  - type: Tag
+    tags:
+    - HideContextMenu
+
+- type: entity
+  parent: LavalandPuzzlePieceFloor1
+  id: LavalandPuzzlePieceFloor2
+  components:
+  - type: Sprite
+    state: puzzle_2
+
+- type: entity
+  parent: LavalandPuzzlePieceFloor1
+  id: LavalandPuzzlePieceFloor3
+  components:
+  - type: Sprite
+    state: puzzle_3
+
+- type: entity
+  parent: LavalandPuzzlePieceFloor1
+  id: LavalandPuzzlePieceFloor4
+  components:
+  - type: Sprite
+    state: puzzle_4
+
+- type: entity
+  parent: LavalandPuzzlePieceFloor1
+  id: LavalandPuzzlePieceFloor5
+  components:
+  - type: Sprite
+    state: puzzle_5
+
+- type: entity
+  parent: LavalandPuzzlePieceFloor1
+  id: LavalandPuzzlePieceFloor6
+  components:
+  - type: Sprite
+    state: puzzle_6
+
+- type: entity
+  parent: LavalandPuzzlePieceFloor1
+  id: LavalandPuzzlePieceFloor7
+  components:
+  - type: Sprite
+    state: puzzle_7
+
+- type: entity
+  parent: LavalandPuzzlePieceFloor1
+  id: LavalandPuzzlePieceFloor8
+  components:
+  - type: Sprite
+    state: puzzle_8
+
+- type: entity
+  parent: LavalandPuzzlePieceFloor1
+  id: LavalandPuzzlePieceFloor9
+  components:
+  - type: Sprite
+    state: puzzle_9
+
+- type: entity
+  id: LavalandPuzzlePillar1
+  parent: BaseStructure
+  name: mysterious pillar
+  description: Puzzling...
+  categories: [ HideSpawnMenu ]
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Sprite
+    sprite: _Pirate/Misc/puzzle.rsi
+    state: pillar_1
+    drawdepth: Mobs
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      puzzle:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 500
+        mask:
+        - MobMask
+        layer:
+        - MidImpassable
+        - HighImpassable
+  - type: LavalandSlidingPuzzleElement
+
+- type: entity
+  parent: LavalandPuzzlePillar1
+  id: LavalandPuzzlePillar2
+  components:
+  - type: Sprite
+    state: pillar_2
+
+- type: entity
+  parent: LavalandPuzzlePillar1
+  id: LavalandPuzzlePillar3
+  components:
+  - type: Sprite
+    state: pillar_3
+
+- type: entity
+  parent: LavalandPuzzlePillar1
+  id: LavalandPuzzlePillar4
+  components:
+  - type: Sprite
+    state: pillar_4
+
+- type: entity
+  parent: LavalandPuzzlePillar1
+  id: LavalandPuzzlePillar5
+  components:
+  - type: Sprite
+    state: pillar_5
+
+- type: entity
+  parent: LavalandPuzzlePillar1
+  id: LavalandPuzzlePillar6
+  components:
+  - type: Sprite
+    state: pillar_6
+
+- type: entity
+  parent: LavalandPuzzlePillar1
+  id: LavalandPuzzlePillar7
+  components:
+  - type: Sprite
+    state: pillar_7
+
+- type: entity
+  parent: LavalandPuzzlePillar1
+  id: LavalandPuzzlePillar8
+  components:
+  - type: Sprite
+    state: pillar_8
+
+- type: entity
+  parent: LavalandPuzzlePillar1
+  id: LavalandPuzzlePillar9
+  components:
+  - type: Sprite
+    state: pillar_9
+
+- type: entity
+  id: LavalandSlidingPuzzle
+  parent: MarkerBase
+  name: sliding puzzle generator
+  description: Generates a sliding puzzle around itself.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: LavalandSlidingPuzzle
+    rewardProto: LavalandPuzzleChest
+    megafaunaProto: LavalandBossAshDrake
+
+- type: entity
+  id: LavalandPrisonCubePuzzle
+  parent: MarkerBase
+  name: prison cube generator
+  categories: [ HideSpawnMenu ]
+  description: Generates a prison cube puzzle around itself.
+  components:
+  - type: LavalandSlidingPuzzle
+    megafaunaChance: 0
+    requiresPrisoner: true
+    emptyTileId: 5
+    returnCubeProto: LavalandPrisonCube
+
+- type: entity
+  parent: BaseItem
+  id: LavalandPrisonCube
+  name: prison cube
+  description: Dusty cube with a humanoid imprint on it.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Misc/puzzle.rsi
+    state: prison_cube
+  - type: StaticPrice
+    price: 33333
+  - type: Item
+    size: Small
+  - type: LavalandPrisonCube
+    puzzleProto: LavalandPrisonCubePuzzle
+
+- type: entity
+  parent: LavalandCrateNecropolis
+  id: LavalandPuzzleChest
+  components:
+  - type: EntityTableContainerFill
+    containers:
+      entity_storage: !type:AllSelector
+        children:
+        - !type:NestedSelector
+          tableId: NecropolisChestLoot
+        - id: LavalandPrisonCube
+
+- type: lavalandGridRuin
+  id: LavalandSlidingPuzzleRuin
+  path: /Maps/_Pirate/Lavaland/sliding_puzzle.yml
+  priority: 0

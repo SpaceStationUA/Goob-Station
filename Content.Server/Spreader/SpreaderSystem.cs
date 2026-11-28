@@ -166,12 +166,13 @@ public sealed class SpreaderSystem : EntitySystem
 
     private void Spread(EntityUid uid, TransformComponent xform, ProtoId<EdgeSpreaderPrototype> prototype, ref int updates)
     {
-        GetNeighbors(uid, xform, prototype, out var freeTiles, out _, out var neighbors);
+        GetNeighbors(uid, xform, prototype, out var freeTiles, out _, out var neighbors, out var allNeighbors); // Pirate
 
         var ev = new SpreadNeighborsEvent()
         {
             NeighborFreeTiles = freeTiles,
             Neighbors = neighbors,
+            AllNeighbors = allNeighbors, // Pirate
             Updates = updates,
         };
 
@@ -184,6 +185,15 @@ public sealed class SpreaderSystem : EntitySystem
     /// </summary>
     public void GetNeighbors(EntityUid uid, TransformComponent comp, ProtoId<EdgeSpreaderPrototype> prototype, out ValueList<(MapGridComponent, TileRef)> freeTiles, out ValueList<Vector2i> occupiedTiles, out ValueList<EntityUid> neighbors)
     {
+        GetNeighbors(uid, comp, prototype, out freeTiles, out occupiedTiles, out neighbors, out _);
+    }
+
+    // Pirate: expose geometric neighbors only for spreaders that can cross airtight tiles and space.
+    private void GetNeighbors(EntityUid uid, TransformComponent comp, ProtoId<EdgeSpreaderPrototype> prototype,
+        out ValueList<(MapGridComponent, TileRef)> freeTiles, out ValueList<Vector2i> occupiedTiles,
+        out ValueList<EntityUid> neighbors, out ValueList<(EntityUid, MapGridComponent, Vector2i)> allNeighbors)
+    {
+        allNeighbors = [];
         freeTiles = [];
         occupiedTiles = [];
         neighbors = [];
@@ -251,6 +261,9 @@ public sealed class SpreaderSystem : EntitySystem
 
         foreach (var (neighborEnt, neighborGrid, neighborPos, ourAtmosDir, otherAtmosDir) in neighborTiles)
         {
+            if (spreaderPrototype.IgnoreBlockedTiles && !spreaderPrototype.PreventSpreadOnSpaced) // Pirate
+                allNeighbors.Add((neighborEnt, neighborGrid, neighborPos));
+
             // This tile is blocked to that direction.
             if ((blockedAtmosDirs & ourAtmosDir) != 0x0)
                 continue;

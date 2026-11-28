@@ -15,6 +15,7 @@
         components:
           - Body
           - Item
+    - type: CascadeCore # Pirate: full-size crystal
     - type: PirateSupermatterSound # Pirate
     - type: RadiationSource
     - type: AmbientSound

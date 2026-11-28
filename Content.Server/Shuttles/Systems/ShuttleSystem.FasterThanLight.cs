@@ -830,6 +830,14 @@ public sealed partial class ShuttleSystem
             {
                 // Startup time has elapsed and in hyperspace.
                 case FTLState.Starting:
+                    // Pirate: a cascade can begin while an evacuation shuttle is warming up at the dock.
+                    if (comp.EmergencyDeparture)
+                    {
+                        var attempt = new EmergencyShuttleDepartureAttemptEvent();
+                        RaiseLocalEvent(ref attempt);
+                        if (attempt.Cancelled)
+                            break;
+                    }
                     UpdateFTLStarting(entity);
                     break;
                 // Arriving, play effects

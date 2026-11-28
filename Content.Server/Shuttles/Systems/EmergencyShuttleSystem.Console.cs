@@ -71,6 +71,7 @@ public sealed partial class EmergencyShuttleSystem
     public float AuthorizeTime;
 
     private CancellationTokenSource? _roundEndCancelToken;
+    private bool _awaitingShuttleRoundEnd; // Pirate
 
     private static readonly ProtoId<AccessLevelPrototype> EmergencyRepealAllAccess = "EmergencyShuttleRepealAll";
     private static readonly Color DangerColor = Color.Red;
@@ -128,6 +129,17 @@ public sealed partial class EmergencyShuttleSystem
 
     private void UpdateEmergencyConsole(float frameTime)
     {
+        // Pirate: a game rule can hold a docked shuttle or take over the round after it left.
+        if (_awaitingShuttleRoundEnd)
+        {
+            if (MayEvacuate())
+            {
+                _awaitingShuttleRoundEnd = false;
+                _roundEnd.EndRound();
+            }
+            return;
+        }
+
         // Add some buffer time so eshuttle always first.
         var minTime = -(TransitTime - (_shuttle.DefaultStartupTime + _shuttle.DefaultTravelTime + 1f));
 
@@ -140,7 +152,7 @@ public sealed partial class EmergencyShuttleSystem
         // I.e., dont infer state from the current interval that the accumulator is in???
         minTime = Math.Min(0, minTime); // ????
 
-        if (_consoleAccumulator < minTime)
+        if (_consoleAccumulator < minTime || !MayEvacuate()) // Pirate
         {
             return;
         }
@@ -173,6 +185,7 @@ public sealed partial class EmergencyShuttleSystem
                 {
                     _shuttle.FTLToDock(comp.EmergencyShuttle.Value, shuttle,
                         centcomm.Entity.Value, _consoleAccumulator, TransitTime);
+                    MarkEvacuationDeparture(comp.EmergencyShuttle.Value, centcomm.Entity.Value); // Pirate
                     continue;
                 }
 
@@ -182,6 +195,7 @@ public sealed partial class EmergencyShuttleSystem
                     _shuttle.FTLToCoordinates(comp.EmergencyShuttle.Value, shuttle,
                         new EntityCoordinates(centcomm.MapEntity.Value,
                             _random.NextVector2(1000f)), _consoleAccumulator, TransitTime);
+                    MarkEvacuationDeparture(comp.EmergencyShuttle.Value, centcomm.MapEntity.Value); // Pirate
                 }
             }
 
@@ -210,6 +224,7 @@ public sealed partial class EmergencyShuttleSystem
 
             // Don't dock them. If you do end up doing this then stagger launch.
             _shuttle.FTLToDock(uid, shuttle, centcomm.Entity.Value, hyperspaceTime: TransitTime);
+            MarkEvacuationDeparture(uid, centcomm.Entity.Value); // Pirate
             RemCompDeferred<EscapePodComponent>(uid);
         }
 
@@ -219,7 +234,7 @@ public sealed partial class EmergencyShuttleSystem
             ShuttlesLeft = true;
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("emergency-shuttle-left", ("transitTime", $"{TransitTime:0}")));
 
-            Timer.Spawn((int)(TransitTime * 1000) + _bufferTime.Milliseconds, () => _roundEnd.EndRound(), _roundEndCancelToken?.Token ?? default);
+            Timer.Spawn((int)(TransitTime * 1000) + _bufferTime.Milliseconds, () => _awaitingShuttleRoundEnd = true, _roundEndCancelToken?.Token ?? default);
         }
 
         // All the others.
@@ -340,6 +355,7 @@ public sealed partial class EmergencyShuttleSystem
         // and timer and all that jazz so I don't really care about debugging if it works on cleanup vs start.
         _announced = false;
         ShuttlesLeft = false;
+        _awaitingShuttleRoundEnd = false; // Pirate
         _launchedShuttles = false;
         _consoleAccumulator = float.MinValue;
         EarlyLaunchAuthorized = false;
@@ -394,7 +410,7 @@ public sealed partial class EmergencyShuttleSystem
     /// </summary>
     public bool EarlyLaunch()
     {
-        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived || _consoleAccumulator <= AuthorizeTime) return false;
+        if (EarlyLaunchAuthorized || !EmergencyShuttleArrived || _consoleAccumulator <= AuthorizeTime || !MayEvacuate()) return false; // Pirate
 
         _logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"Emergency shuttle launch authorized");
         _consoleAccumulator = AuthorizeTime;
@@ -438,6 +454,7 @@ public sealed partial class EmergencyShuttleSystem
 
     public bool DelayEmergencyRoundEnd()
     {
+        _awaitingShuttleRoundEnd = false; // Pirate
         if (_roundEndCancelToken == null)
             return false;
 

@@ -46,6 +46,7 @@
   storage: # DeltaV: Add mining voucher
     back:
     - MiningVoucher
+    - GlowstoneDropperEmpty # Pirate
 - type: chameleonOutfit
   id: SalvageSpecialistChameleonOutfit
   job: SalvageSpecialist

@@ -175,6 +175,8 @@ public partial class ChatBox : UIWidget
                                 ("size", 8+sizeIncrease)
                                 ));
         } // WD EDIT END
+        if (message.Contains("[airadiolink ", StringComparison.Ordinal)) // Pirate: retain speaker text through highlight matching.
+            formatted = Content.Client._Pirate.StationAi.AiRadioSpeakerTag.CreateLinks(formatted);
         Contents.AddMessage(formatted, tagsAllowed: null);
     }
 

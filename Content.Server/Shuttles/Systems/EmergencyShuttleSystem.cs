@@ -112,6 +112,7 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
     {
         _roundEndCancelToken?.Cancel();
         _roundEndCancelToken = null;
+        _awaitingShuttleRoundEnd = false; // Pirate
     }
 
     private void OnCentcommShutdown(EntityUid uid, StationCentcommComponent component, ComponentShutdown args)
@@ -444,7 +445,8 @@ public sealed partial class EmergencyShuttleSystem : SharedEmergencyShuttleSyste
 
         if (!_emergencyShuttleEnabled)
         {
-            _roundEnd.EndRound();
+            if (MayEvacuate()) // Pirate: the fallback round end obeys the same departure gate.
+                _roundEnd.EndRound();
             return;
         }
 

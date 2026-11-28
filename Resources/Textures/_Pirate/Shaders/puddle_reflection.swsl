@@ -1,0 +1,39 @@
+// SPDX-FileCopyrightText: 2017-2026 Space Wizards Federation
+// SPDX-FileCopyrightText: 2024-2026 Starlight
+// SPDX-License-Identifier: MIT
+
+light_mode unshaded;
+blend_mode add;
+uniform sampler2D WET_TEXTURE;
+uniform sampler2D LIGHT_TEXTURE;
+uniform highp vec2 worldOrigin;
+uniform highp vec2 worldAxisX;
+uniform highp vec2 worldAxisY;
+
+void fragment()
+{
+    highp float wet = texture2D(WET_TEXTURE, Pos).a * 0.6;
+    if (wet <= 0.003)
+        discard;
+
+    highp vec2 world = worldOrigin + worldAxisX * Pos.x + worldAxisY * Pos.y;
+    highp float time = mod(TIME, 3600.0);
+    highp vec3 reflected = texture2D(LIGHT_TEXTURE, Pos).rgb * 0.12;
+
+    // Nearby overhead lights are already in the light buffer when the floor is drawn.
+    highp vec2 stepUv = vec2(sin(world.y * 14.0 + time * 2.3) * 0.05 / (12.0 * length(worldAxisX)),
+        0.12 / length(worldAxisY));
+    highp vec3 mirrored = vec3(0.0);
+    for (int i = 1; i <= 12; i++)
+    {
+        highp float fi = float(i);
+        highp vec3 light = texture2D(LIGHT_TEXTURE, Pos + stepUv * fi).rgb;
+        highp float peak = max(light.r, max(light.g, light.b));
+        mirrored += light * smoothstep(0.65, 1.0, peak) * (1.0 - fi / 13.0);
+    }
+    reflected += mirrored * (2.5 / 6.0);
+
+    highp float ripple = 0.8 + 0.2 * sin(world.x * 5.0 + world.y * 2.0 + time * 0.8)
+        * sin(world.y * 4.0 - time * 0.6);
+    COLOR = vec4(reflected * ripple, wet);
+}

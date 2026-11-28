@@ -45,6 +45,7 @@
   storage:
     back:
     - MiningVoucher
+    - GlowstoneDropperFilled50 # Pirate
 
 - type: chameleonOutfit
   id: ShaftMinerChameleonOutfit

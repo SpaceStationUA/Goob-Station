@@ -1,0 +1,59 @@
+- type: entity
+  parent: MobStatusEffectBase
+  id: StatusEffectBiomagneticPolarization
+  name: biomagnetic polarization
+  components:
+  - type: PointLight
+    radius: 1.3
+  - type: BiomagneticPolarizationStatusEffect
+    staticElectricityProviders:
+      tags:
+      - Carpet
+  - type: Sprite
+    noRot: true
+    sprite: /Textures/_Pirate/Effects/elecanim.rsi
+    layers:
+    - state: elecanim
+      map: ["enum.BiomagneticPolarizationLayers.Capped"]
+      visible: false
+      shader: unshaded
+  - type: AmbientSound
+    enabled: false
+    volume: 3
+    sound:
+      path: /Audio/Ambience/Objects/buzzing.ogg
+
+- type: explosion
+  id: BiomagneticDischarge
+  damagePerIntensity:
+    types:
+      Shock: 5
+      Heat: 3
+      Blunt: 2
+      Structural: 20
+  tileBreakChance: [0]
+  tileBreakIntensity: [0]
+  lightColor: Cyan
+  fireColor: Cyan
+  texturePath: /Textures/Effects/fire_greyscale.rsi
+  fireStates: 3
+
+
+- type: entity
+  id: BiomagneticPolarization
+  parent: BaseStationEventShortDelay
+  components:
+  - type: GameRule
+    chaosScore: 80
+  - type: StationEvent
+    weight: 3
+    earliestStart: 20
+    reoccurrenceDelay: 30
+    duration: 1
+    eventType: Chaotic
+    chaos:
+      Medical: 60
+      Mess: 20
+  - type: GlobalStatusEffectRule
+    statusEffect: StatusEffectBiomagneticPolarization
+    announcement: station-event-biomagnetic-polarization-announcement

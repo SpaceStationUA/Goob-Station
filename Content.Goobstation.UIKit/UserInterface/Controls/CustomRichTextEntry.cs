@@ -406,7 +406,8 @@ public struct CustomRichTextEntry
                 }
             }
 
-            var advanceX = control.SetWidth;
+            // Pirate: an inline label has an intrinsic width. Advancing by NaN hides the rest of the line.
+            var advanceX = float.IsNaN(control.SetWidth) ? control.DesiredPixelSize.X : control.SetWidth;
             controlYAdvance = Math.Max(0f, (control.DesiredPixelSize.Y - GetLineHeight(font, uiScale, lineHeightScale)) * invertedScale);
             baseLine += new Vector2(advanceX, 0);
         }

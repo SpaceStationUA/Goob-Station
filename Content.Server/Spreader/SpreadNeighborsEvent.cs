@@ -15,6 +15,8 @@ public record struct SpreadNeighborsEvent
 {
     public ValueList<(MapGridComponent Grid, TileRef Tile)> NeighborFreeTiles;
     public ValueList<EntityUid> Neighbors;
+    // Pirate: geometric neighbors for the crystal that consumes walls and space.
+    public ValueList<(EntityUid GridUid, MapGridComponent Grid, Vector2i Position)> AllNeighbors;
 
     /// <summary>
     /// How many updates allowed are remaining.

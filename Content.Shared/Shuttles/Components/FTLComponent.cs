@@ -21,6 +21,8 @@ public sealed partial class FTLComponent : Component
     [ViewVariables]
     public FTLState State = FTLState.Available;
 
+    public bool EmergencyDeparture; // Pirate: the emergency console scheduled this outward flight.
+
     [ViewVariables(VVAccess.ReadWrite)]
     public StartEndTime StateTime;
 

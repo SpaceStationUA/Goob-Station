@@ -31,6 +31,7 @@
   table: !type:AllSelector
     children:
     - id: AnomalySpawn
+    - id: BiomagneticPolarization
     - id: BluespaceArtifact
     - id: BluespaceLocker
     - id: BreakerFlip

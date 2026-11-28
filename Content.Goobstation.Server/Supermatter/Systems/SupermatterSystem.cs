@@ -15,6 +15,7 @@ using Content.Server.Lightning;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Atmos;
+using Content.Shared._Pirate.Supermatter; // Pirate: resonance cascade
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
@@ -70,7 +71,6 @@ public sealed partial class SupermatterSystem : SharedSupermatterSystem
     [Dependency] private TagSystem _tag = default!;
 
     private const string LTGSM = "/Textures/_Goobstation/MisandryBox/LTGSM.png";
-    private DelamType _delamType = DelamType.Explosion;
 
     public override void Initialize()
     {
@@ -461,7 +461,8 @@ public sealed partial class SupermatterSystem : SharedSupermatterSystem
         {
             message = Loc.GetString("supermatter-delam-cancel", ("integrity", integrity));
             sm.DelamAnnounced = false;
-            global = true;
+            SupermatterAnnouncement(uid, message, true); // Pirate: finish the cancellation before composing a new warning.
+            return;
         }
         if (sm.Delamming && !sm.DelamAnnounced)
         {
@@ -469,7 +470,7 @@ public sealed partial class SupermatterSystem : SharedSupermatterSystem
             var loc = string.Empty;
             var alertLevel = "yellow";
 
-            switch (_delamType)
+            switch (sm.PredictedDelamination) // Pirate
             {
                 case DelamType.Explosion:
                 default:
@@ -497,7 +498,7 @@ public sealed partial class SupermatterSystem : SharedSupermatterSystem
                 _alert.SetLevel((EntityUid) station, alertLevel, true, true, true, false);
 
             sb.AppendLine(Loc.GetString(loc));
-            sb.AppendLine(Loc.GetString("supermatter-seconds-before-delam", ("seconds", sm.DelamTimer)));
+            sb.AppendLine(Loc.GetString("supermatter-seconds-before-delam", ("seconds", Math.Max(0f, sm.DelamTimer - sm.DelamTimerAccumulator)))); // Pirate
 
             message = sb.ToString();
             global = true;
@@ -557,6 +558,13 @@ public sealed partial class SupermatterSystem : SharedSupermatterSystem
     {
         var mix = _atmosphere.GetContainingMixture(uid, true, true);
 
+        // Pirate: this engine models the chamber mixture directly instead of maintaining an internal gas reservoir.
+        if (TryComp<CascadeCoreComponent>(uid, out var core) &&
+            (core.Destabilized || (mix is { TotalMoles: >= 240f } &&
+                mix.GetMoles(Gas.Frezon) >= mix.TotalMoles * 0.4f &&
+                mix.GetMoles(Gas.Tritium) >= mix.TotalMoles * 0.4f)))
+            return DelamType.Cascade;
+
         if (mix is { })
         {
             // var absorbedGas = mix.Remove(sm.GasEfficiency * mix.TotalMoles);
@@ -569,8 +577,6 @@ public sealed partial class SupermatterSystem : SharedSupermatterSystem
         if (sm.Power >= sm.PowerPenaltyThreshold)
             return DelamType.Tesla;
 
-        // TODO: add resonance cascade when there's crazy conditions, or a destabilizing crystal :godo:
-
         return DelamType.Explosion;
     }
 
@@ -581,16 +587,22 @@ public sealed partial class SupermatterSystem : SharedSupermatterSystem
     {
         var xform = Transform(uid);
 
-        _delamType = ChooseDelamType(uid, sm);
+        if (sm.Damage < sm.DelaminationPoint) // Pirate: a recovered crystal cannot finish an old countdown.
+        {
+            if (sm.Delamming)
+                HandleAnnouncements(uid, sm);
+            sm.Delamming = false;
+            sm.DelamTimerAccumulator = 0f;
+            return;
+        }
 
-        if (!sm.Delamming)
+        var forecast = ChooseDelamType(uid, sm);
+        var cascadeChanged = (sm.PredictedDelamination == DelamType.Cascade) != (forecast == DelamType.Cascade);
+        sm.PredictedDelamination = forecast;
+        if (!sm.Delamming || cascadeChanged)
         {
             sm.Delamming = true;
-            HandleAnnouncements(uid, sm);
-        }
-        if (sm.Damage < sm.DelaminationPoint && sm.Delamming)
-        {
-            sm.Delamming = false;
+            sm.DelamAnnounced = false;
             HandleAnnouncements(uid, sm);
         }
 
@@ -601,7 +613,7 @@ public sealed partial class SupermatterSystem : SharedSupermatterSystem
 
         RaiseLocalEvent(new SupermatterDelaminatedEvent(uid));
 
-        switch (_delamType)
+        switch (sm.PredictedDelamination) // Pirate
         {
             case DelamType.Explosion:
             default:
@@ -617,7 +629,7 @@ public sealed partial class SupermatterSystem : SharedSupermatterSystem
                 break;
 
             case DelamType.Cascade:
-                Spawn(sm.SupermatterKudzuPrototypeId, xform.Coordinates);
+                RaiseLocalEvent(new SupermatterCascadeEvent(uid)); // Pirate
                 break;
         }
     }

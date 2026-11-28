@@ -1,0 +1,285 @@
+// SPDX-FileCopyrightText: Contributors to Impstation
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+using Content.Server.Audio;
+using Content.Server.Explosion.EntitySystems;
+using Content.Server.Ghost;
+using Content.Server.Lightning;
+using Content.Server.Storage.EntitySystems;
+using Content.Shared._Pirate.StatusEffectNew;
+using Content.Shared.Audio;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
+using Content.Shared.Humanoid;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
+using Content.Shared.Light.Components;
+using Content.Shared.Maps;
+using Content.Shared.StatusEffectNew;
+using Content.Shared.StatusEffectNew.Components;
+using Content.Shared.Storage.Components;
+using Content.Shared.Throwing;
+using Content.Shared.Whitelist;
+using Robust.Server.Audio;
+using Robust.Server.GameObjects;
+using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
+
+namespace Content.Server._Pirate.StatusEffects;
+
+public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizationSystem
+{
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
+
+    [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
+    [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly EntityStorageSystem _entStorage = default!;
+    [Dependency] private readonly EntityWhitelistSystem _whitelist = default!;
+    [Dependency] private readonly ExplosionSystem _explosion = default!;
+    [Dependency] private readonly GhostSystem _ghost = default!;
+    [Dependency] private readonly LightningSystem _lightning = default!;
+    [Dependency] private readonly MapSystem _mapSystem = default!;
+    [Dependency] private readonly SharedPointLightSystem _lights = default!;
+    [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private readonly TransformSystem _xform = default!;
+
+    private static readonly ProtoId<DamageTypePrototype> ShockDamage = "Shock";
+
+    private readonly List<EntityUid> _expiredEffectEnts = [];
+    private readonly HashSet<EntityUid> _entitiesOnTile = [];
+
+    private const float ExplosionSlope = 1f;
+    private const float CapExplosionSlope = 2f;
+    private const float MaxTileIntensity = 100f;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<BiomagneticPolarizationStatusEffectComponent, StatusEffectAppliedEvent>(OnEffectApplied);
+        SubscribeLocalEvent<BiomagneticPolarizationStatusEffectComponent, StatusEffectRelayedEvent<DamageModifyEvent>>(OnDamageModified);
+        SubscribeLocalEvent<BiomagneticPolarizationStatusEffectComponent, StatusEffectRelayedEvent<InteractionSuccessEvent>>(OnHugging);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var curTime = _timing.CurTime;
+
+        var query = EntityQueryEnumerator<BiomagneticPolarizationStatusEffectComponent, StatusEffectComponent, PointLightComponent>();
+        while (query.MoveNext(out var ent, out var comp, out var statusComp, out var lightComp))
+        {
+            if (statusComp.AppliedTo is not { } statusOwner)
+                continue;
+
+            if (comp.Expired)
+            {
+                _expiredEffectEnts.Add(statusOwner);
+                continue;
+            }
+
+            if (comp.StatusOwner is not { } physTuple)
+                continue;
+
+            HandleStaticTiles((ent, comp));
+
+            if (comp.CooldownEnd <= curTime)
+            {
+                var (opposite, _, capInvolved) = HandleCollisions(physTuple, comp);
+                CollisionEffects(statusOwner, (ent, comp), opposite, capInvolved);
+            }
+
+            // handle strength updates - we don't want to do this every frame, so there's a cooldown.
+            if (comp.NextUpdate > curTime)
+                continue;
+            comp.NextUpdate = curTime + comp.UpdateTime;
+
+            // clamp strength to the strength cap
+            if (comp.CurrentStrength > comp.StrengthCap)
+                comp.CurrentStrength = comp.StrengthCap;
+
+            // reduce strength by decay rate, then if it's 0 or less, mark this effect expired.
+            comp.CurrentStrength -= comp.RealDecayRate;
+            if (comp.CurrentStrength <= 0)
+            {
+                _expiredEffectEnts.Add(statusOwner);
+                continue;
+            }
+
+            var ambientComp = EnsureComp<AmbientSoundComponent>(ent);
+
+            var inCapRange = comp.InCapRange;
+            if (comp.Capped != inCapRange)
+            {
+                comp.Capped = inCapRange;
+                _ambientSound.SetAmbience(ent, inCapRange, ambientComp);
+            }
+
+            Dirty(ent, comp);
+
+            // set the light proportional to the strength
+            var lightStrength = 25f + (float)Math.Log(1f + comp.CurrentStrength) * comp.StrLightMult;
+            _lights.SetEnergy(ent, lightStrength, lightComp);
+        }
+
+        // to avoid modifying the list while it's enumerating, we remove status effects from expired ents after the query.
+        foreach (var expired in _expiredEffectEnts)
+        {
+            _statusEffect.TryRemoveStatusEffect(expired, BiomagEffectID);
+        }
+        _expiredEffectEnts.Clear();
+    }
+
+    private void OnEffectApplied(Entity<BiomagneticPolarizationStatusEffectComponent> ent, ref StatusEffectAppliedEvent args)
+    {
+        var comp = ent.Comp;
+
+        // Set polarization randomly, 50/50. NORTH = TRUE, SOUTH = FALSE
+        comp.Polarization = _random.Prob(0.5f);
+
+        // Set light color based on polarization
+        if (!TryComp<PointLightComponent>(ent, out var maybePointLight) || maybePointLight is not { } pointLight)
+            return;
+        var tgtColor = comp.Polarization ? comp.NorthColor : comp.SouthColor;
+        _lights.SetColor(ent, tgtColor, pointLight);
+
+        // Set the randomized decay rate
+        comp.RealDecayRate = _random.NextFloat(comp.MinMaxDecayRate.Item1, comp.MinMaxDecayRate.Item2);
+
+        var physicsQuery = GetEntityQuery<PhysicsComponent>();
+
+        if (!physicsQuery.TryComp(args.Target, out var maybePhysComp) || maybePhysComp is not { } physComp)
+            return;
+
+        comp.StatusOwner = (args.Target, physComp);
+        Dirty(ent, ent.Comp);
+    }
+
+    private void OnDamageModified(Entity<BiomagneticPolarizationStatusEffectComponent> ent, ref StatusEffectRelayedEvent<DamageModifyEvent> args)
+    {
+        foreach (var (damageType, value) in args.Args.Damage.DamageDict)
+        {
+            if (damageType != ShockDamage.Id)
+                continue;
+            ent.Comp.CurrentStrength += (float)value / 2;
+        }
+    }
+
+    private void OnHugging(Entity<BiomagneticPolarizationStatusEffectComponent> ent, ref StatusEffectRelayedEvent<InteractionSuccessEvent> args)
+    {
+        // since this event is raised on the *target* of a hug, args.Args.User is unintuitively the person *doing* the hugging
+        var hugger = args.Args.User;
+        if (ent.Comp.StatusOwner is not { } statusOwner || statusOwner.Owner == hugger ||
+            ent.Comp.Expired || ent.Comp.CooldownEnd > _timing.CurTime ||
+            !_statusEffect.TryGetStatusEffect(hugger, BiomagEffectID, out var otherEffect) ||
+            !TryComp<BiomagneticPolarizationStatusEffectComponent>(otherEffect, out var other) ||
+            other.Expired || other.CooldownEnd > _timing.CurTime)
+            return;
+
+        var (opposite, _, strCapInvolved) = BiomagCollide(statusOwner.Owner, ent.Comp, hugger, other);
+        CollisionEffects(statusOwner, ent, opposite, strCapInvolved);
+    }
+
+    private void CollisionEffects(EntityUid statusOwner, Entity<BiomagneticPolarizationStatusEffectComponent> ent, bool opposite, bool strCapInvolved)
+    {
+        var comp = ent.Comp;
+        if (opposite)
+        {
+            _expiredEffectEnts.Add(statusOwner);
+
+            var coords = _xform.GetMapCoordinates(statusOwner);
+
+            var arcs = comp.LightningArcsMinMax.Next(_random);
+            if (!strCapInvolved)
+            {
+                _lightning.ShootRandomLightnings(statusOwner, comp.LightningRange, arcs, comp.LightningPrototype);
+
+                _explosion.QueueExplosion(coords, comp.ExplosionPrototype, comp.CurrentStrength * comp.ExplosionStrengthMult, ExplosionSlope, MaxTileIntensity, statusOwner);
+            }
+            else
+            {
+                arcs *= (int)comp.LightningCapMult;
+                _lightning.ShootRandomLightnings(statusOwner, comp.LightningRange * comp.LightningCapMult, arcs, comp.LightningPrototype);
+                _explosion.QueueExplosion(coords, comp.ExplosionPrototype, comp.StrengthCap * comp.CapExplosionMult, CapExplosionSlope, MaxTileIntensity, statusOwner);
+
+                HandleCapCollisionEffects((ent, comp));
+
+                _audio.PlayPvs(comp.CapExplosionSound, ent);
+            }
+        }
+    }
+
+    private void HandleStaticTiles(Entity<BiomagneticPolarizationStatusEffectComponent> ent)
+    {
+        var xform = Transform(ent);
+        var maybeGridUid = xform.GridUid;
+        if (maybeGridUid is not { } gridUid)
+            return;
+        if (!TryComp<MapGridComponent>(gridUid, out var grid))
+            return;
+
+        var tile = _mapSystem.GetTileRef(gridUid, grid, xform.Coordinates);
+
+        if (tile != TileRef.Zero && tile != ent.Comp.LastTile)
+        {
+            _entitiesOnTile.Clear();
+            _lookup.GetEntitiesInTile(tile, _entitiesOnTile, LookupFlags.Uncontained);
+            foreach (var entOnTile in _entitiesOnTile)
+            {
+                if (!_whitelist.IsWhitelistPass(ent.Comp.StaticElectricityProviders, entOnTile))
+                    continue;
+                ent.Comp.CurrentStrength += ent.Comp.StrProvidedByStatic;
+                break;
+            }
+        }
+        ent.Comp.LastTile = tile;
+    }
+
+    /// <summary>
+    /// Much of this was copied over from RevenantSystem.Abilities.
+    /// </summary>
+    private void HandleCapCollisionEffects(Entity<BiomagneticPolarizationStatusEffectComponent> ent)
+    {
+        var worldPos = _xform.GetWorldPosition(ent);
+
+        var lookup = _lookup.GetEntitiesInRange(ent, ent.Comp.CapEffectRange);
+        var entityStorage = GetEntityQuery<EntityStorageComponent>();
+        var items = GetEntityQuery<ItemComponent>();
+        var humanoid = GetEntityQuery<HumanoidAppearanceComponent>();
+        var lights = GetEntityQuery<PoweredLightComponent>();
+        var physics = GetEntityQuery<PhysicsComponent>();
+
+        foreach (var found in lookup)
+        {
+            // chuck shit (including people)
+            if (physics.TryGetComponent(found, out var physComp) && physComp.BodyType != BodyType.Static
+                && (items.HasComponent(found) || humanoid.HasComponent(found)))
+            {
+                var foundPos = _xform.GetWorldPosition(found);
+                var direction = foundPos - worldPos;
+                _throwing.TryThrow(found, direction);
+            }
+
+            // everything below this line has a 50% chance per entity
+            if (!_random.Prob(ent.Comp.CapEffectChance))
+                continue;
+
+            // open lockers and crates at random
+            if (entityStorage.TryGetComponent(found, out var entStorageComp))
+                _entStorage.OpenStorage(found, entStorageComp);
+
+            // flicker lights
+            if (lights.HasComponent(found))
+                _ghost.DoGhostBooEvent(found);
+        }
+    }
+}
