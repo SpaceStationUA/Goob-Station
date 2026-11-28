@@ -5,6 +5,7 @@
   startingInventory:
     Crowbar: 2
     Pickaxe: 4
+    GlowstoneDropperFilled25: 2 # Pirate
     OreBag: 4
     Flare: 4
     FlashlightLantern: 2

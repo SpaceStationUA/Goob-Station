@@ -34,6 +34,8 @@ public sealed partial class StatusEffectsSystem
 
         SubscribeLocalEvent<StatusEffectContainerComponent, AccentGetEvent>(RelayStatusEffectEvent);
 
+        SubscribeLocalEvent<StatusEffectContainerComponent, Content.Shared.Damage.Systems.DamageModifyEvent>(RelayStatusEffectEvent); // Pirate: biomagnetism
+        SubscribeLocalEvent<StatusEffectContainerComponent, Content.Shared.Interaction.Events.InteractionSuccessEvent>(RefRelayStatusEffectEvent); // Pirate
         SubscribeLocalEvent<StatusEffectContainerComponent, BleedModifierEvent>(RefRelayStatusEffectEvent);
     }
 

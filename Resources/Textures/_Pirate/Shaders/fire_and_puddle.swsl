@@ -1,0 +1,95 @@
+// SPDX-FileCopyrightText: 2017-2026 Space Wizards Federation
+// SPDX-FileCopyrightText: 2024-2026 Starlight
+// SPDX-License-Identifier: MIT
+
+light_mode unshaded;
+blend_mode none;
+uniform sampler2D SCREEN_TEXTURE;
+uniform sampler2D LIGHT_TEXTURE;
+uniform sampler2D HEAT_TEXTURE;
+uniform sampler2D WET_TEXTURE;
+uniform sampler2D FOV_TEXTURE;
+uniform highp float haze;
+uniform highp float gloss;
+uniform highp float fovEnabled;
+uniform highp vec2 worldOrigin;
+uniform highp vec2 worldAxisX;
+uniform highp vec2 worldAxisY;
+uniform highp vec2 eyePosition;
+const highp float SPRITE_PIXELS = 32.0;
+const highp float PI = 3.1415926535897932384626433;
+
+// How much of a point is visible from the eye, from 0 to 1. Same test as the engine's own field of view on lighting.
+highp float fovVisibility(highp vec2 diff)
+{
+    highp float angle = atan(diff.y, -diff.x) / PI;
+    highp vec2 moments = zClydeShadowDepthUnpack(texture2D(FOV_TEXTURE, vec2((angle + 1.0) / 2.0, 0.25)));
+    highp float dist = length(diff);
+    highp float lit = float(dist <= moments.x);
+    highp float variance = max(moments.y - moments.x * moments.x, 0.0);
+    highp float d = dist - moments.x;
+    return max(lit, variance / (variance + d * d));
+}
+
+void fragment()
+{
+    highp vec2 world = worldOrigin + worldAxisX * Pos.x + worldAxisY * Pos.y;
+    highp float visible = fovEnabled > 0.5 ? fovVisibility(world - eyePosition) : 1.0;
+    // Wraps once an hour, a single jump is not noticeable.
+    highp float time = mod(TIME, 3600.0);
+
+    // Hot air bends the picture in ripples tied to the world, so they stay put when the camera moves.
+    highp vec2 samplePos = Pos;
+    if (haze > 0.0)
+    {
+        highp float heat = texture2D(HEAT_TEXTURE, Pos).r * haze * visible;
+        if (heat > 0.001)
+        {
+            highp vec2 wave = vec2(
+                sin(world.y * 9.0 + time * 5.0) + 0.5 * sin(world.x * 13.0 - time * 3.7),
+                cos(world.x * 8.0 + time * 4.3) + 0.5 * cos(world.y * 11.0 + time * 6.1));
+            // Up to about one and a half sprite pixels of shift, turned into a share of the view.
+            highp vec2 tiles = wave * heat / SPRITE_PIXELS;
+            samplePos += tiles / vec2(length(worldAxisX), length(worldAxisY));
+        }
+    }
+
+    highp vec4 screen = zTextureSpec(SCREEN_TEXTURE, samplePos);
+    highp vec3 color = screen.rgb;
+
+    if (gloss > 0.0)
+    {
+        highp float wet = texture2D(WET_TEXTURE, Pos).a * gloss;
+        if (wet > 0.003)
+        {
+            // A wet floor gives back a little of the light falling on it.
+            highp vec3 reflected = texture2D(LIGHT_TEXTURE, Pos).rgb * 0.12;
+
+            // Glowing things above on screen, mostly lamps, show up stretched downwards like lamps on a wet street.
+            // The probes reach about one and a half tiles up and sway slightly sideways.
+            {
+                highp float stepUp = 0.12 / length(worldAxisY);
+                highp float sway = sin(world.y * 14.0 + time * 2.3) * 0.05 / length(worldAxisX);
+                highp vec3 mirrored = vec3(0.0);
+                for (int i = 1; i <= 12; i++)
+                {
+                    highp float fi = float(i);
+                    highp vec2 probe = Pos + vec2(sway * fi / 12.0, stepUp * fi);
+                    // Extract bright, visible pixels from Pirate's composited viewport.
+                    highp vec3 emitter = zTextureSpec(SCREEN_TEXTURE, probe).rgb;
+                    highp float peak = max(emitter.r, max(emitter.g, emitter.b));
+                    mirrored += emitter * smoothstep(0.65, 1.0, peak) * (1.0 - fi / 13.0);
+                }
+
+                // The weights add up to 6.
+                reflected += mirrored * (2.5 / 6.0);
+            }
+
+            // Slow ripples so the sheen does not look painted on.
+            highp float ripple = 0.8 + 0.2 * sin(world.x * 5.0 + world.y * 2.0 + time * 0.8) * sin(world.y * 4.0 - time * 0.6);
+            color += reflected * ripple * wet * visible;
+        }
+    }
+
+    COLOR = vec4(color, screen.a);
+}

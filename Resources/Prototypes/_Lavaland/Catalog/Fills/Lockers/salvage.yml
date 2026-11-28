@@ -7,6 +7,7 @@
     - id: HandheldGPSBasic
     - id: HandHeldMassScanner
     - id: FlashlightSeclite
+    - id: GlowstoneDropperFilled50 # Pirate
     - id: OreBag
     - id: Pickaxe
     - id: MineralScanner

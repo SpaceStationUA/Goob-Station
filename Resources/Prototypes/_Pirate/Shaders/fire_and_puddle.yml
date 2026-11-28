@@ -1,0 +1,14 @@
+- type: shader
+  id: PirateFireAndPuddle
+  kind: source
+  path: /Textures/_Pirate/Shaders/fire_and_puddle.swsl
+
+- type: shader
+  id: PirateHeatBlob
+  kind: source
+  path: /Textures/_Pirate/Shaders/heat_blob.swsl
+
+- type: shader
+  id: PiratePuddleMask
+  kind: source
+  path: /Textures/_Pirate/Shaders/wet_mask.swsl

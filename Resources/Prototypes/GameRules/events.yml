@@ -17,6 +17,7 @@
     - id: JobDistributionError
     - id: KudzuGrowth
     - id: MassHallucinations
+    - id: BiomagneticPolarization # Pirate
     - id: MimicVendorRule
     - id: MouseMigration
     - id: RandomVirus # Pirate

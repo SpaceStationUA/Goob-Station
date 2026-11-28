@@ -397,6 +397,24 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         }
     }
 
+    // Pirate: radio links use the same public sensor priority as crew monitoring.
+    public bool HasPublicCoordinates(EntityUid wearer)
+    {
+        if (_onMobSensorsByWearer.TryGetValue(wearer, out var uid) &&
+            TryComp<SuitSensorComponent>(uid, out var onMob) && !onMob.CommandTracker &&
+            onMob.Mode != SuitSensorMode.SensorOff)
+            return onMob.Mode == SuitSensorMode.SensorCords;
+
+        var slots = _inventory.GetSlotEnumerator(wearer, SlotFlags.All);
+        while (slots.NextItem(out var item, out _))
+        {
+            if (TryComp<SuitSensorComponent>(item, out var sensor) && sensor.User == wearer &&
+                !sensor.CommandTracker && sensor.Mode == SuitSensorMode.SensorCords)
+                return true;
+        }
+        return false;
+    }
+
     /// <summary>
     /// Set all suit sensors on the equipment someone is wearing to the specified mode.
     /// </summary>

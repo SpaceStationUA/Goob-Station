@@ -3,6 +3,8 @@
 - type: shopInventory
   id: SalvageVendorInventory
   listings:
+  - id: GlowstoneDropperFilled25 # Pirate
+    cost: 30
   - id: DrinkWhiskeyBottleFull
     cost: 100
   - id: DrinkAbsintheBottleFull
@@ -124,4 +126,3 @@
     cost: 12500 #TODO: Make modules real
   # TODO: luxury elite bar capsule for 10k
   # TODO: mining drone stuff
-

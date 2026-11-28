@@ -18,6 +18,7 @@ public sealed partial class AccessibilityTab : Control
 
         Control.AddOptionCheckBox(CCVars.ChatEnableColorName, EnableColorNameCheckBox);
         Control.AddOptionCheckBox(CCVars.AccessibilityColorblindFriendly, ColorblindFriendlyCheckBox);
+        Control.AddOptionCheckBox(Content.Shared._Pirate.CCVars.PirateVars.EnableBiomagneticPolarizationSymbols, BiomagneticSymbolsCheckBox); // Pirate
         Control.AddOptionCheckBox(DCCVars.NoVisionFilters, DisableVisionFiltersCheckBox); // Pirate
         Control.AddOptionCheckBox(CCVars.ReducedMotion, ReducedMotionCheckBox);
         // Pirate - Starlight arachnophobia sprite alternatives.
