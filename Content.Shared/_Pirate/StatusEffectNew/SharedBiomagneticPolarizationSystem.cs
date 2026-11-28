@@ -98,9 +98,7 @@ public abstract class SharedBiomagneticPolarizationSystem : EntitySystem
         // if two people with DIFFERENT charge come in contact, they cause an explosion and lose their charge.
         else if (ownBiomag.Polarization != otherBiomag.Polarization)
         {
-            var strengthCapWithMargin = ownBiomag.StrengthCap - ownBiomag.CapEffectMargin;
-            if (ownBiomag.CurrentStrength > strengthCapWithMargin || otherBiomag.CurrentStrength > strengthCapWithMargin)
-                strengthCapInvolved = true;
+            strengthCapInvolved = ownBiomag.InCapRange || otherBiomag.InCapRange;
             oppositePolarityCollision = true;
             ownBiomag.Expired = true;
             otherBiomag.Expired = true;

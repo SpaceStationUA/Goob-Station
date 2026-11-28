@@ -66,6 +66,8 @@ public sealed partial class BiomagneticPolarizationStatusEffectComponent : Compo
     /// </summary>
     [DataField]
     public float CapEffectMargin = 5f;
+
+    public bool InCapRange => CurrentStrength >= StrengthCap - CapEffectMargin;
     /// <summary>
     /// The range in tiles in which cap effects (similar to revenant spookies) will occur
     /// </summary>

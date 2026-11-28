@@ -117,19 +117,11 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
 
             var ambientComp = EnsureComp<AmbientSoundComponent>(ent);
 
-            // mark this component as capped if it's in the cap range, and not if it's not
-            var capRangeMin = comp.StrengthCap - comp.CapEffectMargin;
-            if (!comp.Capped && comp.CurrentStrength >= capRangeMin)
+            var inCapRange = comp.InCapRange;
+            if (comp.Capped != inCapRange)
             {
-                comp.Capped = true;
-
-                _ambientSound.SetAmbience(ent, true, ambientComp);
-            }
-            else if (comp.Capped && comp.CurrentStrength < capRangeMin)
-            {
-                comp.Capped = false;
-
-                _ambientSound.SetAmbience(ent, false, ambientComp);
+                comp.Capped = inCapRange;
+                _ambientSound.SetAmbience(ent, inCapRange, ambientComp);
             }
 
             Dirty(ent, comp);
@@ -223,11 +215,7 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
 
                 _audio.PlayPvs(comp.CapExplosionSound, ent);
             }
-            return;
         }
-        // if HandleCollisions[2] returns true, it means that the ent has collided with an ent with different polarity and been thrown,
-        // so we need to prevent collision handling for a few seconds.
-
     }
 
     private void HandleStaticTiles(Entity<BiomagneticPolarizationStatusEffectComponent> ent)

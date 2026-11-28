@@ -28,6 +28,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
 
@@ -173,23 +174,26 @@ public sealed partial class CrewFeatureTest
         await pair.CleanReturnAsync();
     }
 
-    [Test]
-    public async Task SamePolarityContactKnocksDownBothCrew()
+    [TestCase(false, TestName = "SamePolarityPhysicalCollisionKnocksDownBothCrew")]
+    [TestCase(true, TestName = "SamePolarityHugKnocksDownBothCrew")]
+    public async Task SamePolarityKnocksDownBothCrew(bool hug)
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
         var map = await pair.CreateTestMap();
         var server = pair.Server;
         var em = server.EntMan;
         EntityUid a = default, b = default;
+        BiomagneticPolarizationStatusEffectComponent first = default!, second = default!;
         await server.WaitPost(() =>
         {
             var maps = server.System<SharedMapSystem>();
-            var side = new Vector2i(1, 0);
-            maps.SetTile(map.Grid, side, map.Tile.Tile);
+            for (var x = -4; x <= 5; x++)
+            for (var y = -2; y <= 2; y++)
+                maps.SetTile(map.Grid, new Vector2i(x, y), map.Tile.Tile);
             var gravity = em.EnsureComponent<Content.Shared.Gravity.GravityComponent>(map.Grid);
             server.System<Content.Server.Gravity.GravitySystem>().EnableGravity(map.Grid, gravity);
-            a = em.SpawnAttachedTo("MobHuman", map.GridCoords);
-            b = em.SpawnAttachedTo("MobHuman", maps.GridTileToLocal(map.Grid, map.Grid.Comp, side));
+            a = em.SpawnAttachedTo("MobHuman", maps.GridTileToLocal(map.Grid, map.Grid.Comp, Vector2i.Zero));
+            b = em.SpawnAttachedTo("MobHuman", maps.GridTileToLocal(map.Grid, map.Grid.Comp, new Vector2i(1, 0)));
         });
         await pair.RunTicksSync(2);
         await server.WaitAssertion(() =>
@@ -203,13 +207,27 @@ public sealed partial class CrewFeatureTest
                 charge.Polarization = true;
                 return charge;
             }
-            var first = Charge(a);
-            var second = Charge(b);
-            var touch = new InteractionSuccessEvent(b);
-            em.EventBus.RaiseLocalEvent(a, ref touch);
-            Assert.That(em.HasComponent<KnockedDownComponent>(a) && em.HasComponent<KnockedDownComponent>(b), Is.True);
+            first = Charge(a);
+            second = Charge(b);
+            if (hug)
+            {
+                var touch = new InteractionSuccessEvent(b);
+                em.EventBus.RaiseLocalEvent(a, ref touch);
+            }
+            else
+            {
+                var position = em.GetComponent<TransformComponent>(a).Coordinates.Offset(new Vector2(0.6f, 0));
+                server.System<SharedTransformSystem>().SetCoordinates(b, position);
+                server.System<SharedPhysicsSystem>().SetLinearVelocity(b, new Vector2(-2f, 0));
+            }
+        });
+        await pair.RunTicksSync(3);
+        await server.WaitAssertion(() =>
+        {
             Assert.That(first.CooldownEnd, Is.GreaterThan(TimeSpan.Zero));
             Assert.That(first.CooldownEnd, Is.EqualTo(second.CooldownEnd));
+            Assert.That(em.HasComponent<KnockedDownComponent>(a), Is.True);
+            Assert.That(em.HasComponent<KnockedDownComponent>(b), Is.True);
             Assert.That(first.Expired || second.Expired, Is.False);
         });
         await pair.CleanReturnAsync();
