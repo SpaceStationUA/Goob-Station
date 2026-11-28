@@ -107,6 +107,14 @@ public sealed partial class PaintWindow : FancyWindow
         SetTool(null, false, Color.Black);
     }
 
+    /// <summary>
+    /// Pirate: paper drawings never finish, so the finish/rename block can be hidden.
+    /// </summary>
+    public void SetCanFinish(bool canFinish)
+    {
+        FinishPanel.Visible = canFinish;
+    }
+
     public void SetFinished(bool finished, string? title, string? artist)
     {
         _finished = finished;

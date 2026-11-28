@@ -1,10 +1,12 @@
 using Content.Goobstation.Shared.Paint;
 using Content.Shared._Pirate.Crayon; // Pirate: novice crayon protection
+using Content.Shared._Pirate.PersistentText; // Pirate: diary ownership
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
 using Content.Shared.Crayon;
 using Content.Shared.GameTicking;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Paper; // Pirate: diary ownership
 using Content.Shared.Popups;
 
 namespace Content.Goobstation.Server.Paint;
@@ -19,6 +21,7 @@ public sealed partial class PaintSurfaceSystem : SharedPaintSurfaceSystem
     [Dependency] private MetaDataSystem _metaData = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
+    [Dependency] private PaperSystem _paper = default!; // Pirate: diary ownership
 
     private readonly Dictionary<(EntityUid Surface, EntityUid User), int> _unlogged = new();
     private readonly Dictionary<(EntityUid Surface, EntityUid User), List<UndoStep>> _undo = new();
@@ -73,6 +76,13 @@ public sealed partial class PaintSurfaceSystem : SharedPaintSurfaceSystem
 
     private void TryStroke(Entity<PaintSurfaceComponent> ent, EntityUid user, PaintStrokeMessage args)
     {
+        // Pirate: diary ownership - a stroke arriving from an already open painting UI
+        // obeys the same owner-only rule as opening it, so a non-owner can never draw
+        // in (or erase) a bound diary even with a hand-crafted message.
+        if (TryComp<PersistentTextComponent>(ent, out var persistentText)
+            && !_paper.CanWrite(ent.Owner, persistentText, user))
+            return;
+
         if (ent.Comp.Finished
             || ent.Comp.Image is not { } image
             || !TryGetActiveTool(user, out var maybeTool)
@@ -177,7 +187,8 @@ public sealed partial class PaintSurfaceSystem : SharedPaintSurfaceSystem
     private void OnFinish(Entity<PaintSurfaceComponent> ent, ref PaintFinishMessage args)
     {
         var user = args.Actor;
-        if (ent.Comp.Finished || ent.Comp.Image is not { } image || !CheckRate(user) || !TryGetActiveTool(user, out _))
+        // Pirate: paper drawings never finish.
+        if (!ent.Comp.AllowFinish || ent.Comp.Finished || ent.Comp.Image is not { } image || !CheckRate(user) || !TryGetActiveTool(user, out _))
             return;
 
         var title = args.Title.Trim();

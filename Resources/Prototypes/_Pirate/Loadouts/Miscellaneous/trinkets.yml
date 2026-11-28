@@ -27,6 +27,13 @@
     back:
     - DiaryLoadout
 
+# Pirate: a black crayon to write and draw in the diary
+- type: loadout
+  id: TrinketsBlackCrayon
+  storage:
+    back:
+    - CrayonBlack
+
 - type: loadout
   id: TrinketsPhotoCameraFilled
   storage:

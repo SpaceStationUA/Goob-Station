@@ -14,6 +14,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
         <PanelContainer Name="PaperBackground" StyleIdentifier="PaperDefaultBorder" VerticalExpand="True" HorizontalExpand="True">
             <ScrollContainer Name="ScrollingContents" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalExpand="True" VerticalExpand="True" HScrollEnabled="False">
                 <PanelContainer Name="PaperContent" VerticalExpand="True" HorizontalExpand="True" MaxWidth="600">
+                    <!-- Pirate: chalk drawings on paper, behind the text -->
+                    <!-- Pirate: the doodle is sized in code to fit the page (as large as the sheet allows,
+                         proportions kept), so it is readable on any paper and stays on the visible leaf -->
+                    <TextureRect Name="DrawingPreview" Stretch="Scale" HorizontalAlignment="Center" VerticalAlignment="Top" MouseFilter="Ignore" CanShrink="True" Visible="False"/>
                     <BoxContainer Orientation="Vertical" VerticalAlignment="Stretch">
                         <TextureButton Name="HeaderImage" HorizontalAlignment="Center" VerticalAlignment="Top" MouseFilter="Ignore"/>
                         <Control Name="TextAlignmentPadding" VerticalAlignment="Top"/>
@@ -44,14 +48,11 @@ SPDX-License-Identifier: AGPL-3.0-or-later
                 </PanelContainer>
             </ScrollContainer>
         </PanelContainer>
-        <!-- Pirate: persistent diary pages: flip / add / tear out / sign leaves -->
+        <!-- Pirate: persistent diary pages - flipping through the leaves (tearing one out is a context-menu verb) -->
         <BoxContainer Name="PageBar" Orientation="Horizontal" HorizontalAlignment="Center" Margin="6" Visible="False">
             <Button Name="PrevPageButton" />
-            <Label Name="PageLabel" MinWidth="96" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <Label Name="PageLabel" MinWidth="96" HorizontalAlignment="Center" VerticalAlignment="Center" MouseFilter="Ignore" />
             <Button Name="NextPageButton" />
-            <Control MinWidth="16" />
-            <Button Name="AddPageButton" />
-            <Button Name="RemovePageButton" />
         </BoxContainer>
         <!-- Bottom buttons for editing -->
         <BoxContainer Name="EditButtons" Orientation="Horizontal" HorizontalAlignment="Right" Margin="6">

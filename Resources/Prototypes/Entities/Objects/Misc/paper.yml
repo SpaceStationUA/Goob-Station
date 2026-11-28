@@ -116,6 +116,15 @@
     interfaces:
       enum.PaperUiKey.Key:
         type: PaperBoundUserInterface
+      # Pirate: chalk drawing on paper (right-click with a crayon in hand)
+      enum.PaintUiKey.Key:
+        type: Content.Goobstation.Client.Paint.PaintBoundUserInterface
+  # Pirate: chalk drawing on paper
+  - type: PaintSurface
+    size: 48, 64
+    background: White
+    openOnInteract: false
+    allowFinish: false
   - type: FaxableObject
   - type: PaperVisuals
   # Goobstation - needed so you can click with spray painter

@@ -16,6 +16,20 @@ public sealed partial class PaintSurfaceComponent : Component
     [DataField]
     public string Layer = "paint";
 
+    /// <summary>
+    /// Pirate: paper drawing - the surface opens from its own interaction (a crayon on
+    /// paper) instead of opening whenever any paint tool is used on the entity.
+    /// </summary>
+    [DataField]
+    public bool OpenOnInteract = true;
+
+    /// <summary>
+    /// Pirate: paper drawing - the surface is never finished, so it cannot be locked
+    /// or renamed like a standalone canvas.
+    /// </summary>
+    [DataField]
+    public bool AllowFinish = true;
+
     [DataField]
     public bool Finished;
 

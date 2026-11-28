@@ -1,0 +1,14 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleSecurityOfficer
+  name: пончо офіцера СБ
+  description: "Кажуть, що червоний код оголошують лише в надзвичайних ситуаціях. За роки служби ти звик до них настільки, що це пончо вже, здається, почервоніло."
+  components:
+  - type: Item
+    size: Small
+  - type: Sprite
+    sprite: _Pirate/Clothing/Neck/Mantle/officer_mantle.rsi
+  - type: Clothing
+    sprite: _Pirate/Clothing/Neck/Mantle/officer_mantle.rsi
+    slots:
+    - Neck

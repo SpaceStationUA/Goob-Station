@@ -40,3 +40,4 @@
     colorMode: Crayon
     maxBrushSize: 3
     pixelsPerCharge: 0
+    canErase: true

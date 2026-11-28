@@ -35,6 +35,17 @@
   # Pirate: persistent diary pages - the diary reads like a book: flip it leaf by leaf,
   # add or tear out leaves and sign each one separately
   - type: PaperPages
+  # Pirate: diary drawings - right-clicking the open diary with a crayon paints it;
+  # the drawing is saved between rounds together with the text
+  - type: PaintSurface
+    size: 48, 64
+    background: White
+    openOnInteract: false
+    allowFinish: false
+  - type: UserInterface
+    interfaces:
+      enum.PaintUiKey.Key:
+        type: Content.Goobstation.Client.Paint.PaintBoundUserInterface
 
 - type: entity
   id: DiaryLoadout
