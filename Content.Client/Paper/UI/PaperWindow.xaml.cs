@@ -579,6 +579,7 @@ namespace Content.Client.Paper.UI
                 texture.SetSubImage(Vector2i.Zero, image.Size, new ReadOnlySpan<Rgba32>(_drawingBuffer));
                 DrawingPreview.Texture = texture;
                 UpdateDrawingLayout();
+                PaperContent.OnResized += UpdateDrawingLayout; // Pirate: drawings on paper
             }
 
             DrawingPreview.Visible = _hasDrawing;
