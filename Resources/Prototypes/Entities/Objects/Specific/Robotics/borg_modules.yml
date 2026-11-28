@@ -1180,9 +1180,16 @@
     - item: HydroponicsToolSpade
     - item: HydroponicsToolClippers
     - item: Bucket
+      hand:
+        emptyLabel: borg-slot-buckets-empty
+        emptyRepresentative: Bucket
+        whitelist:
+          tags:
+          - Bucket
     - item: HydroponicsToolScythe
     - item: HydroponicsToolHatchet
     - item: PlantBag
+    - item: PlantAnalyzer
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: gardening-module }
 
@@ -1200,7 +1207,20 @@
     - item: KitchenKnife
     - item: RollingPin
     - item: LargeBeaker
+      hand:
+        emptyLabel: borg-slot-beakers-empty
+        emptyRepresentative: LargeBeaker
+        whitelist:
+          tags:
+          - GlassBeaker
     - item: Syringe
+    - hand:
+        emptyLabel: borg-slot-bowls-empty
+        emptyRepresentative: FoodBowlBig
+        whitelist:
+          tags:
+          - FoodBowlBig
+          - Soup
   - type: BorgModuleIcon
     icon: { sprite: Interface/Actions/actions_borg.rsi, state: cooking-module }
 

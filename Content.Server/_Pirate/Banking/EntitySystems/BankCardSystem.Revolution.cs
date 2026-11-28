@@ -18,7 +18,7 @@ public sealed partial class BankCardSystem
     private int ApplyRevolutionSalaryCut(EntityUid mind, int salary)
     {
         if (!TryComp<MindComponent>(mind, out var mindComp) || mindComp.CurrentEntity is not { } mob ||
-            !_job.MindTryGetJob(mind, out var job) || !_job.TryGetAllDepartments(job.ID, out var departments) ||
+            GetSalaryJob(mind) is not { } job || !_job.TryGetAllDepartments(job, out var departments) ||
             !TryComp<PirateRevolutionSalaryCutsComponent>(
                 GetSalaryStation(mind, mob), out var cuts))
             return salary;
