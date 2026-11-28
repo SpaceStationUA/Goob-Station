@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using Content.Server._Pirate.Blueshield;
 using Content.Server.Administration.Logs;
 using Content.Server.Antag;
 using Content.Server.EUI;
@@ -317,9 +318,9 @@ public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<Revolutiona
     }
 
     /// <summary>
-    /// Checks if all of command is dead and if so will remove all sec and command jobs if there were any left.
+    /// Whether the revolution has removed all remaining command staff from play.
     /// </summary>
-    private bool CheckCommandLose()
+    internal bool CheckCommandLose()
     {
         var commandList = new List<EntityUid>();
 
@@ -327,7 +328,7 @@ public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<Revolutiona
         while (heads.MoveNext(out var id, out var commandComp)) // GoobStation - commandComp
         {
             // GoobStation - If mindshield was removed from head and he got converted - he won't count as command
-            if (commandComp.Enabled)
+            if (commandComp.Enabled && !HasComp<LifelineEvacuatedCommandComponent>(id))
                 commandList.Add(id);
         }
 

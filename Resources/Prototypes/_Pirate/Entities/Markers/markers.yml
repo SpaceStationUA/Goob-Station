@@ -18,3 +18,12 @@
       - state: green
       - state: red
   - type: MercSpawnPoint
+
+- type: entity
+  parent: MarkerBase
+  id: BlueshieldLifelineArrival
+  name: Blueshield LifeLine arrival point
+  components:
+  - type: Sprite
+    state: green
+  - type: BlueshieldLifelineArrival
