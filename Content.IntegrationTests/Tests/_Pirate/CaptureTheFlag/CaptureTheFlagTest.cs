@@ -841,8 +841,7 @@ public sealed class CaptureTheFlagTest
             var ticker = server.System<GameTicker>();
             var preset = ticker.FindGamePreset("ctf");
             Assert.That(preset?.ID, Is.EqualTo("CaptureTheFlag"));
-            Assert.That(preset!.ShowInVote, Is.False);
-            Assert.That(preset.MinPlayers, Is.EqualTo(2));
+            Assert.That(preset!.MinPlayers, Is.EqualTo(2));
             ticker.SetGamePreset(preset, resetDelay: 1);
             ticker.ToggleReadyAll(true);
             ticker.StartRound(force);

@@ -7,7 +7,8 @@
   name: ctf-title
   description: ctf-description
   minPlayers: 2
-  showInVote: false
+  maxPlayers: 20
+  showInVote: true
   supportedMaps: CaptureTheFlagMapPool
   arenaFallbackMap: CaptureTheFlagArena
   rules:

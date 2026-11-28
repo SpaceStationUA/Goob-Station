@@ -164,9 +164,10 @@ public sealed partial class GameTicker
             ResetCountdown = null;
         }
 
+        var previousPreset = Preset; // Pirate: a map chosen for an arena belongs to its map pool.
         Preset = preset;
         Decoy = decoy;
-        ValidateMap();
+        ValidateMap(previousPreset);
         UpdateInfoText();
 
         if (force)
@@ -217,17 +218,23 @@ public sealed partial class GameTicker
         return pool.Maps.Contains(map.ID) || Preset.ManualArenaMap?.Id == map.ID; // Pirate
     }
 
-    private void ValidateMap()
+    private void ValidateMap(GamePresetPrototype? previous)
     {
         if (Preset == null || _gameMapManager.GetSelectedMap() is not { } map)
             return;
 
-        if (Preset.MapPool == null ||
-            !_prototypeManager.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
+        // Pirate: a completed arena vote or configured arena must not carry into the next preset.
+        var previousArenaMap = previous?.ArenaFallbackMap != null && previous != Preset &&
+            (previous.ManualArenaMap?.Id == map.ID ||
+             _prototypeManager.TryIndex<GameMapPoolPrototype>(previous.MapPool, out var arenaPool) && arenaPool.Maps.Contains(map.ID));
+        var outsideNewPool = previousArenaMap && Preset.ManualArenaMap?.Id != map.ID &&
+            !_gameMapManager.AllVotableMaps().Any(candidate => candidate.ID == map.ID);
+
+        if (!outsideNewPool && IsMapEligible(map))
             return;
 
-        if (pool.Maps.Contains(map.ID) || Preset.ManualArenaMap?.Id == map.ID) // Pirate
-            return;
+        if (outsideNewPool && _cfg.GetCVar(CCVars.GameMap) == map.ID)
+            _cfg.SetCVar(CCVars.GameMap, string.Empty);
 
         _gameMapManager.SelectMapRandom();
     }

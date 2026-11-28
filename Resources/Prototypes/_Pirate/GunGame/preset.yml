@@ -6,8 +6,8 @@
   name: gun-game-title
   description: gun-game-description
   minPlayers: 2
-  maxPlayers: 5
-  showInVote: false # Pirate event
+  maxPlayers: 20
+  showInVote: true
   supportedMaps: GunGameMapPool
   arenaFallbackMap: MW-Dock
   rules:

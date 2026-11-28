@@ -264,6 +264,8 @@ namespace Content.Server.Voting.Managers
 
         private void CreateMapVote(ICommonSession? initiator)
         {
+            var ticker = _entityManager.System<GameTicker>();
+            var votingPreset = ticker.Preset; // Pirate: the ballot belongs to the pool that supplied its choices.
             var maps = _gameMapManager.CurrentlyEligibleMaps().ToDictionary(map => map, map => map.MapName);
 
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
@@ -288,6 +290,13 @@ namespace Content.Server.Voting.Managers
 
             CreatePirateSelectionVote(options, (_, args) => // Pirate: voting penalties and runoffs
             {
+                if ((votingPreset?.ArenaFallbackMap != null || ticker.Preset?.ArenaFallbackMap != null) &&
+                    votingPreset?.MapPool != ticker.Preset?.MapPool)
+                {
+                    _chatManager.DispatchServerAnnouncement(Loc.GetString("pirate-vote-map-preset-changed"));
+                    return;
+                }
+
                 GameMapPrototype picked;
                 if (args.Winner == null)
                 {
@@ -303,7 +312,6 @@ namespace Content.Server.Voting.Managers
                 }
 
                 _adminLogger.Add(LogType.Vote, LogImpact.Medium, $"Map vote finished: {picked.MapName}");
-                var ticker = _entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
                 if (ticker.CanUpdateMap())
                 {
                     if (_gameMapManager.TrySelectMapIfEligible(picked.ID))
