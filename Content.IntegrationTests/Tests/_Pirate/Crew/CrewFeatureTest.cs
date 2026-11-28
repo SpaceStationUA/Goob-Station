@@ -11,6 +11,7 @@ using Content.Pirate.Server.CrystalMass;
 using Content.Server.Spreader;
 using Content.Server.GameTicking;
 using Content.Server.Mind;
+using Content.Server.Radio.EntitySystems;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared._Pirate.CCVars;
@@ -29,12 +30,16 @@ using Content.Server.StationEvents;
 using Content.Server.StationEvents.Components;
 using Content.Shared._Pirate.Breadcrumb.Components;
 using Content.Shared._Pirate.Lavaland.Puzzle;
+using Content.Shared._Pirate.StationAi;
 using Content.Shared._Pirate.Supermatter;
 using Content.Shared.Charges.Systems;
 using Content.Shared.EntityTable;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
+using Content.Shared.Radio.Components;
+using Content.Shared.Silicons.StationAi;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -320,6 +325,73 @@ public sealed class CrewFeatureTest
         {
             Assert.That(em.GetComponent<CascadeCoreComponent>(core).Destabilized, Is.True);
             Assert.That(em.EntityExists(crystal), Is.False);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task AiRadioClickRequiresAHeardSpeakerAndPublicCoordinates()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var server = pair.Server;
+        var client = pair.Client;
+        var em = server.EntMan;
+        var map = await pair.CreateTestMap();
+        var maps = server.System<SharedMapSystem>();
+        var transforms = server.System<SharedTransformSystem>();
+        var sensors = server.System<SharedSuitSensorSystem>();
+        EntityUid core = default, eye = default, speaker = default, uniform = default;
+        NetEntity radioSpeaker = default;
+        MapCoordinates corePosition = default;
+
+        await server.WaitAssertion(() =>
+        {
+            var tile = new Tile(server.ResolveDependency<ITileDefinitionManager>()["FloorSteel"].TileId);
+            for (var x = 0; x <= 4; x++)
+                maps.SetTile(map.Grid, new Vector2i(x, 0), tile);
+
+            core = em.SpawnEntity("PlayerStationAiEmpty", map.GridCoords);
+            var brain = em.SpawnEntity("StationAiBrain", map.GridCoords);
+            var containers = server.System<SharedContainerSystem>();
+            Assert.That(containers.Insert(brain, containers.GetContainer(core, StationAiCoreComponent.Container)), Is.True);
+            server.PlayerMan.SetAttachedEntity(server.PlayerMan.Sessions.Single(), brain);
+            eye = em.GetComponent<StationAiCoreComponent>(core).RemoteEntity!.Value;
+            corePosition = transforms.GetMapCoordinates(core);
+
+            var remoteTile = maps.GridTileToLocal(map.Grid, map.Grid.Comp, new Vector2i(4, 0));
+            speaker = em.SpawnEntity("MobHuman", remoteTile);
+            uniform = em.SpawnEntity("ClothingUniformJumpsuitCaptain", remoteTile);
+            Assert.That(server.System<InventorySystem>().TryEquip(speaker, uniform, "jumpsuit", silent: true, force: true), Is.True);
+            sensors.SetSensor(uniform, SuitSensorMode.SensorCords);
+            em.EnsureComponent<TelecomExemptComponent>(speaker);
+            radioSpeaker = em.GetNetEntity(speaker);
+        });
+        await pair.RunUntilSynced();
+
+        async Task ClickSpeaker()
+        {
+            await client.WaitPost(() => client.EntMan.RaisePredictiveEvent(new AiRadioJumpEvent(radioSpeaker)));
+            await pair.RunSeconds(1);
+        }
+
+        await ClickSpeaker();
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(transforms.GetMapCoordinates(eye).InRange(transforms.GetMapCoordinates(speaker), 0.2f), Is.False);
+            sensors.SetSensor(uniform, SuitSensorMode.SensorVitals);
+            server.System<RadioSystem>().SendRadioMessage(speaker, "Перевірка зв’язку.", "Common", speaker);
+        });
+        await ClickSpeaker();
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(transforms.GetMapCoordinates(eye).InRange(transforms.GetMapCoordinates(speaker), 0.2f), Is.False);
+            sensors.SetSensor(uniform, SuitSensorMode.SensorCords);
+        });
+        await ClickSpeaker();
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(transforms.GetMapCoordinates(eye).InRange(transforms.GetMapCoordinates(speaker), 0.2f), Is.True);
+            Assert.That(transforms.GetMapCoordinates(core), Is.EqualTo(corePosition));
         });
         await pair.CleanReturnAsync();
     }
