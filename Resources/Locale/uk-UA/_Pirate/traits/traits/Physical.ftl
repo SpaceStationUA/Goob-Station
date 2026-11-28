@@ -18,3 +18,9 @@ trait-light-step-name = Легкий крок
 trait-light-step-desc = Ваші кроки тихіші, ніж у інших представників вашого виду.
 trait-pirate-lightweight-name = Легковаговик
 trait-pirate-lightweight-desc = Ви важите менше за інших представників свого виду. Вас легше підняти, кинути чи тягнути.
+
+trait-slow-corpse-decay-name = Недоторканні рештки
+trait-slow-corpse-decay-desc = Після смерті ваше тіло розкладається на 25% повільніше.
+trait-fast-corpse-decay-name = Напіврозпад
+trait-fast-corpse-decay-desc = Після смерті ваше тіло розкладається на 25% швидше.
+trait-condition-perishable-species = Тіло цього виду має піддаватися розкладанню.

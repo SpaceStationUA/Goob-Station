@@ -1,4 +1,14 @@
 - type: entity
+  parent: BaseFlatpack
+  id: IVDripFlatpack
+  name: IV drip assembly kit
+  description: A folded IV stand and the fittings needed to assemble it.
+  components:
+  - type: Flatpack
+    entity: IVDrip
+    checkObstruction: false
+
+- type: entity
   parent: BaseStructureDynamic
   id: IVDrip
   name: IV drip

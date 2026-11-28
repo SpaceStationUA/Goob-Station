@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Atmos.EntitySystems;
+using Content.Shared._Pirate.Traits; // Pirate: corpse decay traits
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Rotting;
 using Content.Shared.Body.Events;
@@ -56,13 +57,14 @@ public sealed class RottingSystem : SharedRottingSystem
     /// <returns></returns>
     private float GetRotRate(EntityUid uid)
     {
+        var rate = CompOrNull<CorpseDecayModifierComponent>(uid)?.Multiplier ?? 1f; // Pirate
         if (_container.TryGetContainingContainer((uid, null, null), out var container) &&
             TryComp<ProRottingContainerComponent>(container.Owner, out var rotContainer))
         {
-            return rotContainer.DecayModifier;
+            return rate * rotContainer.DecayModifier;
         }
 
-        return 1f;
+        return rate;
     }
 
     public override void Update(float frameTime)
