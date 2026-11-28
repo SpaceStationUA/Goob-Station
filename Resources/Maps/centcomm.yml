@@ -4970,6 +4970,13 @@ entities:
     - type: Transform
       pos: 2.2852075,33.663868
       parent: 1668
+- proto: BlueshieldLifelineArrival
+  entities:
+  - uid: 6992
+    components:
+    - type: Transform
+      pos: 27.5,-9.5
+      parent: 1668
 - proto: BluespaceBeaker
   entities:
   - uid: 547

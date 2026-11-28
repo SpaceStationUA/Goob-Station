@@ -63,3 +63,25 @@
     messages:
       Critical: cybersun-deathrattle-implant-critical-message
       Dead: cybersun-deathrattle-implant-dead-message
+
+- type: entity
+  parent: BaseSubdermalImplant
+  id: BlueshieldLifelineImplant
+  name: Blueshield LifeLine implant
+  description: Extracts its host and anyone they carry to Central Command, once. Activates manually or on the host's death.
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: SubdermalImplant
+    permanent: true
+    implantAction: ActionActivateBlueshieldLifeline
+  - type: MansusGraspBlockTrigger
+  - type: TriggerOnMobstateChange
+    mobState: [ Dead ]
+  - type: TriggerOnActivateImplant
+  - type: BlueshieldLifeline
+
+- type: entity
+  parent: ActionActivateBluespaceLifeline
+  id: ActionActivateBlueshieldLifeline
+  name: Activate LifeLine
+  description: Evacuate to Central Command, alone or with the person in your arms. Single use. A nuclear authentication disk blocks extraction.
