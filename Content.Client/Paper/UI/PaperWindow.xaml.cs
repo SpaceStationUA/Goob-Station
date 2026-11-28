@@ -400,15 +400,12 @@ namespace Content.Client.Paper.UI
             // Pirate: diary drawings - each leaf has its own drawing, swapped by the server;
             // the surface's state can land before or after the paper state, so poll it so the
             // preview never keeps the previous leaf's doodle.
-            if (_paperEntity is { } drawnPaper && _timing.CurTime >= _nextDrawingProbe)
+            if (_paperEntity != null && _timing.CurTime >= _nextDrawingProbe)
             {
                 _nextDrawingProbe = _timing.CurTime + TimeSpan.FromMilliseconds(250);
-                var current = _entityManager.TryGetComponent<PaintSurfaceComponent>(drawnPaper, out var drawnSurface)
-                    ? drawnSurface.Image
-                    : null;
-
-                if (!ReferenceEquals(current, _drawingImage))
-                    UpdateDrawingPreview();
+                // Pirate: drawings on paper - state deltas patch the image in place, so the same image
+                // may change its pixels: refresh on every probe, the texture is only uploaded on change.
+                UpdateDrawingPreview();
             }
 
             // Now do the deferred setup of the written area. At the point
@@ -544,30 +541,46 @@ namespace Content.Client.Paper.UI
 
             _drawingImage = image;
 
+            var changed = false;
+            OwnedTexture texture;
             if (_drawingTexture == null || _drawingTexture.Size != image.Size)
             {
                 _drawingTexture?.Dispose();
-                _drawingTexture = _clyde.CreateBlankTexture<Rgba32>(image.Size, "paper-drawing");
+                texture = _clyde.CreateBlankTexture<Rgba32>(image.Size, "paper-drawing");
+                _drawingTexture = texture;
                 _drawingBuffer = new Rgba32[image.Width * image.Height];
+                changed = true;
+            }
+            else
+            {
+                texture = _drawingTexture;
             }
 
             _hasDrawing = false;
             for (var i = 0; i < _drawingBuffer.Length; i++)
             {
-                if (image.Pixels[i] == 0)
+                var pixel = default(Rgba32);
+                if (image.Pixels[i] != 0)
                 {
-                    _drawingBuffer[i] = new Rgba32(0, 0, 0, 0);
-                    continue;
+                    var color = image.GetPixel(i);
+                    pixel = new Rgba32(color.RByte, color.GByte, color.BByte, (byte) 255);
+                    _hasDrawing = true;
                 }
 
-                var color = image.GetPixel(i);
-                _drawingBuffer[i] = new Rgba32(color.RByte, color.GByte, color.BByte, (byte) 255);
-                _hasDrawing = true;
+                if (_drawingBuffer[i] == pixel)
+                    continue;
+
+                _drawingBuffer[i] = pixel;
+                changed = true;
             }
 
-            _drawingTexture.SetSubImage(Vector2i.Zero, image.Size, new ReadOnlySpan<Rgba32>(_drawingBuffer));
-            DrawingPreview.Texture = _drawingTexture;
-            UpdateDrawingLayout();
+            if (changed)
+            {
+                texture.SetSubImage(Vector2i.Zero, image.Size, new ReadOnlySpan<Rgba32>(_drawingBuffer));
+                DrawingPreview.Texture = texture;
+                UpdateDrawingLayout();
+            }
+
             DrawingPreview.Visible = _hasDrawing;
         }
 
@@ -580,7 +593,12 @@ namespace Content.Client.Paper.UI
             if (!_hasDrawing || _drawingImage is not { } image)
                 return;
 
-            var page = ScrollingContents.PixelSize;
+            // Pirate: drawings on paper - the sheet itself (PaperContent, which is capped by MaxWidth),
+            // in virtual pixels, so the doodle never spills outside the sheet.
+            // The height is capped by the visible leaf so a long note cannot inflate it.
+            var page = PaperContent.Size;
+            page.Y = MathF.Min(page.Y, ScrollingContents.Size.Y);
+
             if (page.X <= 0f || page.Y <= 0f)
                 return;
 
