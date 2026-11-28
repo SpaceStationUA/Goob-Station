@@ -44,6 +44,12 @@ public sealed partial class BankCardSystem
 
             var message = getMessage(accountId);
             var wrappedMessage = $"{FormattedMessage.EscapeText(Name(uid))}: {message}";
+            if (card.BindToMind)
+            {
+                SendSalaryNotification(uid, uid, message, wrappedMessage);
+                continue;
+            }
+
             var parent = Transform(uid).ParentUid;
             var carried = false;
             while (parent.IsValid())

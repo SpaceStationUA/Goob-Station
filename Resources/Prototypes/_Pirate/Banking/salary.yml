@@ -38,6 +38,7 @@
     MedicalIntern: 270
     Psychologist: 270
     # Науковий Відділ
+    Borg: 270
     Roboticist: 470
     Scientist: 470
     Geneticist: 470

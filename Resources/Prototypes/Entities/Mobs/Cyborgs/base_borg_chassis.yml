@@ -403,6 +403,8 @@
   parent: [BaseBorgChassis, BaseBorgTransponder]
   abstract: true
   components:
+  - type: BankCard
+    bindToMind: true
   - type: RandomMetadata
     nameSegments:
     - NamesBorg

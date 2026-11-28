@@ -13,4 +13,8 @@ public sealed partial class BankCardComponent : Component
 
     [DataField]
     public bool CommandBudgetCard;
+
+    /// <summary>The payment terminal in a station borg uses its current occupant's personal account.</summary>
+    [DataField]
+    public bool BindToMind;
 }

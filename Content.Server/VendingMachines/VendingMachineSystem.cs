@@ -296,7 +296,7 @@ namespace Content.Server.VendingMachines
 
         public override void AuthorizedVend(EntityUid uid, EntityUid sender, InventoryType type, string itemId, VendingMachineComponent component)
         {
-            if (component.Ejecting)
+            if (component.Ejecting || component.Broken || !this.IsPowered(uid, EntityManager))
                 return;
 
             if (!IsAuthorized(uid, sender, component))
@@ -338,15 +338,20 @@ namespace Content.Server.VendingMachines
                 {
                     component.Credits -= price;
                 }
-                else if (TryPayWithBankCard(sender, price, uid)) // Pirate: bank transaction history
-                {
-                    Audio.PlayPvs(component.SoundInsertCurrency, uid);
-                }
                 else
                 {
-                    Popup.PopupEntity(Loc.GetString(IsBankCardArrested(sender) ? "bank-account-arrested-purchase" : "vending-machine-component-no-balance", ("target", uid)), sender, sender); // Pirate: citations
-                    Deny((uid, component), sender);
-                    return;
+                    var account = GetPaymentAccount(sender);
+                    if (account == null || !_bankCard.TryChangeBalance(account.Value, -price, BankTransactionType.Purchase, Name(uid)))
+                    {
+                        var message = account is { } id && _bankCard.IsArrested(id)
+                            ? "bank-account-arrested-purchase"
+                            : "vending-machine-component-no-balance";
+                        Popup.PopupEntity(Loc.GetString(message, ("target", uid)), sender, sender);
+                        Deny((uid, component), sender);
+                        return;
+                    }
+
+                    Audio.PlayPvs(component.SoundInsertCurrency, uid);
                 }
             }
 
@@ -354,27 +359,15 @@ namespace Content.Server.VendingMachines
             UpdateVendingMachineInterfaceState(uid, component);
         }
 
-        private bool TryPayWithBankCard(EntityUid user, int amount, EntityUid vendor) // Pirate: bank transaction history
+        private int? GetPaymentAccount(EntityUid user)
         {
-            if (!_idCard.TryFindIdCard(user, out var idCard))
-                return false;
+            if (_idCard.TryFindIdCard(user, out var idCard) && TryComp<BankCardComponent>(idCard.Owner, out var card))
+                return card.AccountId;
 
-            if (!TryComp<BankCardComponent>(idCard.Owner, out var bankCard) || bankCard.AccountId == null)
-                return false;
-
-            return _bankCard.TryChangeBalance(bankCard.AccountId.Value, -amount, BankTransactionType.Purchase, Name(vendor)); // Pirate: bank transaction history
+            return TryComp<BankCardComponent>(user, out var terminal) && terminal.BindToMind
+                ? terminal.AccountId
+                : null;
         }
-
-        #region Pirate: citations
-        private bool IsBankCardArrested(EntityUid user)
-        {
-            return _idCard.TryFindIdCard(user, out var idCard)
-                && TryComp<BankCardComponent>(idCard.Owner, out var bankCard)
-                && bankCard.AccountId is { } accountId
-                && _bankCard.IsArrested(accountId);
-        }
-        #endregion
-
 
         private void OnInteractUsing(EntityUid uid, VendingMachineComponent component, InteractUsingEvent args)
         {

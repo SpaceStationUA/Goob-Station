@@ -6,6 +6,7 @@ using Content.Server.Cargo.Systems;
 using Content.Server.CartridgeLoader;
 using Content.Server.GameTicking;
 using Content.Server.Roles.Jobs;
+using Content.Server.Silicons.Borgs;
 using Content.Server.Station.Systems;
 using Content.Shared._Pirate.Banking;
 using Content.Shared.GameTicking;
@@ -45,6 +46,8 @@ public sealed partial class BankCardSystem : EntitySystem
         _salaries = _protoMan.Index<SalaryPrototype>("Salaries");
 
         SubscribeLocalEvent<BankCardComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<BankCardComponent, MindAddedMessage>(OnCardMindAdded);
+        SubscribeLocalEvent<BankCardComponent, MindRemovedMessage>(OnCardMindRemoved);
         SubscribeLocalEvent<StationBankComponent, MapInitEvent>(OnStationBankInit);
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
@@ -90,7 +93,7 @@ public sealed partial class BankCardSystem : EntitySystem
         PaySalary();
     }
 
-    private void PaySalary()
+    internal void PaySalary()
     {
         var paidAccounts = new HashSet<int>();
         foreach (var account in _accounts.Where(account =>
@@ -115,14 +118,23 @@ public sealed partial class BankCardSystem : EntitySystem
 
     private int GetSalary(EntityUid? mind)
     {
-        if (!_job.MindTryGetJob(mind, out var job) || !_salaries.Salaries.TryGetValue(job.ID, out var salary))
-            return 0;
+        return GetSalaryJob(mind) is { } job ? _salaries.Salaries.GetValueOrDefault(job) : 0;
+    }
 
-        return salary;
+    private string? GetSalaryJob(EntityUid? mind)
+    {
+        if (TryComp<MindComponent>(mind, out var owner) &&
+            TryComp<BankCardComponent>(owner.OwnedEntity, out var card) && card.BindToMind)
+            return BorgSystem.BorgJobId.Id;
+
+        return _job.MindTryGetJob(mind, out var job) ? job.ID : null;
     }
 
     private void OnMapInit(EntityUid uid, BankCardComponent component, MapInitEvent args)
     {
+        if (component.BindToMind)
+            return;
+
         if (component.CommandBudgetCard &&
             TryComp(_station.GetOwningStation(uid), out StationBankComponent? acc))
         {
@@ -138,6 +150,41 @@ public sealed partial class BankCardSystem : EntitySystem
 
         var account = CreateAccount(default, component.StartingBalance);
         component.AccountId = account.AccountId;
+    }
+
+    private void OnCardMindAdded(Entity<BankCardComponent> card, ref MindAddedMessage args)
+    {
+        if (!card.Comp.BindToMind)
+            return;
+
+        var mindId = GetNetEntity(args.Mind.Owner);
+        var account = _accounts.FirstOrDefault(existing => existing.Mind == mindId);
+        if (account == null)
+        {
+            account = CreateAccount();
+            OpenPersonalAccount(account, args.Mind, card.Owner);
+        }
+
+        card.Comp.AccountId = account.AccountId;
+        if (_station.GetOwningStation(card.Owner) is { } station)
+            _salaryStations.TryAdd(args.Mind.Owner, station);
+    }
+
+    private void OnCardMindRemoved(Entity<BankCardComponent> card, ref MindRemovedMessage args)
+    {
+        if (card.Comp.BindToMind)
+            card.Comp.AccountId = null;
+    }
+
+    private void OpenPersonalAccount(BankAccount account, Entity<MindComponent> mind, EntityUid mob)
+    {
+        TryChangeBalance(account.AccountId, GetSalary(mind.Owner) + 100 - account.Balance,
+            BankTransactionType.OpeningBalance);
+        mind.Comp.AddMemory(new Memory("PIN", account.AccountPin.ToString()));
+        mind.Comp.AddMemory(new Memory(Loc.GetString("character-info-memories-account-number"), account.AccountId.ToString()));
+        account.Mind = GetNetEntity(mind.Owner);
+        account.Name = Name(mob);
+        RaiseAccountLinked(account.AccountId);
     }
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
@@ -160,15 +207,8 @@ public sealed partial class BankCardSystem : EntitySystem
             if (!TryComp(mind.Mind, out MindComponent? mindComponent))
                 return;
 
-            TryChangeBalance(bankAccount.AccountId, GetSalary(mind.Mind) + 100 - bankAccount.Balance,
-                BankTransactionType.OpeningBalance);
-            mindComponent.AddMemory(new Memory("PIN", bankAccount.AccountPin.ToString()));
-            mindComponent.AddMemory(new Memory(Loc.GetString("character-info-memories-account-number"),
-                bankAccount.AccountId.ToString()));
-            bankAccount.Mind = GetNetEntity(mind.Mind.Value);
             _salaryStations[mind.Mind.Value] = ev.Station;
-            bankAccount.Name = Name(ev.Mob);
-            RaiseAccountLinked(bankAccount.AccountId);
+            OpenPersonalAccount(bankAccount, (mind.Mind.Value, mindComponent), ev.Mob);
 
             if (!_inventorySystem.TryGetSlotEntity(ev.Mob, "id", out var pdaUid))
                 return;
@@ -244,7 +284,7 @@ public sealed partial class BankCardSystem : EntitySystem
             do
             {
                 accountNumber = _random.Next(100000, 999999);
-            } while (AccountExist(accountId));
+            } while (AccountExist(accountNumber));
 
             account = new BankAccount(accountNumber, startingBalance);
         }

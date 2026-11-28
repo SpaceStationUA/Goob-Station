@@ -10,6 +10,7 @@ using Content.Server.Kitchen.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Temperature.Systems;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -66,6 +67,8 @@ namespace Content.Server.Kitchen.EntitySystems
         [Dependency] private readonly TemperatureSystem _temperature = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
         [Dependency] private readonly HandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedStackSystem _stack = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
@@ -390,9 +393,25 @@ namespace Content.Server.Kitchen.EntitySystems
             }
 
             args.Handled = true;
-            _handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Storage);
+            if (!_handsSystem.TryDropIntoContainer(args.User, args.Used, ent.Comp.Storage) &&
+                !TryInsertLooseItem(ent, args.User, args.Used))
+                return;
+
             UpdateUserInterfaceState(ent, ent.Comp);
             ent.Comp.LastUser = args.User; // Pirate: attribute the next completed recipe.
+        }
+
+        private bool TryInsertLooseItem(Entity<MicrowaveComponent> microwave, EntityUid user, EntityUid item)
+        {
+            // Dragging an ingredient onto a constructed machine also raises InteractUsing.
+            var xform = Transform(item);
+            if (xform.Anchored || _container.IsEntityInContainer(item) ||
+                !_interaction.InRangeAndAccessible(user, (item, xform)) ||
+                !_interaction.InRangeAndAccessible(user, microwave.Owner) ||
+                !_actionBlocker.CanPickup(user, item))
+                return false;
+
+            return _container.Insert(item, microwave.Comp.Storage);
         }
 
         private void OnBreak(Entity<MicrowaveComponent> ent, ref BreakageEventArgs args)
@@ -416,7 +435,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
         private void OnAnchorChanged(EntityUid uid, MicrowaveComponent component, ref AnchorStateChangedEvent args)
         {
-            if (!args.Anchored)
+            if (!args.Anchored && !TerminatingOrDeleted(uid))
                 _container.EmptyContainer(component.Storage);
         }
 
