@@ -27,6 +27,7 @@ using Content.Shared.Storage;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.UnitTesting.Pool;
 
 namespace Content.IntegrationTests.Tests._Pirate.Blueshield;
@@ -34,6 +35,8 @@ namespace Content.IntegrationTests.Tests._Pirate.Blueshield;
 [TestFixture]
 public sealed class BlueshieldLifelineTest
 {
+    private static readonly ProtoId<JobPrototype> BlueshieldJob = "BlueshieldOfficer";
+
     [Test]
     public async Task RescueOnActualCentcommAfterShuttleDeparture()
     {
@@ -60,19 +63,19 @@ public sealed class BlueshieldLifelineTest
             var stationGrid = em.GetComponent<StationDataComponent>(station).Grids.First(grid =>
                 server.Transform(grid).MapID == server.System<GameTicker>().DefaultMap);
             var origin = new EntityCoordinates(stationGrid, 0.5f, 0.5f);
-            var officer = em.SpawnEntity("MobHuman", origin);
-            var captain = em.SpawnEntity("MobHuman", origin);
+            var officer = em.SpawnAttachedTo("MobHuman", origin);
+            var captain = em.SpawnAttachedTo("MobHuman", origin);
             em.EnsureComponent<CommandStaffComponent>(officer);
             em.EnsureComponent<CommandStaffComponent>(captain);
             var minds = server.System<SharedMindSystem>();
             var mind = minds.CreateMind(null);
             minds.TransferTo(mind, captain);
-            var passengerBag = em.SpawnEntity("ClothingBackpack", origin);
+            var passengerBag = em.SpawnAttachedTo("ClothingBackpack", origin);
             Assert.That(server.System<InventorySystem>().TryEquip(captain, passengerBag, "back", silent: true, force: true), Is.True);
-            var fakeDisk = em.SpawnEntity("NukeDiskFake", origin);
+            var fakeDisk = em.SpawnAttachedTo("NukeDiskFake", origin);
             Assert.That(server.System<SharedContainerSystem>().Insert(fakeDisk, em.GetComponent<StorageComponent>(passengerBag).Container), Is.True);
 
-            var job = server.ProtoMan.Index<JobPrototype>("BlueshieldOfficer");
+            var job = server.ProtoMan.Index(BlueshieldJob);
             job.Special.OfType<AddImplantSpecial>().Single().AfterEquip(officer);
             var actions = server.System<SharedActionsSystem>();
             var action = actions.GetActions(officer).Single(a => em.GetComponent<MetaDataComponent>(a).EntityPrototype?.ID == "ActionActivateBlueshieldLifeline");
@@ -93,7 +96,7 @@ public sealed class BlueshieldLifelineTest
             Assert.That(revolution.CheckCommandLose(), Is.True);
 
             // Another surviving head, including an ordinary shuttle evacuee, still counts under the existing rules.
-            var head = em.SpawnEntity("MobHuman", server.Transform(marker).Coordinates);
+            var head = em.SpawnAttachedTo("MobHuman", server.Transform(marker).Coordinates);
             em.EnsureComponent<CommandStaffComponent>(head);
             Assert.That(revolution.CheckCommandLose(), Is.False);
             em.DeleteEntity(head);
@@ -119,8 +122,8 @@ public sealed class BlueshieldLifelineTest
         await server.WaitAssertion(() =>
         {
             RegisterArrival(em, origin, dest);
-            officer = em.SpawnEntity("MobHuman", origin.GridCoords);
-            passenger = em.SpawnEntity("MobHuman", origin.GridCoords);
+            officer = em.SpawnAttachedTo("MobHuman", origin.GridCoords);
+            passenger = em.SpawnAttachedTo("MobHuman", origin.GridCoords);
             implant = server.System<SharedSubdermalImplantSystem>().AddImplant(officer, "BlueshieldLifelineImplant")!.Value;
             action = em.GetComponent<SubdermalImplantComponent>(implant).Action!.Value;
             var (disk, box) = EquipDisk(em, onPassenger ? passenger : officer, origin.GridCoords);
@@ -162,7 +165,7 @@ public sealed class BlueshieldLifelineTest
         await server.WaitAssertion(() =>
         {
             RegisterArrival(em, origin, dest);
-            officer = em.SpawnEntity("MobHuman", origin.GridCoords);
+            officer = em.SpawnAttachedTo("MobHuman", origin.GridCoords);
             implant = server.System<SharedSubdermalImplantSystem>().AddImplant(officer, "BlueshieldLifelineImplant")!.Value;
             var contents = EquipDisk(em, officer, origin.GridCoords);
             disk = contents.Disk;
@@ -198,8 +201,8 @@ public sealed class BlueshieldLifelineTest
         await server.WaitAssertion(() =>
         {
             RegisterArrival(em, origin, dest);
-            officer = em.SpawnEntity("MobHuman", origin.GridCoords);
-            passenger = em.SpawnEntity("MobHuman", origin.GridCoords);
+            officer = em.SpawnAttachedTo("MobHuman", origin.GridCoords);
+            passenger = em.SpawnAttachedTo("MobHuman", origin.GridCoords);
             server.System<SharedSubdermalImplantSystem>().AddImplant(officer, "BlueshieldLifelineImplant");
             if (passengerHasDisk)
                 EquipDisk(em, passenger, origin.GridCoords);
@@ -226,10 +229,10 @@ public sealed class BlueshieldLifelineTest
         var dest = await pair.CreateTestMap();
         await server.WaitAssertion(() =>
         {
-            var officer = em.SpawnEntity("MobHuman", origin.GridCoords);
+            var officer = em.SpawnAttachedTo("MobHuman", origin.GridCoords);
             var implant = server.System<SharedSubdermalImplantSystem>().AddImplant(officer, "BlueshieldLifelineImplant")!.Value;
             var action = em.GetComponent<SubdermalImplantComponent>(implant).Action!.Value;
-            em.SpawnEntity("BlueshieldLifelineArrival", dest.GridCoords); // Unregistered grid.
+            em.SpawnAttachedTo("BlueshieldLifelineArrival", dest.GridCoords); // Unregistered grid.
             server.System<SharedActionsSystem>().PerformAction(officer, (action, em.GetComponent<ActionComponent>(action)));
             Assert.That(server.Transform(officer).MapUid, Is.EqualTo(origin.MapUid));
             Assert.That(em.IsQueuedForDeletion(implant), Is.False);
@@ -244,20 +247,20 @@ public sealed class BlueshieldLifelineTest
 
     private static void RegisterArrival(IEntityManager em, TestMapData origin, TestMapData dest)
     {
-        var station = em.EnsureComponent<StationCentcommComponent>(em.SpawnEntity(null, origin.GridCoords));
+        var station = em.EnsureComponent<StationCentcommComponent>(em.SpawnAttachedTo(null, origin.GridCoords));
         station.Entity = dest.Grid.Owner;
         station.MapEntity = dest.MapUid;
-        em.SpawnEntity("BlueshieldLifelineArrival", dest.GridCoords.Offset(new Vector2(0.5f)));
+        em.SpawnAttachedTo("BlueshieldLifelineArrival", dest.GridCoords.Offset(new Vector2(0.5f)));
     }
 
     private static (EntityUid Disk, BaseContainer Box) EquipDisk(IEntityManager em, EntityUid host, EntityCoordinates coordinates)
     {
-        var backpack = em.SpawnEntity("ClothingBackpack", coordinates);
+        var backpack = em.SpawnAttachedTo("ClothingBackpack", coordinates);
         Assert.That(em.System<InventorySystem>().TryEquip(host, backpack, "back", silent: true, force: true), Is.True);
-        var box = em.SpawnEntity("BoxCardboard", coordinates);
+        var box = em.SpawnAttachedTo("BoxCardboard", coordinates);
         var containers = em.System<SharedContainerSystem>();
         Assert.That(containers.Insert(box, em.GetComponent<StorageComponent>(backpack).Container), Is.True);
-        var disk = em.SpawnEntity("NukeDisk", coordinates);
+        var disk = em.SpawnAttachedTo("NukeDisk", coordinates);
         var storage = em.GetComponent<StorageComponent>(box).Container;
         Assert.That(containers.Insert(disk, storage), Is.True);
         return (disk, storage);

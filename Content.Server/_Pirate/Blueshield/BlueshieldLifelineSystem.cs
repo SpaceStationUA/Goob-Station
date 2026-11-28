@@ -104,7 +104,7 @@ public sealed class BlueshieldLifelineSystem : EntitySystem
 
         QueueDel(implant);
         Spawn("BluespaceLifelineSpawnCore", origin);
-        Spawn("BluespaceLifeline", destination);
+        SpawnAttachedTo("BluespaceLifeline", destination);
         args.Handled = true;
     }
 
