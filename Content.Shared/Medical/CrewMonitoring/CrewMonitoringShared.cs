@@ -84,6 +84,7 @@ public enum CrewMonitoringDepartment
 public sealed class CrewMonitoringState : BoundUserInterfaceState
 {
     public List<SuitSensorStatus> Sensors;
+    public bool CommandTrackersOnly;
     public bool IsEmagged; // Pirate
 
     // Pirate Start - New Monitor: BUI state fields (online, alerts, servers, scan, frame)
@@ -162,9 +163,11 @@ public sealed class CrewMonitoringState : BoundUserInterfaceState
         NetEntity? serverGridUid = null,
         NetEntity? selectedServerUid = null,
         CrewMonitoringReferenceFrame? referenceFrame = null,
-        float alertVolume = 1f)
+        float alertVolume = 1f,
+        bool commandTrackersOnly = false)
     {
         Sensors = sensors;
+        CommandTrackersOnly = commandTrackersOnly;
         IsEmagged = isEmagged;
         ServerOnline = serverOnline;
         ServerName = serverName;

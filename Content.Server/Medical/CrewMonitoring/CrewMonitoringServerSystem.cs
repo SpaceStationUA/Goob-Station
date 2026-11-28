@@ -4,6 +4,7 @@ using Content.Server._Pirate.Medical.SuitSensors;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server._Pirate.ListeningPost.Components;
 using Content.Shared.Medical.SuitSensors;
+using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.DeviceNetwork.Systems;
@@ -25,6 +26,8 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+
+    [Dependency] private readonly CESharedZLevelsSystem _zLevels = default!;
 
     private const float PublishInterval = 0.5f;
     private float _publishAccumulator;
@@ -116,13 +119,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
             if (!power.Powered)
                 continue;
 
-            var serverPosition = serverXform.MapPosition;
-            var inRange =
-                serverPosition.MapId == report.WorldPosition.MapId &&
-                Vector2.DistanceSquared(serverPosition.Position, report.WorldPosition.Position) <=
-                wireless.Range * wireless.Range;
-
-            if (!inRange)
+            if (!IsInWirelessRange(serverXform, Transform(report.Wearer), wireless.Range))
             {
                 // CullOutOfRange also handles this; only touch dict if we currently track the key.
                 if (server.SensorStatus.ContainsKey(key))
@@ -141,12 +138,6 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
             }
 
             var now = _gameTiming.CurTime;
-            // Frame-local position for live Cords reports (and optional keep of last pin).
-            var worldLocal = Vector2.Transform(
-                report.WorldPosition.Position,
-                _transform.GetInvWorldMatrix(frameUid.Value));
-            var framedWorldCoords = GetNetCoordinates(
-                new EntityCoordinates(frameUid.Value, worldLocal));
 
             if (report.Status.Mode == SuitSensorMode.SensorOff)
             {
@@ -168,7 +159,12 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
             NetCoordinates? framedCoords = report.Status.Coordinates;
             if (report.Status.Mode == SuitSensorMode.SensorCords)
             {
-                framedCoords = framedWorldCoords;
+                // Keep a peer deck's own grid so its pin follows that deck in the selector.
+                if (serverXform.MapID == report.WorldPosition.MapId)
+                {
+                    var local = Vector2.Transform(report.WorldPosition.Position, _transform.GetInvWorldMatrix(frameUid.Value));
+                    framedCoords = GetNetCoordinates(new EntityCoordinates(frameUid.Value, local));
+                }
             }
             else if (framedCoords == null)
             {
@@ -488,8 +484,6 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         WirelessNetworkComponent wireless,
         TransformComponent serverXform)
     {
-        var serverPos = serverXform.MapPosition;
-        var rangeSq = wireless.Range * wireless.Range;
         _removeBuffer.Clear();
 
         foreach (var (key, status) in server.SensorStatus)
@@ -498,19 +492,30 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
                 !TryComp(sensorUid.Value, out SuitSensorComponent? sensor) ||
                 sensor.User == null ||
                 !TryComp(sensor.User.Value, out TransformComponent? wearerXform) ||
-                wearerXform.MapID != serverPos.MapId)
+                !IsInWirelessRange(serverXform, wearerXform, wireless.Range))
             {
                 _removeBuffer.Add(key);
-                continue;
             }
-
-            var wearerPos = wearerXform.MapPosition;
-            if (Vector2.DistanceSquared(serverPos.Position, wearerPos.Position) > rangeSq)
-                _removeBuffer.Add(key);
         }
 
         foreach (var key in _removeBuffer)
             RemoveSensor(server, key);
+    }
+
+    internal bool IsInWirelessRange(TransformComponent server, TransformComponent device, float range)
+    {
+        var serverPosition = server.MapPosition;
+        var devicePosition = device.MapPosition;
+        if (serverPosition.MapId == devicePosition.MapId)
+            return Vector2.DistanceSquared(serverPosition.Position, devicePosition.Position) <= range * range;
+
+        if (server.GridUid is not { } serverGrid || device.GridUid is not { } deviceGrid ||
+            !_zLevels.AreGridsLinked(serverGrid, deviceGrid))
+            return false;
+
+        var serverLocal = Vector2.Transform(serverPosition.Position, _transform.GetInvWorldMatrix(serverGrid));
+        var deviceLocal = Vector2.Transform(devicePosition.Position, _transform.GetInvWorldMatrix(deviceGrid));
+        return Vector2.DistanceSquared(serverLocal, deviceLocal) <= range * range;
     }
 
     private static void RemoveSensor(CrewMonitoringServerComponent component, string key)

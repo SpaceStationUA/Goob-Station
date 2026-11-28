@@ -28,6 +28,8 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Gulp:
+      path: /Audio/_Goobstation/Voice/gulpexotic.ogg
     Baa:
       collection: OviniaBaa
 
@@ -58,5 +60,7 @@
       collection: Whistles
     Weh:
       collection: Weh
+    Gulp:
+      path: /Audio/_Goobstation/Voice/gulpexotic.ogg
     Baa:
       collection: OviniaBaa

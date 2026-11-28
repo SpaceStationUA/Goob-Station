@@ -16,6 +16,9 @@ public sealed partial class SpiritCandleComponent : Component
     public EntProtoId SpiritArea = "SpiritCandleRevealArea";
 
     [DataField]
+    public EntProtoId Skull = "HeadSkeleton";
+
+    [DataField]
     public TimeSpan CorporealDuration = TimeSpan.FromSeconds(15);
 
     [DataField]

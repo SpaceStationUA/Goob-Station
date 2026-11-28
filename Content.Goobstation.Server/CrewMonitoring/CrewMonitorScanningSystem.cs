@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Linq;
 using Content.Goobstation.Server.RelayedDeathrattle;
 using Content.Goobstation.Shared.CrewMonitoring;
 using Content.Shared.DoAfter;
@@ -7,6 +8,8 @@ using Content.Shared.Humanoid;
 using Content.Shared.Interaction;
 using Content.Shared.Whitelist;
 using Content.Shared.Implants;
+using Content.Shared.Implants.Components;
+using Robust.Shared.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Server.Popups;
 using Content.Shared.Popups;
@@ -21,8 +24,9 @@ public sealed partial class CrewMonitorScanningSystem : EntitySystem
     [Dependency] private SharedSubdermalImplantSystem _implantSystem = default!;
     [Dependency] private PopupSystem _popup = default!;
 
-    private const string CommandTrackerImplant = "CommandTrackingImplant";
-    private const string CommandTrackerImplantName = "command tracking implant";
+    [Dependency] private IPrototypeManager _prototypes = default!;
+
+    private static readonly EntProtoId CommandTrackerImplant = "CommandTrackingImplant";
 
     public override void Initialize()
     {
@@ -46,31 +50,40 @@ public sealed partial class CrewMonitorScanningSystem : EntitySystem
 
     private void OnScanComplete(EntityUid uid, CrewMonitorScanningComponent comp, CrewMonitorScanningDoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled || args.Target == null)
+        if (args.Cancelled || args.Handled || args.Target is not { } target)
             return;
-        var name = Identity.Name(args.Target.Value, EntityManager, args.User);
-
-        if (comp.ScannedEntities.Contains(args.Target.Value))
-        {
-            var msg = Loc.GetString("implanter-component-implant-already", ("implant", CommandTrackerImplantName), ("target", name));
-            _popup.PopupEntity(msg, args.Target.Value, args.User);
-            return;
-        }
-
-        if (_whitelist.IsWhitelistFail(comp.Whitelist, args.Target.Value))
-        {
-
-            var msg = Loc.GetString("implanter-component-implant-failed", ("implant", CommandTrackerImplantName), ("target", name));
-            _popup.PopupEntity(msg, args.Target.Value, args.User);
-            return;
-        }
-
-        comp.ScannedEntities.Add(args.Target.Value); //Keep for don't double implant
-        _implantSystem.AddImplant(args.Target.Value, CommandTrackerImplant);
-
-        if (comp.ApplyDeathrattle)
-            EnsureComp<RelayedDeathrattleComponent>(args.Target.Value).Target = uid;
 
         args.Handled = true;
+        var name = Identity.Name(target, EntityManager, args.User);
+        var implantName = _prototypes.Index(CommandTrackerImplant).Name;
+        if (TryComp<ImplantedComponent>(target, out var implanted) &&
+            implanted.ImplantContainer.ContainedEntities.Any(id => MetaData(id).EntityPrototype?.ID == CommandTrackerImplant.Id))
+        {
+            _popup.PopupEntity(Loc.GetString("implanter-component-implant-already", ("implant", implantName), ("target", name)), target, args.User);
+            return;
+        }
+
+        if (_whitelist.IsWhitelistFail(comp.Whitelist, target) || !TryInstallTracker(target))
+        {
+            _popup.PopupEntity(Loc.GetString("implanter-component-implant-failed", ("implant", implantName), ("target", name)), target, args.User);
+            return;
+        }
+
+        if (comp.ApplyDeathrattle)
+            EnsureComp<RelayedDeathrattleComponent>(target).Target = uid;
+
+        _popup.PopupEntity(Loc.GetString("crew-monitoring-command-tracker-installed", ("target", name)), target, args.User);
+    }
+
+    private bool TryInstallTracker(EntityUid target)
+    {
+        if (_implantSystem.AddImplant(target, CommandTrackerImplant) is not { } tracker)
+            return false;
+
+        if (Comp<SubdermalImplantComponent>(tracker).ImplantedEntity == target)
+            return true;
+
+        QueueDel(tracker);
+        return false;
     }
 }

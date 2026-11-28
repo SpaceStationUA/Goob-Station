@@ -64,17 +64,21 @@ public sealed class HairGradientPickerTest
             {
                 var editor = picker.FindControl<BoxContainer>("ColorEditor");
                 Assert.That(editor.Visible, Is.True, "shader-only markings must expose their editor");
-                var colors = editor.Children.OfType<ColorSelectorSliders>().ToArray();
-                var parameters = ParameterSliders(editor);
-                Assert.That(colors, Has.Length.EqualTo(colorCount));
+                var selector = editor.Children.OfType<ColorSelectorSliders>().Single();
+                Assert.That(editor.Children.OfType<OptionButton>().Single().ItemCount, Is.EqualTo(colorCount + 1));
+                Assert.That(selector.Color, Is.EqualTo(Color.Red));
+                selector.OnColorChanged!.Invoke(Color.Blue);
+            });
+            await SelectLayer(pair, picker, colorCount);
+            await client.WaitAssertion(() =>
+            {
+                var parameters = ParameterSliders(picker.FindControl<BoxContainer>("ColorEditor"));
                 Assert.That(parameters, Has.Length.EqualTo(colorCount));
-                Assert.That(colors.Select(selector => selector.Color), Has.All.EqualTo(Color.Red));
                 Assert.That(parameters[0].Value, Is.EqualTo(initialParameters.R));
                 Assert.That(parameters[1].Value, Is.EqualTo(initialParameters.G));
                 if (colorCount == 3)
                     Assert.That(parameters[2].Value, Is.EqualTo(initialParameters.B));
 
-                colors[0].OnColorChanged!.Invoke(Color.Blue);
                 parameters[0].Value = 0.25f;
             });
             await pair.RunTicksSync(30);
@@ -93,9 +97,11 @@ public sealed class HairGradientPickerTest
             await client.WaitAssertion(() =>
             {
                 var editor = picker.FindControl<BoxContainer>("ColorEditor");
-                Assert.That(editor.Children.OfType<ColorSelectorSliders>().First().Color, Is.EqualTo(Color.Blue));
                 Assert.That(ParameterSliders(editor)[0].Value, Is.EqualTo(0.25f));
             });
+            await SelectLayer(pair, picker, 0);
+            await client.WaitAssertion(() => Assert.That(picker.FindControl<BoxContainer>("ColorEditor")
+                .Children.OfType<ColorSelectorSliders>().Single().Color, Is.EqualTo(Color.Blue)));
         }
         finally
         {
@@ -142,8 +148,9 @@ public sealed class HairGradientPickerTest
                 Assert.That(marking.MarkingColors, Has.Count.EqualTo(4));
                 Assert.That(marking.MarkingColors.Take(3), Has.All.EqualTo(Color.White));
                 Assert.That(marking.MarkingColors[3], Is.EqualTo(Color.FromHex("#26bfd900")));
-                Assert.That(ParameterSliders(picker.FindControl<BoxContainer>("ColorEditor")), Has.Length.EqualTo(3));
             });
+            await SelectLayer(pair, picker, 3);
+            await client.WaitAssertion(() => Assert.That(ParameterSliders(picker.FindControl<BoxContainer>("ColorEditor")), Has.Length.EqualTo(3)));
         }
         finally
         {
@@ -165,6 +172,20 @@ public sealed class HairGradientPickerTest
             IgnoreCategories = string.Join(',', Enum.GetValues<MarkingCategories>().Where(value => value != category)),
             SetSize = new Vector2(1000, 600),
         };
+    }
+
+    private static async Task SelectLayer(TestPair pair, MarkingGridPicker picker, int index)
+    {
+        OptionButton options = null!;
+        Button entry = null!;
+        await pair.Client.WaitPost(() =>
+        {
+            options = picker.FindControl<BoxContainer>("ColorEditor").Children.OfType<OptionButton>().Single();
+            var popup = options.OptionsScroll.Children.OfType<BoxContainer>().Single();
+            entry = popup.Children.OfType<BoxContainer>().Single().Children.OfType<Button>().ElementAt(index);
+        });
+        await Click(pair, options);
+        await Click(pair, entry);
     }
 
     private static Slider[] ParameterSliders(BoxContainer editor)

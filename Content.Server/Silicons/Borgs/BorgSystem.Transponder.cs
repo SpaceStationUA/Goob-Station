@@ -79,7 +79,7 @@ public sealed partial class BorgSystem
                 comp.Name,
                 meta.EntityName,
                 1f,
-                100,
+                1f,
                 0,
                 hasBrain,
                 false, // Corvax-Next-AiRemoteControl

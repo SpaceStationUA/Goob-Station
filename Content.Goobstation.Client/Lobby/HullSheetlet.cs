@@ -104,6 +104,7 @@ public sealed class HullSheetlet : Sheetlet<NanotrasenStylesheet>
             .Prop(Slider.StylePropertyGrabber, grabber));
 
         rules.Add(E<Label>().Class(HullStyleClasses.Section).Font(PixelFont(true)).FontColor(AmberColor));
+        rules.Add(E<RichTextLabel>().Class(HullStyleClasses.Section).Font(PixelFont(true)).Modulate(AmberColor));
         rules.Add(E<Label>().Class(HullStyleClasses.FieldLabel).Font(PixelFont(false)).FontColor(MutedColor));
         rules.Add(E<RichTextLabel>().Class(HullStyleClasses.FieldLabel).Font(PixelFont(false)));
         rules.Add(E<RichTextLabel>().Class(HullStyleClasses.TileName).Font(PixelFont(false, true)));

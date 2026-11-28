@@ -427,8 +427,9 @@ public abstract class SharedSuitSensorSystem : EntitySystem
         // Pirate: Start - New Monitor: prefer active OnMob sensor over uniform
         // Prefer an *active* OnMob sensor over the uniform. An Off OnMob sensor
         // must not silence the jumpsuit, or that wearer vanishes from monitors.
+        // The private command tracker reports independently of public sensors.
         var wearer = sensor.User;
-        if (!sensor.OnMob &&
+        if (!sensor.OnMob && !sensor.CommandTracker &&
             wearer is { } wearerUid &&
             _onMobSensorsByWearer.TryGetValue(wearerUid, out var onMobUid) &&
             TryComp<SuitSensorComponent>(onMobUid, out var onMob) &&

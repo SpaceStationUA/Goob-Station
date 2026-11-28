@@ -9,7 +9,6 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using Content.Goobstation.Shared.CrewMonitoring;
 using Content.Server.Chat.Systems;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Pinpointer;
@@ -40,10 +39,6 @@ public sealed partial class RelayedDeathrattleSystem : EntitySystem
         newComp.Target = ent.Comp.Target;
         newComp.CritMessage = ent.Comp.CritMessage;
         newComp.DeathMessage = ent.Comp.DeathMessage;
-
-        if (TryComp<CrewMonitorScanningComponent>(ent.Comp.Target, out var scanner)
-            && !scanner.ScannedEntities.Contains(args.NewEntity))
-            scanner.ScannedEntities.Add(args.NewEntity);
     }
 
     private void OnMobStateChanged(EntityUid uid, RelayedDeathrattleComponent comp, MobStateChangedEvent args)

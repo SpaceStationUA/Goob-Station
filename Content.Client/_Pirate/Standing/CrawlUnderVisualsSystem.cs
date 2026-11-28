@@ -5,21 +5,22 @@ namespace Content.Client.Standing;
 
 public sealed class CrawlUnderVisualsSystem : EntitySystem
 {
-    public override void Update(float frameTime)
+    [Dependency] private readonly SpriteSystem _sprites = default!;
+
+    public override void Initialize()
     {
-        base.Update(frameTime);
+        SubscribeLocalEvent<StandingStateComponent, AppearanceChangeEvent>(OnAppearanceChange);
+    }
 
-        var query = EntityQueryEnumerator<StandingStateComponent, SpriteComponent>();
-        while (query.MoveNext(out var uid, out var standing, out var sprite))
-        {
-            var targetDepth = standing.IsCrawlingUnder 
-                ? standing.CrawlingUnderDrawDepth 
-                : standing.NormalDrawDepth;
+    private void OnAppearanceChange(Entity<StandingStateComponent> ent, ref AppearanceChangeEvent args)
+    {
+        if (args.Sprite is not { } sprite ||
+            !args.TryGetData<bool>(CrawlUnderVisuals.Hidden, out var hidden))
+            return;
 
-            if (sprite.DrawDepth != targetDepth)
-            {
-                sprite.DrawDepth = targetDepth;
-            }
-        }
+        if (hidden)
+            _sprites.SetDrawDepth((ent.Owner, sprite), ent.Comp.CrawlingUnderDrawDepth);
+        else if (sprite.DrawDepth == ent.Comp.CrawlingUnderDrawDepth)
+            _sprites.SetDrawDepth((ent.Owner, sprite), ent.Comp.NormalDrawDepth);
     }
 }

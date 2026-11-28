@@ -58,6 +58,7 @@ public sealed partial class MarkingGridPicker : BoxContainer
     private Color? _tileSkin;
     private Color? _tileEyes;
 
+    private (string MarkingId, int Layer)? _selectedColorLayer;
     private bool _colorPending;
     private TimeSpan _lastColorCommit;
 
@@ -630,36 +631,51 @@ public sealed partial class MarkingGridPicker : BoxContainer
         var stateNames = GetMarkingStateNames(proto);
         var current = _currentMarkings.Markings[editing.Category][index];
 
-        ColorEditor.AddChild(new Label
+        var layers = Enumerable.Range(0, Math.Min(proto.ColorCount, current.MarkingColors.Count))
+            .Where(i => !IsColorLinked(proto, i)).ToList();
+        if (layers.Count == 0)
+            return;
+
+        var layer = _selectedColorLayer is { } selection && selection.MarkingId == proto.ID && layers.Contains(selection.Layer)
+            ? selection.Layer
+            : layers[0];
+        ColorEditor.Visible = true;
+        var title = new RichTextLabel { StyleClasses = { HullStyleClasses.Section } };
+        title.SetMessage(Loc.GetString("marking-grid-colors", ("name", Loc.GetString($"marking-{proto.ID}"))));
+        ColorEditor.AddChild(title);
+
+        if (layers.Count > 1)
         {
-            Text = Loc.GetString("marking-grid-colors", ("name", Loc.GetString($"marking-{proto.ID}"))),
-            StyleClasses = { HullStyleClasses.Section },
-        });
-
-        for (var i = 0; i < proto.ColorCount && i < current.MarkingColors.Count; i++) // Pirate - shader markings have no sprites
-        {
-            if (IsColorLinked(proto, i))
-                continue;
-
-            // Pirate - shader parameters use numeric controls rather than RGB color selectors.
-            if (TryCreateShaderParamSliders(proto, i))
-                continue;
-
-            var selector = new ColorSelectorSliders
+            var options = new OptionButton { StyleClasses = { HullStyleClasses.Plate } };
+            foreach (var i in layers)
+                options.AddItem(stateNames[i], i);
+            options.SelectId(layer);
+            options.OnItemSelected += args =>
             {
-                SelectorType = ColorSelectorSliders.ColorSelectorType.Hsv,
-                Color = new Color(current.MarkingColors[i].RByte, current.MarkingColors[i].GByte, current.MarkingColors[i].BByte),
+                _selectedColorLayer = (proto.ID, args.Id);
+                PopulateColorEditor();
             };
-
-            var layer = i;
-            selector.OnColorChanged += color => SetMarkingColor(editing.Category, editing.Id, layer, color);
-
-            ColorEditor.AddChild(new Label { Text = Loc.GetString("marking-grid-layer-color", ("layer", stateNames[i])), StyleClasses = { HullStyleClasses.FieldLabel } });
-            HullStyler.Apply(selector);
-            ColorEditor.AddChild(selector);
+            ColorEditor.AddChild(options);
+        }
+        else
+        {
+            var name = new RichTextLabel { StyleClasses = { HullStyleClasses.FieldLabel } };
+            name.SetMessage(stateNames[layer]);
+            ColorEditor.AddChild(name);
         }
 
-        ColorEditor.Visible = ColorEditor.ChildCount > 1;
+        if (TryCreateShaderParamSliders(proto, layer))
+            return;
+
+        var color = current.MarkingColors[layer];
+        var selector = new ColorSelectorSliders
+        {
+            SelectorType = ColorSelectorSliders.ColorSelectorType.Hsv,
+            Color = new Color(color.RByte, color.GByte, color.BByte),
+        };
+        selector.OnColorChanged += value => SetMarkingColor(editing.Category, editing.Id, layer, value);
+        HullStyler.Apply(selector);
+        ColorEditor.AddChild(selector);
     }
 
     private void SetMarkingColor(MarkingCategories category, string id, int layer, Color color)

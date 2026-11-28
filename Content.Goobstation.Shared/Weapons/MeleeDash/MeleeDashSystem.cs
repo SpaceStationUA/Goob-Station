@@ -16,6 +16,7 @@ using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
@@ -42,7 +43,9 @@ public sealed partial class MeleeDashSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DashingComponent, LandEvent>(OnLand);
+        SubscribeLocalEvent<DashingComponent, LandEvent>((Entity<DashingComponent> ent, ref LandEvent _) => EndDash(ent));
+        SubscribeLocalEvent<DashingComponent, StopThrowEvent>((Entity<DashingComponent> ent, ref StopThrowEvent _) => EndDash(ent));
+        SubscribeLocalEvent<DashingComponent, PreventCollideEvent>(OnPreventCollide);
         SubscribeLocalEvent<DashingComponent, StartCollideEvent>(OnCollide);
         SubscribeAllEvent<MeleeDashEvent>(OnDash);
     }
@@ -76,26 +79,18 @@ public sealed partial class MeleeDashSystem : EntitySystem
         _melee.DoLightAttack(uid, ev, comp.Weapon.Value, melee, actor.PlayerSession);
     }
 
-    private void OnLand(Entity<DashingComponent> ent, ref LandEvent args)
+    private void OnPreventCollide(Entity<DashingComponent> ent, ref PreventCollideEvent args)
     {
-        var (uid, comp) = ent;
+        // Ignore only contacts that would disappear if this fixture ignored MidImpassable.
+        if ((args.OurFixture.CollisionMask & args.OtherFixture.CollisionLayer & ~DashCollisionLayer) == 0 &&
+            (args.OtherFixture.CollisionMask & args.OurFixture.CollisionLayer) == 0)
+            args.Cancelled = true;
+    }
 
-        if (TryComp(uid, out FixturesComponent? fixtureComponent))
-        {
-            foreach (var key in comp.ChangedFixtures)
-            {
-                if (!fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
-                    continue;
-
-                _physics.SetCollisionMask(uid,
-                    key,
-                    fixture,
-                    fixture.CollisionMask | DashCollisionLayer,
-                    fixtureComponent);
-            }
-        }
-
-        RemCompDeferred(uid, comp);
+    private void EndDash(Entity<DashingComponent> ent)
+    {
+        RemComp<DashingComponent>(ent);
+        _physics.RegenerateContacts(ent.Owner);
     }
 
     private void OnDash(MeleeDashEvent msg, EntitySessionEventArgs args)
@@ -124,35 +119,30 @@ public sealed partial class MeleeDashSystem : EntitySystem
             return;
         }
 
-        var length = MathF.Min(msg.Direction.Length(), dash.MaxDashLength);
-        if (length <= 0f)
+        var length = msg.Direction.Length();
+        if (!float.IsFinite(length) || length <= 0f)
             return;
-        var dir = msg.Direction.Normalized() * length;
+
+        var dir = msg.Direction / length * MathF.Min(length, dash.MaxDashLength);
+
+        if (!_hands.IsHolding(user, weapon) ||
+            !TryComp(user, out PhysicsComponent? body) ||
+            (body.BodyType & (BodyType.Dynamic | BodyType.KinematicController)) == 0)
+            return;
+
+        _throwing.TryThrow(user, dir, dash.DashForce, null, 0f, null, false, false, false, false, false);
+        if (!HasComp<ThrownItemComponent>(user))
+            return;
 
         _useDelay.TryResetDelay((weapon, delay));
 
         var dashing = EnsureComp<DashingComponent>(user);
 
-        if (TryComp(user, out FixturesComponent? fixtureComponent))
-        {
-            foreach (var (key, fixture) in fixtureComponent.Fixtures)
-            {
-                if ((fixture.CollisionMask & DashCollisionLayer) == 0)
-                    continue;
-
-                dashing.ChangedFixtures.Add(key);
-                _physics.SetCollisionMask(user,
-                    key,
-                    fixture,
-                    fixture.CollisionMask & ~DashCollisionLayer,
-                    manager: fixtureComponent);
-            }
-        }
-
         dashing.Weapon = weapon;
+        dashing.HitEntities.Clear();
         Dirty(user, dashing);
+        _physics.RegenerateContacts((user, body));
 
-        _throwing.TryThrow(user, dir, dash.DashForce, null, 0f, null, false, false, false, false, false);
         _audio.PlayPredicted(dash.DashSound, user, user);
 
         if (dash.EmoteOnDash != null)

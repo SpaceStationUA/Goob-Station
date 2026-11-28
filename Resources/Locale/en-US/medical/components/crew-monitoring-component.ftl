@@ -47,3 +47,6 @@ crew-monitoring-server-blip = Monitoring server
 crew-monitoring-user-interface-need-help = No sensor data available
 crew-monitoring-header-server-offline = Server offline
 crew-monitoring-header-server-address = Address:
+crew-monitoring-ui-no-command-trackers = No command trackers detected. Scan a member of command with this monitor.
+crew-monitoring-ui-no-sensors = Server connected. No sensor reports received yet.
+crew-monitoring-command-tracker-installed = Command tracker installed in { $target }.

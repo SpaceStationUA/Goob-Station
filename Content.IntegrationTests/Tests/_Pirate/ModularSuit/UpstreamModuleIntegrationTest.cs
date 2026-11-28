@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+using System.Globalization;
 using System.Linq;
 using Content.Client.Popups;
 using Content.Goobstation.Shared.ModSuits.Components;
@@ -8,6 +9,7 @@ using Content.Goobstation.Shared.ModSuits.Systems;
 using Content.Goobstation.Shared.Loudspeaker.Components;
 using Content.Pirate.Shared.ModularSuit;
 using Content.Server.Speech.Components;
+using Content.Server.Chat.Systems;
 using Content.Server.VoiceMask;
 using Content.Shared.Actions;
 using Content.Shared.Chat;
@@ -309,6 +311,48 @@ public sealed class UpstreamModuleIntegrationTest
             var device = entities.GetComponent<ModDeviceModuleComponent>(medbeam);
             Assert.That(device.DeviceEntity, Is.Not.Null);
             Assert.That(device.DeviceContainer.ContainedEntity, Is.Null, "The beam gun is deployed into the medic's hand.");
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task SphereVoiceUsesWearerOrLocalizedOverride()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var map = await pair.CreateTestMap();
+        await server.WaitAssertion(() =>
+        {
+            var wearer = entities.SpawnEntity("MobHuman", map.GridCoords);
+            var suit = entities.SpawnEntity("ClothingModsuitCorporate", map.GridCoords);
+            Assert.That(server.System<InventorySystem>().TryEquip(wearer, suit, "back", silent: true, force: true), Is.True);
+            var modSuit = entities.GetComponent<ModSuitComponent>(suit);
+            var modules = server.System<ModSuitSystem>();
+            var sphere = modSuit.ModulesContainer.ContainedEntities.Single(entities.HasComponent<ModSphereTransformModuleComponent>);
+            modules.SetModuleActive((suit, modSuit), (sphere, entities.GetComponent<ModModuleComponent>(sphere)), true);
+            Assert.That(entities.HasComponent<ModSphereFormComponent>(wearer), Is.True);
+
+            string Say()
+            {
+                var spoken = new TransformSpeakerNameEvent(wearer, entities.GetComponent<MetaDataComponent>(wearer).EntityName);
+                entities.EventBus.RaiseLocalEvent(wearer, spoken);
+                return server.System<ChatSystem>().WrapPublicMessage(wearer, spoken.VoiceName, "Привіт");
+            }
+            Assert.That(Say(), Does.Contain(entities.GetComponent<MetaDataComponent>(wearer).EntityName));
+            var infiltrator = entities.SpawnEntity("ModsuitModuleInfiltrator", map.GridCoords);
+            modules.SetModuleActive((suit, modSuit), (infiltrator, entities.GetComponent<ModModuleComponent>(infiltrator)), true);
+            var localization = server.ResolveDependency<ILocalizationManager>();
+            var original = localization.DefaultCulture;
+            try
+            {
+                localization.SetCulture(CultureInfo.GetCultureInfo("uk-UA"));
+                Assert.That(Say(), Does.Contain(Loc.GetString("voice-mask-default-name-override")));
+            }
+            finally
+            {
+                localization.SetCulture(original!);
+            }
         });
         await pair.CleanReturnAsync();
     }

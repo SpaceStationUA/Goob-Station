@@ -12,6 +12,7 @@ using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 using Content.Shared.Buckle.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage.Components;
+using Content.Shared.Standing;
 using Robust.Client.GameObjects;
 
 namespace Content.Client._Pirate.ZLevels.Core;
@@ -118,7 +119,7 @@ public sealed partial class CEClientZLevelsSystem
             return false;
         }
 
-        EnsureBodyVisualDefaults(zPhys, sprite);
+        EnsureBodyVisualDefaults((uid, zPhys), sprite);
 
         var target = GetVisualsLocalPosition((uid, zPhys), xform);
         var height = AdvanceRenderHeight(zPhys, target, frameTime);
@@ -130,7 +131,7 @@ public sealed partial class CEClientZLevelsSystem
             height,
             elevated,
             zPhys.SpriteOffsetDefault,
-            zPhys.DrawDepthDefault,
+            GroundDrawDepth(uid, zPhys.DrawDepthDefault),
             zPhys.NoRotDefault,
             zPhys.PreserveDynamicDrawDepth);
     }
@@ -146,7 +147,7 @@ public sealed partial class CEClientZLevelsSystem
                 continue;
             }
 
-            EnsureBodyVisualDefaults(zPhys, sprite);
+            EnsureBodyVisualDefaults((uid, zPhys), sprite);
 
             // Use raw height to avoid smoothing twice.
             var target = GetVisualsLocalPosition((carried.Carrier, carrierZ), carrierXform);
@@ -177,7 +178,7 @@ public sealed partial class CEClientZLevelsSystem
                 continue;
             }
 
-            EnsureBodyVisualDefaults(riderZ, sprite);
+            EnsureBodyVisualDefaults((uid, riderZ), sprite);
 
             var target = GetVisualsLocalPosition((strap, strapZ), strapXform);
             var height = AdvanceRenderHeight(riderZ, target, frameTime);
@@ -339,7 +340,7 @@ public sealed partial class CEClientZLevelsSystem
     private void OnBodyStartup(Entity<CEZPhysicsComponent> ent, ref ComponentStartup args)
     {
         if (_spriteQuery.TryComp(ent, out var sprite))
-            EnsureBodyVisualDefaults(ent.Comp, sprite);
+            EnsureBodyVisualDefaults(ent, sprite);
     }
 
     private void OnBodyRemove(Entity<CEZPhysicsComponent> ent, ref ComponentRemove args)
@@ -373,22 +374,32 @@ public sealed partial class CEClientZLevelsSystem
     }
 
     /// <summary>Captures defaults lazily because CEZPhysics can initialize before Sprite.</summary>
-    private static void EnsureBodyVisualDefaults(CEZPhysicsComponent comp, SpriteComponent sprite)
+    private void EnsureBodyVisualDefaults(Entity<CEZPhysicsComponent> ent, SpriteComponent sprite)
     {
+        var comp = ent.Comp;
         if (comp.VisualsInitialized)
             return;
 
         comp.NoRotDefault = sprite.NoRotation;
-        comp.DrawDepthDefault = sprite.DrawDepth;
+        // A client can first see a wearer who is already under a table.
+        comp.DrawDepthDefault = TryComp<StandingStateComponent>(ent, out var standing) && standing.IsCrawlingUnder &&
+            sprite.DrawDepth == standing.CrawlingUnderDrawDepth ? standing.NormalDrawDepth : sprite.DrawDepth;
         comp.SpriteOffsetDefault = sprite.Offset;
         comp.VisualsInitialized = true;
+    }
+
+    private int GroundDrawDepth(EntityUid uid, int defaultDepth)
+    {
+        return TryComp<StandingStateComponent>(uid, out var standing) && standing.IsCrawlingUnder
+            ? standing.CrawlingUnderDrawDepth
+            : defaultDepth;
     }
 
     private void RestoreBodyVisuals(CEZPhysicsComponent comp, Entity<SpriteComponent> sprite)
     {
         sprite.Comp.NoRotation = comp.NoRotDefault;
         _sprite.SetOffset((sprite.Owner, sprite.Comp), comp.SpriteOffsetDefault);
-        _sprite.SetDrawDepth((sprite.Owner, sprite.Comp), comp.DrawDepthBeforeElevation ?? comp.DrawDepthDefault);
+        _sprite.SetDrawDepth((sprite.Owner, sprite.Comp), GroundDrawDepth(sprite.Owner, comp.DrawDepthBeforeElevation ?? comp.DrawDepthDefault));
         comp.DrawDepthBeforeElevation = null;
         comp.RenderElevated = false;
         comp.RenderHeight = 0f;
