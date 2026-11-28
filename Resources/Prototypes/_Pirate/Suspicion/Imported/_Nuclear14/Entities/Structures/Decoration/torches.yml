@@ -44,6 +44,10 @@
   - type: FireVisuals
     sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Decoration/torches.rsi
     normalState: torch_lit
+    # Pirate's fire visualizer creates the light while the torch is burning.
+    lightColor: "#e39c40"
+    lightRadiusPerStack: 1.2
+    maxLightRadius: 5
   - type: Damageable
     damageModifierSet: Wood
   - type: Destructible
@@ -54,12 +58,6 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: ToggleableLightVisuals
-    spriteLayer: null
-  - type: PointLight
-    color: "#e39c40"
-    radius: 5
-    power: 16
 
 - type: entity
   parent: N14Torch

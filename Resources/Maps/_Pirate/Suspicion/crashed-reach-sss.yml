@@ -5421,7 +5421,7 @@ entities:
             rot: 3.141592653589793 rad
             pos: 37.71542,26.37977
             parent: 2
-  - proto: ClothingHeadHatCatEarsValid
+  - proto: PirateExpansionBlackCatEars # Pirate: map-safe cosmetic ears.
     entities:
       - uid: 4654
         components:

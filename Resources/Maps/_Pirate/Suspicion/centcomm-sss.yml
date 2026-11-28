@@ -4723,7 +4723,7 @@ entities:
     - type: Transform
       pos: -24.426022,-5.7340455
       parent: 1668
-- proto: BoxFolderCentCom
+- proto: BoxFolderGreen
   entities:
   - uid: 6501
     components:
@@ -31468,19 +31468,17 @@ entities:
     - type: Transform
       pos: 25.503832,-7.398362
       parent: 1668
+  - uid: 2234
+    components:
+    - type: Transform
+      pos: -12.516554,9.632545
+      parent: 1668
 - proto: RubberStampDenied
   entities:
   - uid: 590
     components:
     - type: Transform
       pos: 25.691332,-7.585862
-      parent: 1668
-- proto: RubberStampQm
-  entities:
-  - uid: 2234
-    components:
-    - type: Transform
-      pos: -12.516554,9.632545
       parent: 1668
 - proto: RubberStampTrader
   entities:

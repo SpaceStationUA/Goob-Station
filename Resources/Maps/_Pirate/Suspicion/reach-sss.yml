@@ -6002,7 +6002,7 @@ entities:
     - type: Transform
       pos: 9.888836,10.049155
       parent: 2
-- proto: ClothingHeadHatCatEars
+- proto: PirateExpansionBlackCatEars
   entities:
   - uid: 953
     components:

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 
 using System.Linq;
+using System.Threading;
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Systems;
 using Content.Server.Antag;
@@ -140,6 +141,14 @@ public sealed partial class SuspicionRuleSystem : ArenaRuleSystem<SuspicionRuleC
         Append(wildcards.Select(t => t.body).ToList(), ref args);
     }
 
+
+    internal CancellationToken? GetLootToken(MapId map)
+    {
+        if (ActiveRule is not { } rule || rule.Comp.GameState == SuspicionGameState.PostRound || map != GameTicker.DefaultMap)
+            return null;
+
+        return MatchToken;
+    }
 
     protected override void Started(EntityUid uid, SuspicionRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {

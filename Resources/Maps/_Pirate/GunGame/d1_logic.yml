@@ -2889,32 +2889,20 @@ entities:
       parent: 2
       rot: -1.5707963267948966 rad
       pos: 2.5,1.5
-- proto: ShuttleGunSvalinnMachineGun
+- proto: GunGameIndustrialLaser
   entities:
   - uid: 772
     components:
-    - type: MetaData
-      name: AG435 Industrial Argon-Cyanide Lasers
-      desc: Quad-mounted, tier 4, illegally modified. Just the way those hardware junkies like them.
     - type: Transform
       parent: 2
       rot: 1.5707963267948966 rad
       pos: 2.5,-0.5
-    missingComponents:
-    - Gun
-    - AutoShootGun
   - uid: 778
     components:
-    - type: MetaData
-      name: AG435 Industrial Argon-Cyanide Lasers
-      desc: Quad-mounted, tier 4, illegally modified. Just the way those hardware junkies like them.
     - type: Transform
       parent: 2
       rot: 1.5707963267948966 rad
       pos: 2.5,2.5
-    missingComponents:
-    - Gun
-    - AutoShootGun
 - proto: SignEscapePods
   entities:
   - uid: 119

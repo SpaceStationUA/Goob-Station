@@ -35,6 +35,7 @@ using Content.Shared.Weapons.Ranged.Events;
 using Robust.Client.UserInterface;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 
@@ -43,6 +44,56 @@ namespace Content.IntegrationTests.Tests._Pirate.Suspicion;
 [TestFixture]
 public sealed class SuspicionRuleTest
 {
+    [TestPrototypes]
+    private const string LootPrototypes = """
+        - type: entity
+          id: TestSuspicionLootItem
+        - type: entity
+          id: TestSuspicionLootMarker
+          components:
+          - type: SuspicionLootSpawner
+            table: !type:EntSelector
+              id: TestSuspicionLootItem
+            delay: 1
+            offset: 0
+        """;
+
+    [Test]
+    public async Task LootSpawnsOnlyOnTheActiveArenaAndStopsAtRoundEnd()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { InLobby = true, Dirty = true });
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var outside = await pair.CreateTestMap();
+        int CountLoot() => entities.EntityQuery<MetaDataComponent>().Count(meta => meta.EntityPrototype?.ID == "TestSuspicionLootItem");
+
+        await server.WaitPost(() => entities.SpawnAtPosition("TestSuspicionLootMarker", outside.GridCoords));
+        await pair.RunTicksSync(server.Timing.TickRate * 2);
+        await server.WaitAssertion(() => Assert.That(CountLoot(), Is.Zero));
+
+        await AddPlayer(pair, "ArenaLootOpponent");
+        await StartPreparing(pair, "1v1CitySSS", 30);
+        EntityCoordinates arena = default;
+        await server.WaitPost(() =>
+        {
+            var player = pair.Player!.AttachedEntity!.Value;
+            arena = entities.GetComponent<TransformComponent>(player).Coordinates;
+            entities.SpawnAtPosition("TestSuspicionLootMarker", outside.GridCoords);
+            entities.SpawnAtPosition("TestSuspicionLootMarker", arena);
+        });
+        await pair.RunTicksSync(server.Timing.TickRate * 2);
+        await server.WaitAssertion(() => Assert.That(CountLoot(), Is.EqualTo(1)));
+
+        await server.WaitPost(() =>
+        {
+            entities.SpawnAtPosition("TestSuspicionLootMarker", arena);
+            server.System<GameTicker>().EndRound();
+        });
+        await pair.RunTicksSync(server.Timing.TickRate * 2);
+        await server.WaitAssertion(() => Assert.That(CountLoot(), Is.EqualTo(1)));
+        await pair.CleanReturnAsync();
+    }
+
     [Test]
     public async Task ReconnectingAfterRoleLockAssignsInnocent()
     {
