@@ -17,6 +17,7 @@ using Content.Shared.Trigger;
 using Content.Shared.Trigger.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 
 namespace Content.Server._Pirate.Blueshield;
 
@@ -29,9 +30,12 @@ public sealed class BlueshieldLifelineSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly TeleportSystem _teleport = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly TriggerSystem _trigger = default!;
     [Dependency] private readonly TurfSystem _turf = default!;
+
+    private static readonly TimeSpan RetryInterval = TimeSpan.FromSeconds(2);
 
     public override void Initialize()
     {
@@ -80,7 +84,8 @@ public sealed class BlueshieldLifelineSystem : EntitySystem
 
         if (GetArrival(Transform(host).MapUid) is not {} destination)
         {
-            _popup.PopupEntity(Loc.GetString("blueshield-lifeline-no-signal"), host, host);
+            if (CompOrNull<PendingBlueshieldLifelineComponent>(implant)?.NextRetry == null)
+                _popup.PopupEntity(Loc.GetString("blueshield-lifeline-no-signal"), host, host);
             return;
         }
 
@@ -146,17 +151,20 @@ public sealed class BlueshieldLifelineSystem : EntitySystem
     {
         base.Update(frameTime);
         var pending = EntityQueryEnumerator<PendingBlueshieldLifelineComponent, SubdermalImplantComponent>();
-        while (pending.MoveNext(out var implant, out _, out var subdermal))
+        while (pending.MoveNext(out var implant, out var waiting, out var subdermal))
         {
-            if (subdermal.ImplantedEntity is {} host && !TerminatingOrDeleted(host) && _mobState.IsDead(host))
+            if (subdermal.ImplantedEntity is not {} host || TerminatingOrDeleted(host) || !_mobState.IsDead(host))
             {
-                if (HasAuthenticationDisk(host))
-                    continue;
-
-                _trigger.Trigger(implant, host);
+                RemCompDeferred<PendingBlueshieldLifelineComponent>(implant);
+                continue;
             }
 
-            RemCompDeferred<PendingBlueshieldLifelineComponent>(implant);
+            if (EntityManager.IsQueuedForDeletion(implant) || waiting.NextRetry > _timing.CurTime || HasAuthenticationDisk(host))
+                continue;
+
+            // Try immediately once the disk is gone. A successful evacuation consumes the implant.
+            if (!_trigger.Trigger(implant, host))
+                waiting.NextRetry = _timing.CurTime + RetryInterval;
         }
     }
 

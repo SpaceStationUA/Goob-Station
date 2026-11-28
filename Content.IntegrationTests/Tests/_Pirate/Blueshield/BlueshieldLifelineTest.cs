@@ -2,6 +2,7 @@
 
 using System.Linq;
 using System.Numerics;
+using Content.Goobstation.Common.BlockTeleport;
 using Content.Goobstation.Shared.Mind.Components;
 using Content.Server._Pirate.Blueshield;
 using Content.Server.GameTicking;
@@ -28,7 +29,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.UnitTesting.Pool;
 
 namespace Content.IntegrationTests.Tests._Pirate.Blueshield;
 
@@ -184,6 +184,53 @@ public sealed class BlueshieldLifelineTest
             Assert.That(server.Transform(officer).MapUid, Is.EqualTo(revive ? origin.MapUid : dest.MapUid));
             Assert.That(server.System<MobStateSystem>().IsDead(officer), Is.EqualTo(!revive));
             Assert.That(em.EntityExists(implant), Is.EqualTo(revive));
+            Assert.That(em.HasComponent<PendingBlueshieldLifelineComponent>(implant), Is.False);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task DeathRetriesAfterDiskRemovalWhenDestinationOrTeleportIsBlocked(bool teleportBlocked)
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
+        var server = pair.Server;
+        var em = server.EntMan;
+        var origin = await pair.CreateTestMap();
+        var dest = await pair.CreateTestMap();
+        EntityUid officer = default, implant = default, disk = default;
+        await server.WaitAssertion(() =>
+        {
+            officer = em.SpawnAttachedTo("MobHuman", origin.GridCoords);
+            implant = server.System<SharedSubdermalImplantSystem>().AddImplant(officer, "BlueshieldLifelineImplant")!.Value;
+            if (teleportBlocked)
+            {
+                RegisterArrival(em, origin, dest);
+                em.EnsureComponent<BlockTeleportComponent>(officer);
+            }
+
+            var contents = EquipDisk(em, officer, origin.GridCoords);
+            disk = contents.Disk;
+            server.System<MobStateSystem>().ChangeMobState(officer, MobState.Dead);
+            Assert.That(em.System<SharedContainerSystem>().Remove(disk, contents.Box, destination: origin.GridCoords), Is.True);
+        });
+        await pair.RunTicksSync(2);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(server.Transform(officer).MapUid, Is.EqualTo(origin.MapUid));
+            Assert.That(em.HasComponent<PendingBlueshieldLifelineComponent>(implant), Is.True);
+            if (teleportBlocked)
+                em.RemoveComponent<BlockTeleportComponent>(officer);
+            else
+                RegisterArrival(em, origin, dest);
+        });
+        await pair.RunSeconds(3);
+        await server.WaitAssertion(() =>
+        {
+            Assert.That(server.Transform(officer).MapUid, Is.EqualTo(dest.MapUid));
+            Assert.That(server.System<MobStateSystem>().IsDead(officer), Is.True);
+            Assert.That(server.Transform(disk).MapUid, Is.EqualTo(origin.MapUid));
+            Assert.That(em.EntityExists(implant), Is.False);
         });
         await pair.CleanReturnAsync();
     }
