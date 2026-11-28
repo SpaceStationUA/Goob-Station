@@ -1,0 +1,116 @@
+- type: entity
+  name: bench
+  id: N14BenchBaseMiddle
+  suffix: Middle
+  abstract: true
+  parent: SeatBase
+  description: Multiple seats spanning a single object. Truly a marvel of science.
+  components:
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    anchored: true
+  - type: Rotatable
+  - type: Sprite
+    state: middle
+
+
+- type: entity
+  id: N14BenchParkLeft
+  categories: [HideSpawnMenu]
+  suffix: Left
+  parent: N14BenchParkMiddle
+  components:
+  - type: Sprite
+    state: left
+
+- type: entity
+  name: park bench
+  id: N14BenchParkMiddle
+  categories: [HideSpawnMenu]
+  parent: N14BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Furniture/Benches/parkbench_wooden.rsi
+
+- type: entity
+  id: N14BenchParkRight
+  categories: [HideSpawnMenu]
+  suffix: Right
+  parent: N14BenchParkMiddle
+  components:
+  - type: Sprite
+    state: right
+
+
+- type: entity
+  id: N14BenchSofaCorpLeft
+  categories: [HideSpawnMenu]
+  suffix: Left
+  parent: N14BenchSofaCorpMiddle
+  components:
+  - type: Sprite
+    state: left
+
+- type: entity
+  name: grey sofa
+  id: N14BenchSofaCorpMiddle
+  categories: [HideSpawnMenu]
+  parent: N14BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Furniture/Benches/sofa_corp.rsi
+
+- type: entity
+  id: N14BenchSofaLeft
+  categories: [HideSpawnMenu]
+  suffix: Left
+  parent: N14BenchSofaMiddle
+  components:
+  - type: Sprite
+    state: left
+
+- type: entity
+  name: sofa
+  id: N14BenchSofaMiddle
+  categories: [HideSpawnMenu]
+  parent: N14BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Furniture/Benches/sofa.rsi
+
+- type: entity
+  id: N14BenchSofaRight
+  categories: [HideSpawnMenu]
+  suffix: Right
+  parent: N14BenchSofaMiddle
+  components:
+  - type: Sprite
+    state: right
+
+- type: entity
+  id: N14BenchSteelLeft
+  categories: [HideSpawnMenu]
+  suffix: Left
+  parent: N14BenchSteelMiddle
+  components:
+  - type: Sprite
+    state: left
+
+- type: entity
+  name: steel bench
+  id: N14BenchSteelMiddle
+  categories: [HideSpawnMenu]
+  parent: N14BenchBaseMiddle
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Furniture/Benches/steel_bench.rsi
+
+- type: entity
+  id: N14BenchSteelRight
+  categories: [HideSpawnMenu]
+  suffix: Right
+  parent: N14BenchSteelMiddle
+  components:
+  - type: Sprite
+    state: right

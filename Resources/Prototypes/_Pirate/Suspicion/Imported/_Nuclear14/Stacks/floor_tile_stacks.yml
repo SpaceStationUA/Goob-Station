@@ -1,0 +1,19 @@
+- type: stack
+  id: FloorTileMetalGreyDark
+  name: pirate-ttt-stack-metal
+  spawn: FloorTileItemMetalGreyDark
+
+- type: stack
+  id: FloorTileWoodHouse
+  name: pirate-ttt-stack-wood
+  spawn: FloorTileItemWoodHouse
+
+- type: stack
+  id: FloorTileWoodMaple
+  name: pirate-ttt-stack-wood
+  spawn: FloorTileItemWoodMaple
+
+- type: stack
+  id: FloorTileWoodOak
+  name: pirate-ttt-stack-wood
+  spawn: FloorTileItemWoodOak

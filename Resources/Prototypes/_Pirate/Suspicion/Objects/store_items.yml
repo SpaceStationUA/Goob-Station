@@ -1,0 +1,81 @@
+- type: entity
+  parent: BoxCardboard
+  id: BoxDehydratedCarp
+  categories: [HideSpawnMenu]
+  name: dehydrated carp box
+  description: Box filled with 4 dehydrated carps. Make sure your friends pet them as well!
+  suffix: Traitor
+  components:
+  - type: StorageFill
+    contents:
+    - id: DehydratedSpaceCarp
+    - id: DehydratedSpaceCarp
+    - id: DehydratedSpaceCarp
+    - id: DehydratedSpaceCarp
+    - id: WaterChemistryBottle
+  - type: Sprite
+    layers:
+    - state: box_of_doom
+
+- type: entity
+  id: WaterChemistryBottle
+  categories: [HideSpawnMenu]
+  suffix: water
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-water
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Water
+          Quantity: 30
+
+- type: entity
+  parent: BoxCardboard
+  id: BoxDisruptiveThrowable
+  categories: [HideSpawnMenu]
+  name: disruptive grenade kit
+  description: A set of 1 flash, smoke and stinger grenades. Perfect for slowing down and getting away.
+  suffix: Traitor
+  components:
+  - type: StorageFill
+    contents:
+    - id: GrenadeFlashBang
+    - id: SmokeGrenade
+    - id: GrenadeStinger
+  - type: Sprite
+    layers:
+    - state: box_of_doom
+
+- type: entity
+  parent: SyndicateBomb
+  id: SyndicateBombSSS
+  categories: [HideSpawnMenu]
+  suffix: Traitor
+  name: syndicate bomb
+  description: A bomb for Syndicate operatives and agents alike. The real deal, no more training, get to it!
+  components:
+  - type: TimerTrigger
+    delay: 90
+    delayOptions: [90, 180]
+    initialBeepDelay: 30 # Gives the bomb some more stealth options due to how loud the timer is.
+    beepSound: /Audio/Machines/timer.ogg
+
+- type: entity
+  name: Armour Upgrade Kit
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: ClothingOuterVestWebMercSuspicionUpgradeKit
+  categories: [HideSpawnMenu]
+  description: An armour upgrade kit. Use on your armour to upgrade the protection. Armour will drop if equipped!
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: abductor_mod # temp - new item might be better but for now this will work
+  - type: Item
+    size: Small
+  - type: Tag
+    tags:
+    - ClothingOuterVestWebMercSuspicionUpgradeKit

@@ -1,0 +1,81 @@
+- type: entity
+  parent: BaseSign
+  id: N14SignConspiracyBoard
+  categories: [HideSpawnMenu]
+  name: conspiracy board
+  description: Perfect for tracking the multiple layers of criminal activities.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Wallmounts/conspiracy_board.rsi
+    state: icon
+    offset: "0.5,0"
+
+- type: entity
+  parent: N14SignBar
+  id: N14SignClinic
+  categories: [HideSpawnMenu]
+  name: clinic sign
+  description: A clinic sign. Hopefully they have meds.
+  components:
+  - type: Sprite
+    state: clinic
+  - type: PointLight
+    radius: 3
+    energy: 1
+    color: '#00ff00'
+
+- type: entity
+  parent: N14SignBase
+  id: N14SignBar
+  categories: [HideSpawnMenu]
+  name: bar sign
+  description: Bar! Get drunk here.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Wallmounts/signs_32x32.rsi
+    state: bar
+
+- type: entity
+  parent: N14SignNotice
+  id: N14SignDanger
+  categories: [HideSpawnMenu]
+  name: danger sign
+  description: Danger.
+  components:
+  - type: Sprite
+    state: danger_sign
+
+
+- type: entity
+  parent: BaseSign
+  id: N14SignLastIdiot
+  categories: [HideSpawnMenu]
+  name: Zero Days Since Last Idiot
+  description: Must be an Engineering joke.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Wallmounts/last_idiot.rsi
+    state: icon
+    offset: "0.5,0"
+
+- type: entity
+  parent: N14SignBase
+  id: N14SignNotice
+  categories: [HideSpawnMenu]
+  name: notice sign
+  description: NOTICE!
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Wallmounts/walldecor.rsi
+    state: notice_sign
+
+- type: entity
+  parent: BaseSign
+  id: N14SignSec
+  categories: [HideSpawnMenu]
+  name: security sign
+  description: A sign indicating the Security department.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Wallmounts/signs.rsi
+    state: sec

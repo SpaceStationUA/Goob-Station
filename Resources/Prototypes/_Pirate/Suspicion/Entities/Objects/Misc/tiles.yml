@@ -1,0 +1,9 @@
+- type: tile
+  id: InvisibleTile
+  name: invisible tile
+  baseTurf: Space
+  isSubfloor: true
+  weather: true
+  isSpace: false
+  friction: 0
+  sprite: /Textures/_Pirate/Suspicion/Tiles/transparent.png

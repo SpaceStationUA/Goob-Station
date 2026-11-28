@@ -1,0 +1,35 @@
+<widgets:SSSStatusGui
+    xmlns="https://spacestation14.io"
+    xmlns:widgets="clr-namespace:Content.Client._Pirate.Suspicion.UserInterface.Widgets"
+    xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+    xmlns:graphics="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    VerticalAlignment="Bottom"
+    HorizontalAlignment="Right"
+    >
+
+    <Control>
+
+        <PanelContainer StyleClasses="AngleRect" />
+        <BoxContainer Orientation="Vertical" Margin="8">
+            <BoxContainer Orientation="Horizontal">
+                <Control>
+                    <PanelContainer Name="RoleBG" Access="Public">
+                    </PanelContainer>
+                    <Label Name="RoleText" Access="Public" Text="Traitor?" Margin="4"/>
+                </Control>
+                <Label Name="TimerText" Access="Public" Text="5:00" Align="Right" HorizontalExpand="True" />
+            </BoxContainer>
+            <Control MinSize="0 4" />
+            <Control MinSize="200 20">
+                <ProgressBar Name="HealthBar" Access="Public" Value="75" MaxValue="100">
+                    <ProgressBar.ForegroundStyleBoxOverride>
+                        <graphics:StyleBoxFlat BackgroundColor="#DE3A3A" />
+                    </ProgressBar.ForegroundStyleBoxOverride>
+                </ProgressBar>
+                <Label Name="HealthNumber" Access="Public" Text="100" Align="Right" />
+            </Control>
+        </BoxContainer>
+
+    </Control>
+
+</widgets:SSSStatusGui>

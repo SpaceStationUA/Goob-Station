@@ -1,0 +1,12 @@
+- type: entity
+  id: ActionPingRadarImplant
+  categories: [HideSpawnMenu]
+  name: Ping Radar
+  description: Pings the radar implant, revealing the location of all nearby humanoids.
+  components:
+  - type: Action
+    icon: { sprite: Objects/Devices/pinpointer.rsi, state: pinpointer-syndicate }
+    itemIconStyle: NoItem
+    useDelay: 30
+  - type: InstantAction
+    event: !type:PingRadarImplantEvent

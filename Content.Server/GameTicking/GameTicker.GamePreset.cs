@@ -55,6 +55,13 @@ public sealed partial class GameTicker
             DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
         }
 
+        // Pirate: avoid starting a fallback preset on an incompatible arena map.
+        if (startAttempt.SkipFallback)
+        {
+            FailedPresetRestart();
+            return false;
+        }
+
         if (_cfg.GetCVar(CCVars.GameLobbyFallbackEnabled))
         {
             var fallbackPresets = _cfg.GetCVar(CCVars.GameLobbyFallbackPreset).Split(",");
@@ -86,6 +93,10 @@ public sealed partial class GameTicker
                     startFailed = false;
                     break;
                 }
+
+                if (startAttempt.SkipFallback) // Pirate: the attempted preset requires a fresh lobby.
+                    break;
+
                 _sawmill.Info($"Fallback - '{preset}' failed to start.");
             }
 
@@ -203,7 +214,7 @@ public sealed partial class GameTicker
         if (Preset.MapPool == null || !_prototypeManager.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
             return true;
 
-        return pool.Maps.Contains(map.ID);
+        return pool.Maps.Contains(map.ID) || Preset.ManualArenaMap?.Id == map.ID; // Pirate
     }
 
     private void ValidateMap()
@@ -215,7 +226,7 @@ public sealed partial class GameTicker
             !_prototypeManager.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
             return;
 
-        if (pool.Maps.Contains(map.ID))
+        if (pool.Maps.Contains(map.ID) || Preset.ManualArenaMap?.Id == map.ID) // Pirate
             return;
 
         _gameMapManager.SelectMapRandom();

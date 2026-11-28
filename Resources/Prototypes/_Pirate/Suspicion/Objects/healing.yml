@@ -1,0 +1,28 @@
+- type: entity
+  id: Ointment5
+  categories: [HideSpawnMenu]
+  parent: Ointment
+  suffix: Five
+  components:
+  - type: Stack
+    stackType: Ointment
+    count: 5
+
+- type: entity
+  id: Brutepack5
+  categories: [HideSpawnMenu]
+  parent: Brutepack
+  suffix: Five
+  components:
+  - type: Stack
+    stackType: Brutepack
+    count: 5
+
+- type: entity
+  id: Gauze5
+  categories: [HideSpawnMenu]
+  parent: Gauze
+  suffix: Five
+  components:
+  - type: Stack
+    count: 5

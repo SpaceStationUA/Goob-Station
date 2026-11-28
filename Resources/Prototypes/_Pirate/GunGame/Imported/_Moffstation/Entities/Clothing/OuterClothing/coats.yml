@@ -1,0 +1,11 @@
+- type: entity
+  parent: [ClothingOuterArmorCaptainCarapace, BaseCommandContraband]
+  id: ClothingOuterCoatCaptainLongcoat
+  categories: [HideSpawnMenu]
+  name: captain's longcoat
+  description: A longcoat befitting of a captain sailing the galaxy, weaved with specially resistant durathread.
+  components:
+  - type: Sprite
+    sprite: _Pirate/GunGame/Imported/_Moffstation/Clothing/OuterClothing/Coats/captainlongcoat.rsi
+  - type: Clothing
+    sprite: _Pirate/GunGame/Imported/_Moffstation/Clothing/OuterClothing/Coats/captainlongcoat.rsi

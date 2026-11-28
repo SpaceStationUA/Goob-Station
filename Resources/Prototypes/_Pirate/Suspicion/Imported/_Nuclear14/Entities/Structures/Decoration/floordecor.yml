@@ -1,0 +1,685 @@
+- type: entity
+  parent: N14DecorFloorWorldBase
+  id: N14DecorBarrels
+  categories: [HideSpawnMenu]
+  name: barrels
+  description: a bunch of old rusty barrels.
+  components:
+  - type: Sprite
+    layers:
+    - state: barrels1
+      map: [ "body" ]
+  - type: RandomSprite
+    available:
+      - body:
+          barrels1: ""
+          barrels2: ""
+          barrels3: ""
+          barrels4: ""
+          barrels5: ""
+          barrels6: ""
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+            radius: 0.3
+        density: 1000
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+
+- type: entity
+  id: N14DecorFloorBase
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Decoration/cave_decor.rsi
+    netsync: false
+    noRot: true
+    drawdepth: FloorObjects
+  - type: Damageable
+    damageModifierSet: Wood
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Clickable
+  - type: InteractionOutline
+# No fixture on this base, inherit from further down for fixture
+
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard1
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_drought_ns-1
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard10
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_drought_we-4
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard11
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_drought_we-5
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard12
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_drought_we-6
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard13
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_mammoth_ns-1
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard14
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_mammoth_ns-2
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard15
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_mammoth_ns-3
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard16
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_mammoth_ns-4
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard17
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_mammoth_ns-5
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard18
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_mammoth_ns-6
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard19
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_mammoth_we-1
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard2
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_drought_ns-2
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard20
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_mammoth_we-2
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard21
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_mammoth_we-3
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard22
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_mammoth_we-4
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard23
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_mammoth_we-5
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard24
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_mammoth_we-6
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard3
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_drought_ns-3
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard4
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_drought_ns-4
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard5
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_drought_ns-5
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard6
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_drought_ns-6
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard7
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_drought_we-1
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard8
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_drought_we-2
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorBoard9
+  categories: [HideSpawnMenu]
+  name: floor board
+  description: Keep the mud off your feet.
+  components:
+  - type: Sprite
+    state: boards_drought_we-3
+
+- type: entity
+  parent: N14DecorFloorWorldBase
+  id: N14DecorFloorBookPile1
+  categories: [HideSpawnMenu]
+  name: book pile
+  description: a pile of books
+  components:
+  - type: Sprite
+    state: bookpile_1
+        # add destruction drop for materials
+
+- type: entity
+  parent: N14DecorFloorBookPile1
+  id: N14DecorFloorBookPile6
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: bookpile_6
+
+- type: entity
+  parent: N14DecorFloorPalletStack
+  id: N14DecorFloorBrickStack
+  categories: [HideSpawnMenu]
+  name: brick stack
+  description: a neat stack of bricks
+  components:
+  - type: Sprite
+    state: brickpile
+
+- type: entity
+  parent: N14DecorFloorWorldBase
+  id: N14DecorFloorBrickrubble
+  categories: [HideSpawnMenu]
+  name: brick rubble
+  description: brick rubble
+  suffix: "6 states"
+  components:
+  - type: Sprite
+    state: brickrubble
+
+- type: entity
+  parent: N14DecorFloorWorldBase
+  id: N14DecorFloorCardboard
+  categories: [HideSpawnMenu]
+  name: cardboard boxes
+  description: cardboard scrap boxes
+  suffix: "6 states"
+  components:
+  - type: Sprite
+    state: cardboard
+    # add destruction drop for materials
+
+- type: entity
+  parent: N14DecorFloorWorldBase
+  id: N14DecorFloorFood1
+  categories: [HideSpawnMenu]
+  name: food stuff
+  description: some old food stuff
+  components:
+  - type: Sprite
+    state: foodstuff_1
+
+- type: entity
+  parent: N14DecorFloorFood1
+  id: N14DecorFloorFood3
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: foodstuff_3
+
+- type: entity
+  parent: N14DecorFloorFood1
+  id: N14DecorFloorFood4
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: foodstuff_4
+
+- type: entity
+  parent: N14DecorFloorFood1
+  id: N14DecorFloorFood5
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: foodstuff_5
+
+- type: entity
+  parent: N14DecorFloorFood1
+  id: N14DecorFloorFood6
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: foodstuff_6
+
+- type: entity
+  parent: N14DecorFloorWorldBase
+  id: N14DecorFloorGlass1
+  categories: [HideSpawnMenu]
+  name: glass bottles
+  description: some old glass scraps
+  components:
+  - type: Sprite
+    state: glass_1
+    # add glass shard destruction
+
+- type: entity
+  parent: N14DecorFloorGlass1
+  id: N14DecorFloorGlass2
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: glass_2
+
+- type: entity
+  parent: N14DecorFloorGlass1
+  id: N14DecorFloorGlass3
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: glass_3
+
+- type: entity
+  parent: N14DecorFloorGlass1
+  id: N14DecorFloorGlass4
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: glass_4
+
+- type: entity
+  parent: N14DecorFloorGlass1
+  id: N14DecorFloorGlass6
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: glass_6
+
+- type: entity
+  parent: N14DecorFloorWorldBase
+  id: N14DecorFloorPallet
+  categories: [HideSpawnMenu]
+  name: pallet
+  description: a wooden pallet.
+  suffix: "2 states"
+  components:
+  - type: Sprite
+    state: pallet
+        # add destruction drop for materials
+
+- type: entity
+  parent: N14DecorFloorWorldBase
+  id: N14DecorFloorPalletStack
+  categories: [HideSpawnMenu]
+  name: pallet stack
+  description: a stack of wooden pallets
+  suffix: "2 states"
+  components:
+  - type: Sprite
+    state: pallet_stack
+        # add destruction drop for materials
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+            radius: 0.20
+        density: 1000
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+
+- type: entity
+  parent: N14DecorFloorWorldBase
+  id: N14DecorFloorPaper
+  categories: [HideSpawnMenu]
+  name: scattered paper
+  description: A mess of papers
+  suffix: 8 states
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Decoration/world.rsi
+    state: scattered_papers
+    # add destruction drop for materials
+
+- type: entity
+  parent: N14DecorFloorWorldBase
+  id: N14DecorFloorPaper1
+  categories: [HideSpawnMenu]
+  suffix: 4 states
+  name: scattered paper
+  description: A mess of papers
+  components:
+  - type: Sprite
+    state: papers_1
+
+- type: entity
+  parent: N14DecorFloorPaper1
+  id: N14DecorFloorPaper2
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: papers_2
+
+- type: entity
+  parent: N14DecorFloorPaper1
+  id: N14DecorFloorPaper3
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: papers_3
+
+- type: entity
+  parent: N14DecorFloorWorldBase
+  id: N14DecorFloorScrapwood
+  categories: [HideSpawnMenu]
+  name: wood scraps
+  description: wood scraps
+  suffix: 6 states
+  components:
+  - type: Sprite
+    state: woodscrap
+
+- type: entity
+  parent: N14DecorFloorWorldBase
+  id: N14DecorFloorSkeleton
+  categories: [HideSpawnMenu]
+  name: skeleton
+  description: looks a little worse for wear
+  components:
+  - type: Sprite
+    state: skeleton
+
+- type: entity
+  parent: N14DecorFloorSkeleton
+  id: N14DecorFloorSkeletonOver
+  categories: [HideSpawnMenu]
+  suffix: draws over objects
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+
+- type: entity
+  parent: N14DecorFloorWorldBase
+  id: N14DecorFloorTrashbags1
+  categories: [HideSpawnMenu]
+  name: trash bags
+  description: some old trash bags
+  components:
+  - type: Sprite
+    state: trashbags_1
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+            radius: 0.20
+        density: 1000
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+
+- type: entity
+  parent: N14DecorFloorTrashbags1
+  id: N14DecorFloorTrashbags2
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: trashbags_2
+
+- type: entity
+  parent: N14DecorFloorTrashbags1
+  id: N14DecorFloorTrashbags3
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: trashbags_3
+
+- type: entity
+  parent: N14DecorFloorTrashbags1
+  id: N14DecorFloorTrashbags4
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: trashbags_4
+
+- type: entity
+  parent: N14DecorFloorTrashbags1
+  id: N14DecorFloorTrashbags6
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: trashbags_6
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorFloorWorldBase
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Decoration/world.rsi
+
+- type: entity
+  parent: N14DecorFloorBookPile1
+  id: N14DecorFloorBookPile3
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: bookpile_3
+
+- type: entity
+  parent: N14DecorFloorBookstack1
+  id: N14DecorFloorBookstack3
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: bookstack_3
+
+- type: entity
+  parent: N14DecorFloorWorldBase
+  id: N14DecorFloorBookstack1
+  categories: [HideSpawnMenu]
+  name: book stack
+  description: a stack of books
+  components:
+  - type: Sprite
+    state: bookstack_1
+        # add destruction drop for materials
+
+- type: entity
+  parent: N14DecorFloorTrashbags1
+  id: N14DecorFloorTrashbags5
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: trashbags_5
+
+- type: entity
+  parent: N14DecorStalagmite1
+  id: N14DecorMinecart
+  categories: [HideSpawnMenu]
+  name: minecrart
+  description: It seems to have fallen over...
+  components:
+  - type: Sprite
+    state: minecart_fallen
+
+- type: entity
+  parent: N14DecorFloorWorldBase
+  id: N14DecorSignMines
+  categories: [HideSpawnMenu]
+  name: mines
+  description: danger of mines and death...
+  components:
+  - type: Sprite
+    state: mine_sign
+
+- type: entity
+  parent: N14DecorFloorBase
+  id: N14DecorStalagmite1
+  categories: [HideSpawnMenu]
+  name: stalagmite
+  description: Pointy rocks! Mites go up, tites come...
+  components:
+  - type: Sprite
+    state: stalagmite
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+            radius: 0.20
+        density: 1000
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer

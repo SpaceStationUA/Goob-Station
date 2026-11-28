@@ -1,0 +1,154 @@
+- type: entity
+  parent: BaseStructure
+  id: N14WindowBase # use for single tile / standalone windows & broken windows
+  description: A window for seeing into places.
+  abstract: true
+  name: window
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Window
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        collection: GlassSmash
+  - type: WallMount
+    arc: 360 # interact despite grilles
+  - type: Tag
+    tags:
+      - ForceFixRotations
+      - Window
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Glass
+  - type: ExaminableDamage
+    messages: WindowMessages
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 150 #excess damage (nuke?). avoid computational cost of spawning entities.
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Appearance
+
+- type: entity
+  parent: N14WindowBase
+  id: N14WindowBaseAirtight # use for single tile / standalone windows that are intact
+  description: A window for seeing into places.
+  abstract: true
+  components:
+  - type: Airtight
+  - type: DamageVisuals
+    thresholds: [4, 8, 12]
+    damageDivisor: 2
+    trackAllDamage: true
+    damageOverlay:
+      sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Windows/slanted/cracks.rsi
+
+- type: entity
+  parent: N14WindowBaseAirtight
+  id: N14WindowHouse
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Windows/window_ruins.rsi
+    state: housewindow
+  - type: Icon
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Windows/window_ruins.rsi
+    state: housewindow
+
+- type: entity
+  parent: N14WindowBaseAirtight
+  id: N14WindowHouseWood
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Windows/window_ruins.rsi
+    state: woodwindow
+  - type: Icon
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Windows/window_ruins.rsi
+    state: woodwindow
+
+- type: entity
+  parent: N14WindowBaseAirtight
+  id: N14WindowStoreLeft
+  categories: [HideSpawnMenu]
+  suffix: left
+  name: store window
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Windows/window_ruins.rsi
+    state: storewindowleft
+  - type: Icon
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Windows/window_ruins.rsi
+    state: storewindowleft
+
+- type: entity
+  parent: N14WindowStoreLeft
+  id: N14WindowStoreMiddleHorizontal
+  categories: [HideSpawnMenu]
+  suffix: middle horizontal
+  name: store window
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Windows/window_ruins.rsi
+    state: storewindowhorizontal
+  - type: Icon
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Windows/window_ruins.rsi
+    state: storewindowhorizontal
+
+- type: entity
+  parent: N14WindowStoreLeft
+  id: N14WindowStoreMiddleVertical
+  categories: [HideSpawnMenu]
+  suffix: middle vertical
+  name: store window
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Windows/window_ruins.rsi
+    state: storewindowvertical
+  - type: Icon
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Windows/window_ruins.rsi
+    state: storewindowvertical
+
+- type: entity
+  parent: N14WindowStoreLeft
+  id: N14WindowStoreRight
+  categories: [HideSpawnMenu]
+  suffix: right
+  name: store window
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Windows/window_ruins.rsi
+    state: storewindowright
+  - type: Icon
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Windows/window_ruins.rsi
+    state: storewindowright

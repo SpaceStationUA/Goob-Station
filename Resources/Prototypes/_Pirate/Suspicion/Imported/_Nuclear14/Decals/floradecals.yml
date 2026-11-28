@@ -1,0 +1,39 @@
+- type: decal
+  id: FloraBranchBrushwood
+  tags: ["flora"]
+  snapCardinals: true
+  sprite:
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Decoration/flora.rsi
+    state: brushwood
+
+- type: decal
+  id: FloraTallGrass1
+  tags: ["flora"]
+  snapCardinals: true
+  sprite:
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Decoration/flora.rsi
+    state: tall_grass_1
+
+- type: decal
+  id: FloraTallGrass2
+  tags: ["flora"]
+  snapCardinals: true
+  sprite:
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Decoration/flora.rsi
+    state: tall_grass_2
+
+- type: decal
+  id: FloraTallGrass3
+  tags: ["flora"]
+  snapCardinals: true
+  sprite:
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Decoration/flora.rsi
+    state: tall_grass_3
+
+- type: decal
+  id: FloraTallGrass4
+  tags: ["flora"]
+  snapCardinals: true
+  sprite:
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Decoration/flora.rsi
+    state: tall_grass_4

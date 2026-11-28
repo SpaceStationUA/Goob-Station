@@ -1,0 +1,15 @@
+- type: gamePreset
+  id: Suspicion
+  alias:
+  - ttt
+  - sss
+  - suspicion
+  minPlayers: 2
+  showInVote: false # Pirate event
+  name: suspicion-title
+  description: suspicion-description
+  supportedMaps: SuspicionMapPool
+  arenaFallbackMap: CentcommSSS
+  manualArenaMap: TrainSSS
+  rules:
+  - Suspicion

@@ -1,0 +1,67 @@
+- type: entity
+  name: metal floor grey dark
+  parent: FloorTileItemBase
+  id: FloorTileItemMetalGreyDark
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: steel
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorMetalGreyDark
+  - type: Stack
+    stackType: FloorTileMetalGreyDark
+
+- type: entity
+  name: house wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodHouse
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: wood
+  - type: Item
+    heldPrefix: wood
+  - type: FloorTile
+    outputs:
+      - FloorWasteland
+      - FloorWoodHouse
+  - type: Stack
+    stackType: FloorTileWoodHouse
+
+- type: entity
+  name: maple floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodMaple
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: wood
+  - type: Item
+    heldPrefix: wood
+  - type: FloorTile
+    outputs:
+      - FloorWasteland
+      - FloorWoodMaple
+  - type: Stack
+    stackType: FloorTileWoodMaple
+
+- type: entity
+  name: oak wood floor
+  parent: FloorTileItemBase
+  id: FloorTileItemWoodOak
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    state: wood
+  - type: Item
+    heldPrefix: wood
+  - type: FloorTile
+    outputs:
+      - FloorWasteland
+      - FloorWoodOak
+  - type: Stack
+    stackType: FloorTileWoodOak

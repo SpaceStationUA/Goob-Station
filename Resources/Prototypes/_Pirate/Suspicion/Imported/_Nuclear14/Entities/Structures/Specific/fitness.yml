@@ -1,0 +1,10 @@
+- type: entity
+  id: N14FitnessPunchingBag
+  categories: [HideSpawnMenu]
+  parent: BaseStructure
+  name: punching bag
+  description: A fitness training bag.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Specific/fitness.rsi
+    state: punchingbag

@@ -1,0 +1,25 @@
+- type: entity
+  parent: PersonalAI # Pirate uses the concrete pAI as the ghost-role base.
+  id: RobotParrot
+  categories: [HideSpawnMenu]
+  name: robot parrot
+  description: A pirates best friend!
+  components:
+  - type: Sprite
+    sprite: _Pirate/GunGame/Imported/_Moffstation/Objects/Fun/robotparrot.rsi
+    layers:
+    - state: icon
+      map: ["screen"]
+  - type: GenericVisualizer
+    visuals:
+      enum.ToggleableGhostRoleVisuals.Status:
+        screen:
+          Off: { state: icon }
+          Searching: { state: icon }
+          On: { state: icon }
+  - type: Clothing
+    sprite: _Pirate/GunGame/Imported/_Moffstation/Objects/Fun/robotparrot.rsi
+    slots:
+    - neck
+  - type: Item
+    inhandVisuals: {}

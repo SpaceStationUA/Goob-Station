@@ -1,0 +1,12 @@
+- files:
+  - wood_common.png
+  - wood_common_damaged.png
+  - wood_fancy.png
+  - wood_fancy_damaged.png
+  - wood_mosaic.png
+  - wood_mosaic_damaged.png
+  - wood_wide.png
+  - wood_wide_damaged.png
+  license: CC-BY-NC-SA-3.0
+  copyright: Mojave Sun 13 contributors. Adapted for SS14 by Nuclear14 contributors.
+  source: https://github.com/Mojave-Sun/mojave-sun-13/blob/1302c0c1f01873bdc6bb2db45bf6ba0b4176770e/mojave/icons/turf/floors.dmi

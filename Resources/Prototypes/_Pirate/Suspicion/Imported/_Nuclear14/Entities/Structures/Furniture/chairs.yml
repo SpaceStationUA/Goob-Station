@@ -1,0 +1,158 @@
+- type: entity
+  parent: N14ChairMetalGreen
+  id: N14ChairMetalFolding
+  categories: [HideSpawnMenu]
+  name: folding chair
+  suffix: folding
+  components:
+  - type: Sprite
+    state: metal_chair_folding
+  - type: Construction
+    graph: N14Seat
+    node: N14ChairMetalFolding
+
+- type: entity
+  parent: Chair
+  id: N14ChairMetalGreen
+  categories: [HideSpawnMenu]
+  description: A metal chair for sitting on.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Furniture/chairs.rsi
+    state: metal_chair
+  - type: Construction
+    graph: N14Seat
+    node: N14ChairMetalGreen
+
+- type: entity
+  parent: N14ChairMetalGreen
+  id: N14ChairPlastic
+  categories: [HideSpawnMenu]
+  name: plastic chair
+  description: A plastic chair. Looks uncomfy.
+  suffix: plastic
+  components:
+  - type: Sprite
+    state: plastic_chair
+  - type: Construction
+    graph: N14Seat
+    node: N14ChairPlastic
+
+- type: entity
+  parent: StoolBase
+  id: N14ChairStoolBarRed
+  categories: [HideSpawnMenu]
+  description: A red bar stool.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Furniture/chairs.rsi
+    state: barstool
+  - type: Construction
+    graph: N14Seat
+    node: N14ChairStoolBarRed
+
+- type: entity
+  parent: N14ChairWood
+  id: N14ChairArmchair
+  categories: [HideSpawnMenu]
+  name: armchair
+  description: A padded armchair.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Furniture/chairs.rsi
+    state: armchair
+  - type: Construction
+    graph: N14Seat
+    node: N14ChairArmchair
+
+
+- type: entity
+  parent: N14ChairMetalGreen
+  id: N14ChairMetalBlue
+  categories: [HideSpawnMenu]
+  suffix: blue
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Furniture/chairs.rsi
+    state: metal_chair_blue
+  - type: Construction
+    graph: N14Seat
+    node: N14ChairMetalBlue
+
+- type: entity
+  parent: N14ChairMetalGreen
+  id: N14ChairMetalBlueBroken
+  categories: [HideSpawnMenu]
+  suffix: blue, broken
+  components:
+  - type: Sprite
+    state: metal_chair_blue_broken
+
+- type: entity
+  parent: N14ChairMetalGreen
+  id: N14ChairMetalGreenUnfinished
+  categories: [HideSpawnMenu]
+  suffix: unfinished
+  components:
+  - type: Sprite
+    state: metal_chair_unfinished
+
+- type: entity
+  parent: N14ChairOfficeRed
+  id: N14ChairOfficeBlueBroken
+  categories: [HideSpawnMenu]
+  suffix: blue, broken
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Furniture/chairs.rsi
+    state: office_chair_blue_broken
+
+- type: entity
+  parent: OfficeChairBase
+  id: N14ChairOfficeGreenBroken
+  categories: [HideSpawnMenu]
+  suffix: green, broken
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Furniture/chairs.rsi
+    state: office_chair_green_broken
+
+- type: entity
+  parent: OfficeChairBase
+  id: N14ChairOfficeRed
+  categories: [HideSpawnMenu]
+  name: office chair
+  suffix: red
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Furniture/chairs.rsi
+    state: office_chair
+  - type: Construction
+    graph: N14Seat
+    node: N14ChairOfficeRed
+
+- type: entity
+  parent: ChairWood
+  id: N14ChairWood
+  categories: [HideSpawnMenu]
+  name: wooden chair
+  description: A wooden chair suitable for sitting on.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Furniture/bedsandchairs.rsi
+    state: wooden_chair
+  - type: Construction
+    graph: N14Seat
+    node: N14ChairWood
+
+- type: entity
+  parent: ChairWood
+  id: N14ChairWood1
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Furniture/chairs.rsi
+    state: wood_chair
+  - type: Construction
+    graph: N14Seat
+    node: N14ChairWood1

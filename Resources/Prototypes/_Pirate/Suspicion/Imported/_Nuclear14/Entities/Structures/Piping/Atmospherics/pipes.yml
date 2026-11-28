@@ -1,0 +1,71 @@
+- type: entity
+  parent: N14GasPipeBase
+  id: N14GasPipeEnd
+  categories: [HideSpawnMenu]
+  suffix: End
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+  - type: Sprite
+    layers:
+      - state: pipeEnd
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+
+- type: entity
+  abstract: true
+  id: N14GasPipeBase
+  parent: GasPipeBase
+  placement:
+    mode: SnapgridCenter
+  components:
+  # Pirate's pipe-layer visualizer selects the RSI again when a pipe changes layers.
+  - type: AtmosPipeLayers
+    spriteLayersRsiPaths:
+      enum.PipeVisualLayers.Pipe:
+        Primary: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Piping/atmospherics.rsi
+        Secondary: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Piping/atmospherics.rsi
+        Tertiary: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Piping/atmospherics.rsi
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Piping/atmospherics.rsi
+    drawdepth: ThinPipe
+    netsync: false
+    visible: false
+
+
+- type: entity
+  parent: N14GasPipeBase
+  id: N14GasPipeStraight
+  categories: [HideSpawnMenu]
+  suffix: Straight
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Longitudinal
+  - type: Sprite
+    layers:
+      - state: pipeStraight
+        map: [ "enum.PipeVisualLayers.Pipe" ]
+
+- type: entity
+  parent: N14GasPipeBase
+  id: N14GasPipeTJunction
+  categories: [HideSpawnMenu]
+  suffix: TJunction
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: TSouth
+  - type: Sprite
+    layers:
+      - state: pipeTJunction
+        map: [ "enum.PipeVisualLayers.Pipe" ]

@@ -1,0 +1,6 @@
+- type: entity
+  parent: BaseGameRule
+  id: Suspicion
+  categories: [HideSpawnMenu]
+  components:
+  - type: SuspicionRule

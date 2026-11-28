@@ -1,0 +1,17 @@
+- type: entity
+  name: combat knife
+  suffix: 1-Hit Throw
+  parent: CombatKnife
+  id: CombatKnifeOneShotThrowing
+  categories: [HideSpawnMenu]
+  description: A deadly knife intended for melee confrontations.
+  components:
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 5
+  - type: SuspicionThrowingKnife
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+    offset: -0.15,0.0
+    deleteOnRemove: true

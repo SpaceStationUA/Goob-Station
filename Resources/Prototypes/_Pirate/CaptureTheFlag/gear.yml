@@ -1,0 +1,45 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: startingGear
+  id: CaptureTheFlagRedGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorRed
+    neck: ClothingNeckScarfStripedRed
+    head: CaptureTheFlagRedBeret
+    shoes: ClothingShoesBootsCombat
+    outerClothing: ClothingOuterArmorBasicSlim
+    back: ClothingBackpackSatchel
+  inhand:
+  - WeaponPistolMk58
+  storage:
+    back:
+    - MagazinePistol
+    - Gauze
+    - Brutepack
+
+- type: startingGear
+  id: CaptureTheFlagBlueGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    neck: ClothingNeckScarfStripedBlue
+    head: ClothingHeadBandBlue
+    shoes: ClothingShoesBootsCombat
+    outerClothing: ClothingOuterArmorBasicSlim
+    back: ClothingBackpackSatchel
+  inhand:
+  - WeaponPistolMk58
+  storage:
+    back:
+    - MagazinePistol
+    - Gauze
+    - Brutepack
+
+- type: entity
+  id: CaptureTheFlagRedBeret
+  parent: ClothingHeadHatBeret
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_security.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_security.rsi

@@ -1,0 +1,104 @@
+- type: gameMapPool
+  id: SuspicionMapPool
+  maps:
+  - ReachSSS
+  - CentcommSSS
+  - ReachSSS
+  # TrainSSS is available for manual selection.
+  - CrashedReachSS
+  - RooftopsSSS
+  - 1v1CitySSS
+
+- type: gameMap
+  id: 1v1CitySSS
+  mapName: '1v1 City'
+  mapPath: /Maps/_Pirate/Suspicion/1v1-city-sss.yml
+  minPlayers: 0
+  maxPlayers: 2
+  stations:
+    1v1CitySSS:
+      stationProto: StandardStationArena
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "1v1 City"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]
+
+- type: gameMap
+  id: ReachSSS
+  mapName: Reach
+  mapPath: /Maps/_Pirate/Suspicion/reach-sss.yml
+  minPlayers: 0
+  maxPlayers: 8
+  stations:
+    ReachSSS:
+      stationProto: StandardStationArena
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Reach"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]
+
+- type: gameMap
+  id: RooftopsSSS
+  mapName: Rooftops
+  mapPath: /Maps/_Pirate/Suspicion/rooftops-sss.yml
+  minPlayers: 0
+  maxPlayers: 30
+  stations:
+    RooftopsSSS:
+      stationProto: StandardStationArena
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Rooftops"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]
+
+- type: gameMap
+  id: CrashedReachSS
+  mapName: Crashed Reach
+  mapPath: /Maps/_Pirate/Suspicion/crashed-reach-sss.yml
+  minPlayers: 0
+  maxPlayers: 30
+  stations:
+    CrashedReachSSS:
+      stationProto: StandardStationArena
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Crashed Reach"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]
+
+- type: gameMap
+  id: CentcommSSS
+  mapName: 'Central Command'
+  mapPath: /Maps/_Pirate/Suspicion/centcomm-sss.yml
+  minPlayers: 0
+  stations:
+    CentcommSSS:
+      stationProto: StandardStationArena
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Central Command"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]
+
+- type: gameMap
+  id: TrainSSS
+  mapName: 'Train'
+  mapPath: /Maps/_Pirate/Suspicion/train-sss.yml
+  minPlayers: 15
+  stations:
+    TrainSSS:
+      stationProto: StandardStationArena
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: "Train"
+      - type: StationJobs
+        availableJobs:
+          Passenger: [ -1, -1 ]

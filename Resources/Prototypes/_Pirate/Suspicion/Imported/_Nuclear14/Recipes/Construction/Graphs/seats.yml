@@ -1,0 +1,82 @@
+# Map furniture keeps its original disassembly paths.
+- type: constructionGraph
+  id: N14Seat
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: N14ChairStoolBarRed
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+        - to: N14ChairMetalGreen
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+        - to: N14ChairMetalFolding
+          steps:
+            - material: Plastic
+              amount: 1
+              doAfter: 1
+            - material: MetalRod
+              amount: 2
+        - to: N14ChairPlastic
+          steps:
+            - material: Plastic
+              amount: 2
+              doAfter: 1
+
+    - node: N14ChairStoolBarRed
+      entity: N14ChairStoolBarRed
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: N14ChairMetalGreen
+      entity: N14ChairMetalGreen
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: N14ChairMetalFolding
+      entity: N14ChairMetalFolding
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlastic1
+              amount: 1
+            - !type:SpawnPrototype
+              prototype: PartRodMetal1
+              amount: 2
+          steps:
+            - tool: Screwing
+              doAfter: 1
+
+    - node: N14ChairPlastic
+      entity: N14ChairPlastic
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPlastic1
+              amount: 2
+          steps:
+            - tool: Welding
+              doAfter: 1

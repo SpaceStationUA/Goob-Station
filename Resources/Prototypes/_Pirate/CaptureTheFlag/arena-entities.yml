@@ -1,0 +1,272 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: entity
+  id: CaptureTheFlagFlag
+  abstract: true
+  categories: [HideSpawnMenu]
+  components:
+  - type: CaptureTheFlagFlag
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/blank_handy_flag.rsi
+    state: icon
+    drawdepth: Items
+    scale: 1.4,1.4
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/blank_handy_flag.rsi
+    size: Large
+
+- type: entity
+  id: CaptureTheFlagRedFlag
+  categories: [HideSpawnMenu]
+  parent: CaptureTheFlagFlag
+  components:
+  - type: Sprite
+    color: "#FF5266"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#FF5266"
+      right:
+      - state: inhand-right
+        color: "#FF5266"
+
+- type: entity
+  id: CaptureTheFlagBlueFlag
+  categories: [HideSpawnMenu]
+  parent: CaptureTheFlagFlag
+  components:
+  - type: Sprite
+    color: "#62BAFF"
+  - type: Item
+    inhandVisuals:
+      left:
+      - state: inhand-left
+        color: "#62BAFF"
+      right:
+      - state: inhand-right
+        color: "#62BAFF"
+
+- type: entity
+  id: CaptureTheFlagStand
+  abstract: true
+  categories: [HideSpawnMenu]
+  components:
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Machines/holopad.rsi
+    state: base
+    drawdepth: HighFloorObjects
+    scale: 1.25,1.25
+  - type: PointLight
+    radius: 2.5
+    energy: 1.4
+    softness: 0.6
+
+- type: entity
+  id: CaptureTheFlagRedStand
+  categories: [HideSpawnMenu]
+  parent: CaptureTheFlagStand
+  components:
+  - type: CaptureTheFlagBase
+    team: Red
+  - type: Sprite
+    color: "#FF5266"
+  - type: PointLight
+    color: "#FF5266"
+
+- type: entity
+  id: CaptureTheFlagBlueStand
+  categories: [HideSpawnMenu]
+  parent: CaptureTheFlagStand
+  components:
+  - type: CaptureTheFlagBase
+    team: Blue
+  - type: Sprite
+    color: "#62BAFF"
+  - type: PointLight
+    color: "#62BAFF"
+
+- type: entity
+  id: CaptureTheFlagRedSpawn
+  parent: MarkerBase
+  categories: [HideSpawnMenu]
+  components:
+  - type: CaptureTheFlagSpawn
+    team: Red
+
+- type: entity
+  id: CaptureTheFlagBlueSpawn
+  parent: MarkerBase
+  categories: [HideSpawnMenu]
+  components:
+  - type: CaptureTheFlagSpawn
+    team: Blue
+
+- type: entity
+  id: CaptureTheFlagSupply
+  parent: BaseStructure
+  abstract: true
+  categories: [HideSpawnMenu]
+  components:
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/medivend.rsi
+    state: "off"
+
+- type: entity
+  id: CaptureTheFlagRedSupply
+  categories: [HideSpawnMenu]
+  parent: CaptureTheFlagSupply
+  components:
+  - type: CaptureTheFlagSupply
+    team: Red
+  - type: Sprite
+    color: "#FFBAC1"
+
+- type: entity
+  id: CaptureTheFlagBlueSupply
+  categories: [HideSpawnMenu]
+  parent: CaptureTheFlagSupply
+  components:
+  - type: CaptureTheFlagSupply
+    team: Blue
+  - type: Sprite
+    color: "#BADDFF"
+
+- type: entity
+  id: CaptureTheFlagHull
+  parent: WallPlastitaniumIndestructible
+  categories: [HideSpawnMenu]
+
+- type: entity
+  id: CaptureTheFlagCover
+  parent: WallPlastitaniumIndestructible
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Structures/Walls/solid.rsi
+  - type: Icon
+    sprite: _Pirate/Structures/Walls/solid.rsi
+    state: full
+  - type: IconSmooth
+    key: walls
+    base: solid
+
+- type: entity
+  id: CaptureTheFlagArenaLight
+  categories: [HideSpawnMenu]
+  components:
+  - type: Transform
+    anchored: true
+  - type: PointLight
+    color: "#F2F5FF"
+    radius: 10
+    energy: 2.5
+    falloff: 2
+    castShadows: false
+
+- type: entity
+  id: CaptureTheFlagSupplyRelay
+  categories: [HideSpawnMenu]
+  parent: CaptureTheFlagStand
+  components:
+  - type: CaptureTheFlagRelay
+  - type: PointLight
+    color: "#FFDB8B"
+    radius: 7
+    energy: 1.6
+    falloff: 2
+    castShadows: false
+
+- type: entity
+  id: CaptureTheFlagMachineCover
+  parent: BaseWall
+  abstract: true
+  categories: [HideSpawnMenu]
+  components:
+  # Fixed machine sprites need unsmoothed walls. Keep the arena's plastitanium protection.
+  - type: Penetratable
+    penetrateDamage: 1000
+    damagePenalty: 0.8
+  - type: Damageable
+    damageModifierSet: StructuralMetallicStrong
+  - type: RustRequiresPathStage
+    pathStage: 11
+  - type: RadiationBlocker
+    resistance: 10
+
+- type: entity
+  id: CaptureTheFlagCollectorCover
+  categories: [HideSpawnMenu]
+  parent: CaptureTheFlagMachineCover
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Generation/Singularity/collector.rsi
+    state: ca_off
+  - type: Icon
+    sprite: Structures/Power/Generation/Singularity/collector.rsi
+    state: ca_off
+
+- type: entity
+  id: CaptureTheFlagGeneratorCover
+  categories: [HideSpawnMenu]
+  parent: CaptureTheFlagMachineCover
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Generation/rtg.rsi
+    state: rtg
+  - type: Icon
+    sprite: Structures/Power/Generation/rtg.rsi
+    state: rtg
+
+- type: entity
+  id: CaptureTheFlagConsoleCover
+  categories: [HideSpawnMenu]
+  parent: CaptureTheFlagMachineCover
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/computers.rsi
+    state: broken
+  - type: Icon
+    sprite: Structures/Machines/computers.rsi
+    state: broken
+
+- type: entity
+  id: CaptureTheFlagCargoPallet
+  categories: [HideSpawnMenu]
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/catwalk.rsi
+    state: catwalk_preview
+    drawdepth: HighFloorObjects
+
+- type: entity
+  id: CaptureTheFlagFreightCover
+  parent: CaptureTheFlagMachineCover
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/engineering.rsi
+    state: icon
+  - type: Icon
+    sprite: Structures/Storage/Crates/engineering.rsi
+    state: icon
+
+- type: entity
+  id: CaptureTheFlagPlanter
+  categories: [HideSpawnMenu]
+  components:
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/Furniture/potted_plants.rsi
+    state: plant-02
+    drawdepth: SmallObjects

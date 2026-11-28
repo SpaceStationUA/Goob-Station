@@ -1,0 +1,11 @@
+- type: entity
+  parent: ClothingBeltSecurity
+  id: ClothingBeltSecurityWebbingAlt
+  categories: [HideSpawnMenu]
+  name: security tactical webbing
+  description: Unique and versatile chest rig, can hold security gear.
+  components:
+  - type: Sprite
+    sprite: _Pirate/GunGame/Imported/_Moffstation/Clothing/Belt/securitywebbingalt.rsi
+  - type: Clothing
+    sprite: _Pirate/GunGame/Imported/_Moffstation/Clothing/Belt/securitywebbingalt.rsi

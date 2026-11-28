@@ -1,0 +1,15 @@
+- type: entity
+  id: NocturineChemistryBottle
+  categories: [HideSpawnMenu]
+  suffix: nocturine
+  parent: BaseChemistryBottleFilled
+  components:
+  - type: Label
+    currentLabel: reagent-name-nocturine
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Nocturine
+          Quantity: 30

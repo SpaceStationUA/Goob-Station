@@ -1,0 +1,91 @@
+- type: entity
+  parent: N14WallWoodWhite
+  id: N14WallWoodDark
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Walls/nc14/wooddark.rsi
+  - type: Icon
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Walls/nc14/wooddark.rsi
+
+- type: entity
+  id: N14WallWoodFrame
+  categories: [HideSpawnMenu]
+  parent: Barricade
+  name: wooden wall Frame
+  description: A frame for building into a wall.
+  components:
+  - type: Construction
+    graph: N14WoodWall
+    node: Frame
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Walls/nc14/woodlog.rsi
+    state: girder
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 0
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroyHeavy
+
+- type: entity
+  parent: N14WallWoodWhite
+  id: N14WallWoodLog
+  categories: [HideSpawnMenu]
+  name: log wall
+  description: A wall made out of wooden logs.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Walls/nc14/woodlognew.rsi
+  - type: Icon
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Walls/nc14/woodlognew.rsi
+  - type: IconSmooth
+    key: log
+    base: log
+  - type: Construction
+    graph: N14WoodWall
+    node: logWall
+
+
+- type: entity
+  parent: BaseWall
+  id: N14WallWoodWhite
+  categories: [HideSpawnMenu]
+  name: wooden wall
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Walls/nc14/woodwhite.rsi
+  - type: Icon
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Walls/nc14/woodwhite.rsi
+  - type: Damageable
+    damageModifierSet: Wood
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: IconSmooth
+    key: wallswood
+    base: wood

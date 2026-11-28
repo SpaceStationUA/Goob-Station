@@ -131,7 +131,14 @@ public sealed class GameMapManager : IGameMapManager
     public IEnumerable<GameMapPrototype> CurrentlyEligibleMaps()
     {
         var maps = AllVotableMaps().Where(IsMapEligible).ToArray();
-        return maps.Length == 0 ? AllMaps().Where(x => x.Fallback) : maps;
+        if (maps.Length > 0)
+            return maps;
+
+        // Pirate arenas must remain playable when every eligible map is on cooldown.
+        if (_entityManager.System<GameTicker>().Preset?.ArenaFallbackMap is { } arena)
+            return [_prototypeManager.Index(arena)];
+
+        return AllMaps().Where(x => x.Fallback);
     }
 
     public IEnumerable<GameMapPrototype> AllVotableMaps()

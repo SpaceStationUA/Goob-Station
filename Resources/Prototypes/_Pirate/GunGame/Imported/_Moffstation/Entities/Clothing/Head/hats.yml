@@ -1,0 +1,19 @@
+- type: entity
+  parent: [ClothingHeadBase, BaseCentcommContraband]
+  id: ClothingHeadHatBeretCentcomm
+  categories: [HideSpawnMenu]
+  name: centcomm beret
+  description: An impressive green beret with a gold trim around the base. The Gold appears to be well maintained & polished regularly
+  components:
+  - type: Sprite
+    sprite: _Pirate/GunGame/Imported/_Moffstation/Clothing/Head/Hats/centcom-beret.rsi
+  - type: Clothing
+    sprite: _Pirate/GunGame/Imported/_Moffstation/Clothing/Head/Hats/centcom-beret.rsi
+  - type: Tag
+    tags:
+    - PetWearable
+    - CorgiWearable
+    - ClothMade
+    - Recyclable
+    - HamsterWearable
+    - WhitelistChameleon

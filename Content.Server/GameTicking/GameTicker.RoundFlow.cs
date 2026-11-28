@@ -120,6 +120,10 @@ namespace Content.Server.GameTicking
                 mainStationMap = _gameMapManager.GetSelectedMap();
             }
 
+            // Pirate: a map selected by config or an admin can belong to the previous station preset.
+            if (CurrentPreset?.ArenaFallbackMap != null && mainStationMap != null && !IsMapEligible(mainStationMap))
+                mainStationMap = _robustRandom.Pick(_gameMapManager.CurrentlyEligibleMaps().ToList());
+
             // Small chance the above could return no map.
             // ideally SelectMapByConfigRules will always find a valid map
             if (mainStationMap != null)
@@ -137,7 +141,7 @@ namespace Content.Server.GameTicking
 
             if (CurrentPreset?.MapPool != null &&
                 _prototypeManager.TryIndex<GameMapPoolPrototype>(CurrentPreset.MapPool, out var pool) &&
-                !pool.Maps.Contains(mainStationMap.ID))
+                !pool.Maps.Contains(mainStationMap.ID) && CurrentPreset.ManualArenaMap?.Id != mainStationMap.ID) // Pirate
             {
                 var msg = Loc.GetString("game-ticker-start-round-invalid-map",
                     ("map", mainStationMap.MapName),
@@ -971,11 +975,19 @@ namespace Content.Server.GameTicking
     {
         public ICommonSession[] Players { get; }
         public bool Forced { get; }
+        public bool SkipFallback { get; private set; } // Pirate: arena presets can require a fresh lobby.
 
         public RoundStartAttemptEvent(ICommonSession[] players, bool forced)
         {
             Players = players;
             Forced = forced;
+        }
+
+        // Pirate: a fallback would reuse the map prepared for this preset.
+        public void CancelWithoutFallback()
+        {
+            SkipFallback = true;
+            Cancel();
         }
     }
 

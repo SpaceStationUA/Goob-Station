@@ -1,0 +1,62 @@
+- type: entity
+  parent: BaseSign
+  id: N14SignBase # for non directional signs otherwise remove snapCardinals: true
+  abstract: true
+  components:
+  - type: WallMount
+    arc: 360
+  - type: Sprite
+    drawdepth: Overdoors
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Wallmounts/adverts.rsi
+    snapCardinals: true # one direction
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+
+- type: entity
+  parent: N14WallDecorClock
+  id: N14WallDecorCalendar
+  categories: [HideSpawnMenu]
+  name: calendar
+  description: A calendar for some forgotten year.
+  components:
+  - type: Sprite
+    state: calendar
+
+- type: entity
+  parent: N14WallDecorClock
+  id: N14WallDecorCalendar1
+  categories: [HideSpawnMenu]
+  name: calendar
+  description: A blank calendar for some forgotten year.
+  components:
+  - type: Sprite
+    state: calendar_blank
+
+- type: entity
+  parent: N14SignBase
+  id: N14WallDecorClock
+  categories: [HideSpawnMenu]
+  name: clock
+  description: A clock. Don't think it works.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Wallmounts/walldecor.rsi
+    snapCardinals: false
+    state: clock
+
+- type: entity
+  parent: N14WallDecorClock
+  id: N14WallDecorCross
+  categories: [HideSpawnMenu]
+  name: cross
+  description: A symbol from another time.
+  components:
+  - type: Sprite
+    state: cross

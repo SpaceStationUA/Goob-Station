@@ -1,0 +1,17 @@
+- files:
+  - dirt.png
+  license: CC-BY-NC-SA-3.0
+  copyright: Ported and modified by Peptide90 for Nuclear14
+  source: https://github.com/DesertRose2/desertrose/blob/master/icons/fallout/turfs/ground.dmi
+- files:
+  - double_edge_E.png
+  - double_edge_N.png
+  - double_edge_S.png
+  - double_edge_W.png
+  - single_edge_NE.png
+  - single_edge_NW.png
+  - single_edge_SE.png
+  - single_edge_SW.png
+  license: CC-BY-NC-SA-3.0
+  copyright: Dirt tile edges by Peptide90, derived from the Desert Rose dirt tile above.
+  source: https://github.com/Vault-Overseers/nuclear-14/commit/38de268a89e8f7305b4c29c87f08662a35023247

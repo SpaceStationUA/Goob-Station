@@ -1,0 +1,20 @@
+- type: entity
+  parent: BaseMaterialDoor
+  id: N14DoorShutterFramedRoller
+  categories: [HideSpawnMenu]
+  name: shutter
+  description: A lightweight airtight roller shutter door.
+  components:
+  - type: Door
+    bumpOpen: false
+    crushDamage:
+      types:
+        Blunt: 5
+    openSound:
+      path: /Audio/Machines/airlock_ext_open.ogg
+    closeSound:
+      path: /Audio/Machines/airlock_ext_close.ogg
+    denySound:
+      path: /Audio/Machines/airlock_deny.ogg
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Doors/RollerDoors/framedshutter.rsi
