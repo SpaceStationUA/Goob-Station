@@ -28,3 +28,4 @@ ui-vote-votekick-success = Голосування за виключення { $t
 ui-vote-votekick-failure = Голосування за виключення { $target } провалено. Причина: { $reason }
 ui-vote-votekick-not-enough-eligible = Недостатньо гравців онлайн для початку голосування: { $voters }/{ $requirement }
 ui-vote-votekick-server-cancelled = Голосування за виключення { $target } було скасовано сервером.
+pirate-vote-map-preset-changed = Режим змінився під час голосування за мапу. Для поточного режиму можна оголосити нове голосування.

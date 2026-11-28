@@ -1,0 +1,33 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+# D1 Logic uses the industrial laser as inert machinery.
+- type: entity
+  id: GunGameIndustrialLaser
+  parent: [BaseStructure, ConstructibleMachine]
+  name: AG435 industrial argon-cyanide lasers
+  description: Quad-mounted, tier 4, illegally modified. Just the way those hardware junkies like them.
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shuttles/laser.rsi
+    layers:
+    - state: lse-400c
+    - state: mag-unshaded-9
+      shader: unshaded
+  - type: Appearance
+  - type: InteractionOutline
+  - type: Anchorable
+  - type: Rotatable
+  - type: Machine
+    board: ShuttleGunSvalinnMachineGunCircuitboard
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Electronic
+  - type: Destructible
+    thresholds:
+    - trigger: !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: [Destruction]

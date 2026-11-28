@@ -1,0 +1,53 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
+- type: gamePreset
+  id: CaptureTheFlag
+  alias:
+  - ctf
+  name: ctf-title
+  description: ctf-description
+  minPlayers: 2
+  maxPlayers: 20
+  showInVote: true
+  supportedMaps: CaptureTheFlagMapPool
+  arenaFallbackMap: CaptureTheFlagArena
+  rules:
+  - CaptureTheFlagRule
+
+- type: entity
+  id: CaptureTheFlagRule
+  categories: [HideSpawnMenu]
+  parent: BaseGameRule
+  components:
+  - type: GameRule
+    minPlayers: 2
+  - type: CaptureTheFlagRule
+    tierTwoGear:
+    - WeaponLaserSvalinn
+    - Brutepack
+    - Ointment
+    tierThreeGear:
+    - WeaponLaserCarbine
+    - MedkitFilled
+
+- type: gameMapPool
+  id: CaptureTheFlagMapPool
+  maps:
+  - CaptureTheFlagArena
+
+- type: gameMap
+  id: CaptureTheFlagArena
+  minPlayers: 0
+  mapName: Два маяки
+  mapPath: /Maps/_Pirate/CaptureTheFlag/two-beacons.yml
+  randomRotation: false
+  maxRandomOffset: 0
+  stations:
+    CaptureTheFlagArena:
+      stationProto: StandardStationArena
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: Два маяки
+      - type: StationJobs
+        availableJobs:
+          Passenger: [-1, -1]

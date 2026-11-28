@@ -1,0 +1,31 @@
+- type: tile
+  id: FloorExoHull
+  parent: BaseStationTile
+  name: tiles-exo-hull
+  sprite: /Textures/_Pirate/GunGame/Imported/Tiles/Exo/exo-hull.png
+  footstepSounds:
+    collection: FootstepTile
+  itemDrop: FloorTileItemExoHull
+
+- type: entity
+  id: FloorTileItemExoHull
+  categories: [HideSpawnMenu]
+  parent: FloorTileItemBase
+  name: exodermis hull floor
+  components:
+  - type: Sprite
+    state: xeno-steel
+  - type: Item
+    heldPrefix: steel
+  - type: FloorTile
+    outputs:
+    - Plating
+    - FloorExoHull
+  - type: Stack
+    stackType: FloorTileExoHull
+
+- type: stack
+  parent: BaseTileStack
+  id: FloorTileExoHull
+  name: stack-exo-hull-floor
+  spawn: FloorTileItemExoHull

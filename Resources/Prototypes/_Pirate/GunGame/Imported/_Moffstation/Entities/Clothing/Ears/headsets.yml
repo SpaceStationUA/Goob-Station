@@ -1,0 +1,37 @@
+- type: entity
+  parent: ClothingHeadset
+  id: ClothingHeadsetPirate
+  categories: [HideSpawnMenu]
+  name: pirate headset
+  description: A headset used by a band thieving pirates.
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots:
+      - EncryptionKeyPirate
+  - type: Sprite
+    sprite: Clothing/Ears/Headsets/freelance.rsi
+  - type: Clothing
+    sprite: Clothing/Ears/Headsets/freelance.rsi
+
+- type: entity
+  parent: [ClothingHeadsetGrey, BaseChameleon, BaseSyndicateContraband]
+  id: ClothingHeadsetSyndicateInfiltrator
+  categories: [HideSpawnMenu]
+  name: syndicate infiltrator headset
+  description: An experimental modular syndicate intercom favored among spies and other infiltrators (there are 6 key slots.).
+  components:
+  - type: ContainerFill
+    containers:
+      key_slots: []
+  - type: EncryptionKeyHolder
+    keySlots: 6
+  - type: Sprite
+    sprite: _Pirate/GunGame/Imported/_Moffstation/Clothing/Ears/Headsets/syndicate.rsi
+    state: icon
+  - type: Clothing
+    sprite: _Pirate/GunGame/Imported/_Moffstation/Clothing/Ears/Headsets/syndicate.rsi
+  - type: ChameleonClothing
+    slot:
+    - ears
+    default: ClothingHeadsetSyndicateInfiltrator

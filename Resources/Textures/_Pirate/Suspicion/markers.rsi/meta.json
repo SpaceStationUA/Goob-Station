@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Space Wizards Federation, modified by Durk for SSS",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "chasm"
+    },
+    {
+      "name": "chasm_side"
+    },
+    {
+      "name": "chasm_corner"
+    }
+  ]
+}

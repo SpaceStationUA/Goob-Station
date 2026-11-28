@@ -1,3 +1,4 @@
+using Content.Shared._Pirate.Store; // Pirate
 using Content.Shared.FixedPoint;
 using Content.Shared.NPC.Prototypes;
 using Robust.Shared.Audio;
@@ -22,6 +23,8 @@ public sealed partial class StoreComponent : Component
     /// </summary>
     [DataField]
     public HashSet<ProtoId<StoreCategoryPrototype>> Categories = new();
+
+    [DataField] public ProtoId<StoreCatalogPrototype>? AdditionalCatalog; // Pirate: stock exclusive to this store.
 
     /// <summary>
     /// The total amount of currency that can be used in the store.

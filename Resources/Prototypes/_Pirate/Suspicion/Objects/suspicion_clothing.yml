@@ -1,0 +1,96 @@
+# Contains the gear for the suspicion gamemode. Most of this stuff will be unremovable.
+
+- type: entity
+  parent: ClothingHeadsetGrey
+  id: ClothingHeadsetGreySuspicion
+  categories: [HideSpawnMenu]
+  name: passenger headset
+  components:
+  - type: Unremoveable
+
+- type: entity
+  parent: ClothingUniformJumpsuitColorWhite
+  id: ClothingUniformJumpsuitColorWhiteSuspicion
+  categories: [HideSpawnMenu]
+  name: white jumpsuit
+  description: A generic white jumpsuit with no rank markings.
+  components:
+  - type: Unremoveable
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackSuspicion
+  categories: [HideSpawnMenu]
+  name: backpack
+  description: You wear this on your back and put items into it. It seems like weapons just don't fit in there.
+  components:
+  - type: Unremoveable
+  - type: Storage
+    grid:
+    - 0,0,3,3
+    maxItemSize: Huge
+    blacklist:
+      components:
+      - Gun
+
+- type: entity
+  parent: ClothingOuterVestWebMerc
+  id: ClothingOuterVestWebMercSuspicion
+  categories: [HideSpawnMenu]
+  suffix: SSS
+  components:
+  - type: Storage
+    grid:
+    - 0,0,2,1
+    blacklist:
+      components:
+      - Gun
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9 # 30% to 10% resistance, Blunt and Slash are underused damage types, increased viability for Melee
+        Slash: 0.9
+        Piercing: 0.7 # 50% to 30% resistance, giving a path for upgradable armour. Fine tune this value as it could be 20% instead.
+        Heat: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.9 # Leaving this incase we want to modify it.
+  - type: Construction
+    graph: UpgradeClothingOuterVestWebMercSuspicion
+    node: start
+
+- type: entity
+  parent: ClothingOuterVestWebMercSuspicion
+  id: ClothingOuterVestWebMercSuspicionUpgraded
+  categories: [HideSpawnMenu]
+  suffix: SSS-Upgraded
+  components:
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.5 # 30% back to 50%, weaker to the base game bulletproofvest
+        Heat: 0.9
+  - type: ExplosionResistance
+    damageCoefficient: 0.8 # 10% to 20%, equivilent to the base game bulletproofvest
+  - type: Construction
+    graph: UpgradeClothingOuterVestWebMercSuspicion
+    node: upgraded
+
+- type: entity
+  parent: HoPIDCard
+  id: HoPIDCardSuspicion
+  categories: [HideSpawnMenu]
+  components:
+  - type: Unremoveable
+
+- type: startingGear
+  id: SuspicionGear
+  equipment:
+    ears: ClothingHeadsetGreySuspicion
+    jumpsuit: ClothingUniformJumpsuitColorWhiteSuspicion
+    shoes: ClothingShoesBootsJack
+    gloves: ClothingHandsGlovesCombat
+    back: ClothingBackpackSuspicion
+    outerClothing: ClothingOuterVestWebMercSuspicion
+    id: HoPIDCardSuspicion

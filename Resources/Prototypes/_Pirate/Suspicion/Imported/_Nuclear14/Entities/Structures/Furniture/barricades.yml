@@ -1,0 +1,52 @@
+- type: entity
+  parent: N14BarricadeSandbagSingle
+  id: N14BarricadeMetal
+  categories: [HideSpawnMenu]
+  name: metal barricade
+  description: A metal fortification.
+  suffix: black
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Furniture/ms13_barricades.rsi
+    state: black
+  - type: Damageable
+    damageModifierSet: Metallic
+    damageContainer: Inorganic
+
+- type: entity
+  id: N14BarricadeSandbagSingle
+  categories: [HideSpawnMenu]
+  parent: BaseStructure
+  name: sandbags
+  description: A sandbag fortification.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Furniture/barricades.rsi
+    netsync: false
+    state: sandbag_single
+  - type: Damageable
+    damageModifierSet: Wood
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,-0.25"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+  - type: Climbable

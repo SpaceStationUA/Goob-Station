@@ -1,0 +1,72 @@
+- type: entity
+  parent: N14TentClothWall
+  id: N14TentClothCorner
+  categories: [HideSpawnMenu]
+  suffix: corner
+  components:
+  - type: Sprite
+    state: cloth_corner
+
+- type: entity
+  parent: N14TentLeatherWall
+  id: N14TentClothWall
+  categories: [HideSpawnMenu]
+  name: tent
+  description: A tent made out of cloth.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Walls/nc14/tents.rsi
+    state: cloth_edge
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: BaseStructure
+  id: N14TentLeatherWall
+  categories: [HideSpawnMenu]
+  name: tent
+  description: A tent made out of leather.
+  components:
+  - type: Sprite
+    drawdepth: Walls
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Walls/nc14/tents.rsi
+    state: leather_edge
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 100
+  - type: Damageable
+    damageContainer: StructuralInorganic
+    damageModifierSet: Web
+  - type: RangedDamageSound
+    soundGroups:
+      Brute:
+        collection:
+          GenericHit
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Occluder
+  - type: RadiationBlocker
+    resistance: 1
+  - type: BlockWeather

@@ -1,0 +1,100 @@
+- type: entity
+  parent: BaseStructureDynamic
+  id: N14CrateBreakBase
+  name: wooden crate
+  description: Might have to break it to see whats inside.
+  abstract: true
+  components:
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 0
+            max: 1
+      - !type:EmptyAllContainersBehaviour
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Storage/Crates/woodencrates.rsi
+  - type: Storage
+    grid:
+    - 0,0,6,3
+    maxItemSize: Huge
+  - type: ContainerContainer
+    containers:
+      storagebase: !type:Container
+        ents: []
+    # TODO: Add crate deconstruction
+
+- type: entity
+  parent: N14CrateBreakBase
+  id: N14CrateBreakPlain
+  categories: [HideSpawnMenu]
+  suffix: plain
+  components:
+  - type: Sprite
+    state: plain_crate
+
+- type: entity
+  parent: N14CrateBreakBase
+  id: N14CrateBreakPlainDamaged
+  categories: [HideSpawnMenu]
+  suffix: plain damaged
+  components:
+  - type: Sprite
+    state: plain_crate-1 # TODO: Make this random between states -1, -2 and -3
+
+- type: entity
+  parent: N14CrateBreakBase
+  id: N14CrateBreakWood
+  categories: [HideSpawnMenu]
+  suffix: wood
+  components:
+  - type: Sprite
+    state: wood_crate
+
+- type: entity
+  parent: CrateGeneric
+  id: N14CrateFreezer
+  categories: [HideSpawnMenu]
+  name: freezer
+  description: A freezer for keeping things cool.
+  components:
+  - type: Icon
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Storage/Crates/freezer.rsi
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Storage/Crates/freezer.rsi
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: AntiRottingContainer
+
+- type: entity
+  parent: CrateGeneric
+  id: N14Trashbin
+  categories: [HideSpawnMenu]
+  name: trash bin
+  description: A trash bin for putting rubbish in.
+  components:
+  - type: Icon
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Storage/Crates/trashbin.rsi
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Storage/Crates/trashbin.rsi
+    layers:
+    - state: base
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]

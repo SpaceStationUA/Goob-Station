@@ -22,6 +22,12 @@ public sealed class KillTrackingSystem : EntitySystem
         SubscribeLocalEvent<KillTrackerComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
+    // Pirate arenas distinguish recoverable incapacitation from a player's death.
+    public void SetKillState(EntityUid entity, MobState state)
+    {
+        EnsureComp<KillTrackerComponent>(entity).KillState = state;
+    }
+
     private void OnDamageChanged(EntityUid uid, KillTrackerComponent component, DamageChangedEvent args)
     {
         if (args.DamageDelta == null)

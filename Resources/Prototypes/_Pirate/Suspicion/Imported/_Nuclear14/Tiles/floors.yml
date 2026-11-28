@@ -1,0 +1,404 @@
+- type: tile
+  id: FloorDirtNew
+  name: dirt
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/Dirt/dirt.png
+  edgeSpritePriority: 1
+  edgeSprites:
+    SouthEast: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/Dirt/single_edge_SE.png
+    NorthEast: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/Dirt/single_edge_NE.png
+    NorthWest: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/Dirt/single_edge_NW.png
+    SouthWest: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/Dirt/single_edge_SW.png
+    South: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/Dirt/double_edge_S.png
+    East: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/Dirt/double_edge_E.png
+    North: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/Dirt/double_edge_N.png
+    West: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/Dirt/double_edge_W.png
+  # baseTurf: FloorBase
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13CarpetFancyBlue
+  name: ms13 carpet fancy blue
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Carpet/carpet_fancy_blue.png
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepCarpet
+  friction: 0.30
+  # itemDrop: FloorTileItemCarpetRed
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13TileBlackLarge
+  name: ms13 tile black large
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Large/tileblacklarge.png
+  variants: 8
+  placementVariants: [0, 1, 2, 3, 4, 5, 6, 7]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  footstepSounds:
+    collection: FootstepFloor
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13TileCafe
+  name: ms13 tile cafe
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Large/tilecafe.png
+  variants: 8
+  placementVariants: [0, 1, 2, 3, 4, 5, 6, 7]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  footstepSounds:
+    collection: FootstepFloor
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13TileCheck
+  name: ms13 tile check
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Large/tilecheck.png
+  variants: 8
+  placementVariants: [0, 1, 2, 3, 4, 5, 6, 7]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  footstepSounds:
+    collection: FootstepFloor
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13TileGreen
+  name: ms13 tile green
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Large/tilegreen.png
+  variants: 8
+  placementVariants: [0, 1, 2, 3, 4, 5, 6, 7]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  footstepSounds:
+    collection: FootstepFloor
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13TileNavyLarge
+  name: ms13 tile navy large
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Large/tilenavylarge.png
+  variants: 8
+  placementVariants: [0, 1, 2, 3, 4, 5, 6, 7]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  footstepSounds:
+    collection: FootstepFloor
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13TileOrnate
+  name: ms13 tile ornate
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/tileornate.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  footstepSounds:
+    collection: FootstepFloor
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+
+- type: tile
+  id: FloorMS13TileWhiteFull
+  name: ms13 tile white full
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Full/tilewhitefull.png
+  variants: 8
+  placementVariants: [0, 1, 2, 3, 4, 5, 6, 7]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  footstepSounds:
+    collection: FootstepFloor
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13TileWhiteLarge
+  name: ms13 tile white large
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Large/tilewhitelarge.png
+  variants: 8
+  placementVariants: [0, 1, 2, 3, 4, 5, 6, 7]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  footstepSounds:
+    collection: FootstepFloor
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13WoodCommon
+  name: ms13 wood common
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Wood/wood_common.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  friction: 0.30
+  # itemDrop: FloorTileItemWoodMaple
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13WoodCommonDamaged
+  name: ms13 wood common damaged
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Wood/wood_common_damaged.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  friction: 0.30
+  # itemDrop: FloorTileItemWoodMaple
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13WoodFancy
+  name: ms13 wood fancy
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Wood/wood_fancy.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  friction: 0.30
+  # itemDrop: FloorTileItemWoodMaple
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13WoodFancyDamaged
+  name: ms13 wood fancy damaged
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Wood/wood_fancy_damaged.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  friction: 0.30
+  # itemDrop: FloorTileItemWoodMaple
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13WoodMosaic
+  name: ms13 wood mosaic
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Wood/wood_mosaic.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  friction: 0.30
+  # itemDrop: FloorTileItemWoodMaple
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13WoodMosaicDamaged
+  name: ms13 wood mosaic damaged
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Wood/wood_mosaic_damaged.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  friction: 0.30
+  # itemDrop: FloorTileItemWoodMaple
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13WoodWide
+  name: ms13 wood wide
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Wood/wood_wide.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  friction: 0.30
+  # itemDrop: FloorTileItemWoodMaple
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorMS13WoodWideDamaged
+  name: ms13 wood wide damaged
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/ms13/Wood/wood_wide_damaged.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  friction: 0.30
+  # itemDrop: FloorTileItemWoodMaple
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+
+- type: tile
+  id: FloorMetalGreyDark
+  name: metal grey dark
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/metalgreydark.png
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepHull
+  friction: 0.30
+  itemDrop: FloorTileItemMetalGreyDark
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorWasteland
+  name: wasteland
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/wasteland.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: Space
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepAsteroid
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+  indestructible: true
+
+- type: tile
+  id: FloorWoodHouse
+  name: wood house
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/woodhouse.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  friction: 0.30
+  itemDrop: FloorTileItemWoodHouse
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorWoodMaple
+  name: wood maple
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/maple.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  friction: 0.30
+  itemDrop: FloorTileItemWoodMaple
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+
+- type: tile
+  id: FloorWoodOak
+  name: wood oak
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/oak.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: FloorWasteland
+  isSubfloor: false
+  deconstructTools: [ Prying ]
+  footstepSounds:
+    collection: FootstepWood
+  friction: 0.30
+  itemDrop: FloorTileItemWoodOak
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: N14FloorConcreteGreyBay
+  name: concrete grey
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/concrete-bay.png
+  variants: 1
+  baseTurf: FloorWasteland
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepTile
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: N14FloorConcreteHexacrete
+  name: concrete hexacrete
+  sprite: /Textures/_Pirate/Suspicion/Imported/_Nuclear14/Tiles/hexacrete.png
+  variants: 1
+  baseTurf: FloorWasteland
+  isSubfloor: true
+  footstepSounds:
+    collection: FootstepTile
+  friction: 0.30
+  thermalConductivity: 0.04
+  heatCapacity: 10000
+  weather: true

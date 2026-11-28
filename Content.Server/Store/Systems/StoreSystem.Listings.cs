@@ -17,6 +17,13 @@ public sealed partial class StoreSystem
     {
         var previousState = component.FullListingsCatalog;
         var newState = GetAllListings();
+        // Pirate: arena stock is added only to the stores that request it.
+        if (component.AdditionalCatalog is {} catalog)
+        {
+            foreach (var listing in _proto.Index(catalog).Listings)
+                newState.Add(new ListingDataWithCostModifiers(listing));
+        }
+
         // if we refresh list with existing cost modifiers - they will be removed,
         // need to restore them
         if (previousState.Count != 0)

@@ -1,0 +1,14 @@
+- type: constructionGraph
+  id: UpgradeClothingOuterVestWebMercSuspicion
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: upgraded
+          steps:
+            - tag: ClothingOuterVestWebMercSuspicionUpgradeKit
+              name: ent-ClothingOuterVestWebMercSuspicionUpgradeKit
+              doAfter: 4
+
+    - node: upgraded
+      entity: ClothingOuterVestWebMercSuspicionUpgraded

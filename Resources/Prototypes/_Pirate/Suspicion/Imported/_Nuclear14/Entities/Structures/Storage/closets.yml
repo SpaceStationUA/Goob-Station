@@ -1,0 +1,121 @@
+- type: entity
+  parent: ClosetBase
+  id: N14ClosetBase
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Storage/Closets/closet.rsi
+    layers:
+    - state: closet
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closet_door
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Physics
+    bodyType: Static
+  - type: EntityStorageVisuals
+    stateBaseClosed: closet
+    stateDoorOpen: closet_open
+    stateDoorClosed: closet_door
+  - type: Transform
+    anchored: true
+  - type: Anchorable # Makes the anchoring near impossible due to high time requirement
+    delay: 3600
+
+- type: entity
+  parent: N14ClosetBase
+  id: N14ClosetBaseW
+  categories: [HideSpawnMenu]
+  name: closet
+  description: A basic closet for storing things.
+  components:
+  - type: Weldable
+  - type: Sprite
+    noRot: true
+    netsync: false
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Storage/Closets/closet.rsi
+    layers:
+    - state: closet
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: closet_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: EntityStorageVisuals
+    stateBaseClosed: closet
+    stateDoorOpen: closet_open
+    stateDoorClosed: closet_door
+
+- type: entity
+  parent: N14ClosetBase
+  id: N14ClosetCabinetWood
+  categories: [HideSpawnMenu]
+  name: cabinet
+  description: An old pre-war wooden cabinet.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Storage/Closets/cabinet.rsi
+  - type: Damageable
+    damageModifierSet: Wood
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 30
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: WoodDestroy
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank:
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Tag
+    tags:
+    - Wooden
+
+- type: entity
+  parent: N14ClosetBaseW
+  id: N14ClosetFridgeWideDirty
+  categories: [HideSpawnMenu]
+  name: fridge
+  description: A dirty old fridge for keeping food fresh
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Storage/Closets/fridgewidedirty.rsi
+  - type: ExplosionResistance
+    damageCoefficient: 0.90
+  - type: AntiRottingContainer
+
+- type: entity
+  parent: N14ClosetBaseW
+  id: N14ClosetGrey1
+  categories: [HideSpawnMenu]
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Storage/Closets/closetgrey.rsi
+  - type: Weldable
+
+- type: entity
+  parent: N14ClosetBaseW
+  id: N14ClosetGunCabinet
+  categories: [HideSpawnMenu]
+  name: gun cabinet
+  description: A secure cabinet for storing guns.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Storage/Closets/guncabinet.rsi
+
+- type: entity
+  parent: N14ClosetBaseW
+  id: N14ClosetRusty
+  categories: [HideSpawnMenu]
+  name: rusty closet
+  description: A rusty old closet for storing things.
+  components:
+  - type: Sprite
+    sprite: _Pirate/Suspicion/Imported/_Nuclear14/Structures/Storage/Closets/closetold.rsi

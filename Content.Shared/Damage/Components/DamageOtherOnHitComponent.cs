@@ -1,6 +1,7 @@
 using Content.Shared.Damage.Systems;
 using Content.Shared._Pirate.Forging; // Pirate
 using Content.Shared._Pirate.Knowledge.Quality; // Pirate
+using Content.Shared._Pirate.Suspicion; // Pirate
 
 namespace Content.Shared.Damage.Components;
 
@@ -8,7 +9,7 @@ namespace Content.Shared.Damage.Components;
 /// Makes this entity deal damage when thrown at something.
 /// </summary>
 [RegisterComponent]
-[Access(typeof(SharedDamageOtherOnHitSystem), typeof(QualitySystem), typeof(ForgingSystem))] // Pirate quality/forging
+[Access(typeof(SharedDamageOtherOnHitSystem), typeof(QualitySystem), typeof(ForgingSystem), typeof(SuspicionThrowingKnifeSystem))] // Pirate
 public sealed partial class DamageOtherOnHitComponent : Component
 {
     /// <summary>

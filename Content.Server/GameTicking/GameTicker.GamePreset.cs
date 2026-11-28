@@ -55,6 +55,13 @@ public sealed partial class GameTicker
             DelayStart(TimeSpan.FromSeconds(PresetFailedCooldownIncrease));
         }
 
+        // Pirate: avoid starting a fallback preset on an incompatible arena map.
+        if (startAttempt.SkipFallback)
+        {
+            FailedPresetRestart();
+            return false;
+        }
+
         if (_cfg.GetCVar(CCVars.GameLobbyFallbackEnabled))
         {
             var fallbackPresets = _cfg.GetCVar(CCVars.GameLobbyFallbackPreset).Split(",");
@@ -86,6 +93,10 @@ public sealed partial class GameTicker
                     startFailed = false;
                     break;
                 }
+
+                if (startAttempt.SkipFallback) // Pirate: the attempted preset requires a fresh lobby.
+                    break;
+
                 _sawmill.Info($"Fallback - '{preset}' failed to start.");
             }
 
@@ -153,9 +164,10 @@ public sealed partial class GameTicker
             ResetCountdown = null;
         }
 
+        var previousPreset = Preset; // Pirate: a map chosen for an arena belongs to its map pool.
         Preset = preset;
         Decoy = decoy;
-        ValidateMap();
+        ValidateMap(previousPreset);
         UpdateInfoText();
 
         if (force)
@@ -203,20 +215,26 @@ public sealed partial class GameTicker
         if (Preset.MapPool == null || !_prototypeManager.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
             return true;
 
-        return pool.Maps.Contains(map.ID);
+        return pool.Maps.Contains(map.ID) || Preset.ManualArenaMap?.Id == map.ID; // Pirate
     }
 
-    private void ValidateMap()
+    private void ValidateMap(GamePresetPrototype? previous)
     {
         if (Preset == null || _gameMapManager.GetSelectedMap() is not { } map)
             return;
 
-        if (Preset.MapPool == null ||
-            !_prototypeManager.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
+        // Pirate: a completed arena vote or configured arena must not carry into the next preset.
+        var previousArenaMap = previous?.ArenaFallbackMap != null && previous != Preset &&
+            (previous.ManualArenaMap?.Id == map.ID ||
+             _prototypeManager.TryIndex<GameMapPoolPrototype>(previous.MapPool, out var arenaPool) && arenaPool.Maps.Contains(map.ID));
+        var outsideNewPool = previousArenaMap && Preset.ManualArenaMap?.Id != map.ID &&
+            !_gameMapManager.AllVotableMaps().Any(candidate => candidate.ID == map.ID);
+
+        if (!outsideNewPool && IsMapEligible(map))
             return;
 
-        if (pool.Maps.Contains(map.ID))
-            return;
+        if (outsideNewPool && _cfg.GetCVar(CCVars.GameMap) == map.ID)
+            _cfg.SetCVar(CCVars.GameMap, string.Empty);
 
         _gameMapManager.SelectMapRandom();
     }
