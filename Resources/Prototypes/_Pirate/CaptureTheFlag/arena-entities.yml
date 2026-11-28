@@ -164,6 +164,13 @@
   components:
   - type: Transform
     anchored: true
+  - type: Sprite
+    drawdepth: HighFloorObjects
+    sprite: _Goobstation/Structures/Decoration/floorlight.rsi
+    layers:
+    - state: base
+    - state: glow
+      shader: unshaded
   - type: PointLight
     color: "#F2F5FF"
     radius: 10

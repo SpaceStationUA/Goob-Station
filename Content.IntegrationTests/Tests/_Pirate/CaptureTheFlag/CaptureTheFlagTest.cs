@@ -13,6 +13,7 @@ using Content.IntegrationTests.Pair;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server._EinsteinEngines.Atmos.Components;
 using Content.Server.Body.Systems;
+using Content.Server.Destructible;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Systems;
 using Content.Server.Preferences.Managers;
@@ -21,6 +22,7 @@ using Content.Shared._Shitmed.Restrict;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.CCVar;
+using Content.Shared.Damage.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Humanoid;
@@ -29,9 +31,11 @@ using Content.Shared.Inventory;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Preferences;
+using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -51,6 +55,107 @@ namespace Content.IntegrationTests.Tests._Pirate.CaptureTheFlag;
 [TestFixture]
 public sealed class CaptureTheFlagTest
 {
+    private static readonly ProtoId<TagPrototype> WallTag = "Wall";
+
+    [Test]
+    public async Task HullAndCoverSurviveGunfireAndKeepTheCornersPressurized()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { InLobby = true, Dirty = true });
+        await StartMatch(pair, 1);
+        var server = pair.Server;
+        var entities = server.EntMan;
+        var grid = GetRule(pair).Grid;
+        var mapGrid = entities.GetComponent<MapGridComponent>(grid);
+        var maps = server.System<SharedMapSystem>();
+        var atmos = server.System<AtmosphereSystem>();
+        var guns = server.System<SharedGunSystem>();
+        var tags = server.System<TagSystem>();
+        Vector2i[] directions = [new(1, 0), new(-1, 0), new(0, 1), new(0, -1)];
+        Vector2i[] corners = [new(-18, -7), new(-18, 7), new(18, -7), new(18, 7)];
+        var pressures = new Dictionary<Vector2i, float>();
+        var targets = new List<(EntityUid Wall, EntityCoordinates Origin, Vector2 Direction)>();
+
+        float Pressure(Vector2i tile) => atmos.GetTileMixture(grid, null, tile, excite: true)!.Pressure;
+
+        await server.WaitAssertion(() =>
+        {
+            var floor = maps.GetAllTiles(grid, mapGrid).Select(tile => tile.GridIndices).ToHashSet();
+            var rim = floor.Where(tile => directions.Any(dir => !floor.Contains(tile + dir))).ToHashSet();
+            Assert.That(rim, Is.Not.Empty);
+            foreach (var tile in rim)
+                Assert.That(atmos.IsTileAirBlocked(grid, tile), Is.True, $"Open hull at {tile}");
+
+            var coverTypes = new HashSet<string>();
+            foreach (var tile in floor)
+            {
+                foreach (var uid in maps.GetAnchoredEntities(grid, mapGrid, tile))
+                {
+                    if (!tags.HasTag(uid, WallTag))
+                        continue;
+
+                    var id = entities.GetComponent<MetaDataComponent>(uid).EntityPrototype!.ID;
+                    Assert.That(entities.HasComponent<DestructibleComponent>(uid), Is.False, $"{id} at {tile}");
+                    var corner = corners.Any(pos => tile == pos + new Vector2i(0, Math.Sign(pos.Y)));
+                    if (!coverTypes.Add(id) && !corner)
+                        continue;
+
+                    var approach = directions.First(dir => floor.Contains(tile - dir) && !atmos.IsTileAirBlocked(grid, tile - dir));
+                    var center = (Vector2) tile + new Vector2(0.5f);
+                    targets.Add((uid, new EntityCoordinates(grid, center - (Vector2) approach), (Vector2) approach));
+                }
+            }
+            Assert.That(coverTypes, Does.Contain("CaptureTheFlagHull"));
+            Assert.That(coverTypes, Does.Contain("CaptureTheFlagCover"));
+            foreach (var tile in corners)
+            {
+                pressures[tile] = Pressure(tile);
+                Assert.That(pressures[tile], Is.InRange(90f, 110f), $"Corner {tile}");
+            }
+        });
+
+        for (var volley = 0; volley < 12; volley++)
+        {
+            await server.WaitPost(() =>
+            {
+                foreach (var (_, origin, direction) in targets)
+                {
+                    var bullet = entities.SpawnEntity(volley % 2 == 0 ? "BulletPistol" : "BulletAntiMateriel", origin);
+                    guns.ShootProjectile(bullet, direction, Vector2.Zero, null);
+                }
+            });
+            await pair.RunTicksSync(4);
+        }
+
+        await pair.RunTicksSync(server.Timing.TickRate * 90);
+        await server.WaitAssertion(() =>
+        {
+            foreach (var (wall, _, _) in targets)
+            {
+                Assert.That(entities.EntityExists(wall), Is.True);
+                Assert.That(entities.GetComponent<DamageableComponent>(wall).TotalDamage.Float(), Is.Positive, $"Shots missed {wall}");
+            }
+            foreach (var tile in corners)
+            {
+                var after = Pressure(tile);
+                TestContext.Out.WriteLine($"Corner {tile}: {pressures[tile]:F2} -> {after:F2} kPa after gunfire.");
+                Assert.That(after, Is.EqualTo(pressures[tile]).Within(1f), $"Pressure loss at {tile}");
+            }
+
+            // Open a control breach to verify that the running atmosphere actually vents to space.
+            var breach = corners[0] + new Vector2i(0, -1);
+            var hullSegment = maps.GetAnchoredEntities(grid, mapGrid, breach).Single(uid => tags.HasTag(uid, WallTag));
+            entities.DeleteEntity(hullSegment);
+        });
+        await pair.RunTicksSync(server.Timing.TickRate * 30);
+        await server.WaitAssertion(() =>
+        {
+            var vented = Pressure(corners[0]);
+            TestContext.Out.WriteLine($"Control breach at {corners[0]}: {vented:F2} kPa.");
+            Assert.That(vented, Is.LessThan(pressures[corners[0]] - 5f));
+        });
+        await pair.CleanReturnAsync();
+    }
+
     [Test]
     public async Task CaptureRequiresHomeFlagAndUnlocksGearForBothTeams()
     {
