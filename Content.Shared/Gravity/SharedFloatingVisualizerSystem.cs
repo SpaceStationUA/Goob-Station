@@ -10,7 +10,7 @@ namespace Content.Shared.Gravity;
 /// <summary>
 /// Handles offsetting a sprite when there is no gravity
 /// </summary>
-public abstract class SharedFloatingVisualizerSystem : EntitySystem
+public abstract partial class SharedFloatingVisualizerSystem : EntitySystem // Goob edit - made partial
 {
     [Dependency] private readonly SharedGravitySystem _gravity = default!;
 
@@ -31,10 +31,11 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
 
     protected bool CanFloat(Entity<FloatingVisualsComponent> entity)
     {
-        entity.Comp.CanFloat = _gravity.IsWeightless(entity.Owner);
+        var alwaysFloat = ShouldFloatRegardlessOfGravity(entity);
+        entity.Comp.CanFloat = alwaysFloat || _gravity.IsWeightless(entity.Owner);
 
         #region Pirate: multiz - z-gravity from a floor below suppresses floating
-        if (entity.Comp.CanFloat &&
+        if (!alwaysFloat && entity.Comp.CanFloat &&
             EntityManager.TrySystem<CESharedZLevelsSystem>(out var zLevels) &&
             zLevels.HasZGravityInfluenceFromBelow(entity.Owner))
         {
@@ -57,10 +58,7 @@ public abstract class SharedFloatingVisualizerSystem : EntitySystem
         if (entity.Comp.CanFloat == args.Weightless)
             return;
 
-        entity.Comp.CanFloat = CanFloat(entity);
-        Dirty(entity);
-
-        if (args.Weightless)
+        if (CanFloat(entity)) // Pirate: respect z-gravity and the prototype's floating override.
             FloatAnimation(entity, entity.Comp.Offset, entity.Comp.AnimationKey, entity.Comp.AnimationTime);
     }
 
