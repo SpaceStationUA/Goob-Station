@@ -584,7 +584,7 @@ namespace Content.Client.Paper.UI
             if (page.X <= 0f || page.Y <= 0f)
                 return;
 
-            var scale = MathF.Min(page.X / image.Width, page.Y / image.Height) * DrawingPageMargin;
+            var scale = MathF.Min(page.X / (float) image.Width, page.Y / (float) image.Height) * DrawingPageMargin;
             DrawingPreview.SetSize = new Vector2(image.Width, image.Height) * scale;
         }
         #endregion
