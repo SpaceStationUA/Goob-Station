@@ -7,6 +7,7 @@ using Content.Shared._Pirate.CCVars;
 using Content.Shared._Pirate.StatusEffectNew;
 using Content.Shared.Audio;
 using Content.Shared.StatusEffectNew.Components;
+using Content.Shared.StatusEffectNew;
 using Content.Shared.Stealth.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -21,6 +22,7 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
     [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private readonly StatusEffectsSystem _effects = default!;
     private static readonly ResPath SpriteRSIPath = new("/Textures/Effects/text.rsi");
     private static readonly SpriteSpecifier.Rsi Plus = new(SpriteRSIPath, "plus");
     private static readonly SpriteSpecifier.Rsi Dash = new(SpriteRSIPath, "dash");
@@ -41,6 +43,14 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
         SubscribeLocalEvent<BiomagneticPolarizationStatusEffectComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<BiomagneticPolarizationStatusEffectComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BiomagneticPolarizationStatusEffectComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<StatusEffectContainerComponent, BiomagneticStealthChangedEvent>(OnStealthChanged);
+    }
+
+    private void OnStealthChanged(Entity<StatusEffectContainerComponent> wearer, ref BiomagneticStealthChangedEvent args)
+    {
+        if (_effects.TryGetStatusEffect(wearer, BiomagEffectID, out var uid) &&
+            TryComp<BiomagneticPolarizationStatusEffectComponent>(uid, out var effect))
+            AdjustSign((uid.Value, effect), args.Enabled);
     }
 
     private void OnHandleState(Entity<BiomagneticPolarizationStatusEffectComponent> ent, ref AfterAutoHandleStateEvent args)
@@ -100,7 +110,7 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
         _sprite.LayerMapSet((ent, sprite), BiomagneticPolarizationSignKey.Key, layer);
     }
 
-    private void AdjustSign(Entity<BiomagneticPolarizationStatusEffectComponent> ent)
+    private void AdjustSign(Entity<BiomagneticPolarizationStatusEffectComponent> ent, bool? stealthEnabled = null)
     {
         if (!TryComp<SpriteComponent>(ent, out var sprite))
             return;
@@ -108,10 +118,10 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
         if (!_sprite.TryGetLayer((ent, sprite), BiomagneticPolarizationSignKey.Key, out var layer, false))
             return;
 
-        if (!_configManager.GetCVar(PirateVars.EnableBiomagneticPolarizationSymbols)
-            || TryComp<StatusEffectComponent>(ent, out var statusEffect)
+        var hidden = stealthEnabled ?? (TryComp<StatusEffectComponent>(ent, out var statusEffect)
             && TryComp<StealthComponent>(statusEffect.AppliedTo, out var stealth)
-            && stealth.Enabled)
+            && stealth.Enabled);
+        if (!_configManager.GetCVar(PirateVars.EnableBiomagneticPolarizationSymbols) || hidden)
         {
             _sprite.LayerSetVisible(layer, false);
             return;
@@ -159,3 +169,6 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
         Key,
     }
 }
+
+[ByRefEvent]
+public readonly record struct BiomagneticStealthChangedEvent(bool Enabled);

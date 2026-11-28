@@ -223,6 +223,9 @@ public sealed partial class SupermatterComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public float DelamTimerAccumulator;
 
+    [ViewVariables]
+    public SharedSupermatterSystem.DelamType PredictedDelamination; // Pirate: forecasts belong to individual crystals.
+
     /// <summary>
     ///     Time until delam
     /// </summary>

@@ -13,6 +13,11 @@ using Content.Server.GameTicking;
 using Content.Server.Mind;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
+using Content.Shared._Pirate.CCVars;
+using Content.Shared.Medical.SuitSensor;
+using Content.Shared.Medical.SuitSensors;
+using Content.Server.RoundEnd;
+using Robust.Shared.Containers;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Damage.Components;
@@ -320,6 +325,128 @@ public sealed class CrewFeatureTest
     }
 
     [Test]
+    public async Task AiCanFollowPublicImplantCoordinatesOnly()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
+        var map = await pair.CreateTestMap();
+        var server = pair.Server;
+        var em = server.EntMan;
+        await server.WaitAssertion(() =>
+        {
+            var wearer = em.SpawnEntity("MobHuman", map.GridCoords);
+            var containers = server.System<SharedContainerSystem>();
+            var implantSlot = containers.EnsureContainer<Container>(wearer, "implant");
+            var sensors = server.System<SharedSuitSensorSystem>();
+            var command = em.SpawnEntity("CommandTrackingImplant", map.GridCoords);
+            Assert.That(containers.Insert(command, implantSlot), Is.True);
+            sensors.SetSensor(command, SuitSensorMode.SensorCords);
+            Assert.That(sensors.HasPublicCoordinates(wearer), Is.False);
+            var tracking = em.SpawnEntity("TrackingImplant", map.GridCoords);
+            Assert.That(containers.Insert(tracking, implantSlot), Is.True);
+            sensors.SetSensor(tracking, SuitSensorMode.SensorCords);
+            Assert.That(sensors.HasPublicCoordinates(wearer), Is.True);
+            sensors.SetSensor(tracking, SuitSensorMode.SensorVitals);
+            Assert.That(sensors.HasPublicCoordinates(wearer), Is.False);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task PrisonCubePreservesAnOverlappingBoardAndItsTarget()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
+        var map = await pair.CreateTestMap();
+        var server = pair.Server;
+        var em = server.EntMan;
+        await server.WaitAssertion(() =>
+        {
+            var board = em.SpawnEntity("LavalandSlidingPuzzle", map.GridCoords);
+            var pieces = em.GetComponent<LavalandSlidingPuzzleComponent>(board).Elements.ToArray();
+            var user = em.SpawnEntity("MobHuman", map.GridCoords);
+            var prisoner = em.SpawnEntity("MobHuman", map.GridCoords);
+            server.System<MobStateSystem>().ChangeMobState(prisoner, MobState.Critical);
+            var cube = em.SpawnEntity("LavalandPrisonCube", map.GridCoords);
+            var interaction = new AfterInteractEvent(user, cube, prisoner, map.GridCoords, true);
+            em.EventBus.RaiseLocalEvent(cube, interaction);
+            Assert.That(interaction.Handled, Is.False);
+            Assert.That(em.HasComponent<BlockMovementComponent>(prisoner), Is.False);
+            Assert.That(em.EntityExists(cube), Is.True);
+            Assert.That(pieces, Has.Length.EqualTo(8));
+            Assert.That(pieces.All(piece => em.EntityExists(piece)), Is.True);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task DelayedCascadesKeepBothOriginsAndBlockAutomaticEvacuation()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true, DummyTicker = false });
+        var map = await pair.CreateTestMap();
+        var server = pair.Server;
+        var em = server.EntMan;
+        var maps = server.System<SharedMapSystem>();
+        var positions = new[] { new Vector2i(-3, 0), new Vector2i(3, 0) };
+        await server.WaitAssertion(() =>
+        {
+            server.CfgMan.SetCVar(PirateVars.EventsDelayOverride, 1f);
+            foreach (var tile in positions)
+            {
+                maps.SetTile(map.Grid, tile, map.Tile.Tile);
+                var core = em.SpawnEntity("Supermatter", maps.GridTileToLocal(map.Grid, map.Grid.Comp, tile));
+                em.EventBus.RaiseEvent(Robust.Shared.GameObjects.EventSource.Local, new SupermatterCascadeEvent(core));
+            }
+            Assert.That(em.AllComponentsList<CascadeRuleComponent>().Single().Component.PendingOrigins, Has.Count.EqualTo(2));
+        });
+        await pair.RunSeconds(2);
+        await server.WaitAssertion(() =>
+        {
+            var rule = em.AllComponentsList<CascadeRuleComponent>().Single();
+            Assert.That(rule.Component.PendingOrigins, Is.Empty);
+            foreach (var tile in positions)
+            {
+                var anchored = maps.GetAnchoredEntities(map.Grid.Owner, map.Grid.Comp, tile);
+                var found = false;
+                while (anchored.MoveNext(out var entity))
+                    found |= em.HasComponent<CrystalMassComponent>(entity);
+                Assert.That(found, Is.True);
+            }
+            var request = new RoundEndRequestAttemptEvent(null);
+            em.EventBus.RaiseEvent(Robust.Shared.GameObjects.EventSource.Local, ref request);
+            Assert.That(request.Cancelled, Is.True);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task RecoveredCrystalSurvivesTheLastCountdownTick()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
+        var map = await pair.CreateTestMap();
+        var server = pair.Server;
+        var em = server.EntMan;
+        EntityUid core = default;
+        await server.WaitPost(() =>
+        {
+            core = em.SpawnEntity("Supermatter", map.GridCoords);
+            var sm = em.GetComponent<SupermatterComponent>(core);
+            sm.Activated = true;
+            sm.Delamming = true;
+            sm.Damage = 0f;
+            sm.DelamTimerAccumulator = sm.DelamTimer - 1f;
+            em.GetComponent<CascadeCoreComponent>(core).Destabilized = true;
+        });
+        await pair.RunSeconds(3);
+        await server.WaitAssertion(() =>
+        {
+            var sm = em.GetComponent<SupermatterComponent>(core);
+            Assert.That(sm.Delamming, Is.False);
+            Assert.That(sm.DelamTimerAccumulator, Is.Zero);
+            Assert.That(em.AllComponentsList<CascadeRuleComponent>(), Is.Empty);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
     public async Task CascadeKeepsAnExistingCrystalWhenSpreadSelectsItsTileAgain()
     {
         await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
@@ -364,7 +491,7 @@ public sealed class CrewFeatureTest
             em.EventBus.RaiseEvent(Robust.Shared.GameObjects.EventSource.Local, new SupermatterCascadeEvent(uid));
             var rule = em.AllComponentsList<CascadeRuleComponent>().Single();
             activeCascade = rule.Uid;
-            Assert.That(rule.Component.Origin, Is.EqualTo(uid));
+            Assert.That(rule.Component.PendingOrigins, Is.Empty);
             Assert.That(rule.Component.DurationToRoundEnd, Is.EqualTo(TimeSpan.FromMinutes(5)));
             Assert.That(server.System<GameTicker>().IsGameRuleActive(rule.Uid), Is.True);
             var tile = server.System<SharedMapSystem>().GetTileRef(map.Grid, map.GridCoords);

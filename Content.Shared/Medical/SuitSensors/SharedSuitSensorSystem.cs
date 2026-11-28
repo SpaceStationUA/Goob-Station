@@ -38,6 +38,7 @@ public abstract class SharedSuitSensorSystem : EntitySystem
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly SharedContainerSystem _sensorContainers = default!; // Pirate: active implanted sensors
     [Dependency] private readonly SharedIdCardSystem _idCardSystem = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -411,6 +412,18 @@ public abstract class SharedSuitSensorSystem : EntitySystem
             if (TryComp<SuitSensorComponent>(item, out var sensor) && sensor.User == wearer &&
                 !sensor.CommandTracker && sensor.Mode == SuitSensorMode.SensorCords)
                 return true;
+        }
+        if (TryComp<ContainerManagerComponent>(wearer, out var manager))
+        {
+            foreach (var container in _sensorContainers.GetAllContainers(wearer, manager))
+            {
+                foreach (var contained in container.ContainedEntities)
+                {
+                    if (TryComp<SuitSensorComponent>(contained, out var sensor) && sensor.User == wearer &&
+                        sensor.ActivationContainer == container.ID && !sensor.CommandTracker && sensor.Mode == SuitSensorMode.SensorCords)
+                        return true;
+                }
+            }
         }
         return false;
     }

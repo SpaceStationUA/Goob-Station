@@ -13,11 +13,10 @@ public sealed class CrystalMassVisualsSystem : VisualizerSystem<CrystalMassVisua
 
         if (args.Sprite == null)
             return;
-        if (AppearanceSystem.TryGetData<int>(uid, CrystalMassVisuals.Variant, out var var, args.Component))
+        if (AppearanceSystem.TryGetData<int>(uid, CrystalMassVisuals.Variant, out var variant, args.Component))
         {
-            var index = SpriteSystem.LayerMapReserve((uid, args.Sprite), $"{component.Layer}");
-            SpriteSystem.LayerSetRsiState((uid, args.Sprite), index, $"crystal_cascade_{var}");
-            args.Sprite.LayerSetShader(index, "unshaded");
+            SpriteSystem.LayerSetRsiState((uid, args.Sprite), component.Layer, $"crystal_cascade_{variant}");
+            args.Sprite.LayerSetShader(component.Layer, "unshaded");
         }
     }
 }

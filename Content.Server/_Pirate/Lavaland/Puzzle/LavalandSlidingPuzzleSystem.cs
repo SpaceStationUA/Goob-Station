@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Numerics;
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.DeviceLinking.Systems;
 using Content.Shared._Pirate.Lavaland.Puzzle;
@@ -85,7 +86,34 @@ public sealed class LavalandSlidingPuzzleSystem : EntitySystem
 
     private void OnMapInit(Entity<LavalandSlidingPuzzleComponent> puzzle, ref MapInitEvent args)
     {
-        Setup(puzzle);
+        if (puzzle.Comp.RequiresPrisoner || puzzle.Comp.Finished || puzzle.Comp.Elements.Count > 0)
+            return;
+
+        if (!PrepareBoard(puzzle, out var gridUid, out var grid, out var center))
+        {
+            QueueDel(puzzle);
+            return;
+        }
+
+        Setup(puzzle, gridUid, grid, center);
+    }
+
+    private bool PrepareBoard(Entity<LavalandSlidingPuzzleComponent> puzzle, out EntityUid gridUid,
+        out MapGridComponent grid, out Vector2i center)
+    {
+        if (!EnsureSetupGrid(puzzle, out gridUid, out grid, out center))
+            return false;
+
+        var boards = EntityQueryEnumerator<LavalandSlidingPuzzleComponent, TransformComponent>();
+        while (boards.MoveNext(out var other, out var board, out var xform))
+        {
+            if (other == puzzle.Owner || board.Finished || board.Elements.Count == 0 || xform.GridUid != gridUid)
+                continue;
+            var delta = _map.CoordinatesToTile(gridUid, grid, xform.Coordinates) - center;
+            if (Math.Abs(delta.X) <= 2 && Math.Abs(delta.Y) <= 2)
+                return false;
+        }
+        return true;
     }
 
     private bool EnsureSetupGrid(
@@ -170,17 +198,8 @@ public sealed class LavalandSlidingPuzzleSystem : EntitySystem
         }
     }
 
-    private void Setup(Entity<LavalandSlidingPuzzleComponent> puzzle)
+    private void Setup(Entity<LavalandSlidingPuzzleComponent> puzzle, EntityUid gridUid, MapGridComponent grid, Vector2i center)
     {
-        if (puzzle.Comp.Finished || puzzle.Comp.Elements.Count > 0)
-            return;
-
-        if (!EnsureSetupGrid(puzzle, out var gridUid, out var grid, out var center))
-        {
-            QueueDel(puzzle);
-            return;
-        }
-
         EnsurePuzzleFloor(gridUid, grid, center);
         ClearPuzzleTiles(gridUid, grid, center);
 
@@ -195,7 +214,24 @@ public sealed class LavalandSlidingPuzzleSystem : EntitySystem
             emptyTileId = _random.PickAndTake(leftIds);
 
         puzzle.Comp.EmptyTileId = emptyTileId;
-        puzzle.Comp.Elements.Clear();
+        _random.Shuffle(leftIds);
+        var inversions = 0;
+        for (var i = 0; i < leftIds.Count; i++)
+        {
+            for (var j = i + 1; j < leftIds.Count; j++)
+            {
+                if (leftIds[i] > leftIds[j])
+                    inversions++;
+            }
+        }
+
+        // An odd-width board is solvable with even parity. A three-cycle keeps a solved shuffle playable.
+        if (inversions % 2 != 0)
+            (leftIds[0], leftIds[1]) = (leftIds[1], leftIds[0]);
+        if (leftIds.SequenceEqual(leftIds.Order()))
+            (leftIds[0], leftIds[1], leftIds[2]) = (leftIds[1], leftIds[2], leftIds[0]);
+
+        var pieceIndex = 0;
 
         for (var spotId = 1; spotId <= 9; spotId++)
         {
@@ -205,7 +241,7 @@ public sealed class LavalandSlidingPuzzleSystem : EntitySystem
             var tile = center + TileOffsets[spotId - 1];
             var coords = _map.GridTileToLocal(gridUid, grid, tile);
 
-            var id = _random.PickAndTake(leftIds);
+            var id = leftIds[pieceIndex++];
             var element = Spawn($"{puzzle.Comp.ElementProtoPrefix}{id}", coords);
 
             var comp = EnsureComp<LavalandSlidingPuzzleElementComponent>(element);
@@ -215,8 +251,6 @@ public sealed class LavalandSlidingPuzzleSystem : EntitySystem
             puzzle.Comp.Elements.Add(element);
         }
 
-        if (!IsSolvable(puzzle))
-            MakeSolvable(puzzle);
     }
 
     private void SpawnFloorPiece(Entity<LavalandSlidingPuzzleComponent> puzzle, int pieceId, Vector2i tile)
@@ -228,76 +262,6 @@ public sealed class LavalandSlidingPuzzleSystem : EntitySystem
         Spawn($"{puzzle.Comp.PieceProtoPrefix}{pieceId}", coords);
     }
 
-    private bool IsSolvable(Entity<LavalandSlidingPuzzleComponent> puzzle)
-    {
-        var ordering = ElementsInOrder(puzzle);
-        var swapTally = 0;
-
-        for (var i = 0; i < ordering.Count; i++)
-        {
-            var checkedValue = ordering[i];
-            for (var j = i; j < ordering.Count; j++)
-            {
-                if (ordering[j] < checkedValue)
-                    swapTally++;
-            }
-        }
-
-        return swapTally % 2 == 0;
-    }
-
-    private List<int> ElementsInOrder(Entity<LavalandSlidingPuzzleComponent> puzzle)
-    {
-        var result = new List<int>(8);
-
-        if (!TryGetPuzzleGrid(puzzle, out var gridUid, out var grid))
-            return result;
-
-        var center = GetCenterTile(puzzle, gridUid, grid);
-
-        for (var spotId = 1; spotId <= 9; spotId++)
-        {
-            if (spotId == puzzle.Comp.EmptyTileId)
-                continue;
-
-            var tile = center + TileOffsets[spotId - 1];
-
-            if (GetElementAtTile(puzzle, gridUid, grid, tile) is { } element &&
-                TryComp<LavalandSlidingPuzzleElementComponent>(element, out var elementComp))
-            {
-                result.Add(elementComp.Id);
-            }
-        }
-
-        return result;
-    }
-
-    private void MakeSolvable(Entity<LavalandSlidingPuzzleComponent> puzzle)
-    {
-        var firstId = 1;
-        var otherId = 2;
-
-        if (puzzle.Comp.EmptyTileId is 1 or 2)
-        {
-            firstId = 4;
-            otherId = 5;
-        }
-
-        var elementA = GetElementAt(puzzle, firstId);
-        var elementB = GetElementAt(puzzle, otherId);
-
-        if (elementA is not { } a || elementB is not { } b)
-            return;
-
-        if (!TryComp<LavalandSlidingPuzzleElementComponent>(a, out _) ||
-            !TryComp<LavalandSlidingPuzzleElementComponent>(b, out _))
-        {
-            return;
-        }
-
-        SwapElements(puzzle, a, b);
-    }
-
     private void MoveElementTo(EntityUid element, EntityCoordinates coords)
     {
         var xform = Transform(element);
@@ -306,30 +270,12 @@ public sealed class LavalandSlidingPuzzleSystem : EntitySystem
         _transform.AnchorEntity(element, Transform(element));
     }
 
-    private void SwapElements(Entity<LavalandSlidingPuzzleComponent> puzzle, EntityUid a, EntityUid b)
-    {
-        var aCoords = Transform(a).Coordinates;
-        var bCoords = Transform(b).Coordinates;
-
-        MoveElementTo(a, bCoords);
-        MoveElementTo(b, aCoords);
-    }
-
     private Vector2i GetCenterTile(
         Entity<LavalandSlidingPuzzleComponent> puzzle,
         EntityUid gridUid,
         MapGridComponent grid)
     {
         return _map.CoordinatesToTile(gridUid, grid, Transform(puzzle).Coordinates);
-    }
-
-    private EntityUid? GetElementAt(Entity<LavalandSlidingPuzzleComponent> puzzle, int spotId)
-    {
-        if (!TryGetPuzzleGrid(puzzle, out var gridUid, out var grid))
-            return null;
-
-        var center = GetCenterTile(puzzle, gridUid, grid);
-        return GetElementAtTile(puzzle, gridUid, grid, center + TileOffsets[spotId - 1]);
     }
 
     private EntityUid? GetElementAtTile(
@@ -690,7 +636,7 @@ public sealed class LavalandSlidingPuzzleSystem : EntitySystem
 
         if (TerminatingOrDeleted(puzzleUid) ||
             !TryComp<LavalandSlidingPuzzleComponent>(puzzleUid, out var puzzle) ||
-            puzzle.Elements.Count == 0)
+            !PrepareBoard((puzzleUid, puzzle), out var gridUid, out var grid, out var center))
         {
             QueueDel(puzzleUid);
             _popup.PopupEntity(Loc.GetString("prison-cube-no-space"), args.User, args.User);
@@ -703,6 +649,7 @@ public sealed class LavalandSlidingPuzzleSystem : EntitySystem
             return;
         }
 
+        Setup((puzzleUid, puzzle), gridUid, grid, center);
         _damageable.ClearAllDamage(target);
         PushAwayNearbyMobs(target);
 

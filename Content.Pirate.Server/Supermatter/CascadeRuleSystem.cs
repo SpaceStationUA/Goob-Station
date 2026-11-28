@@ -45,20 +45,23 @@ public sealed class CascadeRuleSystem : GameRuleSystem<CascadeRuleComponent>
         SubscribeLocalEvent<CascadeCoreComponent, InteractUsingEvent>(OnInteract);
         SubscribeLocalEvent<CascadeCoreComponent, DestabilizeCrystalDoAfterEvent>(OnDestabilize);
         SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCallAttempt);
+        SubscribeLocalEvent<RoundEndRequestAttemptEvent>(OnEvacuationAttempt);
     }
 
     protected override void Started(EntityUid uid, CascadeRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {
         base.Started(uid, comp, gameRule, args);
 
-        comp.TimeUntilInitialAnnouncements = comp.DurationForInitialAnnouncements + Timing.CurTime;
+        var initialWindow = TimeSpan.FromTicks(Math.Min(comp.DurationForInitialAnnouncements.Ticks, comp.DurationToRoundEnd.Ticks / 2));
+        comp.TimeUntilInitialAnnouncements = Timing.CurTime + initialWindow;
         comp.TimeUntilEndRound = comp.DurationToRoundEnd + Timing.CurTime;
 
         SetAlertLevelDelta();
 
         var tile = new Tile(_tileDefManager[comp.CrystalMassPlating].TileId);
-        if (comp.Origin is { } origin && Exists(origin))
+        foreach (var origin in comp.PendingOrigins)
             SpawnSupermatterCrystalMass(origin, comp, tile);
+        comp.PendingOrigins.Clear();
 
         SpawnRandomCrystalMass(comp, tile);
     }
@@ -86,7 +89,7 @@ public sealed class CascadeRuleSystem : GameRuleSystem<CascadeRuleComponent>
             comp.Stage = ResonanceCascadeStage.BeginningEvacCancel;
         }
 
-        if (comp.Stage < ResonanceCascadeStage.MiddleNTAnnouncement
+        if (comp.Stage == ResonanceCascadeStage.BeginningEvacCancel
             && comp.TimeUntilEndRound - Timing.CurTime < comp.DurationToRoundEnd / 2)
         {
             Announce("resonance-cascade-announcement-middle");
@@ -157,19 +160,39 @@ public sealed class CascadeRuleSystem : GameRuleSystem<CascadeRuleComponent>
         if (TerminatingOrDeleted(ev.Core))
             return;
 
-        var active = QueryActiveRules();
-        if (active.MoveNext(out _, out _, out var cascade, out _))
+        EntityUid? rule = null;
+        var existing = EntityQueryEnumerator<CascadeRuleComponent>();
+        while (existing.MoveNext(out var uid, out _))
         {
-            var tile = new Tile(_tileDefManager[cascade.CrystalMassPlating].TileId);
-            SpawnSupermatterCrystalMass(ev.Core, cascade, tile);
+            if (HasComp<EndedGameRuleComponent>(uid))
+                continue;
+            rule = uid;
+            break;
         }
-        else
+
+        var newRule = rule == null;
+        var ruleUid = rule ?? GameTicker.AddGameRule(CascadeRule);
+        var cascade = Comp<CascadeRuleComponent>(ruleUid);
+        var xform = Transform(ev.Core);
+        if (xform.GridUid is { } gridUid && TryComp<MapGridComponent>(gridUid, out var grid))
         {
-            var rule = GameTicker.AddGameRule(CascadeRule);
-            Comp<CascadeRuleComponent>(rule).Origin = ev.Core;
-            GameTicker.StartGameRule(rule);
+            var tile = _map.CoordinatesToTile(gridUid, grid, xform.Coordinates);
+            var origin = _map.GridTileToLocal(gridUid, grid, tile);
+            if (HasComp<ActiveGameRuleComponent>(ruleUid))
+                SpawnSupermatterCrystalMass(origin, cascade, new Tile(_tileDefManager[cascade.CrystalMassPlating].TileId));
+            else
+                cascade.PendingOrigins.Add(origin);
         }
+        if (newRule)
+            GameTicker.StartGameRule(ruleUid);
         QueueDel(ev.Core);
+    }
+
+    private void OnEvacuationAttempt(ref RoundEndRequestAttemptEvent ev)
+    {
+        var query = QueryActiveRules();
+        if (query.MoveNext(out _, out _, out _, out _))
+            ev.Block("emergancy-shuttle-cascade-call-unavailable");
     }
 
     private void OnShuttleCallAttempt(ref CommunicationConsoleCallShuttleAttemptEvent ev)
@@ -182,16 +205,13 @@ public sealed class CascadeRuleSystem : GameRuleSystem<CascadeRuleComponent>
         ev.Reason = Loc.GetString("emergancy-shuttle-cascade-call-unavailable");
     }
 
-    private void SpawnSupermatterCrystalMass(EntityUid supermatterUid, CascadeRuleComponent comp, Tile tile)
+    private void SpawnSupermatterCrystalMass(EntityCoordinates origin, CascadeRuleComponent comp, Tile tile)
     {
-        var xform = Transform(supermatterUid);
-        var gridUid = xform.GridUid;
-
-        if (!TryComp<MapGridComponent>(gridUid, out var supermatterMapGrid))
+        if (!TryComp<MapGridComponent>(origin.EntityId, out var grid))
             return;
 
-        _map.SetTile(gridUid.Value, supermatterMapGrid, xform.Coordinates, tile);
-        Spawn(comp.CrystalBulbPrototype, xform.Coordinates);
+        _map.SetTile(origin.EntityId, grid, origin, tile);
+        Spawn(comp.CrystalBulbPrototype, origin);
     }
 
     private void SpawnRandomCrystalMass(CascadeRuleComponent comp, Tile tile)

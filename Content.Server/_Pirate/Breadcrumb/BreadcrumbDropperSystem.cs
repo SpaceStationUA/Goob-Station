@@ -250,7 +250,7 @@ public sealed partial class BreadcrumbDropperSystem : EntitySystem
     private bool HasCrumbNearby(Entity<BreadcrumbDropperComponent> dropper, TransformComponent xform)
     {
         _nearbyStones.Clear();
-        _lookup.GetEntitiesInRange(xform.Coordinates, dropper.Comp.DropRange, _nearbyStones);
+        _lookup.GetEntitiesInRange(xform.Coordinates, dropper.Comp.DropRange, _nearbyStones, LookupFlags.Uncontained);
         foreach (var ent in _nearbyStones)
         {
             if (ent.Comp.Dropper == dropper.Owner)

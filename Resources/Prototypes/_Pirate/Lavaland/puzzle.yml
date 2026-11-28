@@ -180,6 +180,7 @@
   components:
   - type: LavalandSlidingPuzzle
     megafaunaChance: 0
+    requiresPrisoner: true
     emptyTileId: 5
     returnCubeProto: LavalandPrisonCube
 

@@ -16,7 +16,7 @@ public sealed partial class BreadcrumbDropperWindow : FancyWindow
     /// <summary>
     /// The key currently selected, or null if there are none.
     /// </summary>
-    public string? SelectedColor => ColorSelector.SelectedMetadata as string;
+    public string? SelectedColor => ColorSelector.ItemCount == 0 ? null : ColorSelector.SelectedMetadata as string;
 
     public BreadcrumbDropperWindow()
     {

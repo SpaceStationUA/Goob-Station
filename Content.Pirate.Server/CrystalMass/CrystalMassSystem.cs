@@ -107,9 +107,17 @@ public sealed class CrystalMassSystem : EntitySystem
             prototype = ent.Comp.SecondarySpawnPrototype;
 
         var neighbor = _robustRandom.Pick(args.AllNeighbors);
-        HandleTiles((neighbor.GridUid, neighbor.Grid), neighbor.Position, ent.Comp.MassPlating);
+        // Keep the same growth probability and update budget when another crystal already owns this tile.
+        args.Updates--;
+        var occupants = _map.GetAnchoredEntities(neighbor.GridUid, neighbor.Grid, neighbor.Position);
+        while (occupants.MoveNext(out var occupant))
+        {
+            if (TryComp<EdgeSpreaderComponent>(occupant, out var spreader) && spreader.Id == CrystalMassGroup)
+                return;
+        }
 
-        var neighborUid = SpreadTo((neighbor.GridUid, neighbor.Grid), neighbor.Position, prototype);
+        HandleTiles((neighbor.GridUid, neighbor.Grid), neighbor.Position, ent.Comp.MassPlating);
+        var neighborUid = Spawn(prototype, _map.GridTileToLocal(neighbor.GridUid, neighbor.Grid, neighbor.Position));
         DebugTools.Assert(HasComp<EdgeSpreaderComponent>(neighborUid));
         DebugTools.Assert(HasComp<ActiveEdgeSpreaderComponent>(neighborUid));
         DebugTools.Assert(Comp<EdgeSpreaderComponent>(neighborUid).Id == CrystalMassGroup);
@@ -117,24 +125,6 @@ public sealed class CrystalMassSystem : EntitySystem
         if (_robustRandom.Prob(ent.Comp.SpawningAudioChance))
             _audio.PlayPvs(ent.Comp.SpawningCrystalSound, Transform(ent).Coordinates);
 
-        args.Updates--;
-    }
-
-    private EntityUid SpreadTo(Entity<MapGridComponent> grid, Vector2i tile, string prototype)
-    {
-        var anchored = _map.GetAnchoredEntities(grid.Owner, grid.Comp, tile);
-        while (anchored.MoveNext(out var uid))
-        {
-            if (!HasComp<CrystalMassComponent>(uid) || MetaData(uid.Value).EntityPrototype?.ID != prototype)
-                continue;
-
-            // A hit on the same crystal still clears its tile and can reactivate its frontier.
-            EnsureComp<ActiveTileClearCrystalMassComponent>(uid.Value);
-            EnsureComp<ActiveEdgeSpreaderComponent>(uid.Value);
-            return uid.Value;
-        }
-
-        return Spawn(prototype, _map.GridTileToLocal(grid, grid.Comp, tile));
     }
 
     private void HandleTiles(Entity<MapGridComponent> neighborGrid, Vector2i neighborPosition, ProtoId<ContentTileDefinition> neighborTileReplacement)

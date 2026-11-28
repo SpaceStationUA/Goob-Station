@@ -16,6 +16,9 @@ public sealed partial class LavalandSlidingPuzzleComponent : Component
     [ViewVariables, DataField]
     public int EmptyTileId = 0;
 
+    [DataField]
+    public bool RequiresPrisoner;
+
     [ViewVariables]
     public bool Finished = false;
 

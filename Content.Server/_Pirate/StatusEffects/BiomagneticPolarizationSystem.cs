@@ -89,13 +89,16 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
                 continue;
             }
 
-            if (comp.CooldownEnd > curTime || comp.StatusOwner is not { } physTuple)
+            if (comp.StatusOwner is not { } physTuple)
                 continue;
 
             HandleStaticTiles((ent, comp));
 
-            var (opposite, same, capInvolved) = HandleCollisions(physTuple, comp);
-            CollisionEffects(statusOwner, (ent, comp), opposite, same, capInvolved);
+            if (comp.CooldownEnd <= curTime)
+            {
+                var (opposite, same, capInvolved) = HandleCollisions(physTuple, comp);
+                CollisionEffects(statusOwner, (ent, comp), opposite, same, capInvolved);
+            }
 
             // handle strength updates - we don't want to do this every frame, so there's a cooldown.
             if (comp.NextUpdate > curTime)
@@ -288,7 +291,7 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
             }
 
             // everything below this line has a 50% chance per entity
-            if (_random.Prob(ent.Comp.CapEffectChance))
+            if (!_random.Prob(ent.Comp.CapEffectChance))
                 continue;
 
             // open lockers and crates at random

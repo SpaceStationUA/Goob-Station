@@ -4,6 +4,7 @@
 using Content.Shared.Destructible.Thresholds;
 using Content.Shared.Maps;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Map;
 
 namespace Content.Pirate.Server.Supermatter;
 
@@ -15,7 +16,7 @@ namespace Content.Pirate.Server.Supermatter;
 public sealed partial class CascadeRuleComponent : Component
 {
     [DataField]
-    public EntityUid? Origin;
+    public List<EntityCoordinates> PendingOrigins = [];
 
     /// <summary>
     /// The current stage of the resonance cascade event

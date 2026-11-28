@@ -86,6 +86,8 @@ public sealed class StealthSystem : SharedStealthSystem
             EnsureComp<InteractionOutlineComponent>(uid);
             component.HadOutline = false;
         }
+        var ev = new Content.Client._Pirate.StatusEffects.BiomagneticStealthChangedEvent(enabled); // Pirate: update the wearer's pole symbol.
+        RaiseLocalEvent(uid, ref ev);
     }
 
     private void OnStartup(EntityUid uid, StealthComponent component, ComponentStartup args)
