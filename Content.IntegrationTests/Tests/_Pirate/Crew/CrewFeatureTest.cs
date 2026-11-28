@@ -12,6 +12,10 @@ using Content.Server.Spreader;
 using Content.Server.GameTicking;
 using Content.Server.Mind;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.Power.EntitySystems;
+using Content.Server.Telephone;
+using Content.Shared.Holopad;
+using Content.Shared.Telephone;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared._Pirate.CCVars;
@@ -48,7 +52,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests._Pirate.Crew;
 
 [TestFixture]
-public sealed class CrewFeatureTest
+public sealed partial class CrewFeatureTest
 {
     [TestPrototypes]
     private const string FastCascade = """
@@ -340,7 +344,7 @@ public sealed class CrewFeatureTest
         var maps = server.System<SharedMapSystem>();
         var transforms = server.System<SharedTransformSystem>();
         var sensors = server.System<SharedSuitSensorSystem>();
-        EntityUid core = default, eye = default, speaker = default, uniform = default;
+        EntityUid core = default, eye = default, speaker = default, uniform = default, holopad = default, brain = default;
         NetEntity radioSpeaker = default;
         MapCoordinates corePosition = default;
 
@@ -351,13 +355,16 @@ public sealed class CrewFeatureTest
                 maps.SetTile(map.Grid, new Vector2i(x, 0), tile);
 
             core = em.SpawnEntity("PlayerStationAiEmpty", map.GridCoords);
-            var brain = em.SpawnEntity("StationAiBrain", map.GridCoords);
+            brain = em.SpawnAttachedTo("StationAiBrain", map.GridCoords);
             var containers = server.System<SharedContainerSystem>();
             Assert.That(containers.Insert(brain, containers.GetContainer(core, StationAiCoreComponent.Container)), Is.True);
             server.PlayerMan.SetAttachedEntity(server.PlayerMan.Sessions.Single(), brain);
             eye = em.GetComponent<StationAiCoreComponent>(core).RemoteEntity!.Value;
             corePosition = transforms.GetMapCoordinates(core);
-
+            holopad = em.SpawnAttachedTo("Holopad", maps.GridTileToLocal(map.Grid, map.Grid.Comp, new Vector2i(1, 0)));
+            var power = server.System<PowerReceiverSystem>();
+            power.SetNeedsPower(holopad, false);
+            power.SetNeedsPower(core, false);
             var remoteTile = maps.GridTileToLocal(map.Grid, map.Grid.Comp, new Vector2i(4, 0));
             speaker = em.SpawnEntity("MobHuman", remoteTile);
             uniform = em.SpawnEntity("ClothingUniformJumpsuitCaptain", remoteTile);
@@ -365,6 +372,22 @@ public sealed class CrewFeatureTest
             sensors.SetSensor(uniform, SuitSensorMode.SensorCords);
             em.EnsureComponent<TelecomExemptComponent>(speaker);
             radioSpeaker = em.GetNetEntity(speaker);
+        });
+        // Let the power network update the new receivers before establishing a real call.
+        await pair.RunSeconds(1);
+        await server.WaitAssertion(() =>
+        {
+            var telephone = server.System<TelephoneSystem>();
+            var caller = (core, em.GetComponent<TelephoneComponent>(core));
+            var receiver = (holopad, em.GetComponent<TelephoneComponent>(holopad));
+            Assert.That(telephone.IsTelephonePowered(caller), Is.True, "The AI core needs power for the holocall.");
+            Assert.That(telephone.IsTelephonePowered(receiver), Is.True, "The destination holopad needs power.");
+            Assert.That(telephone.IsSourceInRangeOfReceiver(caller, receiver), Is.True);
+            em.EventBus.RaiseLocalEvent(holopad, new HolopadActivateProjectorMessage { Actor = brain });
+            Assert.That(telephone.IsSourceConnectedToReceiver(caller, receiver), Is.True);
+            var coreState = em.GetComponent<StationAiCoreComponent>(core);
+            Assert.That(coreState.Remote, Is.False);
+            eye = coreState.RemoteEntity!.Value;
         });
         await pair.RunUntilSynced();
 
@@ -385,12 +408,17 @@ public sealed class CrewFeatureTest
         await server.WaitAssertion(() =>
         {
             Assert.That(transforms.GetMapCoordinates(eye).InRange(transforms.GetMapCoordinates(speaker), 0.2f), Is.False);
+            Assert.That(em.GetComponent<StationAiCoreComponent>(core).Remote, Is.False);
             sensors.SetSensor(uniform, SuitSensorMode.SensorCords);
         });
         await ClickSpeaker();
         await server.WaitAssertion(() =>
         {
-            Assert.That(transforms.GetMapCoordinates(eye).InRange(transforms.GetMapCoordinates(speaker), 0.2f), Is.True);
+            var coreState = em.GetComponent<StationAiCoreComponent>(core);
+            Assert.That(coreState.Remote, Is.True);
+            Assert.That(em.GetComponent<HolopadComponent>(holopad).Hologram, Is.Null);
+            Assert.That(server.System<TelephoneSystem>().IsTelephoneEngaged((core, em.GetComponent<TelephoneComponent>(core))), Is.False);
+            Assert.That(transforms.GetMapCoordinates(coreState.RemoteEntity!.Value).InRange(transforms.GetMapCoordinates(speaker), 0.2f), Is.True);
             Assert.That(transforms.GetMapCoordinates(core), Is.EqualTo(corePosition));
         });
         await pair.CleanReturnAsync();

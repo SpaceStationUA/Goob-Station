@@ -76,7 +76,7 @@ public sealed partial class BreadcrumbDropperSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = Toggle(dropper, args.User);
+        args.Handled = Toggle(dropper);
     }
 
     public void OnActivateInWorld(Entity<BreadcrumbDropperComponent> dropper, ref ActivateInWorldEvent args)
@@ -84,7 +84,7 @@ public sealed partial class BreadcrumbDropperSystem : EntitySystem
         if (args.Handled)
             return;
 
-        args.Handled = Toggle(dropper, args.User);
+        args.Handled = Toggle(dropper);
     }
 
     /// <summary>
@@ -139,13 +139,13 @@ public sealed partial class BreadcrumbDropperSystem : EntitySystem
         if (!TryComp<LimitedChargesComponent>(dropper, out var capacity) ||
             _charges.GetCurrentCharges(dropper.Owner) >= capacity.MaxCharges)
         {
-            _popup.PopupPredicted(Loc.GetString(dropper.Comp.LocRechargeFull), dropper, args.User);
+            _popup.PopupEntity(Loc.GetString(dropper.Comp.LocRechargeFull), dropper);
             return;
         }
 
         _charges.AddCharges((dropper, null), charges.Charges);
         UpdateAppearance(dropper);
-        _popup.PopupPredicted(Loc.GetString(dropper.Comp.LocRecharged), dropper, args.User);
+        _popup.PopupEntity(Loc.GetString(dropper.Comp.LocRecharged), dropper);
         QueueDel(args.Used);
         args.Handled = true;
     }
@@ -177,7 +177,7 @@ public sealed partial class BreadcrumbDropperSystem : EntitySystem
             {
                 dropperComp.Enabled = false;
                 UpdateAppearance(dropper);
-                _popup.PopupPredicted(Loc.GetString(dropper.Comp.LocEmptied), dropper, null, PopupType.Medium);
+                _popup.PopupEntity(Loc.GetString(dropper.Comp.LocEmptied), dropper, PopupType.Medium);
                 continue;
             }
 
@@ -186,7 +186,7 @@ public sealed partial class BreadcrumbDropperSystem : EntitySystem
         }
     }
 
-    private bool Toggle(Entity<BreadcrumbDropperComponent> dropper, EntityUid user)
+    private bool Toggle(Entity<BreadcrumbDropperComponent> dropper)
     {
         if (!dropper.Comp.Enabled && !CanBeActive(dropper))
             return false;
@@ -194,16 +194,16 @@ public sealed partial class BreadcrumbDropperSystem : EntitySystem
         // Prevent activating when disabled empty.
         if (!dropper.Comp.Enabled && _charges.GetCurrentCharges(dropper.Owner) <= 0)
         {
-            _popup.PopupPredicted(Loc.GetString(dropper.Comp.LocToggleEmpty), dropper, user);
+            _popup.PopupEntity(Loc.GetString(dropper.Comp.LocToggleEmpty), dropper);
             return true;
         }
 
         dropper.Comp.Enabled = !dropper.Comp.Enabled;
         Dirty(dropper);
         UpdateAppearance(dropper);
-        _popup.PopupPredicted(
+        _popup.PopupEntity(
             Loc.GetString(dropper.Comp.Enabled ? dropper.Comp.LocToggleOn : dropper.Comp.LocToggleOff),
-            dropper, user);
+            dropper);
         return true;
     }
 

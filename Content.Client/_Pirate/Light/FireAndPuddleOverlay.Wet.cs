@@ -79,10 +79,10 @@ public sealed partial class FireAndPuddleOverlay
 
         _puddles.Clear();
         _lookup.GetEntitiesIntersecting(mapId, worldAABB.Enlarged(1f), _puddles,
-            LookupFlags.Static | LookupFlags.Sundries | LookupFlags.Approximate);
+            LookupFlags.Static | LookupFlags.Sundries | LookupFlags.Sensors | LookupFlags.Approximate);
         foreach (var puddle in _puddles)
         {
-            if (!_entMan.TryGetComponent<SpriteComponent>(puddle.Owner, out var sprite) || !sprite.Visible)
+            if (!_entMan.TryGetComponent<SpriteComponent>(puddle.Owner, out var sprite) || !sprite.Visible || sprite.ContainerOccluded)
                 continue;
 
             var (position, rotation) = _xform.GetWorldPositionRotation(puddle.Owner);

@@ -3,6 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared._Pirate.StationAi;
+using Content.Client._Funkystation.Radio;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -16,7 +17,50 @@ namespace Content.Client._Pirate.StationAi;
 [UsedImplicitly]
 public sealed class AiRadioSpeakerTag : IMarkupTagHandler
 {
+    [Dependency] private IEntitySystemManager _systems = default!;
+
     public string Name => "airadiospeaker";
+
+    // The chat highlighter processes ordinary name text before these clickable controls are built.
+    public static FormattedMessage CreateLinks(FormattedMessage message)
+    {
+        var result = new FormattedMessage(message.Count);
+        MarkupNode? link = null;
+        var highlights = new Stack<MarkupParameter>();
+        foreach (var node in message)
+        {
+            if (node.Name == "airadiolink")
+            {
+                link = node.Closing ? null : node;
+                highlights.Clear();
+                continue;
+            }
+
+            if (link != null && node.Name == "color")
+            {
+                if (node.Closing)
+                    highlights.TryPop(out _);
+                else
+                    highlights.Push(node.Value);
+                continue;
+            }
+
+            if (link != null && node.IsPlainText)
+            {
+                var attributes = new Dictionary<string, MarkupParameter>(link.Attributes);
+                if (highlights.TryPeek(out var tint))
+                    attributes["highlight"] = tint;
+                result.PushTag(new MarkupNode("airadiospeaker", node.Value, attributes), selfClosing: true);
+                continue;
+            }
+
+            if (node.Closing)
+                result.Pop();
+            else
+                result.PushTag(node);
+        }
+        return result;
+    }
 
     public bool TryCreateControl(MarkupNode node, [NotNullWhen(true)] out Control? control)
     {
@@ -27,8 +71,12 @@ public sealed class AiRadioSpeakerTag : IMarkupTagHandler
             return false;
 
         var color = Color.CornflowerBlue;
-        if (node.Attributes.TryGetValue("color", out var tint) && tint.TryGetString(out var hex) && Color.TryFromHex(hex, out var parsed))
-            color = parsed;
+        if (node.Attributes.TryGetValue("highlight", out var highlight) && highlight.TryGetColor(out var highlighted))
+            color = highlighted.Value;
+        else if (node.Attributes.TryGetValue("channel", out var channel) && channel.TryGetString(out var channelId))
+            color = _systems.TryGetEntitySystem<RadioChannelColorSystem>(out var colors) ? colors.GetColor(channelId) : ColorTag.DefaultColor;
+        else if (node.Attributes.TryGetValue("color", out var tint) && tint.TryGetString(out var hex) && Color.TryFromHex(hex, out var parsed))
+            color = parsed; // Older chat recordings carry the original channel tint.
 
         var label = new Label
         {

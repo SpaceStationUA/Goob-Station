@@ -29,22 +29,27 @@ public sealed partial class FireAndPuddleOverlay : Overlay
     private readonly SharedMapSystem _map;
     private readonly EntityLookupSystem _lookup;
     private readonly SpriteSystem _sprite;
-    private readonly ShaderInstance _shader;
+    private readonly ShaderInstance _heatShader;
+    private readonly ShaderInstance _reflectionShader;
+    private bool _copyScene;
     private readonly OverlayResourceCache<CachedResources> _resources = new();
     private static readonly TextureSampleParameters _smoothSampling = new() { Filter = true };
 
-    public override OverlaySpace Space => OverlaySpace.WorldSpace;
-    public override bool RequestScreenTexture => true;
+    // Composite wet floors immediately after puddles. Higher sprites cover them normally.
+    // Heat distorts the completed scene in the later world-space pass.
+    public override OverlaySpace Space => OverlaySpace.WorldSpaceEntities | OverlaySpace.WorldSpace;
+    public override bool RequestScreenTexture => _copyScene;
 
     public FireAndPuddleOverlay()
     {
         IoCManager.InjectDependencies(this);
-        ZIndex = -1;
+        ZIndex = (int) Content.Shared.DrawDepth.DrawDepth.Puddles + 1;
         _xform = _entMan.System<SharedTransformSystem>();
         _map = _entMan.System<SharedMapSystem>();
         _lookup = _entMan.System<EntityLookupSystem>();
         _sprite = _entMan.System<SpriteSystem>();
-        _shader = _proto.Index<ShaderPrototype>("PirateFireAndPuddle").InstanceUnique();
+        _heatShader = _proto.Index<ShaderPrototype>("PirateFireAndPuddle").InstanceUnique();
+        _reflectionShader = _proto.Index<ShaderPrototype>("PiratePuddleReflection").InstanceUnique();
     }
 
     private Box2? _effectBounds;
@@ -64,41 +69,49 @@ public sealed partial class FireAndPuddleOverlay : Overlay
         _effectBounds = null;
         // Clyde calls BeforeDraw just before the screen copy for this viewport.
         var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
-        res.HasHeat = HeatEnabled && CollectHeatSpots(args.MapId, args.WorldBounds, args.WorldAABB.Enlarged(FireHeatRadius));
-        res.HasPuddles = _cfg.GetCVar(PirateVars.PuddleReflections) && eye.DrawLight &&
-            _lightManager.Enabled && _lightManager.DrawLighting &&
-            _entMan.TryGetComponent<MapComponent>(args.MapUid, out var map) && map.LightingEnabled &&
-            CollectWet(args.MapId, args.WorldAABB, eye.Rotation);
+        var lighting = eye.DrawLight && _lightManager.Enabled &&
+            _entMan.TryGetComponent<MapComponent>(args.MapUid, out var map) && map.LightingEnabled;
+        res.UseFov = lighting && eye.DrawFov && _lightManager.DrawHardFov;
+        res.HasHeat = args.Space == OverlaySpace.WorldSpace && HeatEnabled &&
+            CollectHeatSpots(args.MapId, args.WorldBounds, args.WorldAABB.Enlarged(FireHeatRadius));
+        res.HasPuddles = args.Space == OverlaySpace.WorldSpaceEntities && lighting && _lightManager.DrawLighting &&
+            _cfg.GetCVar(PirateVars.PuddleReflections) && CollectWet(args.MapId, args.WorldAABB, eye.Rotation);
+        _copyScene = res.HasHeat;
         return res.HasHeat || res.HasPuddles;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (ScreenTexture == null || args.Viewport.Eye is not { } eye || _effectBounds is not { } bounds)
+        if (args.Viewport.Eye is not { } eye || _effectBounds is not { } bounds)
             return;
 
         var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
-        var heat = res.HasHeat ? DrawHeat(args) : null;
-        var wet = res.HasPuddles ? DrawWet(args) : null;
-        if (heat == null && wet == null)
+        ShaderInstance shader;
+        if (res.HasHeat && ScreenTexture != null)
+        {
+            shader = _heatShader;
+            shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
+            shader.SetParameter("HEAT_TEXTURE", DrawHeat(args));
+            shader.SetParameter("FOV_TEXTURE", args.Viewport.FovRenderTarget.Texture);
+            shader.SetParameter("fovEnabled", res.UseFov ? 1f : 0f);
+            shader.SetParameter("eyePosition", eye.Position.Position);
+        }
+        else if (res.HasPuddles)
+        {
+            shader = _reflectionShader;
+            shader.SetParameter("WET_TEXTURE", DrawWet(args));
+            shader.SetParameter("LIGHT_TEXTURE", args.Viewport.LightRenderTarget.Texture);
+        }
+        else
             return;
 
-        _shader.SetParameter("SCREEN_TEXTURE", ScreenTexture);
-        _shader.SetParameter("LIGHT_TEXTURE", args.Viewport.LightRenderTarget.Texture);
-        _shader.SetParameter("HEAT_TEXTURE", heat ?? ScreenTexture);
-        _shader.SetParameter("WET_TEXTURE", wet ?? ScreenTexture);
-        _shader.SetParameter("haze", heat == null ? 0f : 0.7f);
-        _shader.SetParameter("gloss", wet == null ? 0f : 0.6f);
         args.WorldBounds.GetCorners(out var bottomLeft, out var bottomRight, out _, out var topLeft);
-        _shader.SetParameter("worldOrigin", bottomLeft);
-        _shader.SetParameter("worldAxisX", bottomRight - bottomLeft);
-        _shader.SetParameter("worldAxisY", topLeft - bottomLeft);
-        _shader.SetParameter("FOV_TEXTURE", args.Viewport.FovRenderTarget.Texture);
-        _shader.SetParameter("fovEnabled", eye.DrawFov && _lightManager.DrawHardFov ? 1f : 0f);
-        _shader.SetParameter("eyePosition", eye.Position.Position);
+        shader.SetParameter("worldOrigin", bottomLeft);
+        shader.SetParameter("worldAxisX", bottomRight - bottomLeft);
+        shader.SetParameter("worldAxisY", topLeft - bottomLeft);
         var handle = args.WorldHandle;
         handle.SetTransform(Matrix3x2.Identity);
-        handle.UseShader(_shader);
+        handle.UseShader(shader);
         // The masks use linear sampling. Cover one mask pixel beyond the last sprite or heat quad.
         var pixels = args.Viewport.Size;
         var padding = MathF.Max((bottomRight - bottomLeft).Length() / pixels.X,
@@ -115,6 +128,7 @@ public sealed partial class FireAndPuddleOverlay : Overlay
 
     private sealed class CachedResources : IDisposable
     {
+        public bool UseFov;
         public bool HasHeat;
         public bool HasPuddles;
         public IRenderTexture? Heat;

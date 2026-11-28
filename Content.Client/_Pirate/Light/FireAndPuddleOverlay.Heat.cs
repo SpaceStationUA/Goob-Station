@@ -141,9 +141,13 @@ public sealed partial class FireAndPuddleOverlay
         }
 
         var burning = _entMan.EntityQueryEnumerator<FireVisualsComponent, TransformComponent>();
-        while (burning.MoveNext(out _, out var fire, out var xform))
+        while (burning.MoveNext(out var uid, out var fire, out var xform))
         {
-            if (fire.LightEntity == null || xform.MapID != mapId)
+            if (xform.MapID != mapId || fire.LightEntity is not { } light ||
+                !_entMan.TryGetComponent<Robust.Client.GameObjects.SpriteComponent>(uid, out var sprite) ||
+                !sprite.Visible || sprite.ContainerOccluded ||
+                !_entMan.TryGetComponent<Robust.Client.GameObjects.PointLightComponent>(light, out var pointLight) ||
+                pointLight.ContainerOccluded)
                 continue;
 
             var position = _xform.GetWorldPosition(xform);

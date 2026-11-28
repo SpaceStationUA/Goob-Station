@@ -481,10 +481,14 @@ public sealed class HolopadSystem : SharedHolopadSystem
         if (!HasComp<StationAiHeldComponent>(ent))
             return;
 
-        foreach (var holopad in ent.Comp.LinkedHolopads)
-        {
+        EndHolocalls(ent);
+    }
+
+    // Pirate: also end active projections when the AI changes its view through a radio link.
+    public void EndHolocalls(Entity<HolopadUserComponent> user)
+    {
+        foreach (var holopad in user.Comp.LinkedHolopads.ToArray())
             ShutDownHolopad(holopad);
-        }
     }
 
     #endregion

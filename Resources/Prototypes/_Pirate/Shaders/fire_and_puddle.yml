@@ -12,3 +12,8 @@
   id: PiratePuddleMask
   kind: source
   path: /Textures/_Pirate/Shaders/wet_mask.swsl
+
+- type: shader
+  id: PiratePuddleReflection
+  kind: source
+  path: /Textures/_Pirate/Shaders/puddle_reflection.swsl

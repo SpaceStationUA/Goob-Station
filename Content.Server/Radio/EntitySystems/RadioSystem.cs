@@ -289,7 +289,6 @@ public sealed partial class RadioSystem : EntitySystem
             if (HasComp<Content.Shared.Silicons.StationAi.StationAiHeldComponent>(receiver))
             {
                 // Pirate: keep the shared message intact for ordinary radios and the replay.
-                var link = $"[airadiospeaker=\"{FormattedMessage.EscapeStringParameter(evt.VoiceName)}\" target=\"{GetNetEntity(messageSource)}\" color=\"{channel.Color.ToHex()}\"/]";
                 aiMessage ??= ev with
                 {
                     OriginalChatMsg = LinkSpeaker(msg),
@@ -300,6 +299,7 @@ public sealed partial class RadioSystem : EntitySystem
 
                 ChatMessage LinkSpeaker(ChatMessage original)
                 {
+                    var link = $"[airadiolink target=\"{GetNetEntity(messageSource)}\" channel=\"{FormattedMessage.EscapeStringParameter(channel.ID)}\"]{name}[/airadiolink]";
                     var wrapped = WrapRadioMessage(messageSource, channel, link, original.Message, language, frequency, jobIcon, jobName);
                     return new ChatMessage(original.Channel, original.Message, wrapped, original.SenderEntity, original.SenderKey);
                 }

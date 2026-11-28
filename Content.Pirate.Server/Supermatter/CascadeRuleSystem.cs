@@ -13,6 +13,7 @@ using Robust.Shared.Prototypes;
 using Content.Server.Communications;
 using Content.Server.GameTicking.Rules;
 using Content.Server.RoundEnd;
+using Content.Server.Shuttles.Systems;
 using Content.Shared.GameTicking.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -46,6 +47,7 @@ public sealed class CascadeRuleSystem : GameRuleSystem<CascadeRuleComponent>
         SubscribeLocalEvent<CascadeCoreComponent, DestabilizeCrystalDoAfterEvent>(OnDestabilize);
         SubscribeLocalEvent<CommunicationConsoleCallShuttleAttemptEvent>(OnShuttleCallAttempt);
         SubscribeLocalEvent<RoundEndRequestAttemptEvent>(OnEvacuationAttempt);
+        SubscribeLocalEvent<EmergencyShuttleDepartureAttemptEvent>(OnDepartureAttempt);
     }
 
     protected override void Started(EntityUid uid, CascadeRuleComponent comp, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -193,6 +195,13 @@ public sealed class CascadeRuleSystem : GameRuleSystem<CascadeRuleComponent>
         var query = QueryActiveRules();
         if (query.MoveNext(out _, out _, out _, out _))
             ev.Block("emergancy-shuttle-cascade-call-unavailable");
+    }
+
+    private void OnDepartureAttempt(ref EmergencyShuttleDepartureAttemptEvent ev)
+    {
+        var query = QueryActiveRules();
+        if (query.MoveNext(out _, out _, out _, out _))
+            ev.Cancelled = true;
     }
 
     private void OnShuttleCallAttempt(ref CommunicationConsoleCallShuttleAttemptEvent ev)

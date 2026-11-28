@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Shared.StatusEffectNew;
+using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -15,6 +16,7 @@ public abstract class SharedBiomagneticPolarizationSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xform = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
     [Dependency] private readonly ThrowingSystem _throw = default!;
+    [Dependency] private readonly SharedStunSystem _stun = default!;
 
     [Dependency] private readonly Robust.Shared.Timing.IGameTiming _timing = default!;
 
@@ -86,7 +88,10 @@ public abstract class SharedBiomagneticPolarizationSystem : EntitySystem
             // balance the strength of both parties
             ownBiomag.CurrentStrength = strengthAverage;
             otherBiomag.CurrentStrength = strengthAverage;
+            ownBiomag.CooldownEnd = _timing.CurTime + ownBiomag.TriggerCooldown;
             otherBiomag.CooldownEnd = _timing.CurTime + otherBiomag.TriggerCooldown;
+            _stun.TryKnockdown(self, ownBiomag.TriggerCooldown);
+            _stun.TryKnockdown(other, otherBiomag.TriggerCooldown);
             _throw.TryThrow(self, direction * -(strengthAverage / 2), strengthAverage * ownBiomag.ThrowStrengthMult);
             _throw.TryThrow(other, otherDirection * -(strengthAverage / 2), strengthAverage * otherBiomag.ThrowStrengthMult);
         }

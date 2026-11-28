@@ -6,7 +6,6 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Ghost;
 using Content.Server.Lightning;
 using Content.Server.Storage.EntitySystems;
-using Content.Server.Stunnable;
 using Content.Shared._Pirate.StatusEffectNew;
 using Content.Shared.Audio;
 using Content.Shared.Damage.Prototypes;
@@ -49,7 +48,6 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
     [Dependency] private readonly MapSystem _mapSystem = default!;
     [Dependency] private readonly SharedPointLightSystem _lights = default!;
     [Dependency] private readonly StatusEffectsSystem _statusEffect = default!;
-    [Dependency] private readonly StunSystem _stun = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly TransformSystem _xform = default!;
 
@@ -96,8 +94,8 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
 
             if (comp.CooldownEnd <= curTime)
             {
-                var (opposite, same, capInvolved) = HandleCollisions(physTuple, comp);
-                CollisionEffects(statusOwner, (ent, comp), opposite, same, capInvolved);
+                var (opposite, _, capInvolved) = HandleCollisions(physTuple, comp);
+                CollisionEffects(statusOwner, (ent, comp), opposite, capInvolved);
             }
 
             // handle strength updates - we don't want to do this every frame, so there's a cooldown.
@@ -195,16 +193,13 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
             other.Expired || other.CooldownEnd > _timing.CurTime)
             return;
 
-        var (opposite, same, strCapInvolved) = BiomagCollide(statusOwner.Owner, ent.Comp, hugger, other);
-        CollisionEffects(statusOwner, ent, opposite, same, strCapInvolved);
+        var (opposite, _, strCapInvolved) = BiomagCollide(statusOwner.Owner, ent.Comp, hugger, other);
+        CollisionEffects(statusOwner, ent, opposite, strCapInvolved);
     }
 
-    private void CollisionEffects(EntityUid statusOwner, Entity<BiomagneticPolarizationStatusEffectComponent> ent, bool opposite, bool same, bool strCapInvolved)
+    private void CollisionEffects(EntityUid statusOwner, Entity<BiomagneticPolarizationStatusEffectComponent> ent, bool opposite, bool strCapInvolved)
     {
-        var curTime = _timing.CurTime;
         var comp = ent.Comp;
-        // if HandleCollisions[1] returns true, it means that the ent has collided with an entity that has the opposite polarity,
-        // so we'll shoot lighting bolts, cause a modest explosion, and mark the effect as expired.
         if (opposite)
         {
             _expiredEffectEnts.Add(statusOwner);
@@ -232,11 +227,7 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
         }
         // if HandleCollisions[2] returns true, it means that the ent has collided with an ent with different polarity and been thrown,
         // so we need to prevent collision handling for a few seconds.
-        if (same)
-        {
-            _stun.TryKnockdown(statusOwner, comp.TriggerCooldown);
-            comp.CooldownEnd = curTime + comp.TriggerCooldown;
-        }
+
     }
 
     private void HandleStaticTiles(Entity<BiomagneticPolarizationStatusEffectComponent> ent)

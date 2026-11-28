@@ -10,16 +10,16 @@ namespace Content.Shared._Pirate.Lavaland.Puzzle;
 [RegisterComponent]
 public sealed partial class LavalandSlidingPuzzleComponent : Component
 {
-    [ViewVariables]
+    [DataField]
     public List<EntityUid> Elements = new();
 
-    [ViewVariables, DataField]
+    [DataField]
     public int EmptyTileId = 0;
 
     [DataField]
     public bool RequiresPrisoner;
 
-    [ViewVariables]
+    [DataField]
     public bool Finished = false;
 
     [DataField]
@@ -49,16 +49,18 @@ public sealed partial class LavalandSlidingPuzzleComponent : Component
     [DataField]
     public SoundSpecifier? SolveSound;
 
-    [ViewVariables]
+    [DataField]
     public EntityUid? Prisoner;
 
+    [DataField]
     public bool AddedMovementBlock;
+    [DataField]
     public bool AddedGodmode;
 
     [DataField]
     public EntProtoId? ReturnCubeProto;
 
-    [ViewVariables]
+    [DataField]
     public EntityUid? GeneratedGrid;
 
     [DataField]
@@ -71,11 +73,11 @@ public sealed partial class LavalandSlidingPuzzleComponent : Component
 [RegisterComponent]
 public sealed partial class LavalandSlidingPuzzleElementComponent : Component
 {
-    [ViewVariables]
+    [DataField]
     public int Id = 0;
 
-    [ViewVariables]
-    public EntityUid Source;
+    [DataField]
+    public EntityUid? Source;
 }
 
 [RegisterComponent]

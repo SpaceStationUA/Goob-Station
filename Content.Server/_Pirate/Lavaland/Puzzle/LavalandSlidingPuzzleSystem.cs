@@ -113,7 +113,32 @@ public sealed class LavalandSlidingPuzzleSystem : EntitySystem
             if (Math.Abs(delta.X) <= 2 && Math.Abs(delta.Y) <= 2)
                 return false;
         }
+        // The footprint may include a cryopod, locker, or another structure with a mob nested inside.
+        foreach (var offset in TileOffsets)
+        {
+            var anchored = _map.GetAnchoredEntities(gridUid, grid, center + offset);
+            while (anchored.MoveNext(out var uid))
+            {
+                if (TryComp<PhysicsComponent>(uid, out var body) && body.BodyType == BodyType.Static &&
+                    ContainsMob(uid.Value))
+                    return false;
+            }
+        }
         return true;
+    }
+
+    private bool ContainsMob(EntityUid uid)
+    {
+        if (HasComp<MobStateComponent>(uid))
+            return true;
+
+        var children = Transform(uid).ChildEnumerator;
+        while (children.MoveNext(out var child))
+        {
+            if (ContainsMob(child))
+                return true;
+        }
+        return false;
     }
 
     private bool EnsureSetupGrid(
@@ -318,14 +343,14 @@ public sealed class LavalandSlidingPuzzleSystem : EntitySystem
         if (args.Handled)
             return;
 
-        if (TerminatingOrDeleted(element.Comp.Source) ||
-            !TryComp<LavalandSlidingPuzzleComponent>(element.Comp.Source, out var puzzle) ||
+        if (element.Comp.Source is not { } source || TerminatingOrDeleted(source) ||
+            !TryComp<LavalandSlidingPuzzleComponent>(source, out var puzzle) ||
             puzzle.Finished)
         {
             return;
         }
 
-        var puzzleEnt = (element.Comp.Source, puzzle);
+        var puzzleEnt = (source, puzzle);
 
         if (!TryMoveToEmptySpot(element, puzzleEnt))
         {
@@ -382,15 +407,15 @@ public sealed class LavalandSlidingPuzzleSystem : EntitySystem
 
     private void OnElementShutdown(Entity<LavalandSlidingPuzzleElementComponent> element, ref ComponentShutdown args)
     {
-        if (TerminatingOrDeleted(element.Comp.Source) ||
-            !TryComp<LavalandSlidingPuzzleComponent>(element.Comp.Source, out var puzzle) ||
+        if (element.Comp.Source is not { } source || TerminatingOrDeleted(source) ||
+            !TryComp<LavalandSlidingPuzzleComponent>(source, out var puzzle) ||
             puzzle.Finished)
         {
             return;
         }
 
         puzzle.Elements.Remove(element);
-        Validate((element.Comp.Source, puzzle));
+        Validate((source, puzzle));
     }
 
     private void Validate(Entity<LavalandSlidingPuzzleComponent> puzzle)
@@ -533,8 +558,48 @@ public sealed class LavalandSlidingPuzzleSystem : EntitySystem
                 QueueDel(element);
         }
 
-        if (!puzzle.Comp.Finished && puzzle.Comp.GeneratedGrid is { } grid && Exists(grid))
-            QueueDel(grid);
+        if (!puzzle.Comp.Finished && puzzle.Comp.GeneratedGrid is { } grid && !TerminatingOrDeleted(grid) &&
+            TryComp<MapGridComponent>(grid, out var gridComp) && Transform(grid).MapUid is { } map)
+        {
+            var center = GetCenterTile(puzzle, grid, gridComp);
+            // Removing tiles reparents their occupants. Let the marker finish terminating first.
+            Robust.Shared.Timing.Timer.Spawn(0, () => RemoveGeneratedFloor((grid, gridComp), center, map));
+        }
+    }
+
+    private void RemoveGeneratedFloor(Entity<MapGridComponent> grid, Vector2i center, EntityUid map)
+    {
+        if (TerminatingOrDeleted(grid) || TerminatingOrDeleted(map))
+            return;
+
+        var floor = _tileDefinitionManager[FloorTile].TileId;
+        var tiles = new List<(Vector2i, Tile)>(TileOffsets.Length);
+        foreach (var offset in TileOffsets)
+        {
+            var position = center + offset;
+            if (_map.GetTileRef(grid, grid.Comp, position).Tile.TypeId == floor)
+                tiles.Add((position, Tile.Empty));
+        }
+
+        if (tiles.Count < _map.GetFilledTileCount(grid))
+        {
+            // The transform system reparents occupants of removed tiles while leaving the extension intact.
+            _map.SetTiles(grid, grid.Comp, tiles);
+            return;
+        }
+
+        // Deleting a whole grid also deletes off-tile children. Transfer their complete transform trees.
+        var survivors = new List<EntityUid>();
+        var children = Transform(grid).ChildEnumerator;
+        while (children.MoveNext(out var child))
+        {
+            if (!TerminatingOrDeleted(child))
+                survivors.Add(child);
+        }
+        foreach (var child in survivors)
+            _transform.SetParent(child, map);
+
+        QueueDel(grid);
     }
 
     private void ReleasePrisoner(Entity<LavalandSlidingPuzzleComponent> puzzle, EntityUid prisoner)

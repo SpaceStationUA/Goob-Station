@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: MIT
 
 using Content.Server.Radio;
+using Content.Server.Holopad;
+using Content.Shared.Holopad;
 using Content.Shared._Pirate.StationAi;
 using Content.Shared.Medical.SuitSensors;
 using Content.Shared.Popups;
@@ -13,6 +15,7 @@ namespace Content.Server._Pirate.StationAi;
 
 public sealed class AiRadioJumpSystem : EntitySystem
 {
+    [Dependency] private readonly HolopadSystem _holopads = default!;
     [Dependency] private readonly SharedStationAiSystem _ai = default!;
     [Dependency] private readonly SharedSuitSensorSystem _sensors = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -41,7 +44,7 @@ public sealed class AiRadioJumpSystem : EntitySystem
             return;
 
         history.NextJump = _timing.CurTime + TimeSpan.FromMilliseconds(500);
-        if (!_ai.TryGetCore(ai, out var core) || core.Comp?.RemoteEntity is not { } eye)
+        if (!_ai.TryGetCore(ai, out var core) || core.Comp?.RemoteEntity == null)
             return;
         if (Transform(core).GridUid is not { } grid || Transform(speaker.Value).GridUid != grid)
         {
@@ -55,6 +58,11 @@ public sealed class AiRadioJumpSystem : EntitySystem
             return;
         }
 
-        _transform.DropNextTo(eye, speaker.Value);
+        if (TryComp<HolopadUserComponent>(ai, out var call))
+            _holopads.EndHolocalls((ai, call));
+
+        // Ending the call can replace the eye when the core returns to roaming mode.
+        if (core.Comp.RemoteEntity is { } eye)
+            _transform.DropNextTo(eye, speaker.Value);
     }
 }

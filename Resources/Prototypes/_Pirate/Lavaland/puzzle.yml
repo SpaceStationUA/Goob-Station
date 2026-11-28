@@ -212,8 +212,7 @@
           tableId: NecropolisChestLoot
         - id: LavalandPrisonCube
 
-- type: lavalandMarkerRuin
+- type: lavalandGridRuin
   id: LavalandSlidingPuzzleRuin
-  boundary: 5,5
-  spawnedMarker: LavalandSlidingPuzzle
+  path: /Maps/_Pirate/Lavaland/sliding_puzzle.yml
   priority: 0
