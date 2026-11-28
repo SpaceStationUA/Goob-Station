@@ -4,3 +4,11 @@
   completetime: 4
   materials:
     Plastic: 32 # Pirate: converted from RMCPlastic to local material units.
+
+- type: latheRecipe
+  id: IVDripFlatpack
+  result: IVDripFlatpack
+  completetime: 4
+  materials:
+    Steel: 300
+    Plastic: 100

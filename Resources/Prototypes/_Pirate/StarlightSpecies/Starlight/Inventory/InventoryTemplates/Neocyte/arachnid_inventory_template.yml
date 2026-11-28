@@ -49,6 +49,16 @@
     uiWindowPos: 0,3
     strippingWindowPos: 0,0
     displayName: Eyes
+  - name: cassettePlayer # Pirate
+    slotTexture: ears
+    slotFlags: EARS
+    strictWhitelist: true
+    whitelist:
+      components: [CassettePlayer]
+    stripTime: 3
+    uiWindowPos: 0,0
+    strippingWindowPos: 3,0
+    displayName: Касетний плеєр
   - name: ears
     slotTexture: ears
     slotFlags: EARS

@@ -13,6 +13,9 @@
     slots:
     - ears
   - type: CassettePlayer
+  - type: ClothingLayerRemap
+    fromLayer: cassettePlayer
+    toLayer: ears
 
 - type: entity
   abstract: true

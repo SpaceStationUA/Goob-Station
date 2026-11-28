@@ -63,6 +63,7 @@
   - HandheldHealthAnalyzer
   - DiseaseSwab
   - IVBloodPack # Pirate: IV drips
+  - IVDripFlatpack # Pirate
   - BodyBag
   - WhiteCane
   - OffsetCane

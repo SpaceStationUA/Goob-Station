@@ -54,7 +54,7 @@ namespace Content.Server.GameTicking.Rules;
 /// Where all the main stuff for Revolutionaries happens (Assigning Head Revs, Command on station, and checking for the game to end.)
 /// </summary>
 // Heavily edited by goobstation. If you want to upstream something think twice
-public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleComponent>
+public sealed partial class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleComponent> // Pirate: recruitment invitations
 {
     [Dependency] private readonly AntagSelectionSystem _antag = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
@@ -222,6 +222,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// Called when a Head Rev uses a Revolutionary Manifesto to convert somebody else.
     /// </summary>
     private void OnPostConvert(EntityUid uid, HeadRevolutionaryComponent comp, ref AfterRevolutionaryConvertedEvent ev)
+        => TryRecruit(uid, comp, ev, accepted: false); // Pirate: let the target decide
+
+    private void TryRecruit(EntityUid uid, HeadRevolutionaryComponent comp, AfterRevolutionaryConvertedEvent ev, bool accepted)
     {
         // Einstein Engines - Revolutionary Manifesto - Use RevolutionaryConverterSystem instead of hardcoding flashes
         // GoobStation START - check if headRev's ability enabled
@@ -262,15 +265,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             return;
         }
 
-        // goob - event start
-        if (convEv.Blocked)
+        if (!accepted) // Pirate: repeat eligibility checks when the target accepts.
         {
-            if (ev.User != null)
-                _popup.PopupEntity("The conversion failed!", ev.User.Value, ev.User.Value);
-
+            OfferRecruitment(uid, ev, mindId);
             return;
         }
-        // goob - event end
 
         if (HasComp<RevolutionEnemyComponent>(ev.Target))
             RemComp<RevolutionEnemyComponent>(ev.Target);

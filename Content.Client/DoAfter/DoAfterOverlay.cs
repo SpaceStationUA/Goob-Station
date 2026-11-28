@@ -12,6 +12,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.Containers;
 using Content.Client._Pirate.Photo; // Pirate: camera
+using Content.Shared._Pirate.Ninja; // Pirate: cloaked console hacks
 
 namespace Content.Client.DoAfter;
 
@@ -121,7 +122,7 @@ public sealed partial class DoAfterOverlay : Overlay // Goob
             {
                 // Hide some DoAfters from other players for stealthy actions (ie: thieving gloves)
                 var alpha = 1f;
-                if (doAfter.Args.Hidden || isInContainer)
+                if (doAfter.Args.Hidden || isInContainer || NinjaHackVisibility.IsHidden(_entManager, uid, doAfter.Args.Event))
                 {
                     // Goobstation - Show doAfter progress bar to another entity
                     var showTo = doAfter.Args.ShowTo ?? uid;

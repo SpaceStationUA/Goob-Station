@@ -1,3 +1,37 @@
+- type: trait
+  id: PirateSlowCorpseDecay
+  name: trait-slow-corpse-decay-name
+  description: trait-slow-corpse-decay-desc
+  category: Physical
+  cost: 1
+  whitelist:
+    components: [Perishable]
+  conditions:
+  - !type:PerishableSpeciesCondition
+  - !type:HasTraitsCondition
+    invert: true
+    traits: [PirateFastCorpseDecay]
+  components:
+  - type: CorpseDecayModifier
+    multiplier: 0.75
+
+- type: trait
+  id: PirateFastCorpseDecay
+  name: trait-fast-corpse-decay-name
+  description: trait-fast-corpse-decay-desc
+  category: Physical
+  cost: -1
+  whitelist:
+    components: [Perishable]
+  conditions:
+  - !type:PerishableSpeciesCondition
+  - !type:HasTraitsCondition
+    invert: true
+    traits: [PirateSlowCorpseDecay]
+  components:
+  - type: CorpseDecayModifier
+    multiplier: 1.25
+
 #region Temperature
 - type: trait
   id: TraitHeatResistant
