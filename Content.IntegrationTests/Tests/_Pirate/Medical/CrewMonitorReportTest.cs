@@ -2,6 +2,7 @@
 
 using System.Linq;
 using System.Numerics;
+using Content.Client.Medical.CrewMonitoring;
 using Content.Goobstation.Shared.CrewMonitoring;
 using Content.Server.Medical.CrewMonitoring;
 using Content.Server.Power.Components;
@@ -13,6 +14,7 @@ using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared.Station.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests._Pirate.Medical;
 
@@ -31,6 +33,68 @@ public sealed class CrewMonitorReportTest
             mode: SensorCords
             randomMode: false
         """;
+
+    [Test]
+    public async Task RangeRingsFollowTheSelectedLinkedDeck()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true, Dirty = true });
+        var client = pair.Client;
+        await client.WaitAssertion(() =>
+        {
+            var maps = client.System<SharedMapSystem>();
+            var transform = client.System<SharedTransformSystem>();
+            var lowerMap = maps.CreateMap(out var lowerId);
+            var upperMap = maps.CreateMap(out var upperId);
+            try
+            {
+                var lower = maps.CreateGridEntity(lowerId).Owner;
+                var upper = maps.CreateGridEntity(upperId).Owner;
+                transform.SetCoordinates(lower, new EntityCoordinates(lowerMap, new Vector2(-10, 20)));
+                transform.SetCoordinates(upper, new EntityCoordinates(upperMap, new Vector2(70, -50)));
+                transform.SetWorldRotation(upper, Angle.FromDegrees(90));
+                using var radar = new CrewMonitoringNavMapControl
+                {
+                    MapUid = lower,
+                    SensorRangeCenter = new EntityCoordinates(lower, new Vector2(3, 5)),
+                    SensorRange = 48f,
+                };
+                var size = new Vector2(400);
+                radar.Measure(size);
+                radar.Arrange(UIBox2.FromDimensions(Vector2.Zero, size));
+                radar.ForceNavMapUpdate();
+
+                Assert.That(radar.TryGetSensorViewOrigin(out var original, out var range), Is.True);
+                Assert.That(range, Is.EqualTo(48f));
+                radar.MapUid = upper;
+                radar.ForceNavMapUpdate();
+                Assert.That(radar.TryGetSensorViewOrigin(out _, out _), Is.False, "An unrelated map has no coverage.");
+
+                client.EntMan.EnsureComponent<CEZLinkedGridComponent>(lower).PeerGrids[1] = upper;
+                Assert.That(radar.TryGetSensorViewOrigin(out var projected, out range), Is.True);
+                Assert.That(Vector2.Distance(projected, original), Is.LessThan(0.01f));
+                Assert.That(range, Is.EqualTo(48f));
+
+                radar.RecenterToConnectedServer();
+                Assert.That(radar.TryGetSensorViewOrigin(out var centered, out _), Is.True);
+                Assert.That(Vector2.Distance(centered, radar.PixelSize / 2f), Is.LessThan(0.01f));
+                Assert.That(radar.MapUid, Is.EqualTo(upper));
+
+                radar.SetGridTransformsFrozen(true);
+                radar.MapUid = lower;
+                radar.ForceNavMapUpdate();
+                radar.SetGridTransformsFrozen(true);
+                radar.RecenterToConnectedServer();
+                Assert.That(Vector2.Distance(radar.Offset, new Vector2(3, 5)), Is.LessThan(0.01f),
+                    "Recentering an offline monitor uses the snapshot for the newly displayed deck.");
+            }
+            finally
+            {
+                maps.DeleteMap(upperId);
+                maps.DeleteMap(lowerId);
+            }
+        });
+        await pair.CleanReturnAsync();
+    }
 
     [Test]
     public async Task CommandTrackerReachesHandheldAcrossLinkedDecks()
