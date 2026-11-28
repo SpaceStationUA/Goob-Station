@@ -42,3 +42,6 @@ crew-monitoring-server-blip = Сервер моніторингу
 crew-monitoring-user-interface-need-help = Дані сенсорів недоступні
 crew-monitoring-header-server-offline = Сервер не в мережі
 crew-monitoring-header-server-address = Адреса:
+crew-monitoring-ui-no-command-trackers = Командних маячків немає. Відскануйте члена командування цим монітором.
+crew-monitoring-ui-no-sensors = Сервер підключено. Даних із датчиків поки немає.
+crew-monitoring-command-tracker-installed = Командний маячок встановлено. Ціль — { $target }.

@@ -19,6 +19,7 @@ using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Medical.CrewMonitoring;
 using Content.Shared._Pirate.ListeningPost;
+using Content.Shared._Pirate.ZLevels.Core.Components;
 using Content.Shared.Medical.SuitSensor;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio.Systems;
@@ -736,7 +737,8 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
             serverGridUid,
             selectedServerNet,
             component.LastReferenceFrame,
-            component.AlertVolume));
+            component.AlertVolume,
+            HasComp<CrewMonitorScanningComponent>(uid)));
     }
     // Pirate End
 
@@ -759,6 +761,11 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
             TryComp<WirelessNetworkComponent>(component.SelectedServerUid.Value, out var wireless))
         {
             EnsureNavMapsAround(component, serverXform, wireless.Range);
+            if (TryComp<CEZLinkedGridComponent>(serverXform.GridUid, out var decks))
+            {
+                foreach (var grid in decks.PeerGrids.Values)
+                    TryPopulateNavMap(component, grid);
+            }
         }
     }
 
@@ -991,18 +998,9 @@ public sealed class CrewMonitoringConsoleSystem : EntitySystem
 
         var consoleXform = Transform(consoleUid);
         var serverXform = Transform(serverUid);
-        if (consoleXform.MapID != serverXform.MapID)
-            return false;
-
-        // Wireless packet range is determined by the sender. Crew monitor
-        // updates are sent by the monitoring server.
-        if (TryComp<WirelessNetworkComponent>(serverUid, out var wireless) &&
-            (_transform.GetWorldPosition(serverUid) - _transform.GetWorldPosition(consoleUid)).Length() > wireless.Range)
-        {
-            return false;
-        }
-
-        return true;
+        // The server transmits the updates, so its wireless range applies.
+        var range = TryComp<WirelessNetworkComponent>(serverUid, out var wireless) ? wireless.Range : float.PositiveInfinity;
+        return _crewServers.IsInWirelessRange(serverXform, consoleXform, range);
     }
 
     private static bool IsSelectedServerOnline(CrewMonitoringConsoleComponent component, TimeSpan now)

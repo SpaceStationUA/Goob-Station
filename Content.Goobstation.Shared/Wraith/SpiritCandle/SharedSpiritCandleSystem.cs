@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Shared.Atmos;
 using Content.Shared.Charges.Systems;
+using Content.Shared.Destructible;
 using Content.Shared.Eye;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
@@ -41,6 +42,7 @@ public sealed partial class SharedSpiritCandleSystem : EntitySystem
 
         SubscribeLocalEvent<SpiritCandleComponent, IgnitedEvent>(OnIgnited);
         SubscribeLocalEvent<SpiritCandleComponent, ExtinguishedEvent>(OnExtinguished);
+        SubscribeLocalEvent<SpiritCandleComponent, DestructionEventArgs>(OnDestroyed);
 
         SubscribeLocalEvent<SpiritCandleComponent, EntGotInsertedIntoContainerMessage>(OnEntInserted);
         SubscribeLocalEvent<SpiritCandleComponent, EntGotRemovedFromContainerMessage>(OnEntRemoved);
@@ -82,6 +84,11 @@ public sealed partial class SharedSpiritCandleSystem : EntitySystem
         if (_netManager.IsClient)
             return;
 
+        ClearFlame(ent);
+    }
+
+    private void ClearFlame(Entity<SpiritCandleComponent> ent)
+    {
         ent.Comp.Active = false;
 
         if (ent.Comp.AreaUid is not {} areaUid)
@@ -89,6 +96,17 @@ public sealed partial class SharedSpiritCandleSystem : EntitySystem
 
         QueueDel(areaUid);
         ent.Comp.AreaUid = null;
+    }
+
+    private void OnDestroyed(EntityUid uid, SpiritCandleComponent comp, DestructionEventArgs args)
+    {
+        if (_netManager.IsClient)
+            return;
+
+        ClearFlame((uid, comp));
+        var skull = SpawnAtPosition(comp.Skull, Transform(uid).Coordinates);
+        // Free the candle's hand or storage slot before inserting its replacement.
+        _transform.SwapPositions(uid, skull);
     }
 
     private void OnEntInserted(Entity<SpiritCandleComponent> ent, ref EntGotInsertedIntoContainerMessage args)

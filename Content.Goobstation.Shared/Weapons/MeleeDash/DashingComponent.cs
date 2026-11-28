@@ -12,8 +12,5 @@ public sealed partial class DashingComponent : Component
     public HashSet<NetEntity> HitEntities = new();
 
     [DataField, AutoNetworkedField]
-    public List<string> ChangedFixtures = new();
-
-    [DataField, AutoNetworkedField]
     public EntityUid? Weapon;
 }

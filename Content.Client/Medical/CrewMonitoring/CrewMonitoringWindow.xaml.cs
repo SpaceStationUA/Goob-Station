@@ -128,6 +128,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // Pirate: New M
 
     /// <summary>Last server the map was auto-centered on (re-center when selection changes).</summary>
     private NetEntity? _mapCenteredOnServer;
+    private EntityUid? _serverFrameGrid;
 
     /// <summary>Selected monitoring server is online — required for green live-GPS presentation.</summary>
     private bool _serverOnline;
@@ -194,6 +195,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // Pirate: New M
 
         CloseButton.OnPressed += _ => Close();
         NavMap.TrackedEntitySelectedAction += SetTrackedEntityFromNavMap;
+        NavMap.ZFilterTrackedBlipsToDisplayedMap = true;
         NavMap.ZLevelSelectorEnabled = true; // Pirate: multiz
         NavMap.ZLevelSelectedAction += (grid, depth) => OnZLevelSelected?.Invoke(grid, depth); // Pirate: multiz
         NavMap.OnAlertEnabledChanged += enabled => OnAlertMutedChanged?.Invoke(!enabled);
@@ -704,7 +706,11 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // Pirate: New M
             hasScanned,
             state.SelectedServerUid,
             WoundedOnlyCheckbox.Pressed);
-        if (serversHash == _lastServersUiHash && sensorsHash == _lastSensorsStructureHash)
+        EntityUid? frameUid = null;
+        if (state.SelectedServerUid != null && (state.ReferenceFrame?.FrameEntity ?? state.ServerGridUid) is { } frameNet)
+            _entManager.TryGetEntity(frameNet, out frameUid);
+
+        if (serversHash == _lastServersUiHash && sensorsHash == _lastSensorsStructureHash && _serverFrameGrid == frameUid)
         {
             // Coordinates-only / heartbeat UI refresh: update crew blips without wiping controls.
             UpdateExistingCrewBlips(sensors, isEmagged);
@@ -728,6 +734,7 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // Pirate: New M
             MapPlaceholder.Visible = true;
             StationName.Text = Loc.GetString("crew-monitoring-ui-scan-initializing");
             _mapCenteredOnServer = null;
+            _serverFrameGrid = null;
         }
         else
         {
@@ -738,16 +745,12 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // Pirate: New M
                 state.GridName ??
                 string.Empty;
 
-            EntityUid? frameUid = null;
-            var frameNetEntity = state.ReferenceFrame?.FrameEntity ?? state.ServerGridUid;
-            if (frameNetEntity != null &&
-                _entManager.TryGetEntity(frameNetEntity.Value, out var resolvedFrameUid))
+            if (_serverFrameGrid != frameUid)
             {
-                frameUid = resolvedFrameUid;
+                _serverFrameGrid = frameUid;
+                NavMap.SetZLevelSelectorRoot(frameUid);
+                SetDisplayedGrid(frameUid);
             }
-
-            NavMap.SetZLevelSelectorRoot(frameUid);
-            SetDisplayedGrid(frameUid);
 
             if (state.ReferenceFrame != null)
             {
@@ -941,7 +944,13 @@ public sealed partial class CrewMonitoringWindow : BaseWindow   // Pirate: New M
         if (sensors.Count == 0)
         {
             NoServerLabel.Visible = true;
-            NoServerLabel.Text = Loc.GetString("crew-monitoring-ui-no-server-label");   // Pirate: New Monitor
+            var message = "crew-monitoring-ui-no-server-label";
+            if (!hasServerSelected && servers.Count > 0)
+                message = "crew-monitoring-ui-select-server-label";
+            else if (_serverOnline)
+                message = state.CommandTrackersOnly ? "crew-monitoring-ui-no-command-trackers" : "crew-monitoring-ui-no-sensors";
+
+            NoServerLabel.Text = Loc.GetString(message);
             UpdateGridMotionFreeze(state, syncBlips: true);
             return;
         }

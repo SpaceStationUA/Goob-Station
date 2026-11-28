@@ -7,6 +7,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Threading;
+using Content.Shared._Pirate.ZLevels.Core.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Pinpointer;
 using Content.Shared.Shuttles.Systems;
@@ -35,6 +36,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
         Math.Max(1, MidPoint - (int)(MinimapMargin * UIScale));
 
     private readonly SharedTransformSystem _transform;
+    private readonly CESharedZLevelsSystem _zLevels;
     private readonly SharedShuttleSystem _shuttles; // Pirate: фильтр стелс-кораблей по IFF
     private readonly GridRadarRenderer _gridRenderer;
     private readonly IGameTiming _gameTiming;
@@ -51,7 +53,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
 
     /// <summary>
     /// When the monitoring server is offline, neighbor/frame grid transforms are
-    /// snapped once and reused so the map does not keep drifting with live physics.
+    /// snapped for the selected deck so the map does not keep drifting with live physics.
     /// </summary>
     private bool _freezeGridTransforms;
     private Matrix3x2 _frozenWorldToFrame = Matrix3x2.Identity;
@@ -88,6 +90,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
     {
         _mapManager = EntManager.System<SharedMapSystem>(); // Pirate: entity systems are resolved through EntityManager.
         _transform = EntManager.System<SharedTransformSystem>();
+        _zLevels = EntManager.System<CESharedZLevelsSystem>();
         _shuttles = EntManager.System<SharedShuttleSystem>(); // Pirate: stealth shuttle filter
         _gameTiming = IoCManager.Resolve<IGameTiming>();
         _gridRenderer = new GridRadarRenderer(
@@ -267,6 +270,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
 
         // Recenter on the connected monitoring server, not the grid physics center.
         RecenterButton.OnPressed += _ => RecenterToConnectedServer();
+        ZLevelSelectedAction += (_, _) => SetGridTransformsFrozen(_freezeGridTransforms);
     }
     // Pirate: End
 
@@ -276,7 +280,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
     /// </summary>
     public void RecenterToConnectedServer()
     {
-        if (SensorRangeCenter is not { } center || !center.IsValid(EntManager))
+        if (MapUid is not { } frame || !TryGetSensorCenter(frame, out var center))
             return;
 
         CenterToCoordinates(center);
@@ -451,9 +455,8 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
     }
 
     /// <summary>
-    /// Freeze / unfreeze radar grid motion. Grid matrices are captured only on the
-    /// rising edge (live → frozen). After a UI rebuild while still frozen, pass
-    /// <paramref name="syncBlips"/> so new markers get a snapshot without unfreezing grids.
+    /// Capture grid matrices when going offline or switching decks while offline.
+    /// Pass <paramref name="syncBlips"/> after a UI rebuild to include new markers.
     /// </summary>
     public void SetGridTransformsFrozen(bool frozen, bool syncBlips = false)
     {
@@ -467,12 +470,9 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
             return;
         }
 
-        if (!_freezeGridTransforms)
+        if (!_freezeGridTransforms || MapUid is { } frame && _transform.GetMapId(frame) != _frozenMapId)
         {
-            if (!CaptureFrozenTransforms())
-                return;
-
-            _freezeGridTransforms = true;
+            _freezeGridTransforms = CaptureFrozenTransforms();
             return;
         }
 
@@ -548,7 +548,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
         {
             mapId = frameXform.MapID;
             worldToFrame = _transform.GetInvWorldMatrix(MapUid.Value);
-            if (!TryGetCoverage(mapId, out coverageCenter, out coverageRange))
+            if (!TryGetCoverage(MapUid.Value, out coverageCenter, out coverageRange))
                 return;
 
             RefreshGridQuery(mapId, coverageCenter, coverageRange);
@@ -639,29 +639,41 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
         PruneForeignNavCaches();
     }
 
-    private bool TryGetCoverage(MapId mapId, out Vector2 coverageCenter, out float coverageRange)
+    private bool TryGetSensorCenter(EntityUid frame, out EntityCoordinates center)
     {
-        coverageCenter = default;
-        coverageRange = 0f;
-        var offset = GetOffset();
+        center = default;
+        if (SensorRangeCenter is not { } origin || !_transform.IsValid(origin) ||
+            !EntManager.TryGetComponent<TransformComponent>(frame, out var frameXform))
+            return false;
 
-        if (SensorRangeCenter != null && SensorRange > 0f)
+        if (_transform.GetMapId(origin) == frameXform.MapID)
         {
-            var rangeCenter = _transform.ToMapCoordinates(SensorRangeCenter.Value);
-            if (rangeCenter.MapId != mapId)
-                return false;
-
-            coverageCenter = rangeCenter.Position;
-            coverageRange = SensorRange;
+            center = origin;
             return true;
         }
 
-        if (MapUid == null)
+        if (_transform.GetGrid(origin) is not { } sourceGrid || !_zLevels.AreGridsLinked(sourceGrid, frame))
             return false;
 
-        coverageCenter = Vector2.Transform(
-            offset,
-            _transform.GetWorldMatrix(MapUid.Value));
+        // Linked decks share grid-local positions even when their map transforms differ.
+        center = new EntityCoordinates(frame, _transform.WithEntityId(origin, sourceGrid).Position);
+        return true;
+    }
+
+    private bool TryGetCoverage(EntityUid frame, out Vector2 coverageCenter, out float coverageRange)
+    {
+        if (SensorRangeCenter != null && SensorRange > 0f)
+        {
+            coverageCenter = default;
+            coverageRange = SensorRange;
+            if (!TryGetSensorCenter(frame, out var center))
+                return false;
+
+            coverageCenter = _transform.ToMapCoordinates(center).Position;
+            return true;
+        }
+
+        coverageCenter = Vector2.Transform(GetOffset(), _transform.GetWorldMatrix(frame));
         coverageRange = WorldRange * 1.5f;
         return true;
     }
@@ -705,7 +717,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
         }
 
         var mapId = frameXform.MapID;
-        if (!TryGetCoverage(mapId, out var coverageCenter, out var coverageRange))
+        if (!TryGetCoverage(MapUid.Value, out var coverageCenter, out var coverageRange))
             return false;
 
         RefreshGridQuery(mapId, coverageCenter, coverageRange);
@@ -1000,7 +1012,7 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
         }
     }
 
-    private bool TryGetSensorViewOrigin(out Vector2 viewOrigin, out float range)
+    internal bool TryGetSensorViewOrigin(out Vector2 viewOrigin, out float range)
     {
         viewOrigin = default;
         range = 0f;
@@ -1025,17 +1037,11 @@ public sealed partial class CrewMonitoringNavMapControl : NavMapControl
         {
             if (SensorRangeCenter == null ||
                 SensorRange <= 0f ||
-                !EntManager.TryGetComponent<TransformComponent>(MapUid.Value, out var frameXform))
+                !TryGetCoverage(MapUid.Value, out coverageWorld, out coverageRange))
             {
                 return false;
             }
 
-            var rangeCenter = _transform.ToMapCoordinates(SensorRangeCenter.Value);
-            if (rangeCenter.MapId != frameXform.MapID)
-                return false;
-
-            coverageWorld = rangeCenter.Position;
-            coverageRange = SensorRange;
             worldToFrame = _transform.GetInvWorldMatrix(MapUid.Value);
         }
 

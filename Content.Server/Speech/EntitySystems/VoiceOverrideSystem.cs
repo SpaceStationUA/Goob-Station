@@ -18,7 +18,9 @@ public sealed partial class VoiceOverrideSystem : EntitySystem
         if (!entity.Comp.Enabled)
             return;
 
-        args.VoiceName = entity.Comp.NameOverride ?? args.VoiceName;
+        if (entity.Comp.NameOverride is { } name)
+            args.VoiceName = Loc.TryGetString(name, out var localized) ? localized : name;
+
         args.SpeechVerb = entity.Comp.SpeechVerbOverride ?? args.SpeechVerb;
     }
 }

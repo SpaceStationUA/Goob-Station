@@ -1507,7 +1507,7 @@
     components:
     - type: FootstepModifier
     - type: VoiceOverride
-      nameOverride: Unknown
+      nameOverride: voice-mask-default-name-override
 
 - type: entity
   parent: BaseModsuitModuleSyndicate

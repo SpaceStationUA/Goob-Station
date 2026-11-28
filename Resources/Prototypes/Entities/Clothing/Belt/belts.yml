@@ -130,6 +130,7 @@
     whitelist:
       tags:
       - ShellShotgun
+      - ShellShotgunHeavy
     capacity: 14
 
 - type: entity

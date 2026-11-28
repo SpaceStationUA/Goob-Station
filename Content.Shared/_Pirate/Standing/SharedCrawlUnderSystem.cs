@@ -18,6 +18,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Network;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Standing;
 
@@ -72,8 +73,7 @@ public class SharedCrawlUnderSystem : EntitySystem
 
         standingState.LastCrawlToggleTime = curTime;
 
-        standingState.IsCrawlingUnder = newState;
-        Dirty(uid, standingState);
+        SetCrawlingUnder(uid, standingState, newState);
         
         UpdatePhysicsState(uid, standingState);
 
@@ -84,6 +84,13 @@ public class SharedCrawlUnderSystem : EntitySystem
         }
 
         _speed.RefreshMovementSpeedModifiers(uid);
+    }
+
+    private void SetCrawlingUnder(EntityUid uid, StandingStateComponent standing, bool enabled)
+    {
+        standing.IsCrawlingUnder = enabled;
+        Dirty(uid, standing);
+        _appearance.SetData(uid, CrawlUnderVisuals.Hidden, enabled);
     }
 
     private void OnDowned(Entity<StandingStateComponent> ent, ref DownedEvent args)
@@ -125,8 +132,7 @@ public class SharedCrawlUnderSystem : EntitySystem
 
         if (ent.Comp.IsCrawlingUnder)
         {
-            ent.Comp.IsCrawlingUnder = false;
-            Dirty(ent);
+            SetCrawlingUnder(ent, ent.Comp, false);
         }
         
         UpdatePhysicsState(ent, ent.Comp);
@@ -206,4 +212,10 @@ public class SharedCrawlUnderSystem : EntitySystem
             args.ModifySpeed(ent.Comp.CrawlingUnderSpeedModifier, ent.Comp.CrawlingUnderSpeedModifier);
         }
     }
+}
+
+[Serializable, NetSerializable]
+public enum CrawlUnderVisuals : byte
+{
+    Hidden
 }

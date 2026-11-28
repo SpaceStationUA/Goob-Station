@@ -36,8 +36,8 @@
       - map: [ "shoes" ] # Pirate: local footwear slot.
       - map: [ "gloves" ]
       - map: [ "ears" ]
-      - map: [ "belt" ]
       - map: [ "outerClothing" ]
+      - map: [ "belt" ]
       - map: [ "eyes" ]
       - map: [ "back" ]
       - map: [ "neck" ]
@@ -52,6 +52,7 @@
         sprite: "Effects/creampie.rsi"
         state: "creampie_human"
         visible: false
+      - map: [ "maskalt" ]
       - map: [ "enum.HumanoidVisualLayers.Hair" ]
       - map: [ "mask" ]
       - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
@@ -207,8 +208,8 @@
       - map: [ "shoes" ] # Pirate: local footwear slot.
       - map: [ "gloves" ]
       - map: [ "ears" ]
-      - map: [ "belt" ]
       - map: [ "outerClothing" ]
+      - map: [ "belt" ]
       - map: [ "eyes" ]
       - map: [ "back" ]
       - map: [ "neck" ]
@@ -223,6 +224,7 @@
         sprite: "Effects/creampie.rsi"
         state: "creampie_human"
         visible: false
+      - map: [ "maskalt" ]
       - map: [ "enum.HumanoidVisualLayers.Hair" ]
       - map: [ "mask" ]
       - map: [ "enum.HumanoidVisualLayers.HeadTop" ]

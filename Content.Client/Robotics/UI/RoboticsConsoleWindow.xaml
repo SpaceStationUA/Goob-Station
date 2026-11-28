@@ -20,12 +20,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
         <!-- Selected borg info -->
         <Label Name="SelectCyborg" Text="{Loc 'robotics-console-select-cyborg'}" HorizontalAlignment="Center"/>
-        <BoxContainer Name="BorgContainer" Orientation="Vertical" MaxHeight="200" Visible="False">
+        <BoxContainer Name="BorgContainer" Orientation="Vertical" Visible="False">
             <BoxContainer Margin="5 5 5 5" Orientation="Horizontal">
                 <PanelContainer VerticalExpand="True">
-                    <BoxContainer HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextureRect Name="BorgSprite" TextureScale="4 4"/>
-                    </BoxContainer>
+                    <TextureRect Name="BorgSprite" SetSize="128 128" CanShrink="True" Stretch="KeepAspectCentered"/>
                 </PanelContainer>
                 <PanelContainer VerticalExpand="True" HorizontalExpand="True">
                     <RichTextLabel Name="BorgInfo"/>
