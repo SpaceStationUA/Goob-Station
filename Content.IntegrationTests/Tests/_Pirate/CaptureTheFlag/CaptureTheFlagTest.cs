@@ -41,6 +41,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -79,7 +80,7 @@ public sealed class CaptureTheFlagTest
 
         await server.WaitAssertion(() =>
         {
-            Assert.That(rule.Grid.IsValid(), Is.True);
+            Assert.That(entMan.HasComponent<MapGridComponent>(rule.Grid), Is.True);
             Assert.That(redHome.Comp.Spawns, Has.Count.EqualTo(5));
             Assert.That(blueHome.Comp.Spawns, Has.Count.EqualTo(5));
             Assert.That(server.System<AtmosphereSystem>().IsMixtureProbablySafe(server.System<AtmosphereSystem>().GetTileMixture(red)), Is.True);
@@ -649,7 +650,7 @@ public sealed class CaptureTheFlagTest
             Assert.That(late.AttachedEntity, Is.Null);
             ticker.MakeJoinGame(late, EntityUid.Invalid);
             Assert.That(server.EntMan.HasComponent<GhostComponent>(late.AttachedEntity), Is.True);
-            Assert.That(rule.Players.ContainsKey(late.UserId), Is.False);
+            Assert.That(rule.Players, Does.Not.ContainKey(late.UserId));
         });
         await pair.CleanReturnAsync();
     }
