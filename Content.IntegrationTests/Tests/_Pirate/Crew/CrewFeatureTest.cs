@@ -7,6 +7,8 @@ using Content.Goobstation.Server.Supermatter.Systems;
 using Content.Goobstation.Shared.Supermatter.Components;
 using Content.Goobstation.Shared.Supermatter.Systems;
 using Content.Pirate.Server.Supermatter;
+using Content.Pirate.Server.CrystalMass;
+using Content.Server.Spreader;
 using Content.Server.GameTicking;
 using Content.Server.Mind;
 using Content.Server.Atmos.EntitySystems;
@@ -213,22 +215,30 @@ public sealed class CrewFeatureTest
     [Test]
     public async Task MagneticEventPolarizesCrewAndOppositeChargesDischargeOnContact()
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true, DummyTicker = false });
         var server = pair.Server;
         var em = server.EntMan;
         var map = await pair.CreateTestMap();
         var effects = server.System<StatusEffectsSystem>();
-        EntityUid a = default, b = default;
+        EntityUid a = default, b = default, unmanned = default;
         await server.WaitAssertion(() =>
         {
             a = em.SpawnEntity("MobHuman", map.GridCoords);
-            b = em.SpawnEntity("MobHuman", map.GridCoords);
-            var unmanned = em.SpawnEntity("MobHuman", map.GridCoords);
+            var maps = server.System<SharedMapSystem>();
+            var otherTile = new Vector2i(4, 0);
+            maps.SetTile(map.Grid, otherTile, map.Tile.Tile);
+            b = em.SpawnEntity("MobHuman", maps.GridTileToLocal(map.Grid, map.Grid.Comp, otherTile));
+            unmanned = em.SpawnEntity("MobHuman", map.GridCoords);
             var mind = server.System<MindSystem>();
             mind.TransferTo(mind.CreateMind(null, "A"), a);
             mind.TransferTo(mind.CreateMind(null, "B"), b);
             var ticker = server.System<GameTicker>();
             Assert.That(ticker.StartGameRule("BiomagneticPolarization"), Is.True);
+            Assert.That(effects.TryGetStatusEffect(a, SharedBiomagneticPolarizationSystem.BiomagEffectID, out _), Is.False);
+        });
+        await pair.RunSeconds(21);
+        await server.WaitAssertion(() =>
+        {
             var id = SharedBiomagneticPolarizationSystem.BiomagEffectID;
             Assert.That(effects.TryGetStatusEffect(a, id, out var first), Is.True);
             Assert.That(effects.TryGetStatusEffect(b, id, out var second), Is.True);
@@ -305,6 +315,32 @@ public sealed class CrewFeatureTest
         {
             Assert.That(em.GetComponent<CascadeCoreComponent>(core).Destabilized, Is.True);
             Assert.That(em.EntityExists(crystal), Is.False);
+        });
+        await pair.CleanReturnAsync();
+    }
+
+    [Test]
+    public async Task CascadeKeepsAnExistingCrystalWhenSpreadSelectsItsTileAgain()
+    {
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
+        var server = pair.Server;
+        var em = server.EntMan;
+        var map = await pair.CreateTestMap();
+        await server.WaitAssertion(() =>
+        {
+            var maps = server.System<SharedMapSystem>();
+            var tile = new Vector2i(1, 0);
+            maps.SetTile(map.Grid, tile, map.Tile.Tile);
+            var source = em.SpawnEntity("CrystalMassSpreader", map.GridCoords);
+            var neighbor = em.SpawnEntity("CrystalMassSpreader", maps.GridTileToLocal(map.Grid, map.Grid.Comp, tile));
+            var crystal = em.GetComponent<CrystalMassComponent>(source);
+            crystal.SpreadChance = 0f;
+            crystal.SecondaryChance = 0f;
+            var spread = new SpreadNeighborsEvent { Updates = 1 };
+            spread.AllNeighbors.Add((map.Grid.Owner, map.Grid.Comp, tile));
+            em.EventBus.RaiseLocalEvent(source, ref spread);
+            Assert.That(spread.Updates, Is.Zero);
+            Assert.That(em.AllComponentsList<CrystalMassComponent>().Select(x => x.Uid), Is.EquivalentTo(new[] { source, neighbor }));
         });
         await pair.CleanReturnAsync();
     }

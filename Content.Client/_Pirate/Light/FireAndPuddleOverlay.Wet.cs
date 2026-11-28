@@ -73,7 +73,7 @@ public sealed partial class FireAndPuddleOverlay
         return res.Wet.Texture;
     }
 
-    private bool CollectWet(MapId mapId, Box2 worldAABB)
+    private bool CollectWet(MapId mapId, Box2 worldAABB, Angle eyeRotation)
     {
         _wetSprites.Clear();
 
@@ -87,6 +87,7 @@ public sealed partial class FireAndPuddleOverlay
 
             var (position, rotation) = _xform.GetWorldPositionRotation(puddle.Owner);
             _wetSprites.Add(((puddle.Owner, sprite), position, rotation));
+            IncludeBounds(_sprite.CalculateBounds((puddle.Owner, sprite), position, rotation, eyeRotation).CalcBoundingBox());
         }
 
         _puddles.Clear();

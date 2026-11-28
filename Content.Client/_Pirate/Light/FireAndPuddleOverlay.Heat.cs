@@ -132,7 +132,9 @@ public sealed partial class FireAndPuddleOverlay
                         continue;
 
                     var level = Math.Clamp(gas.FireState - 1, 0, _fireStateHeat.Length - 1);
-                    _heatSpots[level].Add(Vector2.Transform(centre, worldMatrix));
+                    var position = Vector2.Transform(centre, worldMatrix);
+                    _heatSpots[level].Add(position);
+                    IncludeBounds(new Box2(position, position).Enlarged(FireHeatRadius));
                     found = true;
                 }
             }
@@ -149,6 +151,7 @@ public sealed partial class FireAndPuddleOverlay
                 continue;
 
             _heatSpots[_fireStateHeat.Length].Add(position);
+            IncludeBounds(new Box2(position, position).Enlarged(BurningHeatRadius));
             found = true;
         }
 

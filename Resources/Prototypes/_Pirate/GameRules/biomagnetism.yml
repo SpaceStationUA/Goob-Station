@@ -41,15 +41,16 @@
 
 - type: entity
   id: BiomagneticPolarization
-  parent: BaseGameRule
+  parent: BaseStationEventShortDelay
   components:
+  - type: GameRule
+    chaosScore: 80
   - type: StationEvent
     weight: 3
     earliestStart: 20
     reoccurrenceDelay: 30
-    startDelay: 10
-    startVariance: 10
     duration: 1
+    eventType: Chaotic
     chaos:
       Medical: 60
       Mess: 20

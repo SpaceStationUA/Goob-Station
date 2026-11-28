@@ -38,6 +38,8 @@ public sealed partial class BreadcrumbDropperSystem : EntitySystem
     [Dependency] private IRobustRandom _random = null!;
     [Dependency] private MobStateSystem _mobState = null!;
 
+    private readonly HashSet<Entity<BreadcrumbComponent>> _nearbyStones = [];
+
     public override void Initialize()
     {
         base.Initialize();
@@ -247,8 +249,9 @@ public sealed partial class BreadcrumbDropperSystem : EntitySystem
 
     private bool HasCrumbNearby(Entity<BreadcrumbDropperComponent> dropper, TransformComponent xform)
     {
-        foreach (var ent in _lookup
-            .GetEntitiesInRange<BreadcrumbComponent>(xform.Coordinates, dropper.Comp.DropRange))
+        _nearbyStones.Clear();
+        _lookup.GetEntitiesInRange(xform.Coordinates, dropper.Comp.DropRange, _nearbyStones);
+        foreach (var ent in _nearbyStones)
         {
             if (ent.Comp.Dropper == dropper.Owner)
                 return true;

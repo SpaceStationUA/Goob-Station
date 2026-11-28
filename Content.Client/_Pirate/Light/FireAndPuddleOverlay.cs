@@ -47,6 +47,13 @@ public sealed partial class FireAndPuddleOverlay : Overlay
         _shader = _proto.Index<ShaderPrototype>("PirateFireAndPuddle").InstanceUnique();
     }
 
+    private Box2? _effectBounds;
+
+    private void IncludeBounds(Box2 bounds)
+    {
+        _effectBounds = _effectBounds?.Union(bounds) ?? bounds;
+    }
+
     private bool HeatEnabled => _cfg.GetCVar(PirateVars.HeatHaze) && !_cfg.GetCVar(CCVars.ReducedMotion);
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
@@ -54,19 +61,20 @@ public sealed partial class FireAndPuddleOverlay : Overlay
         if (args.MapId == MapId.Nullspace || args.Viewport.Eye is not { } eye)
             return false;
 
+        _effectBounds = null;
         // Clyde calls BeforeDraw just before the screen copy for this viewport.
         var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
         res.HasHeat = HeatEnabled && CollectHeatSpots(args.MapId, args.WorldBounds, args.WorldAABB.Enlarged(FireHeatRadius));
         res.HasPuddles = _cfg.GetCVar(PirateVars.PuddleReflections) && eye.DrawLight &&
             _lightManager.Enabled && _lightManager.DrawLighting &&
             _entMan.TryGetComponent<MapComponent>(args.MapUid, out var map) && map.LightingEnabled &&
-            CollectWet(args.MapId, args.WorldAABB);
+            CollectWet(args.MapId, args.WorldAABB, eye.Rotation);
         return res.HasHeat || res.HasPuddles;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
     {
-        if (ScreenTexture == null || args.Viewport.Eye is not { } eye)
+        if (ScreenTexture == null || args.Viewport.Eye is not { } eye || _effectBounds is not { } bounds)
             return;
 
         var res = _resources.GetForViewport(args.Viewport, static _ => new CachedResources());
@@ -91,7 +99,11 @@ public sealed partial class FireAndPuddleOverlay : Overlay
         var handle = args.WorldHandle;
         handle.SetTransform(Matrix3x2.Identity);
         handle.UseShader(_shader);
-        handle.DrawRect(args.WorldBounds, Color.White);
+        // The masks use linear sampling. Cover one mask pixel beyond the last sprite or heat quad.
+        var pixels = args.Viewport.Size;
+        var padding = MathF.Max((bottomRight - bottomLeft).Length() / pixels.X,
+            (topLeft - bottomLeft).Length() / pixels.Y) / MathF.Min(HeatScale, WetScale);
+        handle.DrawRect(bounds.Enlarged(padding), Color.White);
         handle.UseShader(null);
     }
 

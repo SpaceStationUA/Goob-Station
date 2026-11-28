@@ -56,6 +56,7 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
     private static readonly ProtoId<DamageTypePrototype> ShockDamage = "Shock";
 
     private readonly List<EntityUid> _expiredEffectEnts = [];
+    private readonly HashSet<EntityUid> _entitiesOnTile = [];
 
     private const float ExplosionSlope = 1f;
     private const float CapExplosionSlope = 2f;
@@ -237,7 +238,6 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
 
     private void HandleStaticTiles(Entity<BiomagneticPolarizationStatusEffectComponent> ent)
     {
-        HashSet<EntityUid> entities = [];
         var xform = Transform(ent);
         var maybeGridUid = xform.GridUid;
         if (maybeGridUid is not { } gridUid)
@@ -249,16 +249,15 @@ public sealed class BiomagneticPolarizationSystem : SharedBiomagneticPolarizatio
 
         if (tile != TileRef.Zero && tile != ent.Comp.LastTile)
         {
-            var staticProviderOnTile = false;
-            entities.Clear();
-            entities = _lookup.GetEntitiesInTile(tile, LookupFlags.Uncontained);
-            foreach (var entOnTile in entities)
+            _entitiesOnTile.Clear();
+            _lookup.GetEntitiesInTile(tile, _entitiesOnTile, LookupFlags.Uncontained);
+            foreach (var entOnTile in _entitiesOnTile)
             {
-                if (_whitelist.IsWhitelistPass(ent.Comp.StaticElectricityProviders, entOnTile))
-                    staticProviderOnTile = true;
-            }
-            if (staticProviderOnTile)
+                if (!_whitelist.IsWhitelistPass(ent.Comp.StaticElectricityProviders, entOnTile))
+                    continue;
                 ent.Comp.CurrentStrength += ent.Comp.StrProvidedByStatic;
+                break;
+            }
         }
         ent.Comp.LastTile = tile;
     }

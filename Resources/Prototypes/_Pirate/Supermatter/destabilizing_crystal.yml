@@ -26,7 +26,6 @@
   restockTime: 2400
   conditions:
   - !type:BuyerObjectiveWhitelistCondition
-    makeHidden: true
     whitelist:
       components:
       - DieCondition

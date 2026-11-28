@@ -34,6 +34,8 @@ public sealed class CrystalMassSystem : EntitySystem
     [Dependency] private readonly TileSystem _tile = default!;
 
     private static readonly ProtoId<EdgeSpreaderPrototype> CrystalMassGroup = "CrystalMass";
+    private readonly HashSet<EntityUid> _tileOccupants = [];
+    private List<Entity<MapGridComponent>> _overlappingGrids = [];
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -105,11 +107,9 @@ public sealed class CrystalMassSystem : EntitySystem
             prototype = ent.Comp.SecondarySpawnPrototype;
 
         var neighbor = _robustRandom.Pick(args.AllNeighbors);
-        var neighborCoords = _map.GridTileToLocal(neighbor.GridUid, neighbor.Grid, neighbor.Position);
-
         HandleTiles((neighbor.GridUid, neighbor.Grid), neighbor.Position, ent.Comp.MassPlating);
 
-        var neighborUid = Spawn(prototype, neighborCoords);
+        var neighborUid = SpreadTo((neighbor.GridUid, neighbor.Grid), neighbor.Position, prototype);
         DebugTools.Assert(HasComp<EdgeSpreaderComponent>(neighborUid));
         DebugTools.Assert(HasComp<ActiveEdgeSpreaderComponent>(neighborUid));
         DebugTools.Assert(Comp<EdgeSpreaderComponent>(neighborUid).Id == CrystalMassGroup);
@@ -120,6 +120,23 @@ public sealed class CrystalMassSystem : EntitySystem
         args.Updates--;
     }
 
+    private EntityUid SpreadTo(Entity<MapGridComponent> grid, Vector2i tile, string prototype)
+    {
+        var anchored = _map.GetAnchoredEntities(grid.Owner, grid.Comp, tile);
+        while (anchored.MoveNext(out var uid))
+        {
+            if (!HasComp<CrystalMassComponent>(uid) || MetaData(uid.Value).EntityPrototype?.ID != prototype)
+                continue;
+
+            // A hit on the same crystal still clears its tile and can reactivate its frontier.
+            EnsureComp<ActiveTileClearCrystalMassComponent>(uid.Value);
+            EnsureComp<ActiveEdgeSpreaderComponent>(uid.Value);
+            return uid.Value;
+        }
+
+        return Spawn(prototype, _map.GridTileToLocal(grid, grid.Comp, tile));
+    }
+
     private void HandleTiles(Entity<MapGridComponent> neighborGrid, Vector2i neighborPosition, ProtoId<ContentTileDefinition> neighborTileReplacement)
     {
         var mapID = Transform(neighborGrid).MapID;
@@ -127,11 +144,11 @@ public sealed class CrystalMassSystem : EntitySystem
         var box = Box2.CenteredAround(worldPos, Vector2.One);
         var circle = new Circle(worldPos, 0.5f);
 
-        var grids = new List<Entity<MapGridComponent>>();
-        _map.FindGridsIntersecting(mapID, box, ref grids);
+        _overlappingGrids.Clear();
+        _map.FindGridsIntersecting(mapID, box, ref _overlappingGrids);
 
         // Locating every intersecting grid in the neighbor CrystalMass is about to spread to
-        foreach (var grid in grids)
+        foreach (var grid in _overlappingGrids)
         {
             if (grid.Owner == neighborGrid.Owner)
                 continue;
@@ -141,11 +158,9 @@ public sealed class CrystalMassSystem : EntitySystem
                 _map.SetTile(grid.Owner, grid, tile.GridIndices, Tile.Empty);
         }
 
-        var seed = _robustRandom.Next();
-        var random = new Random(seed);
-        var variant = _tile.PickVariant((ContentTileDefinition)_tileDefManager[neighborTileReplacement], random);
-
-        _map.SetTile(neighborGrid, neighborPosition, new Tile(_tileDefManager[neighborTileReplacement].TileId, 0, variant));
+        var definition = (ContentTileDefinition) _tileDefManager[neighborTileReplacement];
+        if (_map.GetTileRef(neighborGrid, neighborGrid.Comp, neighborPosition).Tile.TypeId != definition.TileId)
+            _map.SetTile(neighborGrid, neighborPosition, new Tile(definition.TileId, 0, _tile.PickVariant(definition)));
     }
 
     private void ClearTile(Entity<CrystalMassComponent> ent)
@@ -158,7 +173,9 @@ public sealed class CrystalMassSystem : EntitySystem
 
         var tilePos = _map.LocalToTile(gridUid.Value, grid, xform.Coordinates);
 
-        foreach (var target in _lookup.GetLocalEntitiesIntersecting(gridUid.Value, tilePos, flags: LookupFlags.Uncontained))
+        _tileOccupants.Clear();
+        _lookup.GetLocalEntitiesIntersecting(gridUid.Value, tilePos, _tileOccupants, flags: LookupFlags.Uncontained, gridComp: grid);
+        foreach (var target in _tileOccupants)
         {
             if (target == ent.Owner)
                 continue;
